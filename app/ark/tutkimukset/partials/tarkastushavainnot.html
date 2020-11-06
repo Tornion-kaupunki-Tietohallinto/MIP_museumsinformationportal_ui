@@ -1,0 +1,71 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tarkastushavainnotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Inspection_observations"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="tarkastushavainnotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="form-group">
+	        	<label for="tarkastuksen_syy" class="col-sm-3 control-label" i18n="ark.Inspection_reason"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="tarkastuksen_syy"
+		                ng-model="vm.tutkimus.properties.tarkastus.tarkastuksen_syy">
+		            </textarea>	        	
+	        	</div>
+	        </div>
+	        <div class="form-group">
+	        	<label for="ymparisto_maasto" class="col-sm-3 control-label" i18n="ark.Environment_terrain"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="ymparisto_maasto"
+		                ng-model="vm.tutkimus.properties.tarkastus.ymparisto_maasto">
+		            </textarea>
+	            </div> 
+	        </div>
+	        <div class="form-group">
+	        	<label for="kohteen_kuvaus" class="col-sm-3 control-label" i18n="ark.Arch_target_specifications"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="kohteen_kuvaus"
+		                ng-model="vm.tutkimus.properties.tarkastus.kohteen_kuvaus">
+		            </textarea>
+	            </div> 
+	        </div>
+	        <div class="form-group">
+	        	<label for="muut_tiedot" class="col-sm-3 control-label" i18n="ark.Other_information"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="muut_tiedot"
+		                ng-model="vm.tutkimus.properties.tarkastus.muut_tiedot">
+		            </textarea>
+	            </div> 
+	        </div>	        	        	                      
+	    </div>
+	    <!-- Katselu -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.tarkastuksen_syy">
+	        	<label class="col-sm-3 control-label" i18n="ark.Inspection_reason"></label>
+	        	<div class="col-sm-9">
+	            	<p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.tarkastuksen_syy}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.ymparisto_maasto">
+	        	<label class="col-sm-3 control-label" i18n="ark.Environment_terrain"></label>
+	        	<div class="col-sm-9">
+	            	<p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.ymparisto_maasto}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.kohteen_kuvaus">
+	        	<label class="col-sm-3 control-label" i18n="ark.Arch_target_specifications"></label>
+	        	<div class="col-sm-9">
+	            	<p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.kohteen_kuvaus}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.muut_tiedot">
+	        	<label class="col-sm-3 control-label" i18n="ark.Other_information"></label>
+	        	<div class="col-sm-9">
+	            	<p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.muut_tiedot}}</p>
+	            </div>
+	        </div>	        	        	                      
+	    </div>
+    </div>    
+</div>

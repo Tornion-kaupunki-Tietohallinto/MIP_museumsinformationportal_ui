@@ -1,0 +1,12 @@
+{
+	"Search_failed" : "Haku epäonnistui",
+	"Visible_layers": "Näytettävät kerrokset",
+	"Visible_map_layers" : "Näytettävät karttatasot",
+	"Visible_amount" : "Näytettävä määrä",
+    "Select_inventory_project": "Valitse inventointiprojekti",
+    "Select_inventor": "Valitse inventoija",
+    "Amount_to_show_on_map": "Kartalla näytettävien hakutulosten määrä",    
+    "Layer": "Taso",
+    "Layers": "Tasot",
+    "Remove_marker": "Poista merkki"
+}

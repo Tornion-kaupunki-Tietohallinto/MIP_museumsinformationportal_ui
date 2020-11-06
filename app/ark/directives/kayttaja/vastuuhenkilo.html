@@ -1,0 +1,19 @@
+<div class="form-group">
+    <label for="vastuuhenkilo" class="col-sm-3 control-label">
+        <span i18n="ark.Responsible_person"></span>
+    </label>
+    <div class="col-sm-9">
+        <ui-select ng-model="vastuuhenkilo" name="vastuuhenkilo" theme="bootstrap"> 
+            <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">
+	          {{$select.selected.properties.etunimi}}
+	          {{$select.selected.properties.sukunimi}}
+	          {{$select.selected.properties.sahkoposti}} 
+        	</ui-select-match> 
+        	<ui-select-choices repeat="k in kayttajat | filter: $select.search track by $index">
+          <span ng-bind-html="k.properties.etunimi | highlight: $select.search"></span>
+          <span ng-bind-html="k.properties.sukunimi | highlight: $select.search"></span>
+          <span ng-bind-html="k.properties.sahkoposti | highlight: $select.search"></span>
+        	</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>

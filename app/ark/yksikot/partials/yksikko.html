@@ -1,0 +1,134 @@
+
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    {{vm.tutkimusalue.properties.nimi}} {{vm.yksikko.properties.yksikkotunnus}}
+                </h4>                
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="form"
+                    ng-class="{'form-horizontal-tight':!vm.edit}" novalidate>                            
+                    <!-- Yksikön muokkaustila -->
+                    <div class="row" ng-if="vm.edit">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/tyonimi.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/tyovaiheet.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/kaivaus_seulonta.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/maalajit.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_kuvaus.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/stratigrafiset_kaavio.html'"></div>   
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <!-- RIGHT COLUMN -->
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_perusteet.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/stratigrafiset_suhteet.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/rajapinnat_hairiot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_tulkinta.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_ajoitus.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/lisatiedot.html'"></div>
+							<div class="col-md-12" ng-include="'ark/yksikot/partials/ajoitetut_loydot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/loydot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/poistetut_loydot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/naytteet.html'"></div>                                                      
+                        </div>
+                    </div>
+                    <!-- Yksikön katselutila -->
+                    <div class="row" ng-if="!vm.edit">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/perustieto.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/maalajit.html'"></div>
+							<div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_kuvaus.html'"></div>
+							<div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_perusteet.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/stratigrafiset_suhteet.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/rajapinnat_hairiot.html'"></div>							
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/kaivaus_seulonta.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_tulkinta.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/yksikon_ajoitus.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/lisatiedot.html'"></div>                            
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <!-- RIGHT COLUMN -->
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/stratigrafiset_kaavio.html'"></div> 
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/ajoitetut_loydot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/loydot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/poistetut_loydot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/naytteet.html'"></div>                            
+                            <mip-luetteloidut-kuvat ng-show="vm.images.length > 0" vm="vm"></mip-luetteloidut-kuvat>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/kartat.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/yksikot/partials/tiedostot_view.html'"></div>
+                        </div>
+                    </div>                    
+                </form>
+                
+            </div>
+            <div class="modal-footer">            
+                <div class="dropup">
+					<button 
+                        type="button" 
+                        class="btn btn-small mip-transparent" 
+                        data-placement="top" 
+                        bs-popover 
+                        data-template-url="ark/yksikot/partials/popover-migraatiodata.html"
+                        ng-show="vm.yksikko.properties.migraatiodata">
+                        <span class="fa fa-archive" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+                        <span i18n="common.Actions"></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="" ng-click="vm.poistaYksikko()" class="bg-danger" 
+                               i18n="common.Delete" data-ng-if="vm.permissions.poisto"></a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="" ng-click="vm.addImage(true)" 
+                                   i18n="ark.Add_image_to_list" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons && vm.tutkimus.ark_loyto_kokoelmalaji_id == '2'"></a>
+                        </li>
+                        <li><a href="" ng-click="vm.addKartta()" 
+                                   i18n="ark.Add_map_to_list" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons && vm.tutkimus.ark_loyto_kokoelmalaji_id == '2'"></a>
+                        </li>
+                        <li><a href="" ng-click="vm.lisaaTiedosto()" 
+                               i18n="common.Add_file" data-ng-if="vm.permissions.muokkaus"></a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+<!--                         <li><a href="" ng-click="vm.addDiscovery()" 
+                               i18n="unit.Add_discovery" data-ng-if="vm.permissions.muokkaus"></a>
+                        </li>
+                        <li><a href="" ng-click="vm.addFile()" 
+                               i18n="unit.Add_specimen" data-ng-if="vm.permissions.muokkaus"></a>
+                        </li>                        
+                        <li><a href="" ng-click="vm.addFile()" 
+                               i18n="common.Add_file" data-ng-if="vm.permissions.muokkaus"></a>
+                        </li>
+                        <li><a href="" ng-click="vm.addImage()" 
+                               i18n="common.Add_image" data-ng-if="vm.permissions.muokkaus"></a>
+                        </li>                           
+                        <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.create"></li> -->
+                         
+                        <li><a href="" ng-click="vm.close()"
+                               i18n="common.Close" 
+                               ng-show="!vm.edit"></a>
+                        </li>
+                        <li ng-class="{ 'disabled' : vm.disableButtons }"><a href="" ng-click="vm.disableButtons || vm.cancelEdit()"
+                               i18n="common.Cancel_edit" 
+                               ng-show="vm.edit && !vm.create"></a>
+                        </li>
+                        <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus"></li>
+                        <li><a href="" ng-click="vm.editMode()"
+                               i18n="common.Edit" 
+                               ng-show="!vm.edit" ng-if="vm.permissions.muokkaus"></a>
+                        </li>
+                        <li ng-class="{ disabled: form.$invalid || vm.disableButtons }">
+                        <a href="" ng-click="(form.$invalid || vm.disableButtons || vm.save())" class="bg-success"
+                               i18n="common.Save" 
+                               ng-show="vm.edit" ng-if="vm.permissions.muokkaus"></a>
+                        </li>
+                    </ul>                                       
+                </div>
+            </div>
+        </div>
+        <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

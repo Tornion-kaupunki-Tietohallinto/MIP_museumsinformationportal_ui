@@ -1,0 +1,142 @@
+<!-- Tiedot - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#TiedotPanel1">
+        <h4 class="panel-title">
+            <span data-i18n="common.Details"></span> <span
+                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="TiedotPanel1" class="panel-body panel-collapse collapse in">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Map_number"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.karttatyyppi.tyyppi}} {{kartta.properties.karttatyyppi.numero}}.{{kartta.properties.karttanumero}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.alkup_karttanumero.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Original_map_number"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.alkup_karttanumero}}</p>
+                </div>
+            </div>  
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Name"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p><a class="link form-control-static" target="_blank" href="{{kartta.properties.url}}">{{kartta.properties.alkup_tiedostonimi}}</a></p>
+                </div>
+            </div>            
+            <div class="form-group" ng-if="kartta.properties.piirtaja.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Drawn_by"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.piirtaja}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.organisaatio.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Organization"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.organisaatio}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.mittaukset_kentalla.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Measurements_on_field"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.mittaukset_kentalla}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.koko.koko.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Size"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.koko.koko}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.mittakaava.mittakaava.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Scale"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">1:{{kartta.properties.mittakaava.mittakaava}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.asiasanat.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Glossaries"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline"><span ng-repeat="sana in kartta.properties.asiasanat">{{sana}}<span ng-show="!$last">, </span></span></p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.loydot.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Discoveries"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline"><span ng-repeat="loyto in kartta.properties.loydot"><a class="link" ng-click="avaaLoyto(loyto)">{{loyto.luettelointinumero}}</a><span ng-show="!$last">, </span></span></p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.naytteet.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="ark.Samples"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline"><span ng-repeat="nayte in kartta.properties.naytteet"><a class="link" ng-click="avaaNayte(nayte)">{{nayte.luettelointinumero}}</a><span ng-show="!$last">, </span></span></p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.yksikot.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Units"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline"><span ng-repeat="yksikko in kartta.properties.yksikot"><a class="link" ng-click="avaaYksikko(yksikko)">{{yksikko.yksikkotunnus}}</a><span ng-show="!$last">, </span></span></p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" ng-if="kartta.properties.kuvaus.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Description"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.kuvaus}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.lisatiedot.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Additional_information"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.lisatiedot}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="kartta.properties.tekijanoikeuslauseke.length > 0">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Copyright_clause"></span>
+                </label>
+                <div class="col-sm-9">
+                    <p class="form-control-static mip-multiline">{{kartta.properties.tekijanoikeuslauseke}}</p>
+                </div>
+            </div>   
+        </div>
+        <div class="col-md-6">
+            
+        </div>
+        <div class="col-md-6">
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<!-- Kulttuurihistorialliset tiedot EDIT moodi -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<span i18n="common.Culturohistorical_values"></span>
+		</h4>
+	</div>
+	<div class="panel-body">
+        
+		<div class="form-group">
+			<label for="kulttuurihistoriallisetarvot"
+				class="col-sm-3 control-label"> <span
+				data-i18n="common.Culturohistorical_values"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					ng-model="rakennus.properties.kulttuurihistoriallisetarvot"
+					title="Valitse" name="kulttuurihistoriallisetarvot"
+					theme="bootstrap" multiple="true" ng-required="false"
+					on-remove="addItemBackToList($item, kultHistArvot)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match>
+				<ui-select-choices
+					repeat="k in kultHistArvot | filter: {'nimi_fi': $select.search} track by k.id">
+				<div ng-bind-html="k | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+
+        <div class="form-group">
+            <label for="arvotus" class="col-sm-3 control-label"> <span
+                i18n="common.Valuation"></span>
+            </label>
+            <div class="col-sm-9">
+                <select ng-model="rakennus.properties.arvotustyyppi"
+                    ng-options="arvotus as arvotus.nimi_fi for arvotus in arvotusOptions track by arvotus.id"
+                    name="arvotus" class="form-control">
+                    <option value=""><span data-i18n="common.Select"></span></option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group"
+            ng-class="{ 'has-error': form.perustelut.$invalid && form.perustelut.$touched }">
+            <label for="perustelut" class="col-sm-3 control-label"> <span
+                i18n="common.Reasonings"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="perustelut"
+                    data-i18n-attr="{placeholder: 'common.Reasonings'}"
+                    ng-model="rakennus.properties.kulttuurihistoriallisetarvot_perustelut" 
+                    ng-required="false"
+                    ng-maxlength="254"
+                    ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+                    
+                <span class="help-block" 
+                    ng-show="form.perustelut.$invalid && form.perustelut.$touched">
+                    <span data-i18n="common.err_max_length" ng-show="form.perustelut.$error.maxlength" 
+                        data-field="{{ 'common.Reasonings' | i18n }}" data-maxlength="254"></span>
+                </span>
+                
+            </div>
+        </div>
+	</div>
+</div>

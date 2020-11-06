@@ -1,0 +1,19 @@
+<div class="form-group">
+    <label for="korityyppi" class="col-sm-4 control-label">
+        <span i18n="common.Cart_type"></span> *
+    </label>
+    <div class="col-sm-8">
+        <ui-select 
+        	ng-model="tyyppi.korityyppi" 
+        	name="korityyppi"
+        	ng-required="true"
+        	autofocus
+        	theme="bootstrap"> 
+		    <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected | namei18n}}</ui-select-match> 
+		    <ui-select-choices repeat="tyyppi as tyyppi in korityypit | filter: $select.search">
+ 		       <span ng-bind-html="tyyppi | namei18n | highlight: $select.search"></span>
+			</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>
+ 

@@ -1,0 +1,11 @@
+{
+	"Fetching_villages_failed": "Gettings villages failed",
+	"Saving_village_ok": "Village %name saved",
+	"Village_deleted": "Village deletes",
+	"Village_save_ok": "The village %name saved",
+	"Village_create_ok": "The village created successfully",
+	"Village_create_fail": "The creation of the village failed",
+	"Village_delete_ok": "Village deleted",
+	"Village_count": "Villages",
+	"Village_details": "Village details"
+}

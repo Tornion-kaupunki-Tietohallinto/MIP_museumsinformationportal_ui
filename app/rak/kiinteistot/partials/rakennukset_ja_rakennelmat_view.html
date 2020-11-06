@@ -1,0 +1,27 @@
+
+<!-- Rakennukset ja rakennelmat - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#rakennuksetPanel{{modalId}}">
+		<h4 class="panel-title">
+		    <span data-i18n="common.Buildings_and_structures"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+    <div id="rakennuksetPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+        <div class="row">
+    
+            <ul class="list-group">
+                <li class="list-group-item col-xs-6" ng-repeat="rakennus in rakennukset" 
+                    style="cursor: pointer; border:0" ng-click="showRakennusModal(rakennus);">
+	                <span style="font-weight:bold">{{rakennus.properties.inventointinumero}}</span>
+	                -
+	                <span ng-if="rakennus.properties.rakennustyypit.length==0" style="font-style:italic" data-i18n="building.Building_or_structure"></span>
+	                <span ng-repeat="t in rakennus.properties.rakennustyypit"><span ng-if="!$first">, </span>{{t | namei18n}}</span>
+                    <span ng-if="rakennus.properties.purettu == true" data-i18n="common.Demolished_list_view"></span>
+                </li>
+            </ul>
+            
+        </div>
+	</div>
+</div>
+

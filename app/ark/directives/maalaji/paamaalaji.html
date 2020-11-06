@@ -1,0 +1,12 @@
+<div class="form-group">
+    <label for="paamaalaji" class="col-sm-4 control-label">
+        <span i18n="unit.Main_soil_type"></span>
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="maalaji.paamaalaji" 
+        	ng-model="paamaalaji" 
+            ng-options="paamaalaji as paamaalaji.nimi_fi for paamaalaji in maalajit track by paamaalaji.id">
+        </select>
+    </div>
+</div>

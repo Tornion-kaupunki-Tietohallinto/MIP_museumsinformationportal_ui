@@ -1,0 +1,24 @@
+<div class="form-group">
+    <label for="materiaalikoodi" ng-class="{'col-sm-4': cols === 'wide' , 'col-sm-3': cols === 'narrow'}" class="control-label"> 
+        <span i18n="ark.Material_code"></span> *
+    </label>
+    <div ng-class="{'col-sm-8': cols === 'wide' , 'col-sm-9': cols === 'narrow' }">
+        <select class="form-control" 
+        	ng-show="!vm"
+        	name="materiaalikoodi" 
+        	ng-model="materiaalikoodi" 
+        	ng-required="true" 
+        	focus-me="focusInput"
+            ng-options="materiaalikoodi.koodi + ' ' + materiaalikoodi.nimi_fi for materiaalikoodi in materiaalikoodit track by materiaalikoodi.id">
+        </select>
+        <select class="form-control" 
+        	ng-show="vm"
+        	name="materiaalikoodi" 
+        	ng-change="vm.haeEnsisijaisetMateriaalit(materiaalikoodi)" 
+            ng-model-options='{debounce: 500}'
+        	ng-model="materiaalikoodi" 
+        	ng-required="true" 
+            ng-options="materiaalikoodi.koodi + ' ' + materiaalikoodi.nimi_fi for materiaalikoodi in materiaalikoodit track by materiaalikoodi.id">
+        </select>        
+    </div>
+</div>

@@ -1,0 +1,21 @@
+
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tutkimusaluePanel{{vm.modalId}}">
+       <h4 class="panel-title">
+           <span i18n="ark.Research_areas"></span>
+           <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+       </h4>
+    </div>
+    <div id="tutkimusaluePanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">        
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="ta in vm.tutkimus.properties.tutkimusalueet | orderBy: 'ta.properties.nimi'"
+                style="cursor: pointer; border:0" ng-click="vm.showTutkimusalue(ta);">
+    
+                <h5 class="list-group-item-heading"><a>{{ta.properties.nimi}}</a></h5>
+                <p>{{ta.properties.sijaintikuvaus}}</p>                
+            </li>
+        </ul>
+        
+    </div>
+</div>

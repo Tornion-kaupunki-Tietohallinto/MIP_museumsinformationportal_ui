@@ -1,0 +1,965 @@
+/* Show scrollbar always to prevent the jumping of the layout when opening/closing modals
+ * Does not work directly, as doesn't go to disabled mode when modal is open thus allowing the list underneath to be scrolled!
+ */
+/*
+html {
+    overflow-y: scroll; 
+}
+*/
+body {
+	background-color: #e6e6e6; /* #ededed */
+}
+
+
+/*
+ * panels
+ */ 
+.panel {
+	margin-bottom: 8px;
+} 
+/*
+ * ------------------------- LOGIN ------------------------
+ */
+.panel-login {
+	margin-top: 20px;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: transparent;
+	position: relative;
+	z-index: 2;
+	max-width: 500px;
+}
+
+.panel-login .panel-body {
+	padding-top: 10px;
+	padding-left: 40px;
+	padding-right: 40px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.panel-login .panel-heading {
+	background-color: rgba(255, 255, 255, 0.8);
+	color: white;
+	height: 400px;
+	display: table;
+	width: 100%;
+}
+
+.panel-login .panel-heading div {
+	height: 100%;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.panel-login .panel-heading div h1 {
+	font-size: 100px;
+}
+
+.login-holder {
+	background-image: url("../images/nauvoberghamn_verkkoon.jpg");
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .login-header {
+        font-size:14px;
+        font-weight: bold;
+    }
+}
+
+/*
+ * -------------------- NAVBAR --------------------
+ */
+.navbar-mip {
+	display: none;
+	background-color: #400080;
+	background-image: none;
+	background-repeat: repeat-x;
+	border-radius: 0px;
+	border: none;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 5px
+		rgba(0, 0, 0, 0.075);
+}
+
+.navbar-mip .navbar-brand {
+	color: #fff;
+}
+
+.navbar-brand>img {
+	display: inline;
+}
+
+.navbar-mip .navbar-nav>li>a {
+	color: #fff;
+}
+
+.navbar-mip .navbar-nav>li>a:hover {
+	color: #e2e2e2;
+}
+
+.navbar-mip .navbar-brand:hover, .navbar-mip .navbar-brand:focus {
+	background-color: transparent;
+	color: #e2e2e2;
+}
+
+.navbar-show {
+	display: block;
+}
+
+.navbar {
+	margin-bottom: 10px;
+}
+
+/*
+ * Hiding mechanism of the navbar when the user is not logged in
+ */
+.ng-hide {
+	/* this is just another form of hiding an element */
+	display: block !important;
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+}
+
+/*
+ * ------------------------- TAB BAR -------------------------------
+ */
+.nav-tabs>li {
+	cursor: pointer;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	cursor: pointer !important;
+}
+
+/*
+ * Make tab bar a bit more compact
+ */
+.nav-tabs>li>a {
+	padding: 5px 8px;
+}
+
+/*
+ * ---------------------- MODAL ------------------------------------ 
+ */
+ 
+/* this prevents the body from losing the scrollbar when modal is open */
+.modal-open {
+	overflow: auto;
+}
+ 
+.modal-backdrop.am-fade {
+	opacity: .5;
+	transition: opacity .15s linear;
+	&.
+	ng-enter
+	{
+	opacity
+	:
+	0;
+	&.
+	ng-enter-active
+	{
+	opacity
+	:
+	.5;
+}
+
+}
+&
+.ng-leave {
+	opacity: .5;
+	&.
+	ng-leave-active
+	{
+	opacity
+	:
+	0;
+}
+
+}
+}
+
+
+/*
+ * absolute position for the dialog to show it on top
+ */
+.modal-dialog {
+	position: absolute;
+}
+.active-modal {
+	z-index: 10000;
+}
+
+.modal-header {
+    padding: 8px 15px;
+}
+
+.active-modal .modal-header {
+    background-color: #CCCCCC;	
+}
+/* Modal width */
+.mip-modal-dialog {
+	width: 78%;
+}
+.modal-content {
+	box-sizing: initial;
+}
+.modal-body {
+    padding: 7px;
+	height: calc(100vh - 200px);
+	overflow-y: auto;
+	overflow-x: hidden;
+    box-sizing: initial;
+}
+
+.modal-body-fullscreen {
+	max-height: calc(100vh - 125px);
+	overflow-y: auto;
+	position: relative;
+	padding: 15px;
+}
+.mip-modal-fullscreen {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+.ui-draggable-handle {
+	cursor: move;
+}
+/*
+ * Generic hyperlinks
+ */
+.link {
+	cursor: pointer;
+}
+
+/*
+ * ---------------------------- OPENLAYERS ----------------------
+ */
+
+/*
+ * Openlayers styling
+ */
+.angular-openlayers-map:-moz-full-screen {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.angular-openlayers-map:-webkit-full-screen {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.angular-openlayers-map:full-screen {
+	height: 100%;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.angular-openlayers-map:not(-moz-full-screen) {
+	height: 400px;
+}
+
+.angular-openlayers-map:not(-webkit-full-screen) {
+	height: 400px;
+}
+
+.angular-openlayers-map:not(full-screen) {
+	height: 400px;
+}
+
+/*
+ * Collapse animation
+ */
+.collapse.am-collapse {
+	animation-duration: .3s;
+	animation-timing-function: ease;
+	animation-fill-mode: backwards;
+	overflow: hidden; &. in-remove { animation-name : collapse;
+	display: block;
+}
+
+&
+.in-add {
+	animation-name: expand;
+}
+
+}
+
+/*
+ Makes two scrollbars on the screen...
+.modal { overflow: auto !important; }
+*/
+
+/*Kiinteisto page fiddling. If the two-column is to be changed, the part below is not needed*/
+/* 
+@media (min-width: 768px){
+  #left {
+    position: absolute;
+    top: 160px;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    overflow-y: scroll; 
+  }
+  
+#right {
+    position: absolute;
+    top: 160px;
+    bottom: 0;
+    right: 0;
+    overflow-y: scroll;
+    width: 60%;
+  }
+}
+
+#left {
+  height:75%;
+}
+
+#right {
+  height:75%;
+}
+*/
+.collapse.in {
+	overflow: visible !important;
+}
+
+/*
+ * Photo "cards" need some padding
+ */
+.as-sortable-item {
+	padding: 0.25em;
+	border: 1px solid #ddd;
+}
+
+.as-sortable-item, .as-sortable-placeholder {
+    border-radius: 3px;
+}
+	
+/*
+ *  IMAGES
+ *
+ */ 
+ 
+.mip-image-item {
+	height:150px; /* Thumbnail size small 120px + text */
+}
+
+.mip-image-thumbnail {
+	margin: 0 auto; 
+	cursor: pointer; 
+	max-height:130px;
+}
+
+.mip-image-item-large {
+    height:275px; /* Thumbnail size small 120px + text */
+}
+
+.mip-image-thumbnail-large {
+    margin: 0 auto; 
+    cursor: pointer; 
+    max-height:250px;
+}
+
+.mip-image-thumbnail-overlay {
+	top:0; 
+	left: 0; 
+	position: absolute;
+	opacity: 0.9;
+	background: none repeat scroll 0 0 #FFFFFF;
+}
+.mip-image-thumbnail-overlay-text {
+	
+}
+
+.mip-image-caption {
+	overflow: hidden; 
+	white-space:nowrap; 
+	text-overflow: ellipsis; 
+	display:inline-block
+}
+
+/*
+ * Thumbnails look better when they are a bit rounded as well
+ * and have some "breathing room" below them
+ */
+.as-sortable-item>a>img {
+	margin-bottom: 5px;
+}
+
+.as-sortable-item>a, .as-sortable-item>a>img {
+	cursor: pointer;
+}
+
+.image-heading {
+	margin-top: 0.5em;
+	margin-bottom: 0.25em;
+}
+
+.panel-collapsible>.panel-heading {
+	cursor: pointer;
+}
+.panel-collapsible>.panel-heading .collapsed-indicator::before {
+	content: "\e113";
+}
+.panel-collapsible>.panel-heading.collapsed .collapsed-indicator::before {
+    content: "\e114";
+}
+
+/*
+ * CSS rules for the popup shown on the map page
+ * Border colours should match with feature colours set in mapService.js
+ */
+.mapPopup {
+	position: fixed;
+	top: -9999px;
+	left: -9999px;
+	padding: 3px;
+	background-color: white;
+	text-align: center;
+	border-radius: 6px;
+}
+
+.mapPopup-Kiinteistot {
+	border: 3px solid blue;
+}
+
+.mapPopup-Rakennukset {
+	border: 3px solid orange;
+}
+
+.mapPopup-Alueet {
+	border: 3px solid red;
+}
+
+.mapPopup-Arvoalueet {
+	border: 3px solid green;
+}
+
+.mapPopup-Kohteet {
+	border: 3px solid rgba(252, 86, 153, 1);
+}
+
+.mapPopup-Alakohteet {
+	border: 3px solid rgba(252, 86, 200, 1);
+}
+
+.mapPopup-Tutkimusalueet {
+    border: 3px solid rgba(225, 210, 80, 1);
+}
+
+/*
+ * Date and timepicker 
+ */
+.datepicker.dropdown-menu tbody button {
+	padding: 6px;
+}
+
+.datepicker.dropdown-menu button {
+	border: 0 none;
+	outline: 0 none;
+	background-image: none;
+	box-shadow: none;
+}
+
+.timepicker.dropdown-menu tbody button {
+	padding: 6px;
+}
+
+.timepicker.dropdown-menu button {
+	border: 0 none;
+	outline: 0 none;
+	background-image: none;
+	box-shadow: none;
+}
+
+.mip-fieldgroup {
+	border-radius: 5px;
+	border: 1px solid #e5e5e5;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.lvl-choose-button {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+
+.lvl-upload-button {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #fff;
+	background-color: #5cb85c;
+	border-color: #4cae4c;
+}
+
+.select2>.select2-choice.ui-select-match {
+	/* Because of the inclusion of Bootstrap */
+	height: 29px;
+}
+
+.selectize-control>.selectize-dropdown {
+	top: 36px;
+}
+/* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+.select-box {
+	background: #fff;
+	position: relative;
+	z-index: 1;
+}
+
+.alert-info.positioned {
+	margin-top: 1em;
+	position: relative;
+	z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+}
+
+/* Alert location */
+
+.floater{
+	position: fixed;
+	z-index: 1000000;
+}
+.left {
+    left: 10px;
+}
+.right {
+    right: 10px;
+}
+.top {
+	top: 10px;
+}
+.bottom {
+	bottom: 10px;
+}
+.center {
+    left: 50%;
+    transform:translateX(-50%);
+}
+/* Keep the line breaks */
+.mip-multiline {
+	white-space: pre-line;
+}
+
+/* Use when no data is available, and showing an "No data" message, which should be greyed */
+.no-data {
+	font-style: italic;
+	color: #aaa;
+}
+
+.draggable {
+	cursor: move;
+}
+
+.btn-group-map {
+	padding: 0px;
+}
+
+.btn-group-map > .btn {
+	width: 100%;
+}
+
+.btn-group-map-holder {
+	width: 100%;
+}
+
+.btn-group-col {
+	padding: 0px;
+}
+
+.btn-group-col > .btn-group-justified:last-child > .btn-group > .btn {
+	border-radius: 0px;
+}
+
+.btn-group-col > .btn-group-justified > .btn-group:first-child > .btn {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.btn-group-col > .btn-group-justified > .btn-group > .btn {
+	border-right: none;
+}
+
+.btn-group-map > .btn {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+td.mip-table-header {
+	font-weight: bold;
+}
+
+.mip-footer-btn-group {
+}
+
+.mip-footer-btn-group > .dropup {
+	margin-top: 0;
+	margin-left: 5px;
+    margin-right: 0;
+    margin-bottom: 0;
+	display: inline-block;
+}
+
+/*
+ * Make long texts truncate and add ellipsis
+ */
+.mip-text-overflow {
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+/*
+.modal.custom .modal-dialog {
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      min-width: 320px;
+      max-width: 630px;
+      width: 50%;
+}
+*/
+
+
+.ng-table-bordered-pager {
+	border-top: 1px solid #ddd;
+	padding-top: 0.5em;
+}
+
+/* Background as transparent*/
+.mip-transparent{
+	background-color:transparent;
+}
+
+/* Dropdown menu width */
+.mip-menu-fixed-width{
+	width: 300px;
+}
+
+/* Dropdown menu button */
+.mip-menu-button{
+	width: 90px;
+	padding-left : 7px;
+}
+
+/* Dropdown menu item */
+.mip-menu-item{
+	display: inline; 
+	padding : 0px 10px 0px 10px;
+}
+
+/* Dropdown menu li height */
+.mip-li-fixed-heigth{
+	height: 26px; 
+}
+
+/* Menu selected */
+.mip-menu-item-selected{
+	font-weight: bold;
+}
+
+/* Kyppi muutos */
+.kyppi-changed{
+	color:red;
+	padding-right: 50px;
+}
+
+/*
+ *
+ * --------------------------- BOOTSTRAP OVERRIDES ----------------------------
+ *
+ */
+
+/*
+ * Override form group to make it more compact  
+ */
+.form-group {
+	font-size: 13px;
+	margin-bottom: 2px;	
+}
+/*
+ * View mode is even more compact
+ */
+.form-horizontal-tight .form-group {
+	margin-bottom: 0px;
+}
+ 
+
+/*
+ * Override form-control to make it more compact
+ */
+.form-control {
+	height: 30px;
+}
+
+.form-horizontal .control-label {
+    padding-top: 3px;
+}
+
+.form-control-static {
+    min-height: 25px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/*
+ * Make the heading a bit more compact
+ */
+.panel-heading {
+	padding: 6px 10px;
+}
+
+.panel-title {
+	font-size: 14px;
+}
+
+/*
+ * .. and the body also
+ */
+.panel-body {
+	padding: 7px 15px;
+} 
+/*
+ * Make buttons a bit more compact
+ */ 
+.btn {
+	font-size: 13px;
+}
+
+/*
+ * Search panel contents of list pages. 
+ */
+.searchActions {
+	padding-left: 0;
+	padding-right: 0;
+ /* margin-top: 1.5em; */   /* Clear search properties button added --> no need. */
+    margin-left: 0; 
+    margin-right: 0;
+    text-align: center;
+}
+
+.search-form-group {
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 5px;
+}
+
+/*
+ * Bootstrap -> input-groups.less ylikirjoitus. Monivalinta-lista jäi avattuna seuraavan rivin elementin alle.
+ */
+.input-group .form-control {
+	position: inherit;
+}
+
+/*
+@media (min-width: 992px) {
+    .searchParams {
+	   border-right : 1px solid #ddd;
+	}
+}
+*/
+
+.pagination {
+	margin-top: 0;
+}
+
+/*
+ * Style to show highlight on field
+ */
+.highlight {
+  box-shadow: 0 0 3px green; margin: 10px
+  transition: background 100ms;
+}
+
+.list-group-item {
+    padding: 3px 15px;
+}
+
+/*
+ * table styling
+ */
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+	padding: 6px;
+}
+
+/*
+ * Bootstrap dropdown submenu
+ */
+ 
+.dropdown-submenu {
+	position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+	top:0;
+	left:100%;	
+	margin-top:-6px;
+	margin-left:-1px;
+	-webkit-border-radius:0 6px 6px 6px;
+	-moz-border-radius:0 6px 6px 6px;
+	border-radius:0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+	display:block;
+}
+.dropdown-submenu>a:after {
+	display:block;
+	content:" ";
+	float:right;
+	width:0;
+	height:0;
+	border-color:transparent;
+	border-style:solid;
+	border-width:5px 0 5px 5px;
+	border-left-color:#cccccc;
+	margin-top:5px;
+	margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+	border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+	float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+	left:-100%;
+	margin-left:0;
+	-webkit-border-radius:6px 0 6px 6px;
+	-moz-border-radius:6px 0 6px 6px;
+	border-radius:6px 0 6px 6px;
+}
+
+.dropup {
+	margin-left: 150px;
+}
+
+/*
+ *TODO: Fixaa alla oleva
+ */
+ 
+/*
+ * Korkeutta ei saada automaattisesti elementtien mukaan, joten nyt asetettu kahden rivin
+ * korkeus.
+ */ 
+.submenuHeightFix1Elements {
+    height:2.55em;
+}
+.submenuHeightFix2Elements {
+	height:4.5em;
+}
+
+.submenuHeightFix3Elements {
+    height:6.75em;
+}
+
+.submenuHeightFix4Elements {
+    height:9em;
+}
+
+
+/*
+ * Readonly kenttä ei ole harmaa vaan normaali valkoinen
+ */
+ input[readonly].temporaryReadonly {
+   background-color: #fff;
+}
+
+/* Color the input with bootstrap warning color if it has a value. (Usage for example: ng-class="kiinteistotTable.filter().properties.kunta.length > 0 ? 'input-has-value' : 'form-control'") */
+.input-has-value {
+	outline:none;
+    border-color:#FFC107;
+    box-shadow:0 0 10px #9ecaed;
+}
+
+
+/* Fix UI select placeholders not showing completely from time to time */
+.ui-select-multiple input.ui-select-search { width:auto !important; cursor: pointer; }
+
+/* Input-group together with separated name - number search fields */
+.mip-input-group {
+	padding-right: 0px; 
+	margin-right: -1px;
+}
+
+/* Karttojen valintalistalle max korkeus ja vierityspalkki */
+.select.dropdown-menu {
+    max-height: 50vh;
+    overflow: auto;
+}
+
+/* Mm. inventointiprojektivalintalistacontrollin tekstiongelman korjaus */
+.ui-select-bootstrap .ui-select-choices-row>span {
+	white-space: normal;
+}
+
+/* Kuvien "valitse siirrettäväksi" checkboxin containerin tyyli */
+.mip-right-bottom {
+	position: absolute;
+	bottom: 2px;
+	right: 4px;
+}
+
+/* Tyyli jolla esimerkiksi linkit saa näyttämään disabledilta (voi käyttää esimerkiksi menussa silloin kun ei ole käytetty buttonia, jolla disabled määre on) */
+.mip-disabled {
+	cursor: not-allowed;
+}
+
+/* Elementin (kuvan) zoomaus kun hiiri viedään kuvan päälle */
+.zoom {
+  transition: transform .15s;
+  width: 200px;
+  height: auto;
+  margin: auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(2.0); /* IE 9 */
+  -webkit-transform: scale(2.0); /* Safari 3-8 */
+  transform: scale(2.0);
+}

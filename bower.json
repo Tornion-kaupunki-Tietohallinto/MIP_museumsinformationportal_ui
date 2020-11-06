@@ -1,0 +1,41 @@
+{
+  "name": "lib",
+  "authors": [
+    "mip"
+  ],
+  "description": "",
+  "main": "",
+  "license": "GPL-3",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "1.6.2",
+    "angular-bootstrap": "https://github.com/angular-ui/bootstrap-bower.git#1.3.3",
+    "angular-cookies": "1.6.2",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#1.7.0",
+    "angular-motion": "0.4.4",
+    "angular-openlayers-directive": "1.19.0",
+    "angular-route": "1.6.2",
+    "angular-strap": "2.3.12",
+    "angular-ui-select": "0.19.6",
+    "bootstrap-bower": "https://github.com/angular-ui/bootstrap-bower",
+    "font-awesome": "fontawesome#4.7.0",
+    "bootstrap": "3.3.7",
+    "exif-js": "2.1.1",
+    "ng-file-upload": "12.2.13",
+    "ng-sortable": "1.3.7",
+    "ng-table": "0.8.3",
+    "angular-cache": "^4.6.0",
+    "angularjs-slider": "^6.4.1"
+  },
+  "resolutions": {
+    "angular": "1.7.9"
+  }
+}

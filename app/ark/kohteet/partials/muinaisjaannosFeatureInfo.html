@@ -1,0 +1,16 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4>
+                    _Muinaisjäännöksen tiedot_
+                </h4>
+            </div>
+            <div class="modal-body">
+                <pre>{{vm.data | json}}</pre>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>

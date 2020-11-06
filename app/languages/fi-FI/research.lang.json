@@ -1,0 +1,6 @@
+{
+	"No_view_permission" : "Ei katseluoikeutta tutkimuksiin",
+	"No_view_permission_single" : "Ei katseluoikeutta tutkimukseen",
+	"Research_delete_error": "Tutkimuksella on tutkimusalueita",
+	"Delete_failed": "Tutkimuksen poisto epäonnistui"
+}

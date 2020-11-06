@@ -1,0 +1,104 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="ark.Other_information"></span>
+        </h4>
+    </div>
+    <div class="panel-body">        
+        <!-- 9004 
+        <div class="form-group">
+            <label for="jarjestysnumero" class="col-sm-3 control-label">
+                <span i18n="ark.Order_number"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" name="jarjestysnumero"
+                    ng-model="vm.kohde.properties.jarjestysnumero" spellcheck="false" autocomplete="off">
+            </div>
+        </div>                
+        <div class="form-group">
+            <label for="tarkenne" class="col-sm-3 control-label">
+                <span i18n="ark.Extension"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="tarkenne"
+                    data-i18n-attr="{placeholder: 'ark.Extension'}" ng-maxlength="50"
+                    ng-model="vm.kohde.properties.tarkenne" spellcheck="false" autocomplete="off">
+            </div>
+        </div>        
+        <mip-rauhoitusluokka luokka="vm.kohde.properties.rauhoitusluokka"></mip-rauhoitusluokka>
+         -->
+        <mip-alkuperaisyys alkuperaisyys="vm.kohde.properties.alkuperaisyys"></mip-alkuperaisyys>
+        <mip-kunto kunto="vm.kohde.properties.kunto"></mip-kunto>
+        <mip-hoitotarve hoitotarve="vm.kohde.properties.hoitotarve"></mip-hoitotarve>
+        
+        <div class="form-group">
+            <label for="huomautus" class="col-sm-3 control-label">
+                <span i18n="ark.Remarks"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="huomautus" rows="3" ng-maxlength="3000"
+                    ng-model="vm.kohde.properties.huomautus" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lahteet" class="col-sm-3 control-label">
+                <span i18n="ark.Sources"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="lahteet" rows="3" ng-maxlength="1000"
+                    ng-model="vm.kohde.properties.lahteet" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <!-- 9004 & 9634
+        <div class="form-group">
+            <label for="haaksirikkovuosi" class="col-sm-3 control-label">
+                <span i18n="ark.Shipwreck_year"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" name="haaksirikkovuosi" 
+                    ng-model="vm.kohde.properties.haaksirikkovuosi" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="aluksen_alkuperamaa" class="col-sm-3 control-label">
+                <span i18n="ark.Ships_country_of_origin"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="alkuperamaa" ng-maxlength="100"
+                    ng-model="vm.kohde.properties.alkuperamaa" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="alkuperamaan_perustelu" class="col-sm-3 control-label">
+                <span i18n="ark.Country_of_origin_reasoning"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="alkuperamaanperustelu" ng-maxlength="255"
+                    ng-model="vm.kohde.properties.alkuperamaanperustelu" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        -->
+        <div class="form-group">
+            <label for="vaatii_tarkastusta" class="col-sm-3 control-label"> <span
+                i18n="ark.Examination_required"></span>
+            </label>
+            <div class="col-sm-9">
+                <select class="form-control"
+                	ng-change="vm.tyhjennaMuistiinpano()" 
+                	ng-model="vm.kohde.properties.vaatii_tarkastusta"
+                    ng-options="tf.value as tf.label for tf in vm.noYes"
+                    name="vaatii_tarkastusta">
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="vm.kohde.properties.vaatii_tarkastusta == true">
+            <label for="tarkastus_muistiinpano" class="col-sm-3 control-label">
+                <span i18n="common.Notes"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="tarkastus_muistiinpano" rows="3"
+                    ng-model="vm.kohde.properties.tarkastus_muistiinpano" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>                        
+    </div>
+</div>

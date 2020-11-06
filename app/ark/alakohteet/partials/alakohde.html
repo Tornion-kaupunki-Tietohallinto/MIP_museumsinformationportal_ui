@@ -1,0 +1,62 @@
+
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="ark.Subtarget"></span>
+                    {{vm.alakohde.nimi}}
+                </h4>
+                
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="form"
+                    ng-class="{'form-horizontal-tight':!vm.edit}" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <!-- Kiinteistön tiedot -->
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/alakohteet/partials/perustiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/alakohteet/partials/perustiedot_edit.html'"></div>                            
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/alakohteet/partials/muokkaustiedot_view.html'"></div>                         
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <!-- RIGHT COLUMN -->
+                            <div class="col-md-12" ng-if="vm.showMap"
+                                ng-include="'ark/alakohteet/partials/sijainti.html'"></div>                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">                
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+                        <span i18n="common.Actions"></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">                                                
+                        <li><a href="" ng-click="vm.close()"
+                               i18n="common.Cancel" 
+                               ng-show="vm.create"></a>
+                        </li>
+                        <li ng-class="{ 'disabled' : vm.disableButtons }">
+                            <a href="" ng-click="vm.disableButtons || vm.cancelEdit()"
+                               i18n="common.Cancel_edit" 
+                               ng-show="vm.edit && !vm.create"></a>
+                        </li>
+                        
+                        <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus"></li>                        
+                        <li ng-class="{ disabled: form.$invalid }">
+                        <a href="" ng-click="(form.$invalid || vm.save())" class="bg-success"
+                               i18n="common.Save" 
+                               ng-show="vm.edit"></a>
+                        </li>
+                        
+                    </ul>                                       
+                </div>
+            </div>
+        </div>
+        <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

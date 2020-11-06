@@ -1,0 +1,7 @@
+{{headerInfo.action_tstamp_tx | pvm:'dd.MM.yyyy HH:mm:ss'}} 
+:                        
+<span i18n="common.Addition" ng-if="headerInfo.action=='I'"></span>
+<span i18n="common.Updation" ng-if="headerInfo.action=='U'"></span>
+<span i18n="common.Deletion" ng-if="headerInfo.action=='D'"></span>
+:
+{{headerInfo.etunimi}} {{headerInfo.sukunimi}}

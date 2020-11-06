@@ -1,0 +1,199 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#loydonTiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Basic_information"></span>
+            <span ng-if="vm.vaihdaNumero || vm.loydonLisays"> :</span> 
+            <span ng-if="vm.vaihdaNumero" i18n="ark.Change_list_number"></span>
+            <span ng-if="vm.loydonLisays">{{vm.loyto.properties.yksikko.yksikkotunnus}}</span>  <span ng-if="vm.loydonLisays" i18n="unit.Add_discovery"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="loydonTiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+    	<div class="panel-body" ng-if="vm.vaihdaNumero">
+			<div class="form-group" ng-class="{ 'has-error': form.yksikkotunnus.$invalid && !vm.yksikkoLoytyy}"
+				ng-if="vm.yksikko">
+			    <label for="yksikko" class="col-sm-4 control-label">
+			        <span i18n="common.Unit"></span> *
+			    </label>
+			    <div class="col-sm-8">
+					<input type="text" class="form-control" 
+						name="yksikkotunnus"
+						ng-change="vm.tarkistaYksikko(form)" 
+						ng-model="vm.yksikko.yksikkotunnus" 
+						ng-model-options='{debounce: 300}'
+						spellcheck="false" 
+						autocomplete="off"
+						focus-me="focusInput2">
+		                <span class="help-block" ng-show="form.yksikkotunnus.$invalid && !vm.yksikkoLoytyy">
+		                    <span data-i18n="unit.Unit_check_failed"></span>
+		                </span>								        
+			    </div>
+			</div>
+			<div class="form-group" ng-class="{ 'has-error': form.tutkimusalue.$invalid && !vm.tutkimusalueLoytyy}"
+				ng-if="!vm.yksikko">
+			    <label for="tutkimusalue" class="col-sm-4 control-label">
+			        <span i18n="ark.Research_area"></span> *
+			    </label>
+			    <div class="col-sm-8">
+					<input type="text" class="form-control" 
+						name="tutkimusalue"
+						ng-change="vm.tarkistaTutkimusalue(form)" 
+						ng-model="vm.tutkimusalue.nimi" 
+						ng-model-options='{debounce: 300}'
+						spellcheck="false" 
+						autocomplete="off"
+						focus-me="focusInput2">
+		                <span class="help-block" ng-show="form.tutkimusalue.$invalid && !vm.tutkimusalueLoytyy">
+		                    <span data-i18n="ark.Unknown_research_area"></span>
+		                </span>								        
+			    </div>
+			</div>			
+			<mip-materiaalikoodi materiaalikoodi="vm.loyto.properties.materiaalikoodi" vm="vm"></mip-materiaalikoodi>
+			<div class="form-group">
+			    <label for="ensisijainen" class="col-sm-4 control-label">
+			        <span i18n="ark.Primary_material"></span> *
+			    </label>
+			    <div class="col-sm-8">
+			        <select class="form-control" 
+			        	name="ensisijainen" 
+			        	ng-model="vm.loyto.properties.ensisijainen_materiaali" 
+			        	ng-required="true"
+			            ng-options="materiaali as materiaali.nimi_fi for materiaali in vm.ensisijaisetMateriaalit track by materiaali.id">
+			        </select>
+			    </div>
+			</div>			
+			<div class="form-group" ng-class="{ 'has-error': form.luettelointinumero_kuvaus.$invalid && form.luettelointinumero_kuvaus.$touched}">
+	            <label for="kuvaus" class="col-sm-4 control-label">
+	                <span i18n="ark.Event_description"></span> *
+	            </label>
+	            <div class="col-sm-8">
+	                <textarea rows="3" class="form-control" 
+	                	name="luettelointinumero_kuvaus"
+	                	ng-required="true"
+	                    ng-model="vm.loyto.properties.luettelointinumero_kuvaus">
+	                </textarea>
+	                <span class="help-block" ng-show="form.luettelointinumero_kuvaus.$invalid && form.luettelointinumero_kuvaus.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Event_description' | i18n }}"></span>
+	                </span>		                
+	            </div>				
+			</div>
+			<div class="row">&nbsp;</div>
+		    <div class="form-group">
+		        <div class="col-sm-12">
+		            <button type="button" ng-click="vm.peruutaLuettelointinumeronVaihto()"
+		                class="btn btn-default pull-right" style="margin-left : 5px">
+		                <span i18n="common.Cancel"></span>
+		            </button>
+		            <button type="button" ng-click="(form.$invalid || vm.tallennaLuettelointinumero())"
+		             class="btn btn-success pull-right" ng-class="{ disabled: form.$invalid}">
+		                <span i18n="common.Save"></span>
+		            </button>
+		        </div>
+		    </div>
+    	</div>
+		<div ng-if="vm.loydonLisays">
+			<mip-materiaalikoodi materiaalikoodi="vm.uusiLoyto.properties.materiaalikoodi" focus-input="focusInput3"></mip-materiaalikoodi>			
+			<div class="row">&nbsp;</div>
+		    <div class="form-group">
+		        <div class="col-sm-12">
+		            <button type="button" ng-click="vm.peruutaLoydonLisays()"
+		                class="btn btn-default pull-right" style="margin-left : 5px">
+		                <span i18n="common.Cancel"></span>
+		            </button>
+		            <button type="button" ng-click="vm.tallennaLoytoYksikolle()"
+		             class="btn btn-success pull-right" ng-class="{ disabled: form.$invalid}">
+		                <span i18n="common.Save"></span>
+		            </button>
+		        </div>
+		    </div>
+	    </div>    	
+    	<!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.vaihdaNumero && !vm.loydonLisays">
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Research_name"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	<a class="link" ng-click="vm.avaaTutkimus()">{{vm.tutkimus.nimi}}</a>
+	                </p>
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Research_area"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	<a class="link" ng-click="vm.avaaTutkimusalue()">{{vm.tutkimusalue.nimi}}</a>
+	                </p>
+	            </div>    
+	        </div>	             
+	        <div class="form-group" ng-if="vm.yksikko">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="unit.Unit_identifier"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	<a class="link" ng-click="vm.avaaYksikko()">{{vm.yksikko.yksikkotunnus}}</a>
+	                </p>	                
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.materiaalikoodi">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Material_code"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.materiaalikoodi.koodi}} {{vm.loyto.properties.materiaalikoodi | namei18n}}</p>
+	            </div>    
+	        </div>        
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Listing_number"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.luettelointinumero}}
+	                <button type="button" class="collapsed pull-right fa fa-ellipsis-h btn btn-sm btn-default" ng-show="vm.loyto.properties.luettelointinrohistoria.length > 0" data-toggle="collapse" data-target="#lnrohistoria{{vm.modalId}}" title="Näytä vanhat luettelointinumerot"></button></p> 
+	                <div id="lnrohistoria{{vm.modalId}}" class="collapse list-group">
+	                   <p class="form-control-static" ng-repeat="historia in vm.loyto.properties.luettelointinrohistoria" title="{{historia.luotu | pvm:'dd.MM.yyyy HH:mm'}} {{historia.luoja.etunimi}} {{historia.luoja.sukunimi}} {{historia.loyto_tapahtuma.kuvaus}}">
+	                       {{historia.luettelointinumero_vanha}} <span class="fa fa-arrow-right"></span> {{historia.luettelointinumero_uusi}}
+	                   </p>
+	                </div>
+	            </div>    
+			</div>
+			<div class="form-group" ng-if="!vm.edit && vm.loyto.properties.kenttanumero_vanha_tyonumero">
+				<label for="kenttanumero_vanha_tyonumero" class="col-sm-4 control-label">
+					<span i18n="ark.Field_number_former_work_number"></span> 
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static">
+						{{vm.loyto.properties.kenttanumero_vanha_tyonumero}}
+					</p>
+				</div>
+	        </div>
+            <div class="form-group" ng-if="vm.edit">
+                <label for="kenttanumero_vanha_tyonumero" class="col-sm-4 control-label">
+                    <span i18n="ark.Field_number_former_work_number"></span> 
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="kenttanumero_vanha_tyonumero"
+                            ng-model="vm.loyto.properties.kenttanumero_vanha_tyonumero"
+                            spellcheck="false" autocomplete="off">
+                </div>
+            </div>  
+	        <div class="form-group" ng-if="vm.rontgenkuvat.length > 0">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.XRay_images"></span> 
+                </label>
+                <div class="col-sm-8">
+                    <span class="form-control-static" ng-if="vm.konservointi_oikeus" ng-repeat="rk in vm.rontgenkuvat">
+                        <a class="link" ng-click="vm.avaaRontgenkuva(rk)">{{rk.properties.numero}}</a><span ng-if="!$last">, </span>
+                    </span>
+                    <span class="form-control-static" ng-if="!vm.konservointi_oikeus" ng-repeat="rk in vm.rontgenkuvat">
+                    	{{rk.properties.numero}} <span ng-if="!$last">, </span>
+                    </span>                    
+                </div>    
+            </div> 
+	    </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<ui-select 
+    ng-model="ktModel.kohdetyypit"
+    multiple="true"
+    ng-required="false">
+    <ui-select-match data-i18n-attr="{placeholder: 'common.Type'}">{{$item | namei18n}}</ui-select-match>
+    <ui-select-choices repeat="tyyppi.id as tyyppi in kohdetyypit | filter: {'nimi_fi': $select.search}">
+        <div ng-bind-html="tyyppi | namei18n | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

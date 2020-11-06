@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label for="menetelma" class="col-sm-4 control-label">
+        <span i18n="ark.Method"></span>
+    </label>
+    <div class="col-sm-8">
+		<ui-select class="ng-animate-disabled" theme="bootstrap" name="menetelma" 
+			ng-change="vm.vaihdaMenetelmanKuvaus(menetelma.menetelma)"
+			ng-model="menetelma.menetelma"> 
+		    <ui-select-match  data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected.nimi}}</ui-select-match> 
+		    <ui-select-choices repeat="menetelma in menetelmat | filter: $select.search track by menetelma.id">
+		       <span ng-bind-html="menetelma.nimi | highlight: $select.search"></span>
+			</ui-select-choices> 
+		</ui-select>        
+    </div>
+</div>

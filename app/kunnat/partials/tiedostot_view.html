@@ -1,0 +1,28 @@
+<!-- Tiedostot - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tiedostotPanel1">
+        <h4 class="panel-title">
+            <span i18n="common.Files"></span> 
+            <lukumaara ng-show="kpl_maara" arvo="kpl_maara"></lukumaara>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="tiedostotPanel1" class="panel-body panel-collapse collapse in">
+        <ul class="list-group" data-ng-model="files">
+            <li class="list-group-item clearfix" data-ng-repeat="file in files">
+                <h4 class="list-group-item-heading">{{file.properties.otsikko}}</h4>
+                <p>
+                    <a class="link" target="_blank" href="{{file.properties.url}}">
+                        {{file.properties.alkuperainen_nimi}} </a>
+                </p>
+                <span ng-if="file.properties.kuvaus && file.properties.kuvaus.length>0"
+                    class="mip-multiline">{{file.properties.kuvaus}}</span>
+                <span ng-if="!file.properties.kuvaus || file.properties.kuvaus.length==0">
+                    <span class="no-data" data-i18n="common.No_description"></span>
+                </span>
+                <button class="btn btn-default pull-right" ng-click="openFile(file)"><span class="fa fa-info "></span>                    
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

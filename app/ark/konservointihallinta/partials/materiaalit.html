@@ -1,0 +1,128 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#materiaalitPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Materials"></span> :
+            <span i18n="common.Results"></span> : {{vm.materiaalitTable.total()}}
+            <span i18n="common.Shown"></span> : {{vm.searchResults}}
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="materiaalitPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                	<span data-i18n-attr="{title: 'common.Clear_filter'}">
+				        <button type="button" class="btn btn-default" 
+				        	ng-if="vm.oikeus"
+				        	ng-click="vm.tyhjennaHaku('materiaali')"
+							ng-disabled="vm.editMateriaali !== null">
+				            <span class="fa fa-ban"></span>
+				        </button>
+			        </span>                
+		            <span data-i18n-attr="{title: 'ark.Add_material'}">
+			            <button type="button"
+			            	ng-if="vm.oikeus" 
+			            	ng-click="vm.lisaaMateriaali()"
+			            	ng-disabled="vm.editMateriaali !== null"
+			             	class="btn btn-success">
+			                <span class="fa fa-plus"></span>
+			            </button>
+		            </span>                                                   
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="materiaaliNimi"
+                            ng-model="vm.materiaalitTable.filter().properties.nimi"
+                            data-i18n-attr="{placeholder: 'common.Name'}" spellcheck="false" autocomplete="off">                                        
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="materiaaliKaava"
+                            ng-model="vm.materiaalitTable.filter().properties.kemiallinen_kaava"
+                            data-i18n-attr="{placeholder: 'ark.Chemical_formula'}" spellcheck="false" autocomplete="off">                                        
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="muutNimet"
+                            ng-model="vm.materiaalitTable.filter().properties.muut_nimet"
+                            data-i18n-attr="{placeholder: 'ark.Other_names'}" spellcheck="false" autocomplete="off">                                        
+                    </div>                                                                        
+                </div>                      
+            </div>
+            <div>&nbsp;</div>	    
+			<table ng-table="vm.materiaalitTable" template-pagination="pages/templates/table-pagination.html" class="table table-striped table-bordered" show-filter="false">
+				<tr ng-repeat="materiaali in $data | orderBy: 'nimi'">
+					<td data-title="vm.getColumnName('Name', 'common')" sortable="'properties.nimi'" style="width:20%">
+						<span ng-show="vm.editMateriaali === null || vm.editMateriaali.properties.id !== materiaali.properties.id">{{materiaali.properties.nimi}}</span>
+                        <span ng-show="vm.editMateriaali !== null && vm.editMateriaali.properties.id === materiaali.properties.id">
+                            <input type="text" class="form-control" name="materiaaliNimi"
+                            	ng-change="vm.tarkistaUniikkiMateriaali(form)"
+                            	ng-model-options='{debounce: 300}'
+                            	ng-model="vm.editMateriaali.properties.nimi"
+                            	data-i18n-attr="{placeholder: 'common.Name'}" spellcheck="false" autocomplete="off">
+			                <span class="help-block" ng-show="!vm.uniikkiMateriaali">
+			                    <span class="text-danger" data-i18n="common.already_in_use" data-field="{{ 'common.Name' | i18n }}"></span>
+			                </span>                            	
+                        </span>						
+					</td>
+					<td data-title="vm.getColumnName('Chemical_formula', 'ark')" style="width:20%">
+						<span ng-show="vm.editMateriaali === null || vm.editMateriaali.properties.id !== materiaali.properties.id">{{materiaali.properties.kemiallinen_kaava}}</span>
+                        <span ng-show="vm.editMateriaali !== null && vm.editMateriaali.properties.id === materiaali.properties.id">
+                            <input type="text" class="form-control" name="materiaaliKaava"
+                            	ng-model="vm.editMateriaali.properties.kemiallinen_kaava"
+                            data-i18n-attr="{placeholder: 'ark.Chemical_formula'}" spellcheck="false" autocomplete="off">
+                        </span>											
+					</td>
+					<td data-title="vm.getColumnName('Other_names', 'ark')" style="width:20%">
+						<span ng-show="vm.editMateriaali === null || vm.editMateriaali.properties.id !== materiaali.properties.id">{{materiaali.properties.muut_nimet}}</span>
+                        <span ng-show="vm.editMateriaali !== null && vm.editMateriaali.properties.id === materiaali.properties.id">
+                            <input type="text" class="form-control" name="materiaaliMuutNimet"
+                            	ng-model="vm.editMateriaali.properties.muut_nimet"
+                            data-i18n-attr="{placeholder: 'ark.Other_names'}" spellcheck="false" autocomplete="off">
+                        </span>					
+					</td>
+					<td data-title="vm.getColumnName('Additional_information', 'common')" style="width:20%">
+						<span ng-show="vm.editMateriaali === null || vm.editMateriaali.properties.id !== materiaali.properties.id">{{materiaali.properties.lisatiedot}}</span>
+                        <span ng-show="vm.editMateriaali !== null && vm.editMateriaali.properties.id === materiaali.properties.id">
+                            <input type="text" class="form-control" name="materiaaliLisatiedot"
+                            	ng-model="vm.editMateriaali.properties.lisatiedot"
+                            data-i18n-attr="{placeholder: 'common.Additional_information'}" spellcheck="false" autocomplete="off">
+                        </span>					
+					</td>
+					<td data-title="vm.getColumnName('Active', 'common')" style="width:10%">
+						<span ng-show="vm.editMateriaali === null || vm.editMateriaali.properties.id !== materiaali.properties.id">{{materiaali.properties.aktiivinen | trueFalseToText}}</span>
+                        <span ng-show="vm.editMateriaali !== null && vm.editMateriaali.properties.id === materiaali.properties.id">
+							<select class="form-control"
+								name="materiaali_aktiivinen"
+								ng-model="vm.editMateriaali.properties.aktiivinen"
+								ng-options="option.value as option.label for option in vm.kyllaEi"
+								ng-required="true">
+							</select>
+                        </span>					
+					</td>					
+					<td data-title="vm.getColumnName('Actions', 'common')" style="width:10%">
+                        <button type="button" class="btn btn-sm mip-transparent" data-i18n-attr="{title: 'common.Edit'}" 
+                        	ng-show="materiaali.properties.id && vm.editMateriaali === null"
+                        	ng-click="vm.muokkaaMateriaali(materiaali)">
+                                <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                        </button>
+<!-- US9754             <button type="button" class="btn btn-sm btn-danger" data-i18n-attr="{title: 'common.Delete'}" 
+                        	ng-show="materiaali.properties.id && vm.editMateriaali === null" 
+                        	ng-click="vm.poistaMateriaali(materiaali)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button> -->
+                        <button type="button" class="btn btn-sm btn-success" data-i18n-attr="{title: 'common.Save'}"
+                        	ng-disabled="!vm.uniikkiMateriaali" 
+                        	ng-show="vm.editMateriaali && vm.editMateriaali.properties.id === materiaali.properties.id" 
+                        	ng-click="vm.tallennaMateriaali(materiaali)">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm" data-i18n-attr="{title: 'common.Cancel'}" 
+                        	ng-show="vm.editMateriaali && vm.editMateriaali.properties.id === materiaali.properties.id" 
+                        	ng-click="vm.peruutaMateriaali(materiaali)">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>                         	                        						
+					</td>
+				</tr>
+			</table>
+	    </div>
+    </div>
+</div>

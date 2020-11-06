@@ -1,0 +1,62 @@
+
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="ark.Treatment" ng-if="!vm.create"></span>
+                    <span i18n="ark.Add_treatment" ng-if="vm.create"></span> 
+                    <span ng-if="!vm.create"> : {{vm.kasittely.properties.kasittelytunnus}}</span>
+                </h4>                
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="form" ng-class="{'form-horizontal-tight':!vm.edit}" novalidate>
+                    <div class="row">
+                    	<div class="col-md-12" ng-include="'ark/kasittelyt/partials/perustiedot.html'"></div>
+                    	<div class="col-md-12" ng-include="'ark/kasittelyt/partials/kasittelytapahtumat.html'" ng-show="!vm.edit"></div>
+                    	<div class="col-md-12" ng-include="'ark/kasittelyt/partials/kasittely_loydot_naytteet.html'" ng-show="!vm.edit"></div>
+                    	<div class="col-md-12" ng-include="'ark/kasittelyt/partials/tiedostot_view.html'"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <div class="pull-left" mip-entiteettiselain etype="'toimenpide'" eid="vm.toimenpide.properties.id" close="vm.close()" ng-show="!vm.edit && !vm.disableButtons"></div> -->
+                <div class="mip-footer-btn-group">
+					<button type="button"
+						class="btn btn-default"
+					    ng-class="{ disabled: form.$invalid || vm.editTapahtuma !== null}"
+					    ng-if="vm.permissions.muokkaus && !vm.edit" 
+					    ng-click="(form.$invalid || vm.editTapahtuma !== null || vm.editMode())">
+					    <span i18n="common.Edit"></span>
+					</button>	                
+					<button type="button"
+						class="btn btn-success"
+					    ng-class="{ disabled: form.$invalid}"
+					    ng-if="vm.permissions.muokkaus && vm.edit" 
+					    ng-click="(form.$invalid || vm.save(form))">
+					    <span i18n="common.Save"></span>
+					</button>
+	                <div class="dropup">
+	                    <button class="btn btn-default dropdown-toggle" ng-class="{ 'disabled' : vm.editTapahtuma !== null }" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+	                        <span i18n="common.Actions"></span> <span class="caret"></span>
+	                    </button>
+	                    <ul class="dropdown-menu dropdown-menu-right">
+	                        <li><a href="" ng-click="vm.lisaaTiedosto()" 
+                                   i18n="common.Add_file" ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons"></a>
+                            </li>
+                            <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.create"></li>
+	                        <li>
+	                        	<a href="" ng-click="vm.close()" i18n="common.Close" ng-show="!vm.edit"></a>
+	                        </li>
+	                        <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.edit"></li>
+	                        <li ng-class="{ 'disabled' : vm.disableButtons }"><a href="" ng-click="vm.disableButtons || vm.cancelEdit()"
+	                               i18n="common.Cancel_edit" 
+	                               ng-show="vm.edit && !vm.create"></a>
+	                        </li>
+	                    </ul>                                       
+	                </div>					
+				</div>
+            </div>
+        </div>
+        <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

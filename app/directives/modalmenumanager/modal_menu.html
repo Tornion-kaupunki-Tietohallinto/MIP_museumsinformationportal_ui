@@ -1,0 +1,26 @@
+
+<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-window-restore" aria-hidden="true"></i>
+</a>
+<ul class="dropdown-menu mip-menu-fixed-width">
+    <li ng-repeat="modal in _modals track by $index" class="mip-li-fixed-heigth">
+      <a ng-click="showSelectedModal(modal)" ng-attr-id="{{modal.$id}}" class="mip-text-overflow dropdown-submenu pull-left mip-menu-row" style="width : 90%">
+          {{modal.$id | mipShortModalNameId}}
+      </a>
+	 	<span ng-click="close(modal.$id)"><i class="fa fa-window-close" aria-hidden="false" data-i18n-attr="{title: 'common.Close'}"></i></span>
+     </li>
+     <li role="separator" class="divider"></li>
+     <li data-ng-controller="NavbarController">
+     	<span class="mip-menu-item" >
+          <a ng-click="showAllModals()" class="btn btn-default mip-menu-button">
+             <span i18n="common.Show_all"></span>
+          </a>
+          <a ng-click="hideAllModals()" class="btn btn-default mip-menu-button">
+               <span i18n="common.Hide_all"></span>
+          </a>                                                                         
+          <a ng-click="closeModals()" class="btn btn-default mip-menu-button">
+              <span i18n="common.Close_all"></span>
+          </a>
+         </span>
+     </li>
+</ul>

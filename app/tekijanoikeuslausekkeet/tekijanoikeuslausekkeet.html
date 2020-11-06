@@ -1,0 +1,85 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default panel-collapsible table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> : {{lausekkeetTable.total()}} <span
+                                i18n="common.Shown"></span> : {{searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse form-horizontal collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="vm.refreshTable('tekijanoikeuslausekeCache', 'lausekkeetTable')"
+                                    ng-show="vm.editObj === null"
+                                    data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                    <span class="fa fa-refresh"></span>
+                                </button>   
+                                 <button type="button"
+                                    class="btn btn-success"
+                                    ng-show="vm.editObj === null"
+                                    id="btn-create" ng-click="vm.addLauseke()"
+                                    data-i18n-attr="{title: 'common.Add'}">
+                                    <span class="fa fa-plus"></span>
+                                </button>                                                                                                 
+                            </div><!-- 
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="lauseke"
+                                        ng-model="lausekkeetTable.filter().properties.lauseke"
+                                        data-i18n-attr="{placeholder: 'common.Copyright_clause'}" spellcheck="false" autocomplete="off">                                        
+                                </div>                                
+                            </div>       -->                      
+                        </div>
+                    </div>                   
+                    <table ng-table="vm.lausekkeetTable" class="table table-striped table-bordered"
+                        template-pagination="pages/templates/table-pagination.html"
+                        show-filter="false">
+                        <tr ng-repeat="l in $data">
+                            <td data-title="vm.getColumnName('Caption')"
+                                sortable="'properties.otsikko'"
+                                filter="{'properties.otsikko': 'text'}">
+                                <div ng-show="vm.editObj===null || vm.editObj.properties.id !== l.properties.id" class="mip-multiline">{{l.properties.otsikko}}</div>
+                                <div ng-show="vm.editObj !== null && vm.editObj.properties.id === l.properties.id">
+                                    <textarea class="form-control" style="min-height:50px;" rows="3" cols="2" ng-model="vm.editObj.properties.otsikko"></textarea>
+                                </div>                                
+                            </td>
+                            <td data-title="vm.getColumnName('Copyright_clause')"
+                                sortable="'properties.lauseke'"
+                                filter="{'properties.lauseke': 'text'}">
+                                <div ng-show="vm.editObj===null || vm.editObj.properties.id !== l.properties.id" class="mip-multiline">{{l.properties.lauseke}}</div>
+                                <div ng-show="vm.editObj !== null && vm.editObj.properties.id === l.properties.id">
+                                    <textarea class="form-control" style="min-height:50px;" rows="3" cols="2" ng-model="vm.editObj.properties.lauseke"></textarea>
+                                </div>                                
+                            </td>
+                            <td data-title="vm.getColumnName('Side')"
+                                sortable="'properties.osio'"
+                                filter="{'properties.osio': 'text'}">
+                                <div ng-show="vm.editObj===null || vm.editObj.properties.id !== l.properties.id" style="text-transform: capitalize">{{l.properties.osio}} <span ng-show="l.properties.osio === ''" i18n="common.Common"></span></div>
+                                <div ng-show="vm.editObj !== null && vm.editObj.properties.id === l.properties.id">
+                                    <select class="form-control" ng-model="vm.editObj.properties.osio" ng-options="o.value as o.label for o in vm.osiot">
+                                    </select>
+                                </div>                                
+                                </td>
+                            <td data-title="vm.getColumnName('Actions')">
+                                <button class="btn btn-default" ng-click="vm.editLauseke(l)" ng-show="l.properties.id && vm.editObj === null">Muokkaa</button>
+                                <button class="btn btn-danger" ng-click="vm.deleteLauseke(l)" ng-show="l.properties.id && vm.editObj === null">Poista</button>
+                                <button class="btn btn-success" ng-click="vm.saveLauseke(l)" ng-show="vm.editObj && vm.editObj.properties.id === l.properties.id" ng-disabled="vm.editObj.properties.osio === null || vm.editObj.properties.lauseke.length === 0 || vm.editObj.properties.otsikko.length === 0">Tallenna</button>
+                                <button class="btn btn-default" ng-click="vm.cancelEdit(l)" ng-show="vm.editObj && vm.editObj.properties.id === l.properties.id">Peruuta</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

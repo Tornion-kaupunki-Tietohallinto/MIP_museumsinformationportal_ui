@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body" ng-if="!vm.edit && !vm.create">
+        <div class="form-group" ng-if="vm.yksikko.properties.tutkimusalue">
+            <label class="col-sm-4 control-label">
+                <span i18n="ark.Research_area"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tutkimusalue.nimi}}</p>
+            </div>
+        </div>   
+    </div>
+</div>

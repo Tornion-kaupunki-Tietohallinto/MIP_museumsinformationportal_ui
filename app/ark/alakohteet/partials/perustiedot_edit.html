@@ -1,0 +1,37 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group" ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$touched }">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="common.Name"></span> *
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}" 
+                    ng-maxlength="100"
+                    ng-required="true"
+                    ng-model="vm.alakohde.nimi" spellcheck="false" autocomplete="off">
+	                <span class="help-block" ng-show="form.nimi.$invalid && form.nimi.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+	                </span>                    
+            </div>
+        </div>
+        <mip-kohdetyyppi valituttyypit="vm.alakohde.tyypit" tyyppirequired="false"
+            tarkenninrequired="false" single="true"></mip-kohdetyyppi>
+        <mip-ajoitus valitutajoitukset="vm.alakohde.ajoitukset" ajoitusrequired="false"
+            tarkenninrequired="false"></mip-ajoitus>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.kuvaus.$invalid && form.kuvaus.$touched }">
+            <label for="kuvaus" class="col-sm-3 control-label" i18n="common.Description"></label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="kuvaus" ng-maxlength="5000"
+                    ng-model="vm.alakohde.kuvaus"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

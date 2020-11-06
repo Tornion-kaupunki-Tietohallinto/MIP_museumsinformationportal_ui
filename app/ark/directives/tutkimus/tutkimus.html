@@ -1,0 +1,10 @@
+<ui-select 
+    ng-model="tModel.ark_tutkimus_id"
+    ng-required="false"> 
+    <ui-select-match allow-clear="true" data-i18n-attr="{placeholder: 'common.Research'}">{{$select.selected.nimi}}</ui-select-match>
+    <ui-select-choices 
+        repeat="tutkimus.id as tutkimus in tutkimukset | filter: {'nimi': $select.search}"
+        refresh="tutkimusHaku($select.search)">
+        <div ng-bind-html="tutkimus.nimi | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

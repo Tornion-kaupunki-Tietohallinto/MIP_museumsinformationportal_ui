@@ -1,0 +1,30 @@
+<div class="form-group" ng-if="paasekoite">
+    <label for="paasekoite" class="col-sm-4 control-label">
+        <span i18n="unit.Main_mixture"></span> 
+    </label>
+    <div class="col-sm-8">
+		<ui-select multiple="true" ng-model="maalajiModel.paasekoitteet" theme="bootstrap" name="paasekoite"> 
+            <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> 
+            <ui-select-choices repeat="maalaji in maalajit |  propsFilter: {nimi_fi: $select.search}">
+	          <div>
+	              <span ng-bind-html="maalaji | namei18n | highlight: $select.search"></span>
+	          </div>
+        	</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>
+<div class="form-group" ng-if="!paasekoite">
+    <label for="muumaalaji" class="col-sm-4 control-label">
+        <span i18n="unit.Layer_contain_also"></span> 
+    </label>
+    <div class="col-sm-8">
+		<ui-select multiple="true" ng-model="maalajiModel.muut_maalajit" theme="bootstrap" name="muumaalaji"> 
+            <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> 
+            <ui-select-choices repeat="maalaji in maalajit |  propsFilter: {nimi_fi: $select.search}">
+	          <div>
+	              <span ng-bind-html="maalaji | namei18n | highlight: $select.search"></span>
+	          </div>
+        	</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>

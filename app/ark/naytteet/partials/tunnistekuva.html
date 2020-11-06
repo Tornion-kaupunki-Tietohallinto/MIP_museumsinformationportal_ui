@@ -1,0 +1,24 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tunnistekuvaPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Identification_image"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="tunnistekuvaPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body">
+	        <div class="col-sm-12">
+                 <img ng-if="vm.tunnistekuva.properties.url_small" class="img-responsive mip-image-thumbnail"
+                     ng-src="{{vm.tunnistekuva.properties.url_tiny}}" alt="{{vm.tunnistekuva.properties.otsikko}}"
+                     ng-click="vm.openImage(vm.tunnistekuva, [vm.tunnistekuva])"> 
+                 <img
+                     ng-if="vm.tunnistekuva.properties.url_small==''"  class="img-responsive mip-image-thumbnail"
+                     ng-src="/resources/images/kuva_placeholder.png" alt="..."
+                     ng-click="vm.openImage(vm.tunnistekuva, [])">
+             </div>
+             <div class="col-md-12 text-center mip-image-caption">
+                 <span title="{{vm.tunnistekuva.properties.luettelointinumero}}">{{vm.tunnistekuva.properties.otsikko}} </span>                                
+             </div>             
+	    </div>
+    </div>
+</div>

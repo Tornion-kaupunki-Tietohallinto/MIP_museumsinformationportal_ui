@@ -1,0 +1,8 @@
+{
+	"Role_watcher" : "Katselija",
+	"Role_inventory_auditor" : "Inventoija",
+	"Role_researcher" : "Tutkija",
+	"Role_outside_researcher" : "Ulkopuolinen tutkija",
+	"Role_admin" : "Ylläpitäjä",
+	"Role_is_mandatory_field": "Rooli on pakollinen tieto"
+}

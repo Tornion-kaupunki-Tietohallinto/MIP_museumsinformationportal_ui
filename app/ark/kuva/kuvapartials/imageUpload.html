@@ -1,0 +1,285 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Select_images"></span> - 
+                    <span data-ng-if="objectType=='loyto'"><span i18n='ark.Discovery'></span> {{relatedObject.properties.luettelointinumero}}</span>
+                    <span data-ng-if="objectType=='yksikko'"><span i18n='common.Unit'></span> {{relatedObject.properties.yksikkotunnus}}</span>
+                    <span data-ng-if="objectType=='tutkimus'"><span i18n='common.Research'></span> {{relatedObject.properties.nimi}}</span>
+                    </h4>
+            </div>
+            <div class="modal-body">
+                <form name="myForm" class="form-horizontal" novalidate>
+	                <div class="row">
+		                <div class="col-md-12">
+			                <label class="col-md-12 control-label">
+	                            <span i18n="ark.Select_copyright_clause_for_all" class="pull-left"></span><span class="pull-left"></span>
+	                        </label>
+                            <div class="col-md-12">
+                                <mip-tekijanoikeuslausekevalitsin valittulauseketeksti="tekijanoikeuslauseke" dis="false" osio="'arkeologia'"></mip-tekijanoikeuslausekevalitsin>
+                            </div>		                
+		                </div>
+	                </div>
+                    <div class="row" ng-repeat="file in files"
+                        ng-class="{alert: file.properties.id != null, 'alert-success': file.properties.id != null, alert:file.status == 'loading', 'alert-warning': file.status == 'loading', alert: file.status == 'failure', 'alert-danger': file.status == 'failure'}"
+                        style="border: 1px solid #ddd; border-radius:4px; margin: 15px;">
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-12">
+                                    <button class="fa fa-info btn btn-primary"
+                                        style="margin-top: 0.5em; width: 2.75em;" aria-hidden="true"
+                                        trigger="hover click" placement="right" container="#myModalDialog{{modalId}}"
+                                        ng-click="showPopover(file)"
+                                        title="{{showPopover(file).title}}" html="true"
+                                        data-content="{{showPopover(file).content}}"
+                                        data-trigger="click" auto-close="true" bs-popover></button>
+                                    <button class="btn btn-danger fa fa-trash"
+                                        style="margin-top: 0.5em; width: 2.75em;"
+                                        ng-disabled="uploading || disableButtons"
+                                        data-i18n-attr="{title: 'common.Delete'}"
+                                        ng-click="remove($index, false)"></button>
+                                </div>
+                                <div class="col-md-9 col-sm-12">
+                                    <div style="width: 100%;">
+                                        <img ng-src="{{file.properties.url_small}}"
+                                            class="img-responsive"
+                                            style="margin: 0 auto; vertical-align: middle; margin-top: 0.5em;"
+                                            title="{{file.name}}" imageonload="setDate(file)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 col-xs-12" ng-if="luetteloi === true">
+                                    <div class="form-group"
+                                        ng-class="{ 'has-error': myForm.luettelointinumero_{{$index}}.$invalid && myForm.luettelointinumero_{{$index}}.$touched }">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="ark.Listing_number" class="pull-left"></span><span class="pull-left">*</span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="luettelointinumero_{{$index}}"
+                                                ng-model="file.properties.luettelointinumero"
+                                                ng-required="luetteloi === true"
+                                                ng-change="checkUniqueLuettelointinumero(file.properties.luettelointinumero, file.properties.id, 'luettelointinumero_{{$index}}')"
+                                                ng-disabled="file.status == 'loading'"
+                                                data-i18n-attr="{placeholder: 'ark.Listing_number'}">
+                                            <span class="help-block"
+			                                    ng-show="myForm.luettelointinumero_{{$index}}.$invalid">
+			                                    <span data-i18n="common.mandatory_value" 
+			                                        ng-show="!file.properties.luettelointinumero"
+			                                        data-field="{{ 'ark.Listing_number' | i18n }}"> </span>
+			                                    <span
+			                                        ng-show="myForm.luettelointinumero_{{$index}}.$error.kaytossa"> <span
+			                                        data-i18n="common.already_in_use"
+			                                        data-field="{{ 'ark.Listing_number' | i18n }}"></span>
+			                                    </span>
+			                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12" ng-if="objectType === 'kohde' || luetteloi === false">
+                                    <div class="form-group"
+                                        ng-class="{ 'has-error': myForm.otsikko_{{$index}}.$invalid && myForm.otsikko_{{$index}}.$touched }">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="common.Caption" class="pull-left"></span><span class="pull-left">*</span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="otsikko_{{$index}}"
+                                                ng-model="file.properties.otsikko"
+                                                ng-required="objectType === 'kohde' || luetteloi === false"
+                                                data-i18-attr="{placeholder: 'common.Caption'}"
+                                                ng-disabled="file.status == 'loading'">
+                                            <span class="help-block"
+                                                ng-show="myForm.otsikko_{{$index}}.$invalid">
+                                                <span data-i18n="common.mandatory_value" 
+                                                    ng-show="!file.properties.otsikko"
+                                                    data-field="{{ 'common.Caption' | i18n }}"> </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="common.Taken_by" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="kuvaaja_{{$index}}"
+                                                ng-model="file.properties.kuvaaja"
+                                                data-i18-attr="{placeholder: 'common.Taken_by'}"
+                                                ng-disabled="file.status == 'loading'">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="ark.Shot_from_edit" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <select name="kuvaussuunta_{{$index}}" 
+	                                            ng-model="file.properties.kuvaussuunta" 
+	                                            class="form-control" 
+	                                            ng-disabled="file.status == 'loading'">
+									           <option ng-repeat="suunta in kuvaussuunnat track by $index" value="{{suunta}}">{{suunta}}</option>
+									        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12" ng-if="luetteloi === false && objectType === 'loyto'">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="ark.Conservation_phase" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <select name="konservointivaihe_{{$index}}" 
+                                                ng-model="file.properties.konservointivaihe_id" 
+                                                class="form-control" 
+                                                ng-change="updateOtsikko(file)"
+                                                ng-disabled="file.status == 'loading'">
+                                                <option value=""></option>
+                                                <option ng-repeat="opt in konservointivaiheet track by $index" value="{{opt.id}}">{{opt | namei18n}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12" ng-if="objectType === 'loyto' && luetteloi ===  false">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="ark.Identification_image" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <select name="tunnistekuva_{{$index}}" 
+                                                ng-model="file.properties.tunnistekuva" 
+                                                class="form-control" 
+                                                ng-change="updateTunnistekuva(file)"
+                                                ng-disabled="file.status == 'loading'"                                                
+                                                ng-options="option.value as option.label for option in noYes">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="common.Organization" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="organisaatio_{{$index}}"
+                                                ng-model="file.properties.organisaatio"
+                                                data-i18-attr="{placeholder: 'common.Organization'}"
+                                                ng-disabled="file.status == 'loading'">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                            <span i18n="common.Shoot_date_and_time"
+                                                class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-6"
+                                            style="padding-right: 0;">
+                                            <input bs-datepicker data-autoclose="1"
+                                                placement="bottom-left" start-week="1"
+                                                class="form-control" name="kuvauspvm_{{$index}}"
+                                                ng-model="file.properties.kuvauspvm"
+                                                data-date-format="dd.MM.yyyy"
+                                                ng-disabled="file.status == 'loading'"
+                                                type="text">
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6"
+                                            style="padding-left: 0;">
+                                            <input bs-timepicker class="form-control"
+                                                ng-model="file.properties.kuvauspvm"
+                                                data-time-format="HH:mm:ss" data-autoclose="1"
+                                                type="text"
+                                                ng-disabled="file.status == 'loading'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="row" ng-if="objectType !== 'kohde' && objectType !== 'tutkimus' && objectType !== 'tutkimusalue' && luetteloi === true"> 
+                                <div class="col-md-12 col-sm-12 col-xs-12">                                
+                                    <mip-yksikko-valitsin valitut-yksikot="file.properties.yksikot" entity-id="file.properties.id" mode="'kuva'" tutkimus-id="tutkimusId" dis="file.status == 'loading'"></mip-yksikko-valitsin>
+                                </div>    
+                                <div class="col-md-12 col-sm-12 col-xs-12">                                
+                                    <mip-loyto-valitsin valitut-loydot="file.properties.loydot" entity-id="file.properties.id" mode="'kuva'" tutkimus-id="tutkimusId" dis="file.status == 'loading'"></mip-loyto-valitsin>
+                                </div>
+                                 <div class="col-md-12 col-sm-12 col-xs-12">                                
+                                    <mip-nayte-valitsin valitut-naytteet="file.properties.naytteet" entity-id="file.properties.id" mode="'kuva'" tutkimus-id="tutkimusId" dis="file.status == 'loading'"></mip-nayte-valitsin>
+                                </div>
+                            </div>     
+                            <div class="row">
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <mip-asiasanavalitsin asiasanat="file.properties.asiasanat" dis="file.status == 'loading'"></mip-asiasanavalitsin>
+	                            </div>
+	                        </div>	  	                         
+                            <div class="row" ng-if="luetteloi === false">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="common.Additional_information" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <textarea rows="4" class="form-control" name="lisatiedot_{{$index}}"
+                                                ng-model="file.properties.lisatiedot"
+                                                data-i18n-attr="{placeholder: 'common.Additional_information'}"
+                                                ng-disabled="file.status == 'loading'"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                            
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label">
+                                            <span i18n="common.Description" class="pull-left"></span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <textarea rows="4" class="form-control" name="kuvaus_{{$index}}"
+                                                ng-model="file.properties.kuvaus"
+                                                data-i18n-attr="{placeholder: 'common.Description'}"
+                                                ng-disabled="file.status == 'loading'"></textarea>
+                                        </div>
+                                    </div>
+                                </div>   
+                                <div class="col-md-12">
+                                    <mip-tekijanoikeuslausekevalitsin valittulauseketeksti="file.properties.tekijanoikeuslauseke" dis="file.status == 'loading'" osio="'arkeologia'"></mip-tekijanoikeuslausekevalitsin>
+                                </div>                             
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="row alert alert-danger" ng-repeat="errorFile in errFiles"
+                        style="border: 1px solid #ddd; margin: 15px;">
+                        <div class="col-md-4">{{errorFile.name}}</div>
+                        <div class="col-md-8">
+                            {{errorMessage(errorFile.$error,errorFile.$errorParam)}}</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="upload" type="file"
+                    ngf-select="selectFiles($files, $invalidFiles)" name="file" multiple
+                    accept="image/*" ngf-max-size="MAX_IMAGE_SIZE"
+                    ng-disabled="uploading || disableButtons" i18n="common.Select_images"
+                    ng-class="{'btn-success': files.length == 0, 'btn-default': files.length > 0}"></button>
+                <button class="btn btn-primary" ng-click="save(modalNameId)"
+                    ng-disabled="disableButtons || uploading || myForm.$invalid || files.length <= 0 || uploadedImages <= 0"
+                    i18n="common.Save"></button>
+                <button type="button" class="btn btn-default" ng-click="close()"
+                    ng-disabled="disableButtons || uploading || uploadedImages > 0"
+                    i18n="common.Close"></button>
+            </div>
+        </div>
+    </div>

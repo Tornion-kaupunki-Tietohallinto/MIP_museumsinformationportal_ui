@@ -1,0 +1,8 @@
+{
+	"Role_watcher" : "Watcher",
+	"Role_inventory_auditor" : "Inventory auditor",
+	"Role_researcher" : "Researcher",
+	"Role_outside_researcher" : "Outside researcher",
+	"Role_admin" : "Administrator",
+	"Role_is_mandatory_field": "Role is mandatory field"
+}

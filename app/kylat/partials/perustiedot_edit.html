@@ -1,0 +1,76 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="kyla.Village_details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group"
+            ng-class="{ 'has-error': kylaForm.kylanumero.$invalid && kylaForm.kylanumero.$touched }">
+            <label for="kylanumero" class="col-sm-3 control-label">
+                <span i18n="common.Village_number"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="kylanumero"
+                    ng-model="kyla.properties.kylanumero" ng-required="true" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="kylaForm.kylanumero.$invalid && kylaForm.kylanumero.$touched"> <span
+                    data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Village_number' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kylaForm.nimi.$invalid && kylaForm.nimi.$touched }">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="common.Name"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}" ng-model="kyla.properties.nimi"
+                    ng-required="true" spellcheck="false" autocomplete="off">
+                <span class="help-block" ng-show="kylaForm.nimi.$invalid && kylaForm.nimi.$touched">
+                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nimi_se" class="col-sm-3 control-label">
+                <span i18n="common.Name_in_swedish"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi_se"
+                    ng-model="kyla.properties.nimi_se" ng-required="false" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kylaForm.kunta.$invalid && kylaForm.kunta.$touched }">
+            <label for="kunta" class="col-sm-3 control-label">
+                <span i18n="common.County"></span><span>*</span>
+            </label>
+            <div class="col-sm-9" ng-show="currentLocale === 'fi-FI'">
+                <select ng-model="kyla.properties.kunta_id"
+                    ng-options="kunta.properties.id as kunta.properties.nimi + ' (' + kunta.properties.kuntanumero +')' for kunta in kunnat.features"
+                    ng-change="kuntaChanged()" name="kunta" class="form-control" ng-required="true">
+                    <option value=""><span i18n="common.Select"></span></option>
+                </select>
+                <span class="help-block"
+                    ng-show="kylaForm.kunta.$invalid && kylaForm.kunta.$touched"> <span
+                    data-i18n="common.mandatory_value" data-field="{{ 'common.County' | i18n }}"></span>
+                </span>
+            </div>
+            <div class="col-sm-9" ng-show="currentLocale === 'sv-FI'">
+                <select ng-model="kyla.properties.kunta_id"
+                    ng-options="kunta.properties.id as kunta.properties.nimi_se + ' (' + kunta.properties.kuntanumero +')' for kunta in kunnat.features"
+                    ng-change="kuntaChanged()" name="kunta" class="form-control" ng-required="true">
+                    <option value=""><span i18n="common.Select"></span></option>
+                </select>
+                <span class="help-block"
+                    ng-show="kylaForm.kunta.$invalid && kylaForm.kunta.$touched"> <span
+                    data-i18n="common.mandatory_value" data-field="{{ 'common.County' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

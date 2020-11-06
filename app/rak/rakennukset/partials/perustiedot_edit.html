@@ -1,0 +1,801 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<span i18n="common.Common"></span>
+		</h4>
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label
+				for="kunta"
+				class="col-sm-3 control-label">
+				<span i18n="common.County"></span>
+			</label>
+			<div class="col-sm-9">
+                <p class="form-control-static">
+                    {{rakennus.properties.kiinteisto.kyla.kunta | kuntaKylaNamei18n}}
+                </p>
+            </div>
+		</div>
+		<div class="form-group">
+			<label
+				for="kyla"
+				class="col-sm-3 control-label">
+				<span i18n="common.Village"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+                    {{rakennus.properties.kiinteisto.kyla | kuntaKylaNamei18n}}
+                </p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="kiinteistotunnus"
+				class="col-sm-3 control-label">
+				<span i18n="common.Property_identifier"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+                    {{rakennus.properties.kiinteisto.kiinteistotunnus}} {{rakennus.properties.kiinteisto.nimi}}                    
+                </p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="osoitteet"
+				class="col-sm-3 control-label">
+				<span i18n="common.Addresses"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li
+						class="list-group-item"
+						ng-repeat="os in rakennus.properties.osoitteet">
+						<fieldset>
+							<div class="col-md-12">
+								<div
+									class="form-group"
+									ng-class="{'has-error': form.osoite_{{$index}}_katunimi.$invalid && form.osoite_{{$index}}_katunimi.$touched}">
+									<label class="control-label">
+										<span i18n="common.Street_address_and_number"></span>
+									</label>
+									<div class="row">
+										<div
+											class="col-xs-10"
+											style="padding-right: 0px;">
+											<input
+												class="form-control"
+												name="osoite_{{$index}}_katunimi"
+												data-i18n-attr="{placeholder: 'common.Street_address'}"
+												ng-model="os.katunimi"
+												ng-required="true" spellcheck="false" autocomplete="off"></input>
+										</div>
+										<div
+											class="col-xs-2"
+											style="padding-left: 5px;">
+											<input
+												class="form-control"
+												type="text"
+												name="osoite_{{$index}}_katunumero"
+												ng-model="os.katunumero" spellcheck="false" autocomplete="off"></input>
+										</div>
+									</div>
+									<span
+										class="help-block"
+										ng-show="form.osoite_{{$index}}_katunimi.$invalid && form.osoite_{{$index}}_katunimi.$touched">
+										<span
+										data-i18n="common.mandatory_value"
+										data-field="{{ 'common.Street_address' | i18n }}"></span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label
+										for="osoite_{{$index}}_jarjestysnumero"
+										class="control-label">
+										<span i18n="common.Ordering_number"></span>
+									</label>
+									<input
+										type="number"
+										class="form-control"
+										name="osoite_{{$index}}_jarjestysnumero"
+										ng-model="os.jarjestysnumero"
+										ng-required="false"
+										ng-readonly="false"
+										positiveinteger>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-6">
+									<label
+										for="osoite_{{$index}}_kieli"
+										class="control-label">
+										<span i18n="common.Language"></span>
+									</label>
+									<select
+										class="form-control"
+										name="osoite_{{$index}}_kieli"
+										ng-model="os.kieli">
+										<option
+											ng-repeat="option in languageOptions"
+											value="{{option.id}}">{{option.label}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button
+										ng-click="deleteOsoite($index)"
+										class="btn btn-danger pull-right">
+										<span i18n="common.Delete"></span>
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+					<li class="list-group-item">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button
+										ng-click="addOsoite()"
+										class="btn btn-success pull-right">
+										<span i18n="common.Add"></span>
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="postinumero"
+				class="col-sm-3 control-label">
+				<span i18n="common.Postal_code"></span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					name="postinumero"
+					data-i18n-attr="{placeholder: 'common.Postal_code'}"
+					ng-model="rakennus.properties.postinumero" spellcheck="false" autocomplete="off">
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-class="{'has-error': form.inventointinumero.$invalid && form.inventointinumero.$touched}">
+			<label
+				for="inventointinumero"
+				class="col-sm-3 control-label">
+				<span i18n="common.Inventory_number"></span><span>*</span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					name="inventointinumero"
+					data-i18n-attr="{placeholder: 'common.Inventory_number'}"
+					ng-model="rakennus.properties.inventointinumero"
+					ng-required="true"
+					ng-readonly="false"
+					ng-change="inventointinumero_change()" spellcheck="false" autocomplete="off">
+				<span
+					class="help-block"
+					ng-show="form.inventointinumero.$invalid && form.inventointinumero.$touched && uniqueInventointinumero">
+					<span
+					data-i18n="common.mandatory_value"
+					data-field="{{ 'common.Inventory_number' | i18n }}"></span>
+				</span> <span
+					class="help-block"
+					ng-show="!uniqueInventointinumero"> <span
+					data-i18n="common.already_in_use"
+					data-field="{{ 'common.Inventory_number' | i18n }}"></span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="rakennustunnus"
+				class="col-sm-3 control-label">
+				<span i18n="common.Building_identifier"></span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					name="rakennustunnus"
+					data-i18n-attr="{placeholder: 'common.Building_identifier'}"
+					ng-model="rakennus.properties.rakennustunnus"
+					ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off">
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="rakennustyyppi"
+				class="col-sm-3 control-label">
+				<span i18n="common.Building_type"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.rakennustyypit"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, rakennustyyppiOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item| namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in rakennustyyppiOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt| namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+        <div class="form-group">
+            <label
+                for="rakennustyyppi_kuvaus"
+                class="col-sm-3 control-label">
+                <span i18n="building.Building_type_description"></span>
+            </label>
+            <div class="col-sm-9">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="rakennustyyppi_kuvaus"
+                    data-i18n-attr="{placeholder: 'building.Building_type_description'}"
+                    ng-model="rakennus.properties.rakennustyyppi_kuvaus" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+		<div
+			class="form-group"
+			ng-class="{'has-error': (form.rakennusvuosi_alku.$invalid && form.rakennusvuosi_alku.$touched) 
+                		        || (form.rakennusvuosi_loppu.$invalid && form.rakennusvuosi_loppu.$touched) 
+                                || (form.rakennusvuosi_alku.$invalid && form.rakennusvuosi_selite.$modelValue.length > 0)
+                                || (rakennus.properties.rakennusvuosi_loppu && !rakennus.properties.rakennusvuosi_alku)}">
+			<label
+				for="rakennusvuosi_alku"
+				class="col-sm-3 control-label">
+				<span i18n="common.Construction_year"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<label
+										for="rakennusvuosi_alku"
+										class="control-label">
+										<span i18n="common.Start_and_end_year"></span>
+									</label>
+									<div class="input-group">
+										<input
+											type="text"
+											class="form-control"
+											name="rakennusvuosi_alku"
+											ng-model="rakennus.properties.rakennusvuosi_alku"
+											ng-required="rakennus.properties.rakennusvuosi_selite || rakennusvuosi.properties.rakennusvuosi_loppu"
+											ng-readonly="false"
+                                            maxlength="4"
+                                            minlength="4"
+                                            ng-maxlength="4"
+                                            ng-minlength="4"                                            
+											positiveinteger 
+                                            empty-to-null
+                                            spellcheck="false" autocomplete="off">
+										<span class="input-group-addon">-</span>
+										<input
+											type="text"
+											class="form-control"
+											name="rakennusvuosi_loppu"
+											ng-model="rakennus.properties.rakennusvuosi_loppu"
+											ng-required="false"
+											ng-readonly="false"
+                                            maxlength="4"
+                                            minlength="4"
+                                            ng-maxlength="4"
+                                            ng-minlength="4"
+											positiveinteger
+                                            empty-to-null
+                                            spellcheck="false" autocomplete="off">
+									</div>
+									<span
+										ng-show="(form.rakennusvuosi_alku.$touched && form.rakennusvuosi_alku.$invalid) ||
+				                    (form.rakennusvuosi_loppu.$touched && form.rakennusvuosi_loppu.$invalid)">
+										<span class="help-block"
+										      ng-show="form.rakennusvuosi_alku.$error.integer || form.rakennusvuosi_loppu.$error.integer">
+											<span data-i18n="common.integer_value"
+											      data-field="{{ 'common.Construction_year' | i18n }}"> </span>
+									    </span>
+                                        <span class="help-block"
+                                              ng-show="form.rakennusvuosi_alku.$error.minlength || form.rakennusvuosi_loppu.$error.minlength">
+                                             <span data-i18n="common.err_min_length" 
+                                                data-field="{{ 'common.Construction_year' | i18n }}" data-minlength="4"></span>
+                                        </span>
+                                        
+									</span>
+                                    <span
+                                        ng-show="form.rakennusvuosi_alku.$invalid ||form.rakennusvuosi_loppu.$invalid">
+                                        <span class="help-block"
+                                            ng-show="form.rakennusvuosi_alku.$error.required || form.rakennusvuosi_loppu.$error.required">
+                                            <span data-i18n="common.err_required" 
+                                                data-field="{{ 'common.Construction_year' | i18n }}" data-field2="{{'common.Description' | i18n }}">
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <span
+                                        ng-show="rakennus.properties.rakennusvuosi_loppu && !rakennus.properties.rakennusvuosi_alku" class="help-block">       
+                                        <span data-i18n="common.err_required" 
+                                            data-field="{{ 'common.Start_year' | i18n }}" data-field2="{{'common.End_year' | i18n }}">
+                                        </span>
+                                    </span>                                    
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<label class="control-label">
+										<span i18n="common.Description"></span>
+									</label>
+									<textarea
+										rows="3"
+										class="form-control"
+										name="rakennusvuosi_selite"
+										data-i18n-attr="{placeholder: 'common.Construction_year_description'}"
+										ng-model="rakennus.properties.rakennusvuosi_selite"
+										ng-required="false"
+										ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="muutosvuodet"
+				class="col-sm-3 control-label">
+				<span i18n="common.Alteration_years"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li
+						class="list-group-item"
+						ng-repeat="mv in rakennus.properties.muutosvuodet">
+						<fieldset>
+							<div
+								class="form-group"
+								ng-class="{ 'has-error': 
+	                           (form.muutosvuosi_{{$index}}_alkuvuosi.$invalid && form.muutosvuosi_{{$index}}_alkuvuosi.$touched)
+	                           || (form.muutosvuosi_{{$index}}_loppuvuosi.$invalid && form.muutosvuosi_{{$index}}_loppuvuosi.$touched) }">
+								<div class="col-md-12">
+									<label
+										for="muutosvuosi_{{$index}}_alkuvuosi"
+										class="control-label">
+										<span i18n="common.Start_and_end_year"></span>
+									</label>
+									<div class="input-group">
+										<input
+											type="text"
+											class="form-control"
+											name="muutosvuosi_{{$index}}_alkuvuosi"
+											ng-model="mv.alkuvuosi"
+											ng-required="false"
+											ng-readonly="false"
+											maxlength="4"
+											minlength="4"
+                                            ng-maxlength="4"
+                                            ng-minlength="4"
+											positiveinteger 
+                                            empty-to-null
+                                            spellcheck="false" autocomplete="off">
+										<span class="input-group-addon">-</span>
+										<input
+											type="text"
+											class="form-control"
+											name="muutosvuosi_{{$index}}_loppuvuosi"
+											ng-model="mv.loppuvuosi"
+											ng-required="false"
+											ng-readonly="false"
+                                            maxlength="4"
+                                            minlength="4"
+                                            ng-maxlength="4"
+                                            ng-minlength="4"
+											positiveinteger 
+                                            empty-to-null
+                                            spellcheck="false" autocomplete="off">
+									</div>
+									<span
+										ng-show="(form.muutosvuosi_{{$index}}_alkuvuosi.$touched && form.muutosvuosi_{{$index}}_alkuvuosi.$invalid) ||
+				                    (form.muutosvuosi_{{$index}}_loppuvuosi.$touched && form.muutosvuosi_{{$index}}_loppuvuosi.$invalid)">
+										<span
+										  class="help-block"
+										  ng-show="form.muutosvuosi_{{$index}}_alkuvuosi.$error.integer || form.muutosvuosi_{{$index}}_loppuvuosi.$error.integer">
+											<span
+											data-i18n="common.positive_integer_value"
+											data-field="{{ 'common.Alteration_years' | i18n }}"> </span>
+									    </span>
+                                        <span class="help-block"
+                                              ng-show="form.muutosvuosi_{{$index}}_alkuvuosi.$error.minlength || form.muutosvuosi_{{$index}}_loppuvuosi.$error.minlength">
+                                             <span data-i18n="common.err_min_length" 
+                                                data-field="{{ 'common.Alteration_years' | i18n }}" data-minlength="4"></span>
+                                        </span>
+									</span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div
+									class="form-group"
+									ng-class="{ 'has-error': 
+                               form.muutosvuosi_{{$index}}_selite.$invalid && form.muutosvuosi_{{$index}}_selite.$touched }">
+									<label
+										for="muutosvuosi_{{$index}}_selite"
+										class="control-label">
+										<span i18n="common.Description"></span>
+									</label>
+									<textarea
+										rows="3"
+										class="form-control"
+										name="muutosvuosi_{{$index}}_selite"
+										data-i18n-attr="{placeholder: 'common.Description'}"
+										ng-model="mv.selite"
+										ng-required="false" spellcheck="false" autocomplete="off"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button
+										ng-click="deleteMuutosvuosi($index)"
+										class="btn btn-danger pull-right">
+										<span i18n="common.Delete"></span>
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+					<li class="list-group-item">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button
+										ng-click="addMuutosvuosi()"
+										class="btn btn-success pull-right">
+										<span i18n="common.Add"></span>
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="alkuperainen_kaytto"
+				class="col-sm-3 control-label">
+				<span i18n="common.Original_usage"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.alkuperaisetkaytot"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, alkuperaisetkaytotOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in alkuperaisetkaytotOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="nykykaytto"
+				class="col-sm-3 control-label">
+				<span i18n="common.Common_usage"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.nykykaytot"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, nykykaytotOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item| namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in nykykaytotOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-class="{'has-error': form.kerroslukumaara.$touched && form.kerroslukumaara.$invalid}">
+			<label
+				for="kerroslukumaara"
+				class="col-sm-3 control-label">
+				<span i18n="common.Number_of_floors"></span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					onedecimal
+					class="form-control"
+					name="kerroslukumaara"
+					data-i18n-attr="{placeholder: 'common.Number_of_floors'}"
+					ng-model="rakennus.properties.kerroslukumaara"
+					ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off">
+				<span ng-show="form.kerroslukumaara.$touched && form.kerroslukumaara.$invalid"> <span
+					class="help-block"
+					ng-show="form.kerroslukumaara.$error.onedecimal"> <span
+						data-i18n="common.onedecimal_value"
+						data-field="{{ 'common.Number_of_floors' | i18n }}"> </span>
+				</span>
+				</span>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-class="{'has-error': form.asuin_ja_liikehuoneistoja.$touched && form.asuin_ja_liikehuoneistoja.$invalid}">
+			<label
+				for="asuin_ja_liikehuoneistoja"
+				class="col-sm-3 control-label">
+				<span i18n="common.Residences_and_offices"></span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					integer
+					class="form-control"
+					name="asuin_ja_liikehuoneistoja"
+					ng-model="rakennus.properties.asuin_ja_liikehuoneistoja"
+					ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off">
+				<span
+					ng-show="form.asuin_ja_liikehuoneistoja.$touched && form.asuin_ja_liikehuoneistoja.$invalid">
+					<span
+					class="help-block"
+					ng-show="form.asuin_ja_liikehuoneistoja.$error.integer"> <span
+						data-i18n="common.integer_value"
+						data-field="{{ 'common.Residences_and_offices' | i18n }}"> </span>
+				</span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="perustus"
+				class="col-sm-3 control-label">
+				<span i18n="common.Foundation"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.perustustyypit"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, perustustyyppiOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in perustustyyppiOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="runko"
+				class="col-sm-3 control-label">
+				<span i18n="common.Frame"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.runkotyypit"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, runkotyyppiOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in runkotyyppiOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="vuoraus"
+				class="col-sm-3 control-label">
+				<span i18n="common.Lining"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.vuoraustyypit"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, vuoraustyyppiOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in vuoraustyyppiOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="ulkovari"
+				class="col-sm-3 control-label">
+				<span i18n="common.Outside_color"></span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					name="ulkovari"
+					data-i18n-attr="{placeholder: 'common.Outside_color'}"
+					ng-model="rakennus.properties.ulkovari"
+					ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off">
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="katto"
+				class="col-sm-3 control-label">
+				<span i18n="common.Ceiling"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.kattotyypit"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, kattotyyppiOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in kattotyyppiOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="kate"
+				class="col-sm-3 control-label">
+				<span i18n="common.Cover"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					multiple="true"
+					ng-model="rakennus.properties.katetyypit"
+					theme="bootstrap"
+					sortable="true"
+					on-remove="addItemBackToList($item, katetyyppiOptions)"> <ui-select-match
+					data-i18n-attr="{placeholder: 'common.Select'}">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+					repeat="opt in katetyyppiOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+				<div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="kunto"
+				class="col-sm-3 control-label">
+				<span i18n="common.Condition"></span>
+			</label>
+			<div class="col-sm-9">
+				<select
+					ng-model="rakennus.properties.kuntotyyppi"
+					ng-options="kunto as kunto | namei18n for kunto in kuntotyyppiOptions track by kunto.id"
+					name="kunto"
+					class="form-control">
+					<option value=""><span data-i18n="common.Select"></span></option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="nykyinen_tyyli"
+				class="col-sm-3 control-label">
+				<span i18n="common.Contemporary_style"></span>
+			</label>
+			<div class="col-sm-9">
+				<select
+					ng-model="rakennus.properties.nykyinentyyli"
+					ng-options="tyyli as tyyli | namei18n for tyyli in nykytyyliOptions track by tyyli.id"
+					name="tyyli"
+					class="form-control">
+					<option value=""><span data-i18n="common.Select"></span></option>
+				</select>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-class="{ 'has-error': form.purettu.$invalid && form.purettu.$touched }">
+			<label
+				for="purettu"
+				class="col-sm-3 control-label">
+				<span i18n="common.Demolished"></span> *
+			</label>
+			<div class="col-sm-9">
+				<select
+					class="form-control"
+					ng-model="rakennus.properties.purettu"
+					name="purettu"
+					ng-required="true"
+					ng-options="option.value as option.label for option in noYes">
+				</select>
+				<span
+					class="help-block"
+					ng-show="form.purettu.$invalid && form.purettu.$touched"> <span
+					data-i18n="common.mandatory_value"
+					data-field="{{ 'common.Demolished' | i18n }}"></span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label
+				for="omistajat"
+				class="col-sm-3 control-label">
+				<span i18n="common.Owners"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li
+						class="list-group-item"
+						ng-repeat="om in rakennus.properties.omistajat">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-md-6">
+									<label
+										for="omistaja_{{$index}}_sukunimi"
+										class="control-label">
+										<span i18n="common.Lastname"></span>
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										name="omistaja_{{$index}}_sukunimi"
+										ng-model="om.sukunimi" spellcheck="false" autocomplete="off">
+								</div>
+								<div class="col-md-6">
+									<label
+										for="omistaja_{{$index}}_etunimi"
+										class="control-label">
+										<span i18n="common.Firstname"></span>
+									</label>
+									<input
+										class="form-control"
+										name="omistaja_{{$index}}_etunimi"
+										ng-model="om.etunimi" spellcheck="false" autocomplete="off"></input>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button
+										ng-click="deleteOmistaja($index)"
+										class="btn btn-danger pull-right">
+										<span i18n="common.Delete"></span>
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+					<li class="list-group-item">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<button
+										ng-click="addOmistaja()"
+										class="btn btn-success pull-right">
+										<span i18n="common.Add"></span>
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

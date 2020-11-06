@@ -1,0 +1,22 @@
+
+<div class="form-group">
+    <label for="laji" class="col-sm-3 control-label">
+        <span i18n="common.Type"></span><span ng-show="lajirequired"> *</span>
+    </label>
+    <div class="col-sm-9">
+        <ui-select class="ng-animate-disabled" 
+        	ng-model="laji.tutkimuslaji" 
+        	name="laji"
+        	ng-required="true"
+        	focus-on="focusInput"
+        	autofocus="true"
+        	theme="bootstrap"
+        	ng-disabled="vm.tutkimus.properties.id"> 
+		    <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected | namei18n}}</ui-select-match> 
+		    <ui-select-choices
+		    	repeat="laji as laji in tutkimuslajit | filter: $select.search | filter: {aktiivinen: true}">
+ 		       <span ng-bind-html="laji | namei18n | highlight: $select.search"></span>
+			</ui-select-choices> 
+        </ui-select>        
+    </div>
+</div>

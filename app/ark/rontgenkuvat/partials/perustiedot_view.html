@@ -1,0 +1,63 @@
+<!-- Perustiedot -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#perusTiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.Details"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perusTiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+    	<div class="col-md-6 column-left">
+		    <div class="form-group">
+			    <label class="col-sm-4 control-label">
+			        <span i18n="common.Number"></span>
+			    </label>
+			    <div class="col-sm-8"> 		     
+	        		<p class="form-control-static">{{vm.xray.properties.numero}}</p>
+	        	</div>
+	        </div> 
+	        <div class="form-group" vm.xray.properties.pvm>
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="common.Date"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.xray.properties.pvm | pvm:'dd.MM.yyyy'}}</p>
+	            </div>
+	        </div>
+			<div class="form-group" ng-if="vm.xray.properties.kuvaaja">
+				<label class="col-sm-4 control-label">
+					<span i18n="common.Taken_by"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static">{{vm.xray.properties.kuvaaja}}</p>
+				</div>
+			</div>
+			<div class="form-group" ng-if="vm.xray.properties.loydot.length > 0">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Discoveries"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline"><span ng-repeat="loyto in vm.xray.properties.loydot"><a class="link" ng-click="vm.avaaLoyto(loyto)">{{loyto.luettelointinumero}}</a><span ng-show="!$last">, </span></span></p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.xray.properties.naytteet.length > 0">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Samples"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline"><span ng-repeat="nayte in vm.xray.properties.naytteet"><a class="link" ng-click="vm.avaaNayte(nayte)">{{nayte.luettelointinumero}}</a><span ng-show="!$last">, </span></span></p>
+                </div>
+            </div>
+		</div>
+		<div class="col-md-6 column-right">
+		<div class="form-group" ng-if="vm.xray.properties.lisatiedot">
+                <label class="col-sm-4 control-label">
+                    <span i18n="common.Additional_information"></span>
+                </label>            
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline">{{vm.xray.properties.lisatiedot}}</p>
+                </div>
+            </div>   
+		</div>
+    </div>
+</div>

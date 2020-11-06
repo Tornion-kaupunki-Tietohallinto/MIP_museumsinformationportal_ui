@@ -1,0 +1,115 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#ajoitusPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="unit.Timing"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="ajoitusPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit || vm.create">
+	        <div class="form-group" ng-class="{ 'has-error': form.alkuvuosi.$invalid && form.alkuvuosi.$touched}">
+	            <label for="alkuvuosi" class="col-sm-3 control-label">
+	                <span i18n="ark.Begin"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" min="0" class="form-control" name="alkuvuosi"
+	                    ng-model="vm.loyto.properties.alkuvuosi" 
+	                    data-i18n-attr="{placeholder: 'ark.Year'}"
+	                    ng-required="vm.loyto.properties.paatosvuosi != null"
+	                    spellcheck="false" autocomplete="off">
+	                <span class="help-block" ng-show="form.alkuvuosi.$invalid && form.alkuvuosi.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Year' | i18n }}"></span>
+	                </span>	                    
+	            </div>
+				<div class="col-sm-2">                    
+					<select class="form-control" ng-model="vm.loyto.properties.alkuvuosi_ajanlasku"
+						style="padding-left: 1px"
+						ng-options="option.value as option.label for option in vm.ajanlaskut"
+						name="alkuvuosi_ajanlasku">
+					</select>                    
+	            </div>                
+	        </div>
+	        <div class="form-group">
+	            <label for="paatosvuosi" class="col-sm-3 control-label">
+	                <span i18n="ark.End"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" min="0" class="form-control" name="paatosvuosi"
+	                    ng-model="vm.loyto.properties.paatosvuosi" 
+	                    data-i18n-attr="{placeholder: 'ark.Year'}"
+	                    ng-disabled="vm.loyto.properties.alkuvuosi == null"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-2">                    
+					<select class="form-control" ng-model="vm.loyto.properties.paatosvuosi_ajanlasku"
+						style="padding-left: 1px"
+						ng-options="option.value as option.label for option in vm.ajanlaskut"
+						ng-disabled="vm.loyto.properties.alkuvuosi == null"
+						name="paatosvuosi_ajanlasku">
+					</select>                    
+	            </div>                
+	        </div>            
+	        <div class="form-group">
+	            <label for="ajoitus_kuvaus" class="col-sm-3 control-label">
+	                <span i18n="common.Description"></span>
+	            </label>
+	            <div class="col-sm-9">
+	                <input type="text" class="form-control" name="ajoitus_kuvaus"
+	                    ng-model="vm.loyto.properties.ajoitus_kuvaus"
+	                    ng-disabled="vm.loyto.properties.alkuvuosi == null"
+	                    spellcheck="false" autocomplete="off">
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label for="ajoituksen_perusteet" class="col-sm-3 control-label">
+	                <span i18n="unit.Timing_reasons"></span>
+	            </label>
+	            <div class="col-sm-9">
+	                <input type="text" class="form-control" name="ajoituksen_perusteet"
+	                    ng-model="vm.loyto.properties.ajoituksen_perusteet"
+	                    spellcheck="false" autocomplete="off">
+	            </div>    
+	        </div>        
+	    </div>
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group" ng-if="vm.loyto.properties.alkuvuosi">
+	            <label for="alkuvuosi" class="col-sm-4 control-label">
+	                <span i18n="ark.Begin"></span> 
+	            </label>
+	            <div class="col-sm-2">
+	                <p class="form-control-static">{{vm.loyto.properties.alkuvuosi}}</p>
+	            </div>
+				<div class="col-sm-2">                    
+					<p class="form-control-static">{{vm.loyto.properties.alkuvuosi_ajanlasku}}</p>                    
+	            </div>                
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.paatosvuosi">
+	            <label for="paatosvuosi" class="col-sm-4 control-label">
+	                <span i18n="ark.End"></span> 
+	            </label>
+	            <div class="col-sm-2">
+	                <p class="form-control-static">{{vm.loyto.properties.paatosvuosi}}</p>
+	            </div>
+				<div class="col-sm-2">                    
+					<p class="form-control-static">{{vm.loyto.properties.paatosvuosi_ajanlasku}}</p>                     
+	            </div>                
+	        </div>    
+	        <div class="form-group" ng-if="vm.loyto.properties.ajoitus_kuvaus">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="common.Description"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static mip-multiline">{{vm.loyto.properties.ajoitus_kuvaus}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.ajoituksen_perusteet">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="unit.Timing_reasons"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static mip-multiline">{{vm.loyto.properties.ajoituksen_perusteet}}</p>
+	            </div>
+	        </div>
+	    </div>
+    </div>    
+</div>

@@ -1,0 +1,9 @@
+{
+	"County_saved" : "Kunnan %name tiedot tallennettu onnistuneesti",
+	"County_deleted" : "Kunta poistettu",
+	"No_counties_found" : "Kuntia ei löytynyt",
+	"Getting_areas_for_county_failed" : "Kunnan alueiden hakeminen epäonnistui",
+	"Saving_county_ok" : "Kunnan %name tiedot tallennettu onnistuneesti",
+	"County_added" : "Uusi kunta luotu onnistuneesti",
+	"No_view_permission" : "Ei katseluoikeutta kuntiin"
+}

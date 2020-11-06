@@ -1,0 +1,131 @@
+<div class="panel">
+	<div class="panel-body">
+		<div ng-include="'pages/tabs.html'"></div>
+		<div ng-include="'pages/subtabs.html'"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-collapsible panel-default table-responsive">
+					<div class="panel-heading" role="tab" data-toggle="collapse" data-target="#hakukentat">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span>
+                            : {{vm.loydotTable.total()}}
+                            <span i18n="common.Shown"></span>
+                            : {{vm.searchResults}} 
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>					
+					</div>
+                    <div class="panel-body form-horizontal panel-collapse collapse in" id="hakukentat" 
+                    	ng-include="'ark/loydot/loyto_hakukentat.html'" 
+                    	style="margin-bottom: 1em;">
+                   </div>
+					<div class="panel-heading" role="tab" data-toggle="collapse" data-target="#tarkennettu_haku">
+                        <h4 class="panel-title">
+                            <span i18n="common.Advanced_search"></span>
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>					
+					</div>                   
+                    <div class="panel-body form-horizontal panel-collapse collapse" id="tarkennettu_haku" 
+                    	ng-include="'ark/loydot/loyto_tarkennettu_haku.html'" 
+                    	style="margin-bottom: 1em;">
+                   </div>                   
+                   <!-- Taulukko -->
+					<table ng-table="vm.loydotTable" 
+                        template-pagination="pages/templates/table-pagination.html"
+						class="table table-striped table-bordered" show-filter="false">
+						<tr ng-repeat="loyto in $data" style="cursor: pointer" ng-click="vm.selectLoyto(loyto)">
+                            <td data-title="vm.getColumnName('Main_number', 'ark')" sortable="'properties.loyto_paanumero'" ng-if="vm.colVisibilities.showPaanumeroCol">
+                                <div ng-if="loyto.properties.yksikko">{{loyto.properties.yksikko.tutkimusalue.tutkimus.loyto_paanumero}}</div>
+                                <div ng-if="loyto.properties.tutkimusalue">{{loyto.properties.tutkimusalue.tutkimus.loyto_paanumero}}</div><!-- IRTOLÖYTÖ -->
+                            </td>
+                            <td data-title="vm.getColumnName('Research_abbreviation', 'ark')" sortable="'properties.tutkimusLyhenne'" ng-if="vm.colVisibilities.showTutkimusLyhenneCol">
+                                <div ng-if="loyto.properties.yksikko">{{loyto.properties.yksikko.tutkimusalue.tutkimus.tutkimuksen_lyhenne}}</div>
+                                <div ng-if="loyto.properties.tutkimusalue">{{loyto.properties.tutkimusalue.tutkimus.tutkimuksen_lyhenne}}</div><!-- IRTOLÖYTÖ -->                                
+                            </td>
+                            <td data-title="vm.getColumnName('Research_name', 'ark')" ng-if="vm.colVisibilities.showTutkimuksenNimiCol">
+                                <div ng-if="loyto.properties.yksikko">{{loyto.properties.yksikko.tutkimusalue.tutkimus.nimi}}</div>
+                                <div ng-if="loyto.properties.tutkimusalue">{{loyto.properties.tutkimusalue.tutkimus.nimi}}</div><!-- IRTOLÖYTÖ -->
+                            </td>   					
+                            <td data-title="vm.getColumnName('Listing_number', 'ark')" sortable="'properties.luettelointinumero'" ng-if="vm.colVisibilities.showLuettelointinumeroCol">
+                                {{loyto.properties.luettelointinumero}}
+                            </td>                                   
+                            <td data-title="vm.getColumnName('Unit_identifier', 'unit')" ng-if="vm.colVisibilities.showYksikkotunnusCol">
+                                {{loyto.properties.yksikko.yksikkotunnus}}
+                            </td>         
+                            <td data-title="vm.getColumnName('Area')" ng-if="vm.colVisibilities.showAlueCol">
+                                {{loyto.properties.yksikko.tutkimusalue.nimi}}
+                            </td>                														
+                            <td data-title="vm.getColumnName('Material_code', 'ark')" ng-if="vm.colVisibilities.showMateriaalikoodiCol">
+                                {{loyto.properties.materiaalikoodi | namei18n}}
+                            </td>
+                            <td data-title="vm.getColumnName('Primary_material', 'ark')" ng-if="vm.colVisibilities.showEnsisijainenMateriaaliCol">
+                                {{loyto.properties.ensisijainen_materiaali | namei18n}}
+                            </td>
+                            <td data-title="vm.getColumnName('Type', 'common')" ng-if="vm.colVisibilities.showTyyppiCol">
+                                {{loyto.properties.loytotyyppi | namei18n}}
+                            </td>
+                            <td data-title="vm.getColumnName('Artifact_name', 'ark')" ng-if="vm.colVisibilities.showTyypinTarkenneCol">
+                                <span ng-repeat="tarkenne in loyto.properties.loytotyyppi_tarkenteet">
+                                    {{tarkenne | namei18n}} <font ng-show="!$last">,</font>
+                                </span>
+                            </td>
+                            <td data-title="vm.getColumnName('Other_material', 'ark')" ng-if="vm.colVisibilities.showMuutMateriaalitCol">
+				               	<span ng-repeat="materiaali in loyto.properties.materiaalit">
+				               		{{materiaali | namei18n}} <font ng-show="!$last">,</font>
+				               	</span>	
+                            </td>
+                            <td data-title="vm.getColumnName('Timing', 'ark')" sortable="'properties.alkuvuosi'" ng-if="vm.colVisibilities.showAjoitusCol">
+                                {{loyto.properties.alkuvuosi}} {{loyto.properties.alkuvuosi_ajanlasku}} <font ng-if="loyto.properties.paatosvuosi"> -</font>
+                                {{loyto.properties.paatosvuosi}} {{loyto.properties.paatosvuosi_ajanlasku}} 
+                            </td>                              
+                            <td data-title="vm.getColumnName('Mark', 'common')" ng-if="vm.colVisibilities.showMerkintaCol">
+				               	<span ng-repeat="merkinta in loyto.properties.merkinnat">
+				               		{{merkinta | namei18n}} <font ng-show="!$last">,</font>
+				               	</span>
+                            </td>
+                            <td data-title="vm.getColumnName('Construe', 'common')" ng-if="vm.colVisibilities.showTulkintaCol">
+                                {{loyto.properties.tulkinta}}
+                            </td>
+                            <td data-title="vm.getColumnName('Glossaries', 'ark')" ng-if="vm.colVisibilities.showAsiasanaCol">
+				               	<span ng-repeat="sana in loyto.properties.loydon_asiasanat">
+				               		{{sana.asiasana}} <font ng-show="!$last">,</font>
+				               	</span>
+                            </td>
+                            <td data-title="vm.getColumnName('Discovery_status', 'ark')" ng-if="vm.colVisibilities.showLoydonTilaCol">
+                                {{loyto.properties.loydon_tila | namei18n}}
+                            </td>                      
+                            <td data-title="vm.getColumnName('Collection_identifier', 'ark')" ng-if="vm.colVisibilities.showKokoelmatunnusCol">
+                                {{loyto.properties.yksikko.tutkimusalue.tutkimus.loyto_kokoelmalaji | namei18n}}
+                            </td> 
+                            <td data-title="vm.getColumnName('Conservation_required', 'ark')" ng-if="vm.colVisibilities.showVaatiiKonservointiaCol">
+				               	<span ng-repeat="konservointi in vm.konservointiLista">
+				               		<span ng-show="konservointi.id == loyto.properties.konservointi">{{konservointi.nimi_fi}}</span>
+				               	</span>                                
+                            </td>
+                            <td data-title="vm.getColumnName('Description', 'common')" ng-if="vm.colVisibilities.showKuvausCol">
+                                {{loyto.properties.kuvaus}}
+                            </td>
+                            <td data-title="vm.getColumnName('Additional_information', 'common')" ng-if="vm.colVisibilities.showLisatiedotCol">
+                                {{loyto.properties.lisatiedot}}
+                            </td>
+                            <td data-title="vm.getColumnName('Pcs', 'ark')" ng-if="vm.colVisibilities.showKappalemaaraCol">
+                                {{loyto.properties.kappalemaara}}
+                            </td>
+                            <td data-title="vm.getColumnName('Weight', 'ark')" ng-if="vm.colVisibilities.showPainoCol">
+                                {{loyto.properties.paino}} {{loyto.properties.painoyksikko}}
+                            </td>
+                            <td data-title="vm.getColumnName('Permanent_location', 'ark')" ng-if="vm.colVisibilities.showVakituinenSijaintiCol">
+                                {{loyto.properties.sailytystila | namei18n}} {{loyto.properties.vakituinen_hyllypaikka}}
+                            </td>
+                            <td data-title="vm.getColumnName('Discovery_location_extension', 'ark')" ng-if="vm.colVisibilities.showLoytopaikanTarkenneCol">
+                                {{loyto.properties.loytopaikan_tarkenne}}
+                            </td>
+                            <td data-title="vm.getColumnName('Field_number_former_work_number', 'ark')" ng-if="vm.colVisibilities.showKenttanumeroVanhaTyonumeroCol">
+                                {{loyto.properties.kenttanumero_vanha_tyonumero}}
+                            </td>
+						</tr>
+					</table>                   					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

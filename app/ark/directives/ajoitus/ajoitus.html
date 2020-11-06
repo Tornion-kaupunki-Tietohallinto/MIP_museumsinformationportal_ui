@@ -1,0 +1,55 @@
+<div class="form-group">
+    <label for="ajoitus" class="col-md-3 control-label">
+        <span i18n="ark.Timing"></span><span ng-show="ajoitusrequired">*</span> / 
+        <span i18n="ark.Timing_extension"></span><span ng-show="tarkenninrequired">*</span> /
+        <span i18n="ark.Timing_criteria"></span>
+    </label>
+    <div class="col-sm-9">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="aj in valitutajoitukset">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="ajoitus_{{$index}}"
+                                ng-model="aj.ajoitus" ng-required="true"
+                                ng-options="a as a.nimi_fi for a in ajoitukset track by a.id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="ajoitustarkenne_{{$index}}"
+                                ng-model="aj.tarkenne" ng-disabled="!aj.ajoitus"
+                                ng-options="at as at.nimi_fi for at in ajoitustarkenteet | filter: {ajoitus_id: aj.ajoitus.id}:true track by at.id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="ajoituskriteeri_{{$index}}" ng-maxlength="100"
+                                ng-model="aj.ajoituskriteeri" data-i18n-attr="{placeholder: 'ark.Timing_criteria'}" spellcheck="false" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="deleteAjoitus($index)"
+                                class="btn btn-danger pull-right">
+                                <span i18n="common.Delete"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="button" ng-click="addAjoitus()"
+                            class="btn btn-success pull-right">
+                            <span i18n="common.Add"></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

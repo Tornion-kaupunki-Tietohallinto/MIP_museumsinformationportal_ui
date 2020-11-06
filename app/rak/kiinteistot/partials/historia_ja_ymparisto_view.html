@@ -1,0 +1,84 @@
+<!-- Historia ja ympäristö - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#historiaPanel{{modalId}}">
+		<h4 class="panel-title">
+		    <span data-i18n="common.History_and_environment"></span>
+		    <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="historiaPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+
+		<div class="form-group"
+			ng-if="kiinteisto.properties.aluetyypit.length>0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Area_types"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static"
+					ng-repeat="at in kiinteisto.properties.aluetyypit">{{at | namei18n}}</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.historialliset_tilatyypit.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Historical_property_types"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static"
+					ng-repeat="at in kiinteisto.properties.historialliset_tilatyypit">{{at | namei18n}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="kiinteisto.properties.asutushistoria">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Settlement_history"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{kiinteisto.properties.asutushistoria}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="kiinteisto.properties.lahiymparisto">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Surroundings"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{kiinteisto.properties.lahiymparisto}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="kiinteisto.properties.pihapiiri">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Courtyard"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{kiinteisto.properties.pihapiiri}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="kiinteisto.properties.arkeologinen_kohde">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Archeological_site"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span i18n="common.Yes" ng-if="kiinteisto.properties.arkeologinen_kohde"></span>
+					<span i18n="common.No" ng-if="!kiinteisto.properties.arkeologinen_kohde"></span>
+				</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.arkeologinen_intressi">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Archeological_interests"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{kiinteisto.properties.arkeologinen_intressi}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="kiinteisto.properties.muu_historia">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Other_history"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{kiinteisto.properties.muu_historia}}</p>
+			</div>
+		</div>
+	</div>
+</div>

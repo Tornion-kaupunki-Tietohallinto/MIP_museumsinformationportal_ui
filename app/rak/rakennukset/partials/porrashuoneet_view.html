@@ -1,0 +1,25 @@
+
+<!-- Rakennukset ja rakennelmat - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#porrashuoneetPanel{{modalId}}">
+		<h4 class="panel-title">
+		    <span data-i18n="common.Staircases"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+    <div id="porrashuoneetPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+        <div class="row">
+    
+            <ul class="list-group">
+                <li class="list-group-item col-xs-6" ng-repeat="porrashuone in porrashuoneet" 
+                    style="cursor: pointer; border:0" ng-click="showPorrashuoneModal(porrashuone);">
+	                <span style="font-weight:bold">{{porrashuone.properties.porrashuoneen_tunnus}}</span>
+	                -
+	                <span ng-if="porrashuone.properties.porrashuonetyyppi">{{porrashuone.properties.porrashuonetyyppi | namei18n}}</span>
+                </li>
+            </ul>
+            
+        </div>
+	</div>
+</div>
+

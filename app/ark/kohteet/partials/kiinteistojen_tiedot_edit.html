@@ -1,0 +1,12 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Estates"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <mip-kiinteistorakennus ng-if="vm.kohde.properties.kiinteistotrakennukset" kr-model="vm.kohde.properties.kiinteistotrakennukset"></mip-kiinteistorakennus>
+        <mip-kiinteistorakennus ng-if="vm.tutkimus.properties.kiinteistotrakennukset" kr-model="vm.tutkimus.properties.kiinteistotrakennukset"></mip-kiinteistorakennus> 
+    </div>
+</div>

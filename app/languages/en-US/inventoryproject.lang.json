@@ -1,0 +1,14 @@
+{
+	"Inventory_project_saved_successfully" : "Inventory project %name saved successfully",
+	"Inventory_project_deleted": "Inventory project deleted",
+	"No_view_permission" : "You don't have permission to view inventory projects",	
+	"Estate_added_to_inventory_project_success": "Added the estate to the inventory project successfully",
+	"Estate_deleted_from_inventory_project_success": "Deleted the estate from the inventory project successfully",
+	"Inventor_count": "Inventors",
+	"Save_failed": "Saving the inventory project failed",
+	"Inventoryproject_deleted": "Inventory project deleted successfully",
+	"Start_date": "Start date",
+	"End_date": "End date",
+	"Create_new_inventor": "Create a new inventor"
+	
+}

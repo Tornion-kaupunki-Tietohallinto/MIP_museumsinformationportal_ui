@@ -1,0 +1,53 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group"
+            ng-class="{ 'has-error': kuntaForm.kuntanumero.$invalid && kuntaForm.kuntanumero.$touched }">
+            <label for="kuntanumero" class="col-sm-3 control-label">
+                <span i18n="common.County_number"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="kuntanumero"
+                    ng-model="kunta.properties.kuntanumero" ng-required="true" ng-minlength="3" ng-maxlength="3" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="kuntaForm.kuntanumero.$invalid && kuntaForm.kuntanumero.$touched"> <span
+                    data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.County_number' | i18n }}"></span><br>
+                    <span ng-show="kuntaForm.kuntanumero.$error.minlength || kuntaForm.kuntanumero.$error.maxlength" data-i18n="error.Countynumber_length_error"></span>           
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kuntaForm.nimi.$invalid && kuntaForm.nimi.$touched }">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="common.Name"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}" ng-model="kunta.properties.nimi"
+                    ng-required="true" ng-minlength="2" spellcheck="false" autocomplete="off">
+                <span class="help-block" ng-show="kuntaForm.nimi.$invalid && kuntaForm.nimi.$touched">
+                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span><br>
+                    <span ng-show="kuntaForm.nimi.$error.minlength" data-i18n="error.County_name_length_error"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': kuntaForm.nimi_se.$invalid && kuntaForm.nimi_se.$touched }">
+            <label for="nimi_se" class="col-sm-3 control-label">
+                <span i18n="common.Name_in_swedish"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi_se"
+                    ng-model="kunta.properties.nimi_se" ng-required="false" ng-minlength="2" spellcheck="false" autocomplete="off">
+                    <span class="help-block" ng-show="kuntaForm.nimi_se.$invalid && kuntaForm.nimi_se.$touched">                    
+                        <span ng-show="kuntaForm.nimi_se.$error.minlength" data-i18n="error.County_name_length_error"></span>
+                    </span>
+            </div>
+        </div>       
+    </div>
+</div>

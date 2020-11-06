@@ -1,0 +1,9 @@
+{
+    "County_saved" : "Information om kommunen %name har sparats",
+    "County_deleted" : "Kommunen har raderats",
+    "No_counties_found" : "Kommuner hittades inte",
+    "Getting_areas_for_county_failed" : "Misslyckades med att söka kommunområden",
+    "Saving_county_ok" : "Information om kommunen %name har sparats",
+    "County_added" : "Ny kommun har skapats",
+    "No_view_permission" : "Du har inte rättigheter att se kommuner"
+}

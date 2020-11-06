@@ -1,0 +1,5 @@
+<div bs-tabs bs-active-pane="activeSubTab"
+	data-template="pages/templates/mipsubtab.tpl.html" style="margin-bottom: 1em;">
+	<div ng-click="navigate(tab, true)" bs-pane ng-repeat="tab in subTabs"
+		name="{{tab.title}}" data-title="{{tab.title}}"></div>
+</div>

@@ -1,0 +1,40 @@
+<div class="popover" style="width: 30em; max-width: 40em; height:32em;" tabindex="-1">
+    <div class="arrow"></div>
+    <h3 class="popover-title" i18n="common.Search_for_address_or_nomenclature"></h3>
+    <div class="col-md-12" style="margin: 5px;">
+        <input type="text" class="form-control" data-i18n-attr="{placeholder: 'common.Address'}"
+            ng-model="geolocateAddress" ng-change="geolocate(geolocateAddress);"
+            ng-model-options='{debounce: 1000}' bs-typeahead data-auto-select="true" data-limit="15"
+            min-length="3" data-watch-options="true" data-trim-value="false" ng-trim="false"
+            data-filter="false"
+            bs-options="address as address.properties.osoite for address in addresses">
+        <div class="help-block">
+            <h5 i18n="common.You_can_search_using_the_following_criteria"></h5>
+            <ul>
+                <li i18n="common.Street_address_street_number"></li>
+                <li i18n="common.Street_address_street_number_county_name"></li>
+                <li i18n="common.Street_address_street_number_county_number"></li>
+            </ul>
+        </div>
+        <br />
+        <input type="text" class="form-control"
+            data-i18n-attr="{placeholder: 'common.Nomenclature'}" ng-model="geolocatePaikka"
+            ng-change="geolocateNimisto(geolocatePaikka);" ng-model-options='{debounce: 1000}'
+            bs-typeahead data-auto-select="true" data-limit="15" min-length="3"
+            data-watch-options="true" data-trim-value="false" ng-trim="false" data-filter="false"
+            bs-options="nimisto as nimisto.properties.formatted_data for nimisto in nimistot">
+        <div class="help-block">
+            <h5 i18n="common.You_can_search_using_the_following_criteria">
+                </h6>
+                <ul>
+                    <li i18n="common.Place_name"></li>
+                    <li i18n="common.Place_name_county_name"></li>
+                    <li i18n="common.Place_name_county_number"></li>
+                    <li i18n="common.County_name_county_name"></li>
+                </ul>
+                <br />
+                <span i18n="common.Amount_to_show" data-amount="15"></span>
+        </div>        
+        <button class="btn btn-default" ng-disabled="markers.length == 0" ng-click="clearMarker()" i18n="map.Remove_marker"></button>        
+    </div>
+</div>

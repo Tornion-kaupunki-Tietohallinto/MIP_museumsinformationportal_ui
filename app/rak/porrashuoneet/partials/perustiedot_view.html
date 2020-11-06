@@ -1,0 +1,145 @@
+
+<div class="panel panel-default panel-collapsible">
+	<div
+		class="panel-heading"
+		data-toggle="collapse"
+		data-target="#perusTiedotPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Common"></span> <span
+				class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div
+		id="perusTiedotPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+		<div
+			class="form-group"
+			ng-show="kiinteisto.properties.kyla.kunta">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.County"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a
+						class="link"
+						ng-click="showKuntaModal(kiinteisto.properties.kyla.kunta.id)">{{kiinteisto.properties.kyla.kunta | kuntaKylaNamei18n}}</a>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="kiinteisto.properties.kyla">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Village"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a
+						class="link"
+						ng-click="showKylaModal(kiinteisto.properties.kyla.id)">{{kiinteisto.properties.kyla | kuntaKylaNamei18n}}</a>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="kiinteisto.properties.kiinteistotunnus">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Property_identifier"></span>
+			</label>
+			<div class="col-sm-9">
+				<a
+					class="link"
+					ng-click="showKiinteistoModal(kiinteisto)">
+					<p class="form-control-static">{{kiinteisto.properties.kiinteistotunnus}}</p>
+				</a>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.inventointinumero">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Building"></span>
+			</label>
+			<div class="col-sm-9">
+				<a
+					class="link"
+					ng-click="showRakennusModal(rakennus)">
+					<p class="form-control-static">{{rakennus.properties.inventointinumero}}
+						(<span ng-repeat="rt in rakennus.properties.rakennustyypit"><span ng-if="!$first">, </span>{{rt | namei18n}}</span>)</p>
+				</a>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.porrashuoneen_tunnus">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Staircase_identifier"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{porrashuone.properties.porrashuoneen_tunnus}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.porrashuonetyyppi">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Staircase_type"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{porrashuone.properties.porrashuonetyyppi | namei18n}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.huoneistojen_maara">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Number_of_apartments"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{porrashuone.properties.huoneistojen_maara}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.portaiden_muoto">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Stair_type"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{porrashuone.properties.portaiden_muoto}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.hissi">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Elevator"></span>
+			</label>
+			<div class="col-sm-9">
+			    <p class="form-control-static" i18n="common.Yes" ng-if="porrashuone.properties.hissi"></p>
+                <p class="form-control-static" i18n="common.No" ng-if="!porrashuone.properties.hissi"></p>
+            </div>    
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.hissin_kuvaus">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Elevator_description"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{porrashuone.properties.hissin_kuvaus}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.kattoikkuna">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Skylight_window"></span>
+			</label>
+            <div class="col-sm-9">
+                <p class="form-control-static" i18n="common.Yes" ng-if="porrashuone.properties.kattoikkuna"></p>
+                <p class="form-control-static" i18n="common.No" ng-if="!porrashuone.properties.kattoikkuna"></p>
+            </div>
+		</div>
+	</div>
+</div>

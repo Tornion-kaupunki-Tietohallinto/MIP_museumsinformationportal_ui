@@ -1,0 +1,103 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Common"></span>
+        </h4>
+    </div>
+    <div class="panel-body">       
+       <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Estate"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{matkaraportti.properties.kiinteisto.kiinteistotunnus}} {{matkaraportti.properties.kiinteisto.nimi}}</p>
+            </div>
+        </div>            
+        <div class="form-group" 
+            ng-class="{ 'has-error': form.syyt.$invalid && form.syyt.$touched }">
+            <label
+                for="syyt"
+                class="col-sm-3 control-label">
+                <span i18n="common.Reasons"></span>*
+            </label>
+            <div class="col-sm-9">
+                <ui-select
+                    multiple="true"
+                    name="syyt"
+                    ng-model="matkaraportti.properties.syyt"
+                    theme="bootstrap"
+                    sortable="true"
+                    ng-required="true"
+                    title="Valitse syyt"
+                    on-remove="addItemBackToList($item, syyOptions)"> <ui-select-match
+                    placeholder="Valitse">{{$item | namei18n}}</ui-select-match> <ui-select-choices
+                    repeat="opt in syyOptions | filter: {'nimi_fi': $select.search} track by opt.id">
+                <div ng-bind-html="opt | namei18n | highlight: $select.search"></div>
+                </ui-select-choices> </ui-select>
+                <span class="help-block"
+                    ng-show="form.syyt.$invalid && form.syyt.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Reasons' | i18n }}"></span>
+                </span>
+            </div>
+            
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.matkapvm.$invalid && form.matkapvm.$touched }">
+            <label
+                for="matkapvm"
+                class="col-sm-3 control-label">
+                <span i18n="common.Travel_date"></span>*
+            </label>
+            <div class="col-sm-9">
+               <input bs-datepicker data-date-format="dd.MM.yyyy"
+                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+                            start-week="1" class="form-control" name="matkapvm"
+                            ng-model="matkaraportti.properties.matkapvm" ng-required="true">
+                <span class="help-block"
+                    ng-show="form.matkapvm.$invalid && form.matkapvm.$touched">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.Travel_date' | i18n }}"></span>
+                </span>
+            </div>
+        </div>     
+        <div class="form-group"
+            ng-class="{ 'has-error': form.tehtavan_kuvaus.$invalid && form.tehtavan_kuvaus.$touched }">
+            <label
+                for="tehtavan_kuvaus"
+                class="col-sm-3 control-label">
+                <span i18n="common.Task_description"></span>*
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="tehtavan_kuvaus"
+                    data-i18n-attr="{placeholder: 'common.Task_description'}"
+                    ng-model="matkaraportti.properties.tehtavan_kuvaus"
+                    ng-required="true" spellcheck="false" autocomplete="off"></textarea> 
+                <span class="help-block"
+                    ng-show="form.tehtavan_kuvaus.$invalid && form.tehtavan_kuvaus.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Task_description' | i18n }}"></span>
+                </span>
+            </div>
+        </div>    
+        <div class="form-group"
+            ng-class="{ 'has-error': form.huomautukset.$invalid && form.huomautukset.$touched }">
+            <label
+                for="huomautukset"
+                class="col-sm-3 control-label">
+                <span i18n="common.Remarks"></span>*
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="huomautukset"
+                    data-i18n-attr="{placeholder: 'common.Remarks'}"
+                    ng-model="matkaraportti.properties.huomautukset"
+                    ng-required="true" spellcheck="false" autocomplete="off"></textarea>  
+                <span class="help-block"
+                    ng-show="form.huomautukset.$invalid && form.huomautukset.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Remarks' | i18n }}"></span>
+                </span>            
+            </div>
+        </div>               
+    </div>
+</div>

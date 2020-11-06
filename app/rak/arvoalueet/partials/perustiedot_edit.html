@@ -1,0 +1,225 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+    
+        <div class="form-group">
+            <label
+                for="id"
+                class="col-sm-3 control-label">
+                <span data-i18n="common.Area"></span>
+            </label>
+            <div class="col-sm-9">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="id"
+                    data-i18n-attr="{placeholder: 'common.Area'}"
+                    data-ng-model="arvoalue.properties._alue.nimi"
+                    data-ng-required="false"
+                    data-ng-readonly="true" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+                            
+        <div
+            class="form-group"
+            ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$touched }">
+            <label
+                for="nimi"
+                class="col-sm-3 control-label">
+                <span i18n="common.Name"></span>
+            </label>
+            <div class="col-sm-9">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}"
+                    ng-model="arvoalue.properties.nimi"
+                    ng-required="false" spellcheck="false" autocomplete="off">
+                <span
+                    class="help-block"
+                    ng-show="form.nimi.$invalid && form.nimi.$touched"> <span
+                    data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Name' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label
+                for="kunta"
+                class="col-sm-3 control-label">
+                <span i18n="common.County"></span><span>*</span> / <span i18n="common.Village"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+            
+                 <ul class="list-group">
+                    <li class="list-group-item"
+                        ng-repeat="k in alueKylaKuntaSelections">
+                        <fieldset>
+                            <div class="form-group"
+                                ng-class="{ 'has-error': form.kunta_{{$index}}.$invalid && form.kunta_{{$index}}.$touched }">
+                        
+                                <div class="col-sm-12" ng-show="currentLocale === 'fi-FI'">
+                                    <select
+                                        class="form-control"
+                                        name="kunta_{{$index}}"
+                                        ng-model="k.kunta"
+                                        ng-options="kunta as kunta.nimi+ ' ('+kunta.kuntanumero+')' for kunta in kunnat track by kunta.id"
+                                        ng-change="kuntaChanged($index)"
+                                        ng-required="true">
+                                        <option value=""></option>
+                                    </select>
+                                    <span
+                                        class="help-block"
+                                        ng-show="form.kunta_{{$index}}.$invalid && form.kunta_{{$index}}.$touched"> 
+                                        <span
+                                            data-i18n="common.mandatory_value"
+                                            data-field="{{ 'common.County' | i18n }}"></span>
+                                    </span>
+                            
+                                </div>
+                                <div class="col-sm-12" ng-show="currentLocale === 'sv-FI'">
+					                <select
+					                    class="form-control"
+					                    name="kunta_{{$index}}"					                    
+					                    ng-model="k.kunta"
+					                    ng-options="kunta as kunta.nimi_se+ ' ('+kunta.kuntanumero+')' for kunta in kunnat track by kunta.id"
+					                    ng-change="kuntaChanged($index)"
+					                    ng-required="true">
+					                    <option value=""></option>
+					                </select>
+		                            <span
+		                                class="help-block"
+		                                ng-show="form.kunta_{{$index}}.$invalid && form.kunta_{{$index}}.$touched"> 
+		                                <span
+		                                    data-i18n="common.mandatory_value"
+		                                    data-field="{{ 'common.County' | i18n }}"></span>
+		                            </span>                            
+		                        </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{ 'has-error': form.kyla_{{$index}}.$invalid && form.kyla_{{$index}}.$touched }">
+                                <div class="col-sm-12">
+                                    <select
+                                        class="form-control"
+                                        name="kyla_{{$index}}"
+                                        ng-model="k.kyla"
+                                        ng-options="kyla as kyla.nimi+' ('+kyla.kylanumero+')' for kyla in k.kylaOptions track by kyla.id"
+                                        ng-change=""
+                                        ng-required="true">
+                                        <option value=""></option>
+                                    </select>
+                                    <span
+                                        class="help-block"
+                                        ng-show="form.kyla_{{$index}}.$invalid && form.kyla_{{$index}}.$touched"> 
+                                        <span
+                                            data-i18n="common.mandatory_value"
+                                            data-field="{{ 'common.Village' | i18n }}"></span>
+                                    </span>
+                               </div>
+                            </div>
+                            <div class="form-group" ng-if="!$first">
+                                <div class="col-sm-12">
+                                    <button type="button" ng-click="deleteKylaKuntaSelection($index)"
+                                        class="btn btn-danger pull-right">
+                                        <span i18n="common.Delete"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </li>
+                    
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                  <button type="button" ng-click="addKylaKuntaSelection()" class="btn btn-success pull-right">
+                                      <span i18n="common.Add"></span>
+                                  </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group"
+            ng-class="{ 'has-error': form.paikkakunta.$invalid && form.paikkakunta.$touched }">
+            <label for="paikkakunta" class="col-sm-3 control-label">
+                <span i18n="common.District"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="paikkakunta" ng-minlength="2"
+                    data-i18n-attr="{placeholder: 'common.District'}"
+                    ng-model="arvoalue.properties.paikkakunta" ng-required="false" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="form.paikkakunta.$invalid && form.paikkakunta.$touched">
+                    <span data-i18n="common.err_min_length"
+                    ng-show="form.paikkakunta.$error.minlength"
+                    data-field="{{ 'common.District' | i18n }}" data-minlength="2"></span>
+                </span>
+            </div>
+        </div>
+        
+        <div
+            class="form-group"
+            ng-class="{ 'has-error': form.inventointinumero.$invalid && form.inventointinumero.$touched }">
+            <label
+                for="nimi"
+                class="col-sm-3 control-label">
+                <span i18n="common.Inventory_number"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input
+                    type="text"
+                    class="form-control"
+                    name="inventointinumero"
+                    data-i18n-attr="{placeholder: 'common.Inventory_number'}"
+                    ng-model="arvoalue.properties.inventointinumero"
+                    ng-required="true"
+                    ng-change="inventointinumero_change()" spellcheck="false" autocomplete="off">
+                <span
+                    class="help-block"
+                    ng-show="form.inventointinumero.$invalid && form.inventointinumero.$touched && uniqueInventointinumero"> <span
+                    data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Inventory_number' | i18n }}"></span>
+                </span>
+                <span
+                    class="help-block"
+                    ng-show="!uniqueInventointinumero"> <span
+                    data-i18n="common.already_in_use"
+                    data-field="{{ 'common.Inventory_number' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.aluetyyppi.$invalid && form.aluetyyppi.$touched }">
+            <label class="col-sm-3 control-label">
+                <span data-i18n="common.Area_type"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <select ng-model="arvoalue.properties.aluetyyppi"
+                    ng-options="aluetyyppi as aluetyyppi.nimi_fi for aluetyyppi in aluetyyppiOptions track by aluetyyppi.id"
+                    name="aluetyyppi" class="form-control"
+                    ng-required="true">
+                    <option value=""><span data-i18n="common.Select"></span></option>
+                </select>
+            </div>
+        </div>
+		<div class="form-group">
+			<label for="arkeologinen_kohde" class="col-sm-3 control-label"> <span
+				i18n="common.Archeological_site"></span>
+			</label>
+			<div class="col-sm-9">
+				<select ng-model="arvoalue.properties.arkeologinen_kohde"
+					ng-options="option.value as option.label for option in noYes"
+					name="arkeologinen_kohde" class="form-control">
+				</select>
+			</div>
+		</div>	
+    </div>
+</div>

@@ -1,0 +1,1378 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default panel-collapsible table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> : {{kunnatTable.total()}} <span
+                                i18n="common.Shown"></span> : {{searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse form-horizontal collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="clearSearchFilter()" 
+                                    data-i18n-attr="{title: 'common.Clear_filter'}">
+                                    <span class="fa fa-ban"></span>
+                                </button>
+                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="refreshTable()"
+                                    data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                    <span class="fa fa-refresh"></span>
+                                </button>   
+                            
+                                <button type="button"
+                                    class="btn btn-success"
+                                    data-ng-show="showCreateNewButton"
+                                    id="btn-create" ng-click="selectKunta()" 
+                                    data-i18n-attr="{title: 'common.Add_county'}">
+                                    <span class="fa fa-plus"></span>
+                                </button>                                
+                            </div>    
+                            <div class="col-md-9 col-sm-12 col-xs-12 searchParams">
+                                            <div id="content">
+                                                <!-- TABIT -->
+                                                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                                                    <li ng-class="{active: kiinteisto_tab}">
+                                                        <input style="display: inline-block;" type="checkbox" data-i18n-attr="{title: 'common.Select_remove_layer'}"
+                                                        ng-model="kiinteisto_taso" ng-change="selectLayer(null, null, true)">
+                                                        <a href="!#kiinteistot" data-toggle="tab" style="display: inline-block;" i18n="common.Estates"></a>
+                                                    </li>
+                                                    <li ng-class="{active: rakennus_tab}">
+                                                        <span style="margin-left:3px">
+                                                            <input style="display: inline-block;" type="checkbox" data-i18n-attr="{title: 'common.Select_remove_layer'}"
+                                                            ng-model="rakennus_taso" ng-change="selectLayer(null, null, true)">
+                                                        </span>
+                                                        <a href="!#rakennukset" data-toggle="tab" style="display: inline-block;" i18n="common.Buildings"></a>
+                                                    </li>
+                                                    <li ng-class="{active: alue_tab}">
+                                                        <span style="margin-left:3px">
+                                                            <input style="display: inline-block;" type="checkbox" data-i18n-attr="{title: 'common.Select_remove_layer'}"
+                                                            ng-model="alue_taso" ng-change="selectLayer(null, null, true)">
+                                                        </span>
+                                                        <a href="!#alueet" data-toggle="tab" style="display: inline-block;" i18n="common.Areas"></a>
+                                                    </li>
+                                                    <li ng-class="{active: arvoalue_tab}">
+                                                        <span style="margin-left:3px">
+                                                            <input style="display: inline-block;" type="checkbox" data-i18n-attr="{title: 'common.Select_remove_layer'}"
+                                                            ng-model="arvoalue_taso" ng-change="selectLayer(null, null, true)">
+                                                        </span> 
+                                                        <a href="!#arvoalueet" data-toggle="tab" style="display: inline-block;" i18n="common.Valueareas"></a>
+                                                    </li>
+                                                </ul>
+                                                <div id="my-tab-content" class="tab-content"
+                                                    style="margin-top: 2px;">
+                                                    <!-- KIINTEISTO BEGIN -->
+                                                    <div class="tab-pane" ng-class="{active: kiinteisto_tab}" id="kiinteistot">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="county"
+                                                                                data-i18n-attr="{placeholder: 'common.County'}"
+                                                                                ng-model="searchCounty"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="countynumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchCountyNumber"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="village"
+                                                                                data-i18n-attr="{placeholder: 'common.Village'}"
+                                                                                ng-model="searchVillage"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="villagenumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchVillageNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="village"
+                                                                                data-i18n-attr="{placeholder: 'common.Property_identifier'}"
+                                                                                ng-model="searchEstateNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="villagenumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchEstateColumnNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                                      
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Estate'}"
+                                                                        ng-model="searchEstateName"
+                                                                        ng-change="search()"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Address'}"
+                                                                        ng-model="searchAddress"
+                                                                        ng-change="search();"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchArvotus"
+                                                                        name="arvotus"
+                                                                        theme="bootstrap"
+                                                                        multiple="true"
+                                                                        ng-required="false"
+                                                                        on-select="search();"
+                                                                        on-remove="addItemBackToList($item, arvotusOptions); search();"
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        data-i18n-attr="{placeholder: 'common.Valuation'}">{{$item | namei18n}}</ui-select-match>
+                                                                    <ui-select-choices
+                                                                        repeat="arvotus.id as arvotus in arvotusOptions | filter: {'nimi_fi': $select.search}">
+                                                                    <div ng-bind-html="arvotus | namei18n | highlight: $select.search">
+                                                                        </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Municipality'}"
+                                                                        ng-model="searchPaikkakunta"
+                                                                        ng-change="search();"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchInventointiprojektiId"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="inventointiprojekti"
+                                                                        ng-change="updateInventointiprojektiId($select.selected.id); clearInventors(); search();"
+                                                                        close-on-select="true"
+                                                                        title="{{$select.selected.nimi}} "
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        allow-clear="true"
+                                                                        data-i18n-attr="{placeholder: 'common.Inventory_project'}">{{$select.selected.nimi}}
+                                                                    </ui-select-match> <ui-select-choices
+                                                                        repeat="ip.id as ip in inventointiprojektit | filter: {'nimi': $select.search} track by $index" 
+                                                                        refresh="getInventointiprojektit($select.search)"
+                                                                        refresh-delay="250">
+                                                                    <div>
+                                                                        <span
+                                                                            ng-bind-html="ip.nimi | highlight: $select.search"
+                                                                            title="{{ip.nimi}}"></span>
+                                                                    </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <!-- Bug in ui-select - without own row it won't align to the left -->
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <ui-select
+                                                                                ng-model="ui.searchInventoija"
+                                                                                theme="bootstrap"
+                                                                                sortable="true"
+                                                                                name="inventoija"
+                                                                                ng-change="updateInventoija($select.selected.id); search();"
+                                                                                title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                                close-on-select="true"
+                                                                                spellcheck="false">
+                                                                                <ui-select-match
+                                                                                    allow-clear="true"
+                                                                                    data-i18n-attr="{placeholder: 'common.Inventor'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                                </ui-select-match> <ui-select-choices
+                                                                                    group-by="'tyyppi'"
+                                                                                    repeat="inventoija.id as inventoija in inventoijat track by $index "
+                                                                                    refresh="getInventoijat($select.search)"
+                                                                                    refresh-delay="250">
+                                                                                <div>
+                                                                                    <span
+                                                                                        ng-bind-html="inventoija.etunimi"
+                                                                                        title="{{inventoija.etunimi}} {{inventoija.sukunimi}}">
+                                                                                    </span>
+                                                                                    <span
+                                                                                        ng-bind-html="inventoija.sukunimi | highlight: $select.search"
+                                                                                        title="{{inventoija.etunimi}} {{inventoija.sukunimi}}">
+                                                                                    </span>
+                                                                                    
+                                                                                </div>
+                                                                                </ui-select-choices> 
+                                                                            </ui-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchLuoja"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="luoja"
+                                                                        ng-change="updateLuoja($select.selected.id); search();"
+                                                                        title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                        close-on-select="true"
+                                                                        spellcheck="false">
+                                                                        <ui-select-match
+                                                                            allow-clear="true"
+                                                                            data-i18n-attr="{placeholder: 'common.Created_by'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                        </ui-select-match> <ui-select-choices
+                                                                            repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                                            refresh="getKayttajat($select.search)"
+                                                                            refresh-delay="250">
+                                                                        <div>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.etunimi"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.sukunimi | highlight: $select.search"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            
+                                                                        </div>
+                                                                        </ui-select-choices> 
+                                                                    </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- KIINTEISTÖ END -->
+                                                    <!-- RAKENNUS BEGIN -->
+                                                    <div class="tab-pane" ng-class="{active: rakennus_tab}" id="rakennukset">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="county"
+                                                                                data-i18n-attr="{placeholder: 'common.County'}"
+                                                                                ng-model="searchCounty"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="countynumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchCountyNumber"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="village"
+                                                                                data-i18n-attr="{placeholder: 'common.Village'}"
+                                                                                ng-model="searchVillage"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="villagenumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchVillageNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="village"
+                                                                                data-i18n-attr="{placeholder: 'common.Property_identifier'}"
+                                                                                ng-model="searchEstateNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="villagenumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchEstateColumnNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>                
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Estate'}"
+                                                                        ng-model="searchEstateName"
+                                                                        ng-change="search()"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Address'}"
+                                                                        ng-model="searchAddress"
+                                                                        ng-change="search();"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchArvotus"
+                                                                        name="arvotus"
+                                                                        theme="bootstrap"
+                                                                        multiple="true"
+                                                                        ng-required="false"
+                                                                        on-select="search();"
+                                                                        on-remove="addItemBackToList($item, arvotusOptions); search();"
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        data-i18n-attr="{placeholder: 'common.Valuation'}">{{$item | namei18n}}</ui-select-match>
+                                                                    <ui-select-choices
+                                                                        repeat="arvotus.id as arvotus in arvotusOptions | filter: {'nimi_fi': $select.search}">
+                                                                    <div ng-bind-html="arvotus | namei18n | highlight: $select.search">
+                                                                        </div>
+                                                                    <ui-select-choices></ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchRakennustyyppi"
+                                                                        name="rakennustyyppi"
+                                                                        theme="bootstrap"
+                                                                        multiple="true"
+                                                                        ng-required="false"
+                                                                        on-select="search();"
+                                                                        on-remove="addItemBackToList($item, rakennustyyppiOptions); search();"
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        data-i18n-attr="{placeholder: 'common.Building_type'}">{{$item | namei18n}}</ui-select-match>
+                                                                    <ui-select-choices
+                                                                        repeat="rakennustyyppi.id as rakennustyyppi in rakennustyyppiOptions | filter: {'nimi_fi': $select.search}">
+                                                                    <div ng-bind-html="rakennustyyppi | namei18n | highlight: $select.search">
+                                                                        </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select 
+                                                                        theme="bootstrap"
+                                                                        ng-model="ui.searchDesigner"
+                                                                        ng-change="updateSuunnittelija($select.selected.id); search();"
+                                                                        name="suunnittelija"
+                                                                        spellcheck="false">
+                                                                        <ui-select-match 
+                                                                            data-i18n-attr="{placeholder: 'common.Architect'}"
+                                                                            allow-clear="true">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}
+                                                                        </ui-select-match>
+                                                                        <ui-select-choices        
+                                                                            repeat="suunnittelija.id as suunnittelija in suunnittelijat track by $index "
+                                                                            refresh="getSuunnittelijat($select.search)"
+                                                                            refresh-delay="250">
+                                                                            <div>                                                                
+                                                                                <span
+                                                                                    ng-bind-html="suunnittelija.etunimi | highlight: $select.search">
+                                                                                </span>
+                                                                                <span
+                                                                                    ng-bind-html="suunnittelija.sukunimi | highlight: $select.search">
+                                                                                </span>
+                                                                            </div>
+                                                                        </ui-select-choices> 
+                                                                    </ui-select>                                                                        
+                                                                        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                data-i18n-attr="{placeholder: 'common.Municipality'}"
+                                                                                ng-model="searchPaikkakunta"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                               <!-- <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <ui-select
+                                                                        ng-model="ui.searchInventointiprojektiId"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="inventointiprojekti"
+                                                                        ng-change="clearInventors(); search();"
+                                                                        close-on-select="true"
+                                                                        title="{{$select.selected.nimi}} "
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        allow-clear="true"
+                                                                        data-i18n-attr="{placeholder: 'common.Inventory_project'}">{{$select.selected.nimi}}
+                                                                    </ui-select-match> <ui-select-choices
+                                                                        repeat="ip.id as ip in inventointiprojektit | filter: {'nimi': $select.search} track by $index" 
+                                                                        refresh="getInventointiprojektit($select.search)"
+                                                                        refresh-delay="250">
+                                                                    <div>
+                                                                        <span
+                                                                            ng-bind-html="ip.nimi | highlight: $select.search"
+                                                                            title="{{ip.nimi}}"></span>
+                                                                    </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
+                                                                <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchLuoja"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="luoja"
+                                                                        ng-change="updateLuoja($select.selected.id); search();"
+                                                                        title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                        close-on-select="true"
+                                                                        spellcheck="false">
+                                                                        <ui-select-match
+                                                                            allow-clear="true"
+                                                                            data-i18n-attr="{placeholder: 'common.Created_by'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                        </ui-select-match> <ui-select-choices
+                                                                            repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                                            refresh="getKayttajat($select.search)"
+                                                                            refresh-delay="250">
+                                                                        <div>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.etunimi"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.sukunimi | highlight: $select.search"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            
+                                                                        </div>
+                                                                        </ui-select-choices> 
+                                                                    </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            </div>
+                                                        </div> 
+                                                 <div class="row">  <div class="col-md-12">     
+                    <div class="panel-heading collapsed  btn-default" role="tab" data-toggle="collapse"
+                        data-target="#lisatiedotPanel" style="cursor:pointer;">
+                        <h4 class="panel-title">
+                            <span i18n="common.Detailed_search"></span>
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body form-horizontal panel-collapse collapse"
+                        id="lisatiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">                            
+                            <div class="col-md-12 col-sm-12 col-xs-12">                                                              
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="rakennustyypin_kuvaus"
+                                                ng-model="searchRakennustyypin_kuvaus"
+                                                ng-change="search()" ng-model-options='{debounce: 500}'
+                                                data-i18n-attr="{placeholder: 'common.Building_type_description'}"
+                                                spellcheck="false"
+                                                autocomplete="off">
+                                        </div>
+                                </div>
+                                <div class="form-group col-md-3">                                    
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                                <input type="number" class="form-control" name="rakennusvuosi_alku"
+                                                    ng-model="searchRakennusvuosi_alku" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                    data-i18n-attr="{placeholder: 'common.Construction_year_start'}"
+                                                    spellcheck="false"
+                                                    autocomplete="off">                                                
+                                                    <span class="input-group-addon">-</span>
+                                                <input type="number" class="form-control" name="rakennusvuosi_lopetus"
+                                                    ng-model="searchRakennusvuosi_lopetus" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                    data-i18n-attr="{placeholder: 'common.Construction_year_end'}"
+                                                    spellcheck="false"
+                                                    autocomplete="off">                                                 
+                                    </div></div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+
+                                            <input type="text" class="form-control"
+                                                name="rakennusvuosi_kuvaus" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                ng-model="searchRakennusvuosi_kuvaus"
+                                                data-i18n-attr="{placeholder: 'common.Construction_year_description'}"
+                                                spellcheck="false"
+                                                autocomplete="off">
+                                    </div>
+                                </div>   
+                                <div class="form-group col-md-3">                                    
+                                    <div class="col-md-12">
+                                    <div class="input-group">
+                                                <input type="number" class="form-control" name="muutosvuosi_alku"
+                                                    ng-model="searchMuutosvuosi_alku" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                    data-i18n-attr="{placeholder: 'common.Alteration_year_start'}"
+                                                    spellcheck="false"
+                                                    autocomplete="off">                                                
+                                                    <span class="input-group-addon">-</span>
+                                                <input type="number" class="form-control" name="muutosvuosi_lopetus"
+                                                    ng-model="searchMuutosvuosi_lopetus" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                    data-i18n-attr="{placeholder: 'common.Alteration_year_end'}"
+                                                    spellcheck="false"
+                                                    autocomplete="off">                                                  
+                                    </div></div>
+                                </div>                                
+                                
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="muutosvuosi_kuvaus" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                ng-model="searchMuutosvuosi_kuvaus"
+                                                data-i18n-attr="{placeholder: 'common.Alteration_year_description'}"
+                                                spellcheck="false"
+                                                autocomplete="off">
+                                    </div>
+                                </div>  
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchAlkuperainen_kaytto"
+                                                name="alkuperainen_kaytto" theme="bootstrap" multiple="true"
+                                                ng-required="false"
+                                                on-select="search();"
+                                                on-remove="addItemBackToList($item, alkuperainen_kayttoOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Original_usage'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="alkuperainen_kaytto.id as alkuperainen_kaytto in alkuperainen_kayttoOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="alkuperainen_kaytto | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>                                
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchNykykaytto"
+                                                name="nykykaytto" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, nykykayttoOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Common_usage'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="nykykaytto.id as nykykaytto in nykykayttoOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="nykykaytto | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchPerustus"
+                                                name="perustus" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, perustusOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Foundation'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="perustus.id as perustus in perustusOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="perustus | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchRunko"
+                                                name="runko" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, runkoOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Frame'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="runko.id as runko in runkoOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="runko | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchVuoraus"
+                                                name="vuoraus" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, vuorausOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Lining'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="vuoraus.id as vuoraus in vuorausOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="vuoraus | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchKatto"
+                                                name="katto" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, kattoOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Ceiling'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="katto.id as katto in kattoOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="katto | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchKate"
+                                                name="kate" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, kateOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Cover'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="kate.id as kate in kateOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="kate | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchKunto"
+                                                name="kunto" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, kuntoOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Condition'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="kunto.id as kunto in kuntoOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="kunto | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12"> 
+                                            <ui-select ng-model="ui.searchNykytyyli"
+                                                name="nykytyyli" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, nykytyyliOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Contemporary_style'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="nykytyyli.id as nykytyyli in nykytyyliOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="nykytyyli | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchPurettu"
+                                                name="katto" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, purettuOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Demolished'}">{{$item.label}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="purettu.value as purettu in purettuOptions | filter: {'label': $select.search}">
+                                            <div ng-bind-html="purettu.label | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <ui-select ng-model="ui.searchKulttuurihistorialliset_arvot"
+                                                name="kulttuurihistorialliset_arvot" theme="bootstrap" multiple="true"
+                                                ng-required="false" on-select="search();"
+                                                on-remove="addItemBackToList($item, kulttuurihistorialliset_arvotOptions); search();"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Culturohistorical_values'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="kulttuurihistorialliset_arvot.id as kulttuurihistorialliset_arvot in kulttuurihistorialliset_arvotOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="kulttuurihistorialliset_arvot | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                name="kuvaukset" ng-change="search()" ng-model-options='{debounce: 500}'
+                                                ng-model="searchKuvaukset"
+                                                data-i18n-attr="{placeholder: 'common.Descriptions'}"
+                                                spellcheck="false"
+                                                autocomplete="off">
+                                    </div>
+                                </div>   
+                                                            
+                            </div>                          
+                        </div>
+                    </div>
+</div></div>
+
+
+
+                                                     
+                                                    </div>
+                                                    <!-- RAKENNUS END -->
+                                                    <!-- ALUEET BEGIN -->
+                                                    <div class="tab-pane" ng-class="{active: alue_tab}" id="alueet">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="county"
+                                                                                data-i18n-attr="{placeholder: 'common.County'}"
+                                                                                ng-model="searchCounty"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="countynumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchCountyNumber"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="village"
+                                                                                data-i18n-attr="{placeholder: 'common.Village'}"
+                                                                                ng-model="searchVillage"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="villagenumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchVillageNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Area'}"
+                                                                        ng-model="searchAreaName"
+                                                                        ng-change="search()"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Municipality'}"
+                                                                        ng-model="searchPaikkakunta"
+                                                                        ng-change="search();"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchInventointiprojektiId"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="inventointiprojekti"
+                                                                        ng-change="clearInventors(); search();"
+                                                                        close-on-select="true"
+                                                                        title="{{$select.selected.nimi}} "
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        allow-clear="true"
+                                                                        data-i18n-attr="{placeholder: 'common.Inventory_project'}">{{$select.selected.nimi}}
+                                                                    </ui-select-match> <ui-select-choices
+                                                                        repeat="ip.id as ip in inventointiprojektit | filter: {'nimi': $select.search} track by $index" 
+                                                                        refresh="getInventointiprojektit($select.search)"
+                                                                        refresh-delay="250">
+                                                                    <div>
+                                                                        <span
+                                                                            ng-bind-html="ip.nimi | highlight: $select.search"
+                                                                            title="{{ip.nimi}}"></span>
+                                                                    </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchInventoija"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="inventoija"
+                                                                        ng-change="updateInventoija($select.selected.id); search();"
+                                                                        title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                        close-on-select="true"
+                                                                        spellcheck="false">
+                                                                        <ui-select-match
+                                                                            allow-clear="true"
+                                                                            data-i18n-attr="{placeholder: 'common.Inventor'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                        </ui-select-match> <ui-select-choices
+                                                                            group-by="'tyyppi'"
+                                                                            repeat="inventoija.id as inventoija in inventoijat track by $index "
+                                                                            refresh="getInventoijat($select.search)"
+                                                                            refresh-delay="250">
+                                                                        <div>
+                                                                            <span
+                                                                                ng-bind-html="inventoija.etunimi"
+                                                                                title="{{inventoija.etunimi}} {{inventoija.sukunimi}}">
+                                                                            </span>
+                                                                            <span
+                                                                                ng-bind-html="inventoija.sukunimi | highlight: $select.search"
+                                                                                title="{{inventoija.etunimi}} {{inventoija.sukunimi}}">
+                                                                            </span>
+                                                                            
+                                                                        </div>
+                                                                        </ui-select-choices> 
+                                                                    </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchLuoja"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="luoja"
+                                                                        ng-change="updateLuoja($select.selected.id); search();"
+                                                                        title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                        close-on-select="true"
+                                                                        spellcheck="false">
+                                                                        <ui-select-match
+                                                                            allow-clear="true"
+                                                                            data-i18n-attr="{placeholder: 'common.Created_by'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                        </ui-select-match> <ui-select-choices
+                                                                            repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                                            refresh="getKayttajat($select.search)"
+                                                                            refresh-delay="250">
+                                                                        <div>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.etunimi"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.sukunimi | highlight: $select.search"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            
+                                                                        </div>
+                                                                        </ui-select-choices> 
+                                                                    </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ALUEET END -->
+                                                    <!-- ARVOALUEET BEGIN -->
+                                                    <div class="tab-pane" ng-class="{active: arvoalue_tab}" id="arvoalueet">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="county"
+                                                                                data-i18n-attr="{placeholder: 'common.County'}"
+                                                                                ng-model="searchCounty"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="countynumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchCountyNumber"
+                                                                                ng-change="search();"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="col-xs-7 col-sm-7 col-md-8 col-lg-9"
+                                                                            style="padding-right: 0px">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                                                name="village"
+                                                                                data-i18n-attr="{placeholder: 'common.Village'}"
+                                                                                ng-model="searchVillage"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                                            style="padding-left: 0px;">
+                                                                            <input type="text"
+                                                                                class="form-control"
+                                                                                style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                                                name="villagenumber"
+                                                                                data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                                                ng-model="searchVillageNumber"
+                                                                                ng-change="search()"
+                                                                                ng-model-options='{debounce: 500}'
+                                                                                spellcheck="false" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Area'}"
+                                                                        ng-model="searchAreaName"
+                                                                        ng-change="search()"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Valuearea'}"
+                                                                        ng-model="searchValueareaName"
+                                                                        ng-change="search()"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                       
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchAluetyyppi"
+                                                                        name="aluetyyppi"
+                                                                        theme="bootstrap"
+                                                                        multiple="true"
+                                                                        ng-required="false"
+                                                                        on-select="search();"
+                                                                        on-remove="addItemBackToList($item, aluetyyppiOptions); search();"
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        data-i18n-attr="{placeholder: 'common.Area_type'}">{{$item | namei18n}}</ui-select-match>
+                                                                    <ui-select-choices
+                                                                        repeat="aluetyyppi.id as aluetyyppi in aluetyyppiOptions | filter: {'nimi_fi': $select.search}">
+                                                                    <div ng-bind-html="aluetyyppi | namei18n | highlight: $select.search">
+                                                                        </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchArvotus"
+                                                                        name="arvotus"
+                                                                        theme="bootstrap"
+                                                                        multiple="true"
+                                                                        ng-required="false"
+                                                                        on-select="search();"
+                                                                        on-remove="addItemBackToList($item, arvotusOptions); search();"
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        data-i18n-attr="{placeholder: 'common.Valuation'}">{{$item | namei18n}}</ui-select-match>
+                                                                    <ui-select-choices
+                                                                        repeat="arvotus.id as arvotus in arvotusOptions | filter: {'nimi_fi': $select.search}">
+                                                                    <div ng-bind-html="arvotus | namei18n | highlight: $select.search">
+                                                                        </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <input type="text"
+                                                                        class="form-control"
+                                                                        data-i18n-attr="{placeholder: 'common.Municipality'}"
+                                                                        ng-model="searchPaikkakunta"
+                                                                        ng-change="search();"
+                                                                        ng-model-options='{debounce: 500}'
+                                                                        spellcheck="false" autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                   <ui-select
+                                                                        ng-model="ui.searchInventointiprojektiId"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="inventointiprojekti"
+                                                                        ng-change="clearInventors(); search();"
+                                                                        close-on-select="true"
+                                                                        title="{{$select.selected.nimi}} "
+                                                                        spellcheck="false">
+                                                                    <ui-select-match
+                                                                        allow-clear="true"
+                                                                        data-i18n-attr="{placeholder: 'common.Inventory_project'}">{{$select.selected.nimi}}
+                                                                    </ui-select-match> <ui-select-choices
+                                                                        repeat="ip.id as ip in inventointiprojektit | filter: {'nimi': $select.search} track by $index" 
+                                                                        refresh="getInventointiprojektit($select.search)"
+                                                                        refresh-delay="250">
+                                                                    <div>
+                                                                        <span
+                                                                            ng-bind-html="ip.nimi | highlight: $select.search"
+                                                                            title="{{ip.nimi}}"></span>
+                                                                    </div>
+                                                                    </ui-select-choices> </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <!-- Bug in ui-select - without own row it won't align to the left -->
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="col-md-12">
+                                                                            <ui-select
+                                                                                ng-model="ui.searchInventoija"
+                                                                                theme="bootstrap"
+                                                                                sortable="true"
+                                                                                name="inventoija"
+                                                                                ng-change="updateInventoija($select.selected.id); search();"
+                                                                                title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                                close-on-select="true"
+                                                                                spellcheck="false">
+                                                                                <ui-select-match
+                                                                                    allow-clear="true"
+                                                                                    data-i18n-attr="{placeholder: 'common.Inventor'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                                </ui-select-match> <ui-select-choices
+                                                                                    group-by="'tyyppi'"
+                                                                                    repeat="inventoija.id as inventoija in inventoijat track by $index "
+                                                                                    refresh="getInventoijat($select.search)"
+                                                                                    refresh-delay="250">
+                                                                                <div>
+                                                                                    <span
+                                                                                        ng-bind-html="inventoija.etunimi"
+                                                                                        title="{{inventoija.etunimi}} {{inventoija.sukunimi}}">
+                                                                                    </span>
+                                                                                    <span
+                                                                                        ng-bind-html="inventoija.sukunimi | highlight: $select.search"
+                                                                                        title="{{inventoija.etunimi}} {{inventoija.sukunimi}}">
+                                                                                    </span>
+                                                                                    
+                                                                                </div>
+                                                                                </ui-select-choices> 
+                                                                            </ui-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <ui-select
+                                                                        ng-model="ui.searchLuoja"
+                                                                        theme="bootstrap"
+                                                                        sortable="true"
+                                                                        name="luoja"
+                                                                        ng-change="updateLuoja($select.selected.id); search();"
+                                                                        title="{{$select.selected.etunimi}} {{$select.selected.sukunimi}}"
+                                                                        close-on-select="true"
+                                                                        spellcheck="false">
+                                                                        <ui-select-match
+                                                                            allow-clear="true"
+                                                                            data-i18n-attr="{placeholder: 'common.Created_by'}">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}                                                                            
+                                                                        </ui-select-match> <ui-select-choices
+                                                                            repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                                            refresh="getKayttajat($select.search)"
+                                                                            refresh-delay="250">
+                                                                        <div>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.etunimi"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            <span
+                                                                                ng-bind-html="kayttaja.sukunimi | highlight: $select.search"
+                                                                                title="{{kayttaja.etunimi}} {{kayttaja.sukunimi}}">
+                                                                            </span>
+                                                                            
+                                                                        </div>
+                                                                        </ui-select-choices> 
+                                                                    </ui-select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ARVOALUEET END -->
+                                                </div>
+                                            </div>
+                                        </div>                       
+                        </div>
+                    </div>
+                    <table ng-table="kunnatTable" class="table table-striped table-bordered"
+                        template-pagination="pages/templates/table-pagination.html"
+                        show-filter="false">
+                        <tr ng-repeat="kunta in $data" style="cursor: pointer"
+                            ng-click="selectKunta(kunta)">
+                            <td data-title="getColumnName('County')" sortable="'properties.nimi'"
+                                filter="{ 'properties.kunta': 'text' }">{{kunta.properties.nimi}}</td>
+                            <td data-title="getColumnName('County_number')"
+                                sortable="'properties.kuntanumero'"
+                                filter="{ 'properties.kuntanumero': 'text' }">{{kunta.properties.kuntanumero}}</td>
+                             <td data-title="getColumnName('Added_by')"
+                                filter="{ 'properties.luoja': 'number' }">
+                                <div ng-if="kunta.properties.luoja.etunimi !== 'System' && kunta.properties.luoja.sukunimi !== 'System'">                                                                
+                                    {{kunta.properties.luoja.etunimi}} {{kunta.properties.luoja.sukunimi}}     
+                                </div>                                                        
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

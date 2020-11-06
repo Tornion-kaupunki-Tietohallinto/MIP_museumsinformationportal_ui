@@ -1,0 +1,10 @@
+<div class="popover" tabindex="-1">
+    <div class="arrow"></div>     
+    <h3 class="popover-title" ng-bind="title" ng-show="title"></h3>    
+    <div class="popover-content">
+        <span>Id:</span>{{raporttipyynto.id}}<br />
+        <span>Kuvaus:</span>{{raporttipyynto.report.description}}<br />
+        <span>Tila:</span>{{raporttipyynto.status.id | mipReportStatusTranslator }}<br />
+        <div ng-if="raporttipyynto.status.id == 3"><span>Tiedostonimi:</span>{{raporttipyynto.outputFile | mipOutputFilename}}</div><br />       
+    </div>
+</div>

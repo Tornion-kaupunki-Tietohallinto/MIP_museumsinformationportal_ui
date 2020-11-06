@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="mip" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="mip" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="mip" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<!-- ng-strict-di -->
+<html lang="fi-FI" data-ng-app="mip" class="no-js">
+<!--<![endif]-->
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta name="description" content="MIP Museon informaatioportaali">
+<title>MIP</title>
+<link rel="stylesheet" href="resources/css/normalize.css">
+<!-- Load Bootstrap CSS -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="lib/bower_components/bootstrap/dist/css/bootstrap.css">
+
+<link rel="stylesheet" href="lib/other/jquery-ui/css/jquery-ui.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="lib/bower_components/bootstrap/dist/css/bootstrap-theme.css">
+<link rel="stylesheet" href="lib/bower_components/angular-motion/dist/angular-motion.css">
+<link rel="stylesheet" href="lib/bower_components/ng-table/dist/ng-table.css">
+<link rel="stylesheet" href="lib/bower_components/openlayers/ol.css" />
+<link rel="stylesheet"
+    href="lib/bower_components/angular-openlayers-directive/dist/angular-openlayers-directive.css" />
+<link rel="stylesheet" type="text/css"
+    href="lib/bower_components/ng-sortable/dist/ng-sortable.min.css">
+<link rel="stylesheet" type="text/css" href="lib/bower_components/angular-ui-select/dist/select.css">
+<!-- OPTIONAL: default style -->
+<link rel="stylesheet" type="text/css"
+    href="lib/bower_components/ng-sortable/dist/ng-sortable.style.min.css">
+<link rel="stylesheet" href="lib/bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="lib/bower_components/angularjs-slider/dist/rzslider.css" />
+<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="resources/css/slider_custom_style.css">
+</head>
+<body>
+    <!-- HEADER AND NAVBAR -->
+    <header>
+        <nav data-ng-controller="NavbarController"
+            data-ng-class="{'navbar-show': authenticated.Auth}"
+            class="navbar navbar-default navbar-mip">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only"> <span i18n="common.Toggle_navigation"></span>
+                        </span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                            class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">
+                        <span i18n="common.Museum_information_portal"></span>
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!-- <ul class="nav navbar-nav">
+						<li class="active"><a href="#">MIP <span class="sr-only">(current)</span></a></li>
+						<li><a href="#">Arkeologinen data</a></li>
+						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><td><span i18n="common.Navigate"></span></td> <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li role="separator" class="divider"></li>
+								<li><a href="#/kiinteistot"><td><span i18n="common.Estates"></span></td></a></li>
+								<li><a href="#/rakennukset"><td><span i18n="common.Buildings"></span></td></a></li>
+								<li><a href="#/porrashuoneet"><td><span i18n="common.Staircases"></span></td></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#/"><td><span i18n="common.Areas"></span></td></a></li>
+								<li><a href="#/"><td><span i18n="common.Valueareas"></span></td></a></li>
+								<li><a href="#/">Matkaraportit</a></li>
+								<li><a href="#/"><td><span i18n="common.Inventory_projects"></span></td></a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="#/"><td><span i18n="common.Architects"></span></td></a></li>
+								<li><a href="#/"><td><span i18n="common.Counties"></span></td></a></li>
+								<li><a href="#/"><td><span i18n="common.Villages"></span></td></a></li>
+							</ul></li> 
+					</ul> -->
+         <!-- 
+                    <form class="navbar-form navbar-left" role="search"
+                        ng-controller="SearchController">
+                        <div class="form-group">
+                            <input type="text" name="qry" class="form-control" ng-model="qry"
+                                ng-change="search()" ng-model-options='{debounce: 500}'
+                                placeholder="Etsi ..." bs-typeahead
+                                bs-options="tulos as tulos.nimi for tulos in search()"
+                                limit={{searchLimit}}+1 comparator="comp">
+                        </div>
+                        <button type="submit" class="btn btn-default"
+                            ng-click="navigateToSearchPage()">
+                                <span i18n="common.Search"></span>
+                        </button>
+                    </form>
+                     -->
+                    <ul class="nav navbar-nav navbar-right">
+                    <!-- 
+                        <li class="dropdown" ng-controller="RaporttiNavbarController" ng-show="showMenu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                 <span i18n="common.Reports"></span><span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="rr in reportRequests" ng-class="{link: rr.status.id == 3}" ng-click="rr.status.id == 3 && downloadReport(rr)">
+                                    <a>
+                                        {{rr.parameters | mipReportDisplayName}} ( {{rr.created | date: 'dd.MM.yyyy HH:mm:ss'}} {{rr.status.id | mipReportStatusTranslator }} )
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                     -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" name="usrEmail" aria-expanded="false">
+                                {{userProperties.user.sahkoposti}} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li ng-click="showModal()">
+                                    <a>
+                                        <span i18n="common.Settings"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-click="getKayttoohje()">
+                                        <span i18n="common.Userguide"></span>
+                                    </a>
+                                </li>
+<!--                            <li>
+                                    <a ng-click="getReleasenotes()">
+                                        <span i18n="common.Release_notes"></span>
+                                    </a>
+                                </li>
+-->                                
+                                <li role="separator" class="divider"></li>
+                                <li data-ng-controller="AuthController">
+                                    <a ng-click="logout()">
+                                        <span i18n="common.Logout"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li mip-modal-menu-manager class="dropdown keep-open"></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+    <div>
+        <div class="container-fluid" id="main_mip_app">
+            <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+            <div data-ng-view></div>
+        </div>
+    </div>
+    <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+    <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
+    <script src="lib/bower_components/jquery/dist/jquery.js"></script>
+    <script src="lib/other/jquery-ui/jquery-ui.js"></script>
+    <script src="lib/other/angular/angular.js"></script>
+    <script src="lib/bower_components/angular-route/angular-route.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="lib/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- AngularJS Application Scripts -->
+    <script src="lib/bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="lib/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <!-- <script src="lib/bower_components/angular-bootstrap/ui-bootstrap.js"></script> -->
+    <script src="lib/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <!-- <script src="lib/bower_components/openlayers/ol.js"></script>-->
+    <script src="lib/bower_components/openlayers/ol-debug.js"></script>
+    <script
+        src="lib/bower_components/angular-openlayers-directive/dist/angular-openlayers-directive.js"></script>
+    <script src="lib/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="lib/other/angular-localization/dist/angular-localization.js"></script>
+    <script src="lib/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="lib/bower_components/ng-table/dist/ng-table.js"></script>
+    <script src="lib/other/spin.js/spin.js"></script>
+    <script src="lib/other/angular-spinner/angular-spinner.js"></script>
+    <script src="lib/other/angular-loading-spinner/angular-loading-spinner.js"></script>  
+    <script src="lib/bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="lib/other/proj4.js"></script>
+    <!-- <script src="lib/other/ol3-layerswitcher.js"></script> -->
+    <script src="lib/bower_components/angular-hotkeys/build/hotkeys.js"></script>
+    <script type="text/javascript" src="lib/bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+    <script src="lib/bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="lib/bower_components/exif-js/exif.js"></script>
+    <script src="lib/bower_components/angular-cache/dist/angular-cache.js"></script>    
+    <script src="lib/bower_components/angularjs-slider/dist/rzslider.min.js"></script>
+    <script src="lib/other/polyfills.js"></script>
+    
+    <!-- COMMON -->  
+	<!-- build:js ./app.js -->
+    <script src="app.js"></script>          
+    <!-- build:js ./directives/directives.js -->
+    <script src="directives/directives.js"></script>    
+    <!-- build:js ./directives/kylakuntavalitsin/mipkylakuntavalitsin.js -->
+    <script src="directives/kylakuntavalitsin/mipkylakuntavalitsin.js"></script>  
+    <!-- build:js ./directives/kylakuntavalitsin/kuntavalitsin_haku.js -->
+    <script src="directives/kylakuntavalitsin/kuntavalitsin_haku.js"></script>  
+    <!-- build:js ./directives/kylakuntavalitsin/kylavalitsin_haku.js -->
+    <script src="directives/kylakuntavalitsin/kylavalitsin_haku.js"></script>  
+    <!-- build:js ./directives/kenttavalitsin/mipkenttavalitsin.js -->
+    <script src="directives/kenttavalitsin/mipkenttavalitsin.js"></script>  
+    <!-- build:js ./directives/modalmenumanager/mipmodalmenumanager.js -->
+    <script src="directives/modalmenumanager/mipmodalmenumanager.js"></script>  
+    <!-- build:js ./directives/dialog/mipdialog.js -->
+    <script src="directives/dialog/mipdialog.js"></script>  
+    <!-- build:js ./directives/imageBrowser.js -->
+    <script src="directives/imageBrowser.js"></script>
+    <!-- build:js ./directives/entityBrowser.js -->
+    <script src="directives/entityBrowser.js"></script>
+
+    <!-- build:js ./general/filters/filters.js -->
+    <script src="filters/filters.js"></script>
+    <!-- build:js ./general/listService.js -->
+    <script src="general/listService.js"></script>
+    <!-- build:js ./general/tabService.js -->
+    <script src="general/tabService.js"></script>
+    <!-- build:js ./general/alertService.js -->
+    <script src="general/alertService.js"></script>
+    <!-- build:js ./general/modalService.js -->
+    <script src="general/modalService.js"></script>
+    <!-- build:js ./general/modalServiceExtension.js -->
+    <script src="general/modalServiceExtension.js"></script>
+    <!-- build:js ./general/modalServiceArkExtension.js -->
+    <script src="general/modalServiceArkExtension.js"></script>        
+    <!-- build:js ./general/modalFunctions.js -->
+    <script src="general/modalFunctions.js"></script>  
+    <!-- build:js ./general/listControllerFunctions.js -->
+    <script src="general/listControllerFunctions.js"></script>
+    <!-- build:js ./general/dropdownListController.js -->
+    <script src="general/dropdownListController.js"></script>
+    <!-- build:js ./general/arkDropdownListController.js -->
+    <script src="general/arkDropdownListController.js"></script>
+    <!-- build:js ./general/navbarController.js -->
+    <script src="general/navbarController.js"></script>
+    <!-- build:js ./general/search/searchService.js -->
+    <script src="general/search/searchService.js"></script>
+    <!-- build:js ./general/search/searchController.js -->
+    <script src="general/search/searchController.js"></script>
+    <!-- build:js ./general/search/searchPageController.js -->
+    <script src="general/search/searchPageController.js"></script>
+    <!--  build:js ./img_file_search/arkSearchListController.js -->
+    <script src="img_file_search/arkSearchListController.js"></script>
+    <!--  build:js ./img_file_search/rakSearchListController.js -->
+    <script src="img_file_search/rakSearchListController.js"></script>
+    <!--  build:js ./img_file_search/arkMapSearchListController.js -->
+    <script src="img_file_search/arkMapSearchListController.js"></script>
+    <!-- build:js ./tiedosto/fileService.js -->
+    <script src="tiedosto/fileService.js"></script>
+    <!-- build:js ./rak/tiedosto/fileController.js -->
+    <script src="rak/tiedosto/fileController.js"></script>
+    <!-- build:js ./rak/tiedosto/fileUploadController.js -->
+    <script src="rak/tiedosto/fileUploadController.js"></script>
+    <!-- build:js ./directives/raportit/kuntaraportti.js -->
+    <script src="directives/raportit/kuntaraportti.js"></script>   
+    <!-- build:js ./directives/raportit/kiinteistoraportti.js -->
+    <script src="directives/raportit/kiinteistoraportti.js"></script>    
+    <!-- build:js ./directives/raportit/matkaraportti_kooste.js -->
+    <script src="directives/raportit/matkaraportti_kooste.js"></script>
+    <!-- build:js ./directives/raportit/inventointiprojektiraportti.js -->
+    <script src="directives/raportit/inventointiprojektiraportti.js"></script>       
+    <!-- build:js ./directives/raportit/vuosiraportti.js -->
+    <script src="directives/raportit/vuosiraportti.js"></script>       
+    <!-- build:js .directives/raportit/yhteenvetoraportti.js -->
+    <script src="directives/raportit/yhteenvetoraportti.js"></script>
+    <!-- build:js ./directives/raportit/koriraportti.js -->
+    <script src="directives/raportit/koriraportti.js"></script>     
+    <!-- build:js ./directives/tekijanoikeuslausekevalitsin/miptekijanoikeusvalitsin.js -->
+    <script src="directives/tekijanoikeuslausekevalitsin/miptekijanoikeuslausekevalitsin.js"></script>
+    <!-- build:js ./kirjautuminen/authController.js -->
+    <script src="kirjautuminen/authController.js"></script>
+    <!-- build:js ./kirjautuminen/authService.js -->
+    <script src="kirjautuminen/authService.js"></script>
+    <!-- build:js ./kirjautuminen/loginInfoController.js -->
+    <script src="kirjautuminen/loginInfoController.js"></script>
+    <!-- build:js ./kirjautuminen/sessionService.js -->
+    <script src="kirjautuminen/sessionService.js"></script>
+    <!-- build:js ./kartta/mapController.js -->
+    <script src="kartta/mapController.js"></script>
+    <!-- build:js ./kartta/featureinfoController.js -->
+    <script src="kartta/featureinfoController.js"></script>
+    <!-- build:js ./kartta/mapService.js -->
+    <script src="kartta/mapService.js"></script>
+    <!-- build:js ./kartta/featureStyleService.js -->
+    <script src="kartta/featureStyleService.js"></script>
+    <!-- build:js ./kayttajat/userListController.js -->
+    <script src="kayttajat/userListController.js"></script>
+    <!-- build:js ./kayttajat/userService.js -->
+    <script src="kayttajat/userService.js"></script>
+    <!-- build:js ./kayttajat/userController.js -->
+    <script src="kayttajat/userController.js"></script>
+    <!-- build:js ./kylat/kylaService.js -->
+    <script src="kylat/kylaService.js"></script>
+    <!-- build:js ./kylat/kylaController.js -->
+    <script src="kylat/kylaController.js"></script>
+    <!-- build:js ./kylat/kylaListController.js -->
+    <script src="kylat/kylaListController.js"></script>
+    <!-- build:js ./kunnat/kuntaService.js -->
+    <script src="kunnat/kuntaService.js"></script>
+    <!-- build:js ./kunnat/kuntaListController.js -->
+    <script src="kunnat/kuntaListController.js"></script>
+    <!-- build:js ./kunnat/kuntaController.js -->
+    <script src="kunnat/kuntaController.js"></script>
+    <!-- build:js ./muutoshistoria/muutoshistoriaService.js -->
+    <script src="muutoshistoria/muutoshistoriaService.js"></script>
+    <!-- build:js ./muutoshistoria/muutoshistoriaController.js -->
+    <script src="muutoshistoria/muutoshistoriaController.js"></script>
+    <!-- build:js ./raportit/raporttiService.js -->
+    <script src="raportit/raporttiService.js"></script>
+    <!-- build:js ./raportit/raporttiListController.js -->
+    <script src="raportit/raporttiListController.js"></script>
+    <!-- build:js ./raportit/raporttiController.js -->
+    <script src="raportit/raporttiController.js"></script>
+    <!-- build:js ./raportit/raporttiNavbarController.js -->
+    <script src="raportit/raporttiNavbarController.js"></script>
+    <!-- build:js ./korit/koriService.js -->
+    <script src="korit/koriService.js"></script>
+	<!-- build:js ./korit/koriController.js -->
+    <script src="korit/koriController.js"></script>
+	<!-- build:js ./korit/koriListController.js -->
+    <script src="korit/koriListController.js"></script>
+	<!-- build:js ./korit/rakKoriListController.js -->
+    <script src="korit/rakKoriListController.js"></script>
+	<!-- build:js ./korit/arkKoriListController.js -->
+    <script src="korit/arkKoriListController.js"></script>  
+    <!-- build:js ./directives/kori/korityyppi_direktiivi.js -->
+    <script src="directives/kori/korityyppi_direktiivi.js"></script>        
+    <!-- build:js ./directives/kuvasiirrin/kuvasiirrin.js -->
+    <script src="directives/kuvasiirrin/kuvasiirrin.js"></script>          
+    <!-- build:js ./tekijanoikeuslausekkeet/tekijanoikeuslausekeService.js -->
+    <script src="tekijanoikeuslausekkeet/tekijanoikeuslausekeService.js"></script>
+    <!-- build:js ./tekijanoikeuslausekkeet/tekijanoikeuslausekeListController.js -->
+    <script src="tekijanoikeuslausekkeet/tekijanoikeuslausekeListController.js"></script>
+    
+    <!-- RAKENNUSINVENTOINTI -->
+    <!-- build:js ./rak/kiinteistot/kiinteistoService.js -->
+    <script src="rak/kiinteistot/kiinteistoService.js"></script>
+    <!-- build:js ./rak/kiinteistot/kiinteistot/kiinteistoListController.js -->
+    <script src="rak/kiinteistot/kiinteistoListController.js"></script>
+    <!-- build:js ./rak/kiinteistot/kiinteistot/kiinteistoController.js -->
+    <script src="rak/kiinteistot/kiinteistoController.js"></script>
+    <!-- build:js ./rak/kiinteisto/kiinteistot/kiinteistoFetchedDetailsController.js -->
+    <script src="rak/kiinteistot/kiinteistoFetchedDetailsController.js"></script>
+    <!-- build:js ./rak/alueet/alueService.js -->
+    <script src="rak/alueet/alueService.js"></script>
+    <!-- build:js ./rak/alueet/alueet/alueListController.js -->
+    <script src="rak/alueet/alueListController.js"></script>
+    <!-- build:js ./rak/alueet/alueController.js -->
+    <script src="rak/alueet/alueController.js"></script>
+    <!-- build:js ./rak/arvoalueet/arvoalueService.js -->
+    <script src="rak/arvoalueet/arvoalueService.js"></script>
+    <!-- build:js ./rak/arvoalueet/arvoalueListController.js -->
+    <script src="rak/arvoalueet/arvoalueListController.js"></script>
+    <!-- build:js ./rak/arvoalueet/arvoalueet/arvoalueController.js -->
+    <script src="rak/arvoalueet/arvoalueController.js"></script>
+    <!-- build:js ./rak/rakennukset/rakennukset/rakennusService.js -->
+    <script src="rak/rakennukset/rakennusService.js"></script>
+    <!-- build:js ./rak/rakennukset/rakennusListController.js -->
+    <script src="rak/rakennukset/rakennusListController.js"></script>
+    <!-- build:js ./rak/rakennukset/rakennusController/.js -->
+    <script src="rak/rakennukset/rakennusController.js"></script>
+    <!-- build:js ./rak/rakennukset/rakennusFetchedDetailsController.js -->
+    <script src="rak/rakennukset/rakennusFetchedDetailsController.js"></script>
+    <!-- build:js ./rak/rakennukset/siirraRakennusController.js -->
+    <script src="rak/rakennukset/siirraRakennusController.js"></script>
+    <!-- build:js ./rak/inventointiprojektit/inventointiprojektiService.js -->
+    <script src="rak/inventointiprojektit/inventointiprojektiService.js"></script>
+    <!-- build:js ./rak/inventointiprojektit/inventointiprojektit/inventointiprojektiListController.js -->
+    <script src="rak/inventointiprojektit/inventointiprojektiListController.js"></script>
+    <!-- build:js ./rak/inventointiprojektit/inventointiprojektiController/.js -->
+    <script src="rak/inventointiprojektit/inventointiprojektiController.js"></script>
+    <!--  build:js ./rak/directives/mipinventointiprojektivalitsin/mipinventointiprojektivalitsin.js -->
+    <script src="rak/directives/mipinventointiprojektivalitsin/mipinventointiprojektivalitsin.js"></script>
+    <!-- build:js ./rak/porrashuoneet/porrashuoneService.js -->
+    <script src="rak/porrashuoneet/porrashuoneService.js"></script>
+    <!-- build:js ./rak/porrashuoneet/porrashuoneController.js -->
+    <script src="rak/porrashuoneet/porrashuoneController.js"></script>
+    <!-- build:js ./rak/porrashuoneet/porrashuoneListController.js -->
+    <script src="rak/porrashuoneet/porrashuoneListController.js"></script>
+    <!-- build:js ./rak/suunnittelijat/suunnittelijaService.js -->
+    <script src="rak/suunnittelijat/suunnittelijaService.js"></script>
+    <!-- build:js ./rak/suunnittelijat/suunnittelijaListController.js -->
+    <script src="rak/suunnittelijat/suunnittelijaListController.js"></script>
+    <!-- build:js ./rak/suunnittelijat/suunnittelijaController.js -->
+    <script src="rak/suunnittelijat/suunnittelijaController.js"></script>
+    <!-- build:js ./rak/inventointijulkaisut/inventointijulkaisuService.js -->
+    <script src="rak/inventointijulkaisut/inventointijulkaisuService.js"></script>
+    <!-- build:js ./rak/inventointijulkaisut/inventointijulkaisuListController.js -->
+    <script src="rak/inventointijulkaisut/inventointijulkaisuListController.js"></script>
+    <!-- build:js ./rak/inventointijulkaisut/inventointijulkaisuController.js -->
+    <script src="rak/inventointijulkaisut/inventointijulkaisuController.js"></script>
+    <!-- build:js ./rak/matkaraportit/matkaraporttiService.js -->
+    <script src="rak/matkaraportit/matkaraporttiService.js"></script>
+    <!-- build:js ./rak/matkaraportit/matkaraporttiListController.js -->
+    <script src="rak/matkaraportit/matkaraporttiListController.js"></script>
+    <!-- build:js ./rak/matkaraportit/matkaraporttiController.js -->
+    <script src="rak/matkaraportit/matkaraporttiController.js"></script>
+    <!-- build:js ./rak/tiedosto/imageController.js -->
+    <script src="rak/tiedosto/imageController.js"></script>
+    <!-- build:js ./rak/tiedosto/siirraKuvaController.js -->
+    <script src="rak/tiedosto/siirraKuvaController.js"></script>
+    <!-- build:js ./rak/tiedosto/imageUploadController.js -->
+    <script src="rak/tiedosto/imageUploadController.js"></script>
+    
+    <!-- ARKEOLOGIA -->
+    <!-- build:js ./ark/tutkimukset/tutkimusService.js -->
+    <script src="ark/tutkimukset/tutkimusService.js"></script>
+	<!-- build:js ./ark/tutkimukset/tutkimusListController.js -->
+    <script src="ark/tutkimukset/tutkimusListController.js"></script>
+	<!-- build:js ./ark/tutkimukset/tutkimusController.js -->
+    <script src="ark/tutkimukset/tutkimusController.js"></script>
+    <!-- build:js ./ark/tutkimukset/tutkimusKayttajatController.js -->
+    <script src="ark/tutkimukset/tutkimusKayttajatController.js"></script>
+    
+    <!-- build:js ./ark/directives/tutkimuslaji/tutkimuslaji_direktiivi.js -->
+    <script src="ark/directives/tutkimuslaji/tutkimuslaji_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/tutkimuslaji/tutkimuslaji_multi_direktiivi.js -->
+    <script src="ark/directives/tutkimuslaji/tutkimuslaji_multi_direktiivi.js"></script>    
+    <!-- build:js ./ark/directives/kayttaja/kayttaja_direktiivi.js -->
+    <script src="ark/directives/kayttaja/kayttaja_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kokoelmalaji/kokoelmalaji_direktiivi.js -->
+    <script src="ark/directives/kokoelmalaji/kokoelmalaji_direktiivi.js"></script>    
+    <!-- build:js ./ark/directives/asiasanavalitsin/mipasiasanavalitsin.js -->
+    <script src="ark/directives/asiasanavalitsin/mipasiasanavalitsin.js"></script>
+    
+    <!-- build:js ./ark/directives/loyto_yksikkovalitsin/miploytoyksikkovalitsin.js -->
+    <script src="ark/directives/loyto_yksikkovalitsin/miploytoyksikkovalitsin.js"></script>
+    
+    <!-- build:js ./ark/directives/loytovalitsin/miploytovalitsin.js -->
+    <script src="ark/directives/loytovalitsin/miploytovalitsin.js"></script>
+    <!-- build:js ./ark/directives/yksikkovalitsin/mipyksikkovalitsin.js -->
+    <script src="ark/directives/yksikkovalitsin/mipyksikkovalitsin.js"></script>
+    <!-- build:js ./ark/directives/naytevalitsin/mipnaytevalitsin.js -->
+    <script src="ark/directives/naytevalitsin/mipnaytevalitsin.js"></script>
+    <!-- build:js ./ark/directives/tutkimusaluevalitsin/mipaluevalitsin.js -->
+    <script src="ark/directives/tutkimusaluevalitsin/mipaluevalitsin.js"></script>
+    
+    <!-- build:js ./ark/tutkimusalueet/lisaaTutkimusalueController.js -->
+    <script src="ark/tutkimusalueet/lisaaTutkimusalueController.js"></script>     
+    <!-- build:js ./ark/tutkimusalueet/lisaaTutkimusalueTiedostoController.js -->
+    <script src="ark/tutkimusalueet/lisaaTutkimusalueTiedostoController.js"></script>            
+    <!-- build:js ./ark/tutkimusalueet/tutkimusalueService.js -->
+    <script src="ark/tutkimusalueet/tutkimusalueService.js"></script>
+    <!-- build:js ./ark/tutkimusalueet/tutkimusalueController.js -->
+    <script src="ark/tutkimusalueet/tutkimusalueController.js"></script>
+    <!-- build:js ./ark/directives/kuvat/luetteloitu_kuva_direktiivi.js -->
+    <script src="ark/directives/kuvat/luetteloitu_kuva_direktiivi.js"></script>
+    
+
+
+	<!-- build:js ./ark/yksikot/yksikkoService.js -->
+    <script src="ark/yksikot/yksikkoService.js"></script>
+	<!-- build:js ./ark/yksikot/yksikkoController.js -->
+    <script src="ark/yksikot/yksikkoController.js"></script>
+    <!-- build:js ./ark/directives/yksikko/yksikko_tyyppi_direktiivi.js -->
+    <script src="ark/directives/yksikko/yksikko_tyyppi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kaivaustapa/kaivaustapa_direktiivi.js -->
+    <script src="ark/directives/kaivaustapa/kaivaustapa_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/seulontatapa/seulontatapa_direktiivi.js -->
+    <script src="ark/directives/seulontatapa/seulontatapa_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/tyovaihe/tyovaihe_direktiivi.js -->
+    <script src="ark/directives/tyovaihe/tyovaihe_direktiivi.js"></script>              
+    <!-- build:js ./ark/directives/maalaji/paamaalaji_direktiivi.js -->
+    <script src="ark/directives/maalaji/paamaalaji_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/maalaji/maalaji_multi_direktiivi.js -->
+    <script src="ark/directives/maalaji/maalaji_multi_direktiivi.js"></script>    
+    
+    <!-- build:js ./ark/loydot/loytoService.js -->
+    <script src="ark/loydot/loytoService.js"></script>
+	<!-- build:js ./ark/loydot/loytoController.js -->
+    <script src="ark/loydot/loytoController.js"></script>
+	<!-- build:js ./ark/loydot/loytoListController.js -->
+    <script src="ark/loydot/loytoListController.js"></script>
+	<!-- build:js ./ark/loydot/yksikonLoytoListController.js -->
+    <script src="ark/loydot/yksikonLoytoListController.js"></script>
+	<!-- build:js ./ark/loydot/loytoTapahtumaController.js -->
+    <script src="ark/loydot/loytoTapahtumaController.js"></script>
+            
+    <!-- build:js ./ark/directives/materiaali/materiaalikoodi_direktiivi.js -->
+    <script src="ark/directives/materiaali/materiaalikoodi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/materiaali/materiaalikoodi_multi_direktiivi.js -->
+    <script src="ark/directives/materiaali/materiaalikoodi_multi_direktiivi.js"></script>    
+    <!-- build:js ./ark/directives/materiaali/ensisijainen_materiaali_direktiivi.js -->
+    <script src="ark/directives/materiaali/ensisijainen_materiaali_direktiivi.js"></script>    
+    <!-- build:js ./ark/directives/materiaali/materiaali_multi_direktiivi.js -->
+    <script src="ark/directives/materiaali/materiaali_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/loytotyyppi/loytotyyppi_direktiivi.js -->
+    <script src="ark/directives/loytotyyppi/loytotyyppi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/loytotyyppi/loytotyyppi_multi_direktiivi.js -->
+    <script src="ark/directives/loytotyyppi/loytotyyppi_multi_direktiivi.js"></script>                 
+    <!-- build:js ./ark/directives/loytotyyppi/loytotyyppi_tarkenne_multi_direktiivi.js -->
+    <script src="ark/directives/loytotyyppi/loytotyyppi_tarkenne_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/merkinta/merkinta_multi_direktiivi.js -->
+    <script src="ark/directives/merkinta/merkinta_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/materiaali/ensisijainen_materiaali_multi_direktiivi.js -->
+    <script src="ark/directives/materiaali/ensisijainen_materiaali_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/loyto_tila/loyto_tila_direktiivi.js -->
+    <script src="ark/directives/loyto_tila/loyto_tila_direktiivi.js"></script>     
+    <!-- build:js ./ark/directives/loyto_tila/loyto_tila_multi_direktiivi.js -->
+    <script src="ark/directives/loyto_tila/loyto_tila_multi_direktiivi.js"></script>        
+
+    <!-- build:js ./ark/naytteet/nayteService.js -->
+    <script src="ark/naytteet/nayteService.js"></script>
+    <!-- build:js ./ark/naytteet/nayteController.js -->
+    <script src="ark/naytteet/nayteController.js"></script>
+	<!-- build:js ./ark/naytteet/nayteListController.js -->
+    <script src="ark/naytteet/nayteListController.js"></script>
+	<!-- build:js ./ark/naytteet/yksikonNayteListController.js -->
+    <script src="ark/naytteet/yksikonNayteListController.js"></script>    
+	<!-- build:js ./ark/naytteet/nayteTapahtumaController.js -->
+    <script src="ark/naytteet/nayteTapahtumaController.js"></script>        
+    <!-- build:js ./ark/directives/nayte/naytekoodi_direktiivi.js -->
+    <script src="ark/directives/nayte/naytekoodi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/nayte/naytetyyppi_direktiivi.js -->
+    <script src="ark/directives/nayte/naytetyyppi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/nayte/nayte_tila_direktiivi.js -->
+    <script src="ark/directives/nayte/nayte_tila_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/nayte/talteenottotapa_direktiivi.js -->
+    <script src="ark/directives/nayte/talteenottotapa_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/nayte/naytekoodi_multi_direktiivi.js -->
+    <script src="ark/directives/nayte/naytekoodi_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/nayte/naytetyyppi_multi_direktiivi.js -->
+    <script src="ark/directives/nayte/naytetyyppi_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/nayte/nayte_tila_multi_direktiivi.js -->
+    <script src="ark/directives/nayte/nayte_tila_multi_direktiivi.js"></script>                 
+
+    <!-- build:js ./ark/toimenpiteet/toimenpideService.js -->
+    <script src="ark/toimenpiteet/toimenpideService.js"></script>
+    <!-- build:js ./ark/toimenpiteet/toimenpideController.js -->
+    <script src="ark/toimenpiteet/toimenpideController.js"></script>
+	<!-- build:js ./ark/toimenpiteet/toimenpideListController.js -->
+    <script src="ark/toimenpiteet/toimenpideListController.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_toimenpide_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_toimenpide_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_menetelma_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_menetelma_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_menetelma_multi_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_menetelma_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_toimenpide_multi_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_toimenpide_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_materiaali_multi_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_materiaali_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_kasittely_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_kasittely_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/konservointi/konservointi_kasittely_multi_direktiivi.js -->
+    <script src="ark/directives/konservointi/konservointi_kasittely_multi_direktiivi.js"></script>                  
+    
+    <!-- build:js ./ark/konservointihallinta/konservointiHallintaService.js -->
+    <script src="ark/konservointihallinta/konservointiHallintaService.js"></script>    
+    <!-- build:js ./ark/konservointihallinta/konservointiHallintaController.js -->
+    <script src="ark/konservointihallinta/konservointiHallintaController.js"></script>
+    
+    <!-- build:js ./ark/konservointi/konservointiService.js -->
+    <script src="ark/konservointi/konservointiService.js"></script>    
+    <!-- build:js ./ark/konservointi/konservointiController.js -->
+    <script src="ark/konservointi/konservointiController.js"></script>    
+    
+    <!-- build:js ./ark/kasittelyt/kasittelyService.js -->
+    <script src="ark/kasittelyt/kasittelyService.js"></script>
+    <!-- build:js ./ark/kasittelyt/kasittelyController.js -->
+    <script src="ark/kasittelyt/kasittelyController.js"></script>
+	<!-- build:js ./ark/kasittelyt/kasittelyListController.js -->
+    <script src="ark/kasittelyt/kasittelyListController.js"></script>
+    
+    <!-- build:js ./ark/kohteet/kohdeService.js -->
+    <script src="ark/kohteet/kohdeService.js"></script>
+    <!-- build:js ./ark/kohteet/kohdeController.js -->
+    <script src="ark/kohteet/kohdeController.js"></script>
+    <!-- build:js ./ark/kohteet/muinaisjaannosFeatureInfoController.js -->
+    <script src="ark/kohteet/muinaisjaannosFeatureInfoController.js"></script>
+    <!-- build:js ./ark/kohteet/kohdeListController.js -->
+    <script src="ark/kohteet/kohdeListController.js"></script> 
+    
+    <!-- build:js ./ark/alakohteet/alakohdeController.js -->
+    <script src="ark/alakohteet/alakohdeController.js"></script>      
+    
+    <!-- build:js ./ark/directives/kohdelaji/kohde_laji_direktiivi.js -->
+    <script src="ark/directives/kohdelaji/kohde_laji_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kohdelaji_multi/kohde_laji_multi_direktiivi.js -->
+    <script src="ark/directives/kohdelaji_multi/kohde_laji_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kohdetyyppi/kohde_tyyppi_direktiivi.js -->
+    <script src="ark/directives/kohdetyyppi/kohde_tyyppi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kohdetyyppi_multi/kohde_tyyppi_multi_direktiivi.js -->
+    <script src="ark/directives/kohdetyyppi_multi/kohde_tyyppi_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kohdetyyppi_multi/kohde_tyyppi_tarkenne_multi_direktiivi.js -->
+    <script src="ark/directives/kohdetyyppi_multi/kohde_tyyppi_tarkenne_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kohde/kohde_direktiivi.js -->
+    <script src="ark/directives/kohde/kohde_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/ajoitus/ajoitus_direktiivi.js -->
+    <script src="ark/directives/ajoitus/ajoitus_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/ajoitus_multi/ajoitus_multi_direktiivi.js -->
+    <script src="ark/directives/ajoitus_multi/ajoitus_multi_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/rauhoitusluokka/rauhoitusluokka_direktiivi.js -->
+    <script src="ark/directives/rauhoitusluokka/rauhoitusluokka_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/alkuperaisyys/alkuperaisyys_direktiivi.js -->
+    <script src="ark/directives/alkuperaisyys/alkuperaisyys_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/rajaustarkkuus/rajaustarkkuus_direktiivi.js -->
+    <script src="ark/directives/rajaustarkkuus/rajaustarkkuus_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/maastomerkinta/maastomerkinta_direktiivi.js -->
+    <script src="ark/directives/maastomerkinta/maastomerkinta_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/kunto/kunto_direktiivi.js -->
+    <script src="ark/directives/kunto/kunto_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/vanhakunta/vanhakunta_direktiivi.js -->
+    <script src="ark/directives/vanhakunta/vanhakunta_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/hoitotarve/hoitotarve_direktiivi.js -->
+    <script src="ark/directives/hoitotarve/hoitotarve_direktiivi.js"></script>    
+    <!-- build:js ./ark/directives/suojelutiedot/suojelituedot_direktiivi.js -->
+    <script src="ark/directives/suojelutiedot/suojelutiedot_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/tuhoutumissyy/tuhoutumissyy_direktiivi.js -->
+    <script src="ark/directives/tuhoutumissyy/tuhoutumissyy_direktiivi.js"></script>    
+    <!-- build:js ./ark/directives/kiinteistorakennus/kiinteistorakennus_direktiivi.js -->
+    <script src="ark/directives/kiinteistorakennus/kiinteistorakennus_direktiivi.js"></script>
+    <!-- build:js ./ark/directives/tutkimus/tutkimus_direktiivi.js -->
+    <script src="ark/directives/tutkimus/tutkimus_direktiivi.js"></script>
+    
+    <!-- build:js ./ark/tiedosto/arkFileController.js -->
+    <script src="ark/tiedosto/arkFileController.js"></script>
+    <!-- build:js ./ark/tiedosto/arFileUploadController.js -->
+    <script src="ark/tiedosto/arkFileUploadController.js"></script>
+    <!-- build:js ./ark/directives/kyppi_status_multi/kyppi_status_multi_direktiivi.js -->
+    <script src="ark/directives/kyppi_status_multi/kyppi_status_multi_direktiivi.js"></script>    
+    
+    <!-- build:js ./ark/kuva/arkImageController.js -->
+    <script src="ark/kuva/arkImageController.js"></script>
+    <!-- build:js ./ark/kuva/arkImageUploadController.js -->
+    <script src="ark/kuva/arkImageUploadController.js"></script>
+    
+    <!-- build:js ./ark/kartta/karttaService.js -->
+    <script src="ark/kartta/karttaService.js"></script>
+    <!-- build:js ./ark/kartta/karttaController.js -->
+    <script src="ark/kartta/karttaController.js"></script>
+    <!-- build:js ./ark/kartta/karttaUploadController.js -->
+    <script src="ark/kartta/karttaUploadController.js"></script>
+    <!-- build:js ./ark/directives/karttatyyppivalitsin/karttatyyppivalitsin.js -->
+    <script src="ark/directives/karttatyyppivalitsin/karttatyyppivalitsin.js"></script>
+    <!-- build:js ./ark/directives/karttakokovalitsin/karttakokovalitsin.js -->
+    <script src="ark/directives/karttakokovalitsin/karttakokovalitsin.js"></script>
+    <!-- build:js ./ark/directives/karttamittakaavavalitsin/karttamittakaavavalitsin.js -->
+    <script src="ark/directives/karttamittakaavavalitsin/karttamittakaavavalitsin.js"></script>    
+    <!-- build:js ./directives/karttaBrowser.js -->
+    <script src="directives/karttaBrowser.js"></script>
+    <!-- build:js ./ark/directives/sailytystilavalitsin/sailytystilavalitsin.js -->
+    <script src="ark/directives/sailytystilavalitsin/sailytystilavalitsin.js"></script>
+    
+    <!-- build:js ./ark/rontgenkuvat/rontgenkuvaService.js -->
+    <script src="ark/rontgenkuvat/rontgenkuvaService.js"></script>
+    <!-- build:js ./ark/rontgenkuvat/rontgenkuvaController.js -->
+    <script src="ark/rontgenkuvat/rontgenkuvaController.js"></script>
+    
+    
+	<!-- endbuild -->
+    
+    <span style="position: fixed; top: 50%; left: 50%; z-index: 100000;"
+        us-spinner="{radius:30, width:8, length: 16}"></span>
+		
+</body>
+</html>

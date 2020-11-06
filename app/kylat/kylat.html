@@ -1,0 +1,112 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-collapsible panel-default table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> : {{kylatTable.total()}} <span
+                                i18n="common.Shown"></span> : {{searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse collapse in form-horizontal"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
+                                
+                                    <button type="button"
+                                        class="btn btn-default"
+                                        ng-click="clearSearchFilter()"
+                                        data-i18n-attr="{title: 'common.Clear_filter'}">
+                                        <span class="fa fa-ban"></span>
+                                    </button>
+                                    
+                                     <button type="button"
+                                        class="btn btn-default"
+                                        ng-click="refreshTable()"
+                                        data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                        <span class="fa fa-refresh"></span>
+                                    </button>   
+                                    
+                                
+                                    <button type="button"
+                                        class="btn btn-success"
+                                        data-ng-show="showCreateNewButton"
+                                        id="btn-create" ng-click="selectKyla()" 
+                                        data-i18n-attr="{title: 'common.Add_village'}">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                
+                            </div>
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <mip-kuntavalitsin props="kylatTable.filter().properties"></mip-kuntavalitsin>
+                                    </div>
+                                </div>                                
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <mip-kylavalitsin props="kylatTable.filter().properties"></mip-kylavalitsin>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">         
+                                        <ui-select 
+                                            ng-model="kylatTable.filter().properties.luoja"
+                                            name="luoja"
+                                            spellcheck="false">
+                                            <ui-select-match 
+                                                data-i18n-attr="{placeholder: 'common.Created_by'}"
+                                                allow-clear="true">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}</ui-select-match>
+                                            <ui-select-choices        
+                                                repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                refresh="getKayttajat($select.search)"
+                                                refresh-delay="250">
+                                                <div>                                                                
+                                                    <span
+                                                        ng-bind-html="kayttaja.etunimi | highlight: $select.search">
+                                                    </span>
+                                                    <span
+                                                        ng-bind-html="kayttaja.sukunimi | highlight: $select.search">
+                                                    </span>
+                                                </div>
+                                            </ui-select-choices> 
+                                        </ui-select>
+                                    </div>
+                                </div>  
+                            </div>                            
+                        </div>
+                    </div>
+                    <table ng-table="kylatTable" class="table table-striped table-bordered"
+                        template-pagination="pages/templates/table-pagination.html"
+                        show-filter="false">
+                        <tr ng-repeat="kyla in $data" style="cursor: pointer"
+                            ng-click="selectKyla(kyla)">
+                            <td data-title="getColumnName('County')"
+                                sortable="'properties.kunta_nimi'">
+                                {{kyla.properties.kunta | kuntaKylaNamei18n}}</td>
+                            <td data-title="getColumnName('County_number')"
+                                sortable="'properties.kuntanumero'">
+                                {{kyla.properties.kunta.kuntanumero}}</td>
+                            <td data-title="getColumnName('Village')" sortable="'properties.nimi'"
+                                filter="{ 'properties.kylanumero': 'text' }">{{kyla.properties.nimi}}</td>
+                            <td data-title="getColumnName('Village_number')"
+                                sortable="'properties.kylanumero'"
+                                filter="{ 'properties.nimi': 'text' }">{{kyla.properties.kylanumero}}</td>
+                             <td data-title="getColumnName('Added_by')"
+                                filter="{ 'properties.luoja': 'number' }">
+                                <div ng-if="kyla.properties.luoja.etunimi !== 'System' && kyla.properties.luoja.sukunimi !== 'System'">                                                                
+                                    {{kyla.properties.luoja.etunimi}} {{kyla.properties.luoja.sukunimi}}     
+                                </div>                                                        
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

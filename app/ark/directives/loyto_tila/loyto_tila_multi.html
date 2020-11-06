@@ -1,0 +1,17 @@
+<ui-select multiple="true" ng-model="tilat.loytoTilat" theme="bootstrap" name="loytotilat" ng-if="!haku"> 
+	<ui-select-match data-i18n-attr="{placeholder: 'ark.Discovery_status'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="tila.id as tila in loytoTilat | filter: $select.search">
+        <div>
+            <span ng-bind-html="tila | namei18n | highlight: $select.search"></span>
+        </div>
+    </ui-select-choices> 
+</ui-select>
+<!-- Hakusivu -->
+<ui-select multiple="true" ng-if="haku" ng-model="tilat.loydon_tilat" theme="bootstrap" name="tilat"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'ark.Discovery_status'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="tila.id as tila in loytoTilat | filter: $select.search">
+   <div>
+       <span ng-bind-html="tila | namei18n | highlight: $select.search"></span>
+   </div>
+	</ui-select-choices> 
+</ui-select>

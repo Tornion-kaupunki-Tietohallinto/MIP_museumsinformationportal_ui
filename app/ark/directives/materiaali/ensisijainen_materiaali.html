@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label for="ensisijainenMateriaali" class="col-sm-3 control-label">
+        <span i18n="ark.Primary_material"></span> *
+    </label>
+    <div class="col-sm-9">
+        <select class="form-control" 
+        	name="ensisijainenMateriaali" 
+        	ng-model="ensisijainenMateriaali" 
+        	ng-required="true" 
+            ng-options="materiaali as materiaali.nimi_fi for materiaali in ensisijaisetMateriaalit track by materiaali.id"
+            focus-me="focusInput">
+        </select>
+    </div>
+</div>

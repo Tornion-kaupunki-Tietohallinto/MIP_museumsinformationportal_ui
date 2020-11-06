@@ -1,0 +1,55 @@
+<!-- Tiedot - muokkausmoodi -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="col-md-12 control-label">
+                            <span class="pull-left" i18n="common.Original_name"></span>
+                        </label>
+                        <div class="col-md-12 form-control-static">{{file.properties.alkuperainen_nimi}}</div>
+                    </div>
+                </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group"
+                            ng-class="{ 'has-error': fileForm.otsikko.$invalid && fileForm.otsikko.$touched }">
+                            <label class="col-md-12 control-label">
+                                <span i18n="common.Caption" class="pull-left"></span><span
+                                    class="pull-left">*</span>
+                            </label>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" name="otsikko"
+                                    ng-model="file.properties.otsikko" ng-required="true" ng-readonly="entiteetti_tyyppi == 'rakennus'"
+                                    data-i18n-attr="{placeholder: 'common.Caption'}" spellcheck="false" autocomplete="off">
+                                <span class="help-block"
+                                    ng-show="fileForm.otsikko.$invalid && fileForm.otsikko.$touched">
+                                    <span data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Caption' | i18n }}"> </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-12 control-label">
+                        <span i18n="common.Description" class="pull-left"></span>
+                    </label>
+                    <div class="col-md-12">
+                        <textarea rows="4" class="form-control" name="kuvaus"
+                            ng-model="file.properties.kuvaus"
+                            data-i18n-attr="{placeholder: 'common.Description'}" spellcheck="false" autocomplete="off"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

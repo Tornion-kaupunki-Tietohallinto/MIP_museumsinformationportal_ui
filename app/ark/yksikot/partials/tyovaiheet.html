@@ -1,0 +1,57 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Work_stage"></span>
+        </h4>
+    </div>
+    <!-- Muistiinpanojen muokkaus -->
+    <div class="panel-body" ng-if="vm.create && !vm.showNotes">
+    	<mip-yksikko-tyovaihe tyovaiheet="vm.yksikko.properties.tyovaiheet"></mip-yksikko-tyovaihe>
+    </div>
+    <!-- Muistiinpanojen katselu -->
+    <div class="panel-body" ng-if="!vm.edit && !vm.create && vm.showNotes">
+    	<ul class="list-group">
+    		<li class="list-group-item" ng-if="vm.yksikko.properties.tyovaiheet" ng-repeat="tyovaihe in vm.yksikko.properties.tyovaiheet | orderBy:'paivamaara'">
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		            	<span i18n="unit.Date"></span> 
+		            </label>
+		            <div class="col-sm-8">
+		                <p class="form-control-static">{{tyovaihe.paivamaara | date:'dd.MM.yyyy'}}</p>
+		            </div>
+		        </div>
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		            	<span i18n="unit.Work_stage_description"></span> 
+		            </label>
+		            <div class="col-sm-8">
+		                <p class="form-control-static">{{tyovaihe.kuvaus}}</p>
+		            </div>
+		        </div>
+        	</li>
+        </ul>
+    </div>
+    <!-- Yksikön muokkaus, näytetään muistiinpanot -->
+    <div class="panel-body" ng-if="vm.edit && !vm.create && vm.showNotes">
+    	<ul class="list-group">
+    		<li class="list-group-item" ng-if="vm.yksikko.properties.tyovaiheet" ng-repeat="tyovaihe in vm.yksikko.properties.tyovaiheet">
+		        <div class="form-group" ng-if="tyovaihe.paivamaara">
+		            <label class="col-sm-4 control-label">
+		            	<span i18n="unit.Date"></span> 
+		            </label>
+		            <div class="col-sm-8">
+		                <p class="form-control-static">{{tyovaihe.paivamaara | date:'dd.MM.yyyy'}}</p>
+		            </div>
+		        </div>
+		        <div class="form-group" ng-if="tyovaihe.kuvaus">
+		            <label class="col-sm-4 control-label">
+		            	<span i18n="unit.Work_stage_description"></span> 
+		            </label>
+		            <div class="col-sm-8">
+		                <p class="form-control-static">{{tyovaihe.kuvaus}}</p>
+		            </div>
+		        </div>
+        	</li>
+        </ul>
+    </div>        
+</div>

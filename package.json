@@ -1,0 +1,43 @@
+{
+  "name": "mip_frontend",
+  "version": "1.2",
+  "description": "Museon informaatioportaali frontend",
+  "repository": {
+    "type": "git",
+    "url": "<repo_url>"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "grunt-cli": "^1.2.0",
+    "http-server": "^0.12.3"
+  },
+  "devDependencies": {
+    "angular-jsdoc": "^1.5.0",
+    "grunt": "^1.0.2",
+    "grunt-angular-templates": "^1.1.0",
+    "grunt-contrib-clean": "~1.1.0",
+    "grunt-contrib-compress": "^1.4.1",
+    "grunt-contrib-concat": "~1.0.1",
+    "grunt-contrib-copy": "~1.0.0",
+    "grunt-contrib-cssmin": "~2.1.0",
+    "grunt-contrib-htmlmin": "~2.3.0",
+    "grunt-contrib-imagemin": "~1.0.1",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-uglify": "~2.3.0",
+    "grunt-jsdoc": "^2.2.1",
+    "grunt-replace": "^1.0.1",
+    "grunt-rev": "~0.1.0",
+    "grunt-usemin": "~3.1.1",
+    "jsdoc": "^3.5.5",
+    "matchdep": "~1.0.1",
+    "ng-annotate": "^1.2.1",
+    "protractor-jasmine2-html-reporter": "0.0.7"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "start": "node node_modules/http-server/bin/http-server ./app -o -c-1 --cors"
+  }
+}

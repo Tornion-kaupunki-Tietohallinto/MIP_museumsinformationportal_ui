@@ -1,0 +1,358 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#kuvausPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Description_classification"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <!-- Muokkaus -->
+    <div id="kuvausPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+			<mip-materiaalikoodi materiaalikoodi="vm.loyto.properties.materiaalikoodi" vm="vm" ng-if="vm.tutkimus.ark_tutkimuslaji_id == 6" cols='narrow'></mip-materiaalikoodi>
+			<hr ng-if="vm.tutkimus.ark_tutkimuslaji_id == 6">	
+	    	<div class="form-group">
+			    <label for="ensisijainen" class="col-sm-3 control-label">
+			        <span i18n="ark.Primary_material"></span> *
+			    </label>
+			    <div class="col-sm-9">
+			        <select class="form-control" 
+			        	name="ensisijainen" 
+			        	ng-model="vm.loyto.properties.ensisijainen_materiaali" 
+			        	ng-required="true"
+			            ng-options="materiaali as materiaali.nimi_fi for materiaali in vm.ensisijaisetMateriaalit track by materiaali.id">
+			        </select>
+			    </div>
+			</div>	
+	    	<mip-materiaali-multi muut-materiaalit="vm.loyto.properties"></mip-materiaali-multi>
+	    	<mip-loytotyyppi loytotyyppi="vm.loyto.properties.loytotyyppi"></mip-loytotyyppi>
+	    	<mip-loytotyyppi-tarkenne-multi loytotyyppi="vm.loyto.properties"></mip-loytotyyppi-tarkenne-multi>
+	    	
+	        <div class="form-group" ng-class="{ 'has-error': form.kuvaus.$invalid && form.kuvaus.$touched}">
+	            <label for="kuvaus" class="col-sm-3 control-label">
+	                <span i18n="common.Description"></span> * 
+	            </label>
+	            <div class="col-sm-9">
+	                <textarea rows="3" class="form-control" name="kuvaus"
+	                    ng-model="vm.loyto.properties.kuvaus" ng-required="true">
+	                </textarea>
+	                <span class="help-block" ng-show="form.kuvaus.$invalid && form.kuvaus.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Description' | i18n }}"></span>
+	                </span>	
+	            </div>    
+	        </div>          
+	        <div class="form-group" ng-class="{ 'has-error': form.kappalemaara.$invalid && form.kappalemaara.$touched}">
+	            <label for="kappalemaara" class="col-sm-3 control-label">
+	                <span i18n="ark.Pieces"></span> *
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" min="1" class="form-control" name="kappalemaara"
+	                    ng-model="vm.loyto.properties.kappalemaara"
+	                    ng-required="true"
+	                    spellcheck="false" autocomplete="off">
+	                <span class="help-block" ng-show="form.kappalemaara.$invalid && form.kappalemaara.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Pieces' | i18n }}"></span>
+	                </span>	                
+	            </div>
+	            <div class="col-sm-3">
+                    <select ng-model="vm.loyto.properties.kappalemaara_arvio"
+                        ng-options="ka.value as ka.label for ka in vm.kplArvio"
+                        name="kappalemaara_arvio" class="form-control">
+                    </select>             
+                </div>
+	        </div>
+            <div class="form-group">
+	            <label for="paino" class="col-sm-3 control-label">
+	                <span i18n="ark.Weight"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" class="form-control" name="paino"
+	                    ng-model="vm.loyto.properties.paino"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="vm.loyto.properties.painoyksikko"
+						style="padding-left: 0px"
+						ng-options="option.value as option.label for option in vm.painoyksikot"
+						name="painoyksikko">
+					</select>			        
+				</div>     
+	        </div>        
+	        <div class="form-group">
+	            <label for="pituus" class="col-sm-3 control-label">
+	                <span i18n="ark.Length"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" class="form-control" name="pituus"
+	                    ng-model="vm.loyto.properties.pituus"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="vm.loyto.properties.pituusyksikko"
+						ng-options="option.value as option.label for option in vm.pituusyksikot"
+						style="padding-left: 0px"					
+						name="pituusyksikko">
+					</select>			        
+				</div>     
+	        </div>
+	        <div class="form-group">
+	            <label for="leveys" class="col-sm-3 control-label">
+	                <span i18n="ark.Width"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" class="form-control" name="leveys"
+	                    ng-model="vm.loyto.properties.leveys"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="vm.loyto.properties.leveysyksikko"
+						style="padding-left: 0px"				
+						ng-options="option.value as option.label for option in vm.pituusyksikot"
+						name="leveysyksikko">
+					</select>			        
+				</div>       
+	        </div>
+	        <div class="form-group">
+	            <label for="korkeus" class="col-sm-3 control-label">
+	                <span i18n="ark.Height"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" class="form-control" name="korkeus"
+	                    ng-model="vm.loyto.properties.korkeus"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="vm.loyto.properties.korkeusyksikko"
+						style="padding-left: 0px"				
+						ng-options="option.value as option.label for option in vm.pituusyksikot"
+						name="korkeusyksikko">
+					</select>			        
+				</div>      
+	        </div> 
+	        <div class="form-group">
+	            <label for="halkaisija" class="col-sm-3 control-label">
+	                <span i18n="ark.Diameter"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" class="form-control" name="halkaisija"
+	                    ng-model="vm.loyto.properties.halkaisija"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="vm.loyto.properties.halkaisijayksikko"
+						style="padding-left: 0px"				
+						ng-options="option.value as option.label for option in vm.pituusyksikot"
+						name="halkaisijayksikko">
+					</select>			        
+				</div>       
+	        </div>
+	        <div class="form-group">
+	            <label for="paksuus" class="col-sm-3 control-label">
+	                <span i18n="ark.Thickness"></span> 
+	            </label>
+	            <div class="col-sm-3">
+	                <input type="number" class="form-control" name="paksuus"
+	                    ng-model="vm.loyto.properties.paksuus"
+	                    spellcheck="false" autocomplete="off">
+	            </div>
+				<div class="col-sm-3">
+					<select class="form-control" ng-model="vm.loyto.properties.paksuusyksikko"
+						style="padding-left: 0px"				
+						ng-options="option.value as option.label for option in vm.pituusyksikot"
+						name="paksuusyksikko">
+					</select>			        
+				</div>       
+	        </div>                                
+	        <div class="form-group">
+	            <label for="muut_mitat" class="col-sm-3 control-label">
+	                <span i18n="ark.Other_measures"></span> 
+	            </label>
+	            <div class="col-sm-9">
+	                <textarea rows="3" class="form-control" name="muut_mitat"
+	                    ng-model="vm.loyto.properties.muut_mitat">
+	                </textarea> 
+	            </div>    
+	        </div>
+            <mip-merkinta-multi merkinta="vm.loyto.properties"></mip-merkinta-multi>
+	        <div class="form-group">
+                <label for="loytopaivamaara" class="col-sm-3 control-label">
+                    <span i18n="ark.Discovery_date"></span> 
+                </label>
+                <div class="col-sm-9">
+                    <input bs-datepicker data-date-format="dd.MM.yyyy"
+                        model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+                        start-week="1"
+                        class="form-control" name="loytopaivamaara"
+                        ng-model="vm.loyto.properties.loytopaivamaara">                 
+                </div>
+            </div>
+	        <div class="form-group">
+	            <label for="tulkinta" class="col-sm-3 control-label">
+	                <span i18n="common.Construe"></span>  
+	            </label>
+	            <div class="col-sm-9">
+	                <textarea rows="3" class="form-control" name="tulkinta"
+	                    ng-model="vm.loyto.properties.tulkinta">
+	                </textarea> 
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label for="konservointi" class="col-sm-3 control-label">
+	            	<span i18n="ark.Conservation_required"></span> 
+	            </label>
+	            <div class="col-sm-9">
+					<select ng-model="vm.loyto.properties.konservointi"
+					    ng-options="konservointi.id as konservointi.nimi_fi for konservointi in vm.konservointiLista"
+					    name="konservointi" class="form-control">
+					</select>	                
+	            </div>
+	        </div>	                                       
+	    </div>
+	    <!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.edit">
+			<div class="form-group">
+			    <label class="col-sm-4 control-label">
+			        <span i18n="ark.Primary_material"></span>
+			    </label>
+			    <div class="col-sm-8">
+			    	<p class="form-control-static mip-multiline">{{vm.loyto.properties.ensisijainen_materiaali | namei18n}}</p>
+			    </div>
+			</div>    
+			<div class="form-group" ng-if="vm.loyto.properties.materiaalit.length > 0">
+			    <label class="col-sm-4 control-label">
+			        <span i18n="ark.Other_material"></span>
+			    </label>
+			    <div class="col-sm-8">
+	               	<span ng-repeat="materiaali in vm.loyto.properties.materiaalit">
+	               		{{materiaali | namei18n}} <font ng-show="!$last">,</font>
+	               	</span>				
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-sm-4 control-label">
+			        <span i18n="common.Type"></span>
+			    </label>
+			    <div class="col-sm-8">
+			    	<p class="form-control-static mip-multiline">{{vm.loyto.properties.loytotyyppi | namei18n}}</p>
+			    </div>
+			</div>
+			<div class="form-group" ng-if="vm.loyto.properties.loytotyyppi_tarkenteet.length > 0">
+			    <label class="col-sm-4 control-label">
+			        <span i18n="ark.Artifact_name"></span>
+			    </label>
+			    <div class="col-sm-8">
+	               	<span ng-repeat="tarkenne in vm.loyto.properties.loytotyyppi_tarkenteet">
+	               		{{tarkenne | namei18n}} <font ng-show="!$last">,</font>
+	               	</span>				
+			    </div>
+			</div>					    
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="common.Description"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static mip-multiline">{{vm.loyto.properties.kuvaus}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Pieces"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.kappalemaara}} <span ng-show="vm.loyto.properties.kappalemaara_arvio === true"> (arvio)</span></p>
+	            </div>
+	        </div>                   
+	        <div class="form-group" ng-if="vm.loyto.properties.paino">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Weight"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.paino}} {{vm.loyto.properties.painoyksikko}}</p> 
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.pituus">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Length"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.pituus}} {{vm.loyto.properties.pituusyksikko}}</p> 
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.leveys">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Width"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.leveys}} {{vm.loyto.properties.leveysyksikko}}</p> 
+	            </div>
+	        </div> 
+	        <div class="form-group" ng-if="vm.loyto.properties.korkeus">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Height"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.korkeus}} {{vm.loyto.properties.korkeusyksikko}}</p> 
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.halkaisija">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Diameter"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.halkaisija}} {{vm.loyto.properties.halkaisijayksikko}}</p> 
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.paksuus">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Thickness"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.loyto.properties.paksuus}} {{vm.loyto.properties.paksuusyksikko}}</p> 
+	            </div>
+	        </div> 
+	        <div class="form-group" ng-if="vm.loyto.properties.muut_mitat">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Other_measures"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static mip-multiline">{{vm.loyto.properties.muut_mitat}}</p> 
+	            </div>
+	        </div>
+            <div class="form-group" ng-if="vm.loyto.properties.merkinnat.length > 0">
+                <label class="col-sm-4 control-label">
+                    <span i18n="common.Mark"></span> 
+                </label>
+                <div class="col-sm-8">
+                    <span ng-repeat="merkinta in vm.loyto.properties.merkinnat">
+                        {{merkinta | namei18n}} <font ng-show="!$last">,</font>
+                    </span>                     
+                </div>
+            </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.loytopaivamaara">                                   
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Discovery_date"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">{{vm.loyto.properties.loytopaivamaara | date:'dd.MM.yyyy'}}</p>                        
+                </div>                
+            </div>  
+	        <div class="form-group" ng-if="vm.loyto.properties.tulkinta">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="common.Construe"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static mip-multiline">{{vm.loyto.properties.tulkinta}}</p> 
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Conservation_required"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	               	<span ng-repeat="konservointi in vm.konservointiLista">
+	               		<span ng-show="konservointi.id == vm.loyto.properties.konservointi">{{konservointi.nimi_fi}}</span>
+	               	</span>
+	            </div>
+	        </div>	                                                                                
+	    </div>
+    </div>    
+</div>

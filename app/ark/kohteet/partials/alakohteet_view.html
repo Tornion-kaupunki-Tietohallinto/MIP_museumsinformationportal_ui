@@ -1,0 +1,39 @@
+
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#alakohdePanel{{vm.modalId}}">
+	   <h4 class="panel-title">
+	       <span i18n="ark.Subtargets"></span>
+           <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+	   </h4>
+	</div>
+    <div id="alakohdePanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">        
+        <ul class="list-group">
+	        <li class="list-group-item"
+				ng-repeat="alakohde in vm.kohde.properties.alakohteet">
+	
+	            <h4 class="list-group-item-heading">{{alakohde.nimi}}</h4>
+                
+                <div class="form-group" ng-if="alakohde.tyyppi">
+                    <label class="col-sm-3"> <span
+                        i18n="common.Type"></span> / <span i18n="ark.Type_extension"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{alakohde.tyyppi | namei18n}} - {{alakohde.tyyppitarkenne | namei18n}}</p>
+                    </div>
+                </div>
+                                                                                   
+                
+                <label i18n="ark.Timing"></label>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="aka in alakohde.ajoitukset">{{aka.ajoitus | namei18n}} - {{aka.tarkenne | namei18n}}
+                        <p class="mip-multiline">{{aka.ajoituskriteeri}}</p>
+                    </li>
+                    
+                </ul>
+                <label i18n="common.Description"></label>
+	            <p class="mip-multiline">{{alakohde.kuvaus}}</p>
+		    </li>
+		</ul>
+        
+    </div>
+</div>

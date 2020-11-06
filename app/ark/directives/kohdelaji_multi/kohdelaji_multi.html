@@ -1,0 +1,9 @@
+<ui-select 
+    ng-model="klModel.kohdelajit"
+    multiple="true"
+    ng-required="false"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'common.Kind'}">{{$item | namei18n}}</ui-select-match>
+    <ui-select-choices repeat="laji.id as laji in kohdelajit | filter: {'nimi_fi': $select.search}">
+        <div ng-bind-html="laji | namei18n | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

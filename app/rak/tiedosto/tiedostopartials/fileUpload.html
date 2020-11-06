@@ -1,0 +1,98 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Select_files"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="myForm" class="form-horizontal" novalidate>
+                    <div class="row" ng-repeat="file in files"
+                        ng-class="{alert: file.properties.id != null, 'alert-success': file.properties.id != null, alert:file.status == 'loading', 'alert-warning': file.status == 'loading', alert: file.status == 'failure', 'alert-danger': file.status == 'failure'}"
+                        style="border: 1px solid #ddd; border-radius: 4px; margin: 15px;">
+                        <div class="col-md-1">
+                            <div class="row">
+                                <div class="col-md-1 col-sm-1">
+                                    <button class="fa fa-info btn btn-primary"
+                                        style="margin-top: 0.5em; width: 2.75em;" aria-hidden="true"
+                                        trigger="hover click" placement="right" container="#myModalDialog{{modalId}}"
+                                        ng-click="showPopover(file)"
+                                        title="{{showPopover(file).title}}" html="true"
+                                        data-content="{{showPopover(file).content}}"
+                                        data-trigger="click" auto-close="true" bs-popover></button>
+                                    <button class="btn btn-danger fa fa-trash"
+                                        style="margin-top: 0.5em; width: 2.75em;"
+                                        ng-disabled="uploading || disableButtons"
+                                        data-i18n-attr="{title: 'common.Delete'}"
+                                        ng-click="remove($index, false)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label pull-left">{{file.name}},
+                                        {{file.size | Filesize}}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group"
+                                    ng-class="{ 'has-error': myForm.otsikko_{{$index}}.$invalid && myForm.otsikko_{{$index}}.$touched }">
+                                    <label class="col-md-12 control-label">
+                                        <span i18n="common.Caption" class="pull-left"></span><span
+                                            class="pull-left">*</span>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control"
+                                            name="otsikko_{{$index}}"
+                                            ng-model="file.properties.otsikko" ng-required="true"
+                                            ng-disabled="uploading == true || disableButtons"
+                                            data-i18n-attr="{placeholder: 'common.Caption'}">
+                                        <span class="help-block"
+                                            ng-show="myForm.otsikko_{{$index}}.$invalid && myForm.otsikko_{{$index}}.$touched">
+                                            <span data-i18n="common.mandatory_value"
+                                            data-field="{{ 'common.Caption' | i18n }}"> </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label">
+                                        <span i18n="common.Description" class="pull-left"></span>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <textarea rows="2" class="form-control"
+                                            name="kuvaus_{{$index}}"
+                                            ng-model="file.properties.kuvaus"
+                                            data-i18n-attr="{placeholder: 'common.Description'}"
+                                            ng-disabled="uploading == true || disableButtons"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row alert alert-danger" ng-repeat="errorFile in errFiles"
+                        style="border: 1px solid #ddd; margin: 15px;">
+                        <div class="col-md-4">{{errorFile.name}}</div>
+                        <div class="col-md-8">
+                            {{errorMessage(errorFile.$error,errorFile.$errorParam)}}</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="upload" type="file"
+                    ngf-select="selectFiles($files, $invalidFiles)" name="file" multiple
+                    accept="file/*" ngf-max-size="MAX_FILE_SIZE"
+                    ng-disabled="uploading || disableButtons" i18n="common.Select_files"
+                    ng-class="{'btn-success': files.length == 0, 'btn-default': files.length > 0}"></button>
+                <button class="btn btn-primary" ng-click="save(modalNameId)"
+                    ng-disabled="disableButtons || uploading || myForm.$invalid || files.length <= 0"
+                    i18n="common.Save"></button>
+                <button type="button" class="btn btn-default" ng-click="close()"
+                    ng-disabled="disableButtons || uploading || uploadedFiles > 0"
+                    i18n="common.Close"></button>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,621 @@
+<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title">
+                <span i18n="common.Modification_history"></span> : <span i18n="common.Building"></span> {{title}}
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    
+
+				    <div class="panel-body panel-collapse collapse in">        
+				        <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+				            <!-- rakennuksen lisäystiedot -->
+				            <div class="panel panel-default" ng-if="h.action=='I' && h.table_name=='rakennus'">
+				              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>
+				
+				              <table class="table">
+				                <tr>
+				                    <th><span i18n="common.Field"></span></th>
+				                    <th><span i18n="common.Value"></span></th>
+				                </tr>
+				                
+				                <!-- perustiedot -->                    
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_osoite'} as osoitteet">
+				                    <td rowspan="{{osoitteet.length}}" ng-if="$index==0"><span i18n="common.Address"></span></td>
+				                    <td>{{c.row_data.jarjestysnumero}} - {{c.row_data.katunimi}} {{c.row_data.katunumero}} ({{c.row_data.kieli}})</td>
+				                </tr>
+				                <tr ng-if="h.row_data.postinumero">
+				                    <td><span i18n="common.Postal_code"></span></td>
+				                    <td>{{h.row_data.postinumero}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.inventointinumero">
+				                    <td><span i18n="common.Inventory_number"></span></td>
+				                    <td>{{h.row_data.inventointinumero}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.rakennustunnus">
+				                    <td><span i18n="common.Building_identifier"></span></td>
+				                    <td>{{h.row_data.rakennustunnus}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.rakennuksen_sijainti">
+				                    <td><span i18n="common.Location_point"></span></td>
+				                    <td>{{h.row_data.rakennuksen_sijainti}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_rakennustyyppi'} as raktyypit">
+				                    <td rowspan="{{raktyypit.length}}" ng-if="$index==0"><span i18n="common.Building_type"></span></td>
+				                    <td>{{c.row_data.rakennustyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.rakennusvuosi_alku || h.row_data.rakennusvuosi_loppu">
+				                    <td>
+					                    <span i18n="common.Construction_year"></span> / 
+					                    <span i18n="common.Start_and_end_year"></span>
+					                </td>
+				                    <td>{{h.row_data.rakennusvuosi_alku}} - {{h.row_data.rakennusvuosi_loppu}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.rakennusvuosi_selite">
+				                    <td>
+				                        <span i18n="common.Construction_year"></span> / 
+				                        <span i18n="common.Description"></span>
+				                    </td>
+				                    <td>{{h.row_data.rakennusvuosi_selite}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_muutosvuosi'} as mvuodet">
+				                    <td rowspan="{{arvot.mvuodet}}" ng-if="$index==0"><span i18n="common.Alteration_years"></span></td>
+				                    <td>{{c.row_data.alkuvuosi}} - {{c.row_data.loppuvuosi}} <br>{{c.row_data.selite}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_alkuperainenkaytto'} as akaytot">
+				                    <td rowspan="{{akaytot.length}}" ng-if="$index==0"><span i18n="common.Original_usage"></span></td>
+				                    <td>{{c.row_data.kayttotarkoitus | namei18n}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_nykykaytto'} as nkaytot">
+				                    <td rowspan="{{nkaytot.length}}" ng-if="$index==0"><span i18n="common.Common_usage"></span></td>
+				                    <td>{{c.row_data.kayttotarkoitus | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.kerroslukumaara">
+				                    <td><span i18n="common.Number_of_floors"></span></td>
+				                    <td>{{h.row_data.kerroslukumaara}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.asuin_ja_liikehuoneistoja">
+				                    <td><span i18n="common.Residences_and_offices"></span></td>
+				                    <td>{{h.row_data.asuin_ja_liikehuoneistoja}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_perustustyyppi'} as ptyypit">
+				                    <td rowspan="{{ptyypit.length}}" ng-if="$index==0"><span i18n="common.Foundation"></span></td>
+				                    <td>{{c.row_data.perustustyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_runkotyyppi'} as rtyypit">
+				                    <td rowspan="{{arvot.rtyypit}}" ng-if="$index==0"><span i18n="common.Frame"></span></td>
+				                    <td>{{c.row_data.runkotyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_vuoraustyyppi'} as vtyypit">
+				                    <td rowspan="{{vtyypit.length}}" ng-if="$index==0"><span i18n="common.Lining"></span></td>
+				                    <td>{{c.row_data.vuoraustyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.ulkovari">
+				                    <td><span i18n="common.Outside_color"></span></td>
+				                    <td>{{h.row_data.ulkovari}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_kattotyyppi'} as kattotyypit">
+				                    <td rowspan="{{kattotyypit.length}}" ng-if="$index==0"><span i18n="common.Ceiling"></span></td>
+				                    <td>{{c.row_data.kattotyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_katetyyppi'} as katetyypit">
+				                    <td rowspan="{{katetyypit.length}}" ng-if="$index==0"><span i18n="common.Cover"></span></td>
+				                    <td>{{c.row_data.katetyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.kuntotyyppi">
+				                    <td><span i18n="common.Condition"></span></td>
+				                    <td>{{h.row_data.kuntotyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.nykyinentyyli">
+				                    <td><span i18n="common.Contemporary_style"></span></td>
+				                    <td>{{h.row_data.nykyinentyyli | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.purettu">
+				                    <td><span i18n="common.Demolished"></span></td>
+				                    <td>
+				                        <span i18n="common.Yes" ng-if="h.row_data.purettu=='t'"></span>
+				                        <span i18n="common.No" ng-if="h.row_data.purettu=='f'"></span>
+				                    </td>
+				                </tr>
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_omistaja'} as omistajat">
+				                    <td rowspan="{{arvot.omistajat}}" ng-if="$index==0"><span i18n="common.Owners"></span></td>
+				                    <td>{{c.row_data.sukunimi}} {{c.row_data.etunimi}}</td>
+				                </tr>
+				                
+				                <!-- Kuvaukset -->
+				                <tr ng-if="h.row_data.rakennushistoria">
+				                    <td><span i18n="common.Structure_history"></span></td>
+				                    <td>{{h.row_data.rakennushistoria}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.erityispiirteet">
+				                    <td><span i18n="common.Special_characteristics"></span></td>
+				                    <td>{{h.row_data.erityispiirteet}}</td>
+				                </tr>                
+				                <tr ng-if="h.row_data.sisatilakuvaus">
+				                    <td><span i18n="common.Interior_description"></span></td>
+				                    <td>{{h.row_data.sisatilakuvaus}}</td>
+				                </tr> 
+				                <tr ng-if="h.row_data.muut_tiedot">
+				                    <td><span i18n="common.Other_information"></span></td>
+				                    <td>{{h.row_data.muut_tiedot}}</td>
+				                </tr> 
+				                
+				                <!-- kulttuurihistorialliset arvot -->
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_rakennuskulttuurihistoriallinenarvo'} as rkharvot">
+				                    <td rowspan="{{rkharvot.length}}" ng-if="$index==0"><span i18n="common.Culturohistorical_values"></span></td>
+				                    <td>{{c.row_data.kulttuurihistoriallinenarvo | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.arvotustyyppi">
+				                    <td><span i18n="common.Valuation"></span></td>
+				                    <td>{{h.row_data.arvotustyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.row_data.kulttuurihistoriallisetarvot_perustelut">
+				                    <td><span i18n="common.Reasonings"></span></td>
+				                    <td>{{h.row_data.kulttuurihistoriallisetarvot_perustelut}}</td>
+				                </tr>
+				                 
+				                <!-- suojelutiedot -->
+				                <tr ng-repeat="c in h.children | filter:{table_name:'rakennus_suojelutyyppi'} as rstyypit">
+				                    <td rowspan="{{rstyypit.length}}" ng-if="$index==0"><span i18n="common.Building_protection"></span></td>
+				                    <td>
+					                    {{c.row_data.suojelutyyppi | namei18n}}
+					                    <br/>
+					                    <span ng-if="c.row_data.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+					                        <span i18n="common.Mark"></span>: {{c.row_data.merkinta}}, 
+					                    </span>
+					                    <span i18n="common.Explanation"></span>: {{c.row_data.selite}}
+				                    </td>
+				                </tr>
+				                <!-- suunnittelijat -->                
+				                <tr ng-repeat="c in h.children | filter:{table_name:'suunnittelija_rakennus'} as suunnittelijat">
+				                    <td rowspan="{{suunnittelijat.length}}" ng-if="$index==0"><span i18n="common.Architects"></span></td>
+				                    <td>
+				                        {{c.row_data.suunnittelija.sukunimi}} <span ng-if="c.row_data.suunnittelija.etunimi.length > 0">{{c.row_data.suunnittelija.etunimi}}</span>, {{c.row_data.suunnittelijatyyppi | namei18n}}
+				                        <br/>                                                          
+				                        <span ng-if="c.row_data.suunnitteluvuosi_alku">{{c.row_data.suunnitteluvuosi_alku}}</span><span ng-if="c.row_data.suunnitteluvuosi_loppu"> - {{c.row_data.suunnitteluvuosi_loppu}}</span> 
+				                        <span ng-if="c.row_data.suunnitteluvuosi_alku || c.row_data.sunnitteluvuosi_loppu"><br /></span>
+				                        <span ng-if="c.row_data.lisatieto.length > 0"> {{c.row_data.lisatieto}}</span>                            
+				                    </td>
+				                </tr>
+				                
+				                <!-- TODO: rest -->
+				              </table>                
+				            </div>
+				            
+				            <!-- rakennuksen muokkaustiedot -->
+				            <div class="panel panel-default" ng-if="h.action=='U' && h.table_name=='rakennus'">
+				              <div class="panel-heading"><mip-history-header item="h"></mip-history-header></div>
+				              
+				              <table class="table">
+				                <tr>
+				                    <th><span i18n="common.Field"></span></th>
+				                    <th><span i18n="common.OldValue"></span></th>
+				                    <th><span i18n="common.NewValue"></span></th>
+				                </tr>
+				                <!-- perustiedot -->
+				                
+				                
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_osoite'}).length > 0">
+				                    <td><span i18n="common.Address"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_osoite', action:'D'}">
+				                            {{c.row_data.jarjestysnumero}} - {{c.row_data.katunimi}} {{c.row_data.katunumero}} ({{c.row_data.kieli}})<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_osoite', action:'I'}">
+				                            {{c.row_data.jarjestysnumero}} - {{c.row_data.katunimi}} {{c.row_data.katunumero}} ({{c.row_data.kieli}}) <br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                 <tr ng-if="h.changed_fields.hasOwnProperty('kiinteisto')">
+				                    <td><span i18n="common.Estate"></span></td>
+				                    <td>{{h.row_data.kiinteisto.kiinteistotunnus}} {{h.row_data.kiinteisto.nimi}}</td>
+				                    <td>{{h.changed_fields.kiinteisto.kiinteistotunnus}} {{h.changed_fields.kiinteisto.nimi}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('postinumero')">
+				                    <td><span i18n="common.Postal_code"></span></td>
+				                    <td>{{h.row_data.postinumero}}</td>
+				                    <td>{{h.changed_fields.postinumero}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('inventointinumero')">
+				                    <td><span i18n="common.Inventory_number"></span></td>
+				                    <td>{{h.row_data.inventointinumero}}</td>
+				                    <td>{{h.changed_fields.inventointinumero}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('rakennustunnus')">
+				                    <td><span i18n="common.Building_identifier"></span></td>
+				                    <td>{{h.row_data.rakennustunnus}}</td>
+				                    <td>{{h.changed_fields.rakennustunnus}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('rakennuksen_sijainti')">
+				                    <td><span i18n="common.Location_point"></span></td>
+				                    <td>{{h.row_data.rakennuksen_sijainti}}</td>
+				                    <td>{{h.changed_fields.rakennuksen_sijainti}}</td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_rakennustyyppi'}).length > 0">
+				                    <td><span i18n="common.Building_type"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_rakennustyyppi', action:'D'}">
+				                            {{c.row_data.rakennustyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_rakennustyyppi', action:'I'}">
+				                            {{c.row_data.rakennustyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('rakennusvuosi_alku') || h.changed_fields.hasOwnProperty('rakennusvuosi_loppu')">
+				                    <td><span i18n="common.Construction_year"></span> / 
+				                        <span i18n="common.Start_and_end_year"></span>
+				                    </td>
+				                    <td>{{h.row_data.rakennusvuosi_alku}} - {{h.row_data.rakennusvuosi_loppu}}</td>
+				                    <td>
+				                        <span ng-if="h.changed_fields.rakennusvuosi_alku">
+				                            {{h.changed_fields.rakennusvuosi_alku}}
+				                        </span>
+				                        <span ng-if="!h.changed_fields.rakennusvuosi_alku">
+				                            {{h.row_data.rakennusvuosi_alku}}
+				                        </span>
+				                         - 
+				                        <span ng-if="h.changed_fields.rakennusvuosi_loppu">
+				                            {{h.changed_fields.rakennusvuosi_loppu}}
+				                        </span>
+				                        <span ng-if="!h.changed_fields.rakennusvuosi_loppu">
+				                            {{h.row_data.rakennusvuosi_loppu}}
+				                        </span>                         
+				                    </td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('rakennusvuosi_selite')">
+				                    <td>
+				                        <span i18n="common.Construction_year"></span> / 
+				                        <span i18n="common.Description"></span>
+				                    </td>
+				                    <td>{{h.row_data.rakennusvuosi_selite}}</td>
+				                    <td>{{h.changed_fields.rakennusvuosi_selite}}</td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_muutosvuosi'}).length > 0">
+				                    <td><span i18n="common.Alteration_years"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_muutosvuosi', action:'D'}">
+				                            {{c.row_data.alkuvuosi}} - {{c.row_data.loppuvuosi}} <br>{{c.row_data.selite}}<br/><br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_muutosvuosi', action:'I'}">
+				                            {{c.row_data.alkuvuosi}} - {{c.row_data.loppuvuosi}} <br>{{c.row_data.selite}}<br/><br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_alkuperainenkaytto'}).length > 0">
+				                    <td><span i18n="common.Original_usage"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_alkuperainenkaytto', action:'D'}">
+				                            {{c.row_data.kayttotarkoitus | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_alkuperainenkaytto', action:'I'}">
+				                            {{c.row_data.kayttotarkoitus | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_nykykaytto'}).length > 0">
+				                    <td><span i18n="common.Common_usage"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_nykykaytto', action:'D'}">
+				                            {{c.row_data.kayttotarkoitus | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_nykykaytto', action:'I'}">
+				                            {{c.row_data.kayttotarkoitus | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('kerroslukumaara')">
+				                    <td>
+				                        <span i18n="common.Number_of_floors"></span>
+				                    </td>
+				                    <td>{{h.row_data.kerroslukumaara}}</td>
+				                    <td>{{h.changed_fields.kerroslukumaara}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('asuin_ja_liikehuoneistoja')">
+				                    <td>
+				                        <span i18n="common.Residences_and_offices"></span>
+				                    </td>
+				                    <td>{{h.row_data.asuin_ja_liikehuoneistoja}}</td>
+				                    <td>{{h.changed_fields.asuin_ja_liikehuoneistoja}}</td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_perustustyyppi'}).length > 0">
+				                    <td><span i18n="common.Foundation"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_perustustyyppi', action:'D'}">
+				                            {{c.row_data.perustustyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_perustustyyppi', action:'I'}">
+				                            {{c.row_data.perustustyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_runkotyyppi'}).length > 0">
+				                    <td><span i18n="common.Frame"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_runkotyyppi', action:'D'}">
+				                            {{c.row_data.runkotyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_runkotyyppi', action:'I'}">
+				                            {{c.row_data.runkotyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_vuoraustyyppi'}).length > 0">
+				                    <td><span i18n="common.Lining"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_vuoraustyyppi', action:'D'}">
+				                            {{c.row_data.vuoraustyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_vuoraustyyppi', action:'I'}">
+				                            {{c.row_data.vuoraustyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('ulkovari')">
+				                    <td>
+				                        <span i18n="common.Outside_color"></span>
+				                    </td>
+				                    <td>{{h.row_data.ulkovari}}</td>
+				                    <td>{{h.changed_fields.ulkovari}}</td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_kattotyyppi'}).length > 0">
+				                    <td><span i18n="common.Ceiling"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_kattotyyppi', action:'D'}">
+				                            {{c.row_data.kattotyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_kattotyyppi', action:'I'}">
+				                            {{c.row_data.kattotyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_katetyyppi'}).length > 0">
+				                    <td><span i18n="common.Cover"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_katetyyppi', action:'D'}">
+				                            {{c.row_data.katetyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_katetyyppi', action:'I'}">
+				                            {{c.row_data.katetyyppi | namei18n}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('kuntotyyppi')">
+				                    <td>
+				                        <span i18n="common.Condition"></span>
+				                    </td>
+				                    <td>{{h.row_data.kuntotyyppi | namei18n}}</td>
+				                    <td>{{h.changed_fields.kuntotyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('nykyinentyyli')">
+				                    <td>
+				                        <span i18n="common.Contemporary_style"></span>
+				                    </td>
+				                    <td>{{h.row_data.nykyinentyyli | namei18n}}</td>
+				                    <td>{{h.changed_fields.nykyinentyyli | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.purettu && h.row_data.purettu && (h.row_data.purettu != h.changed_fields.purettu)">
+				                    <td><span i18n="common.Demolished"></span></td>
+				                    <td>
+				                        <span i18n="common.Yes" ng-if="h.row_data.purettu=='t'"></span>
+				                        <span i18n="common.No" ng-if="h.row_data.purettu=='f'"></span>
+				                    </td>
+				                    <td>
+				                        <span i18n="common.Yes" ng-if="h.changed_fields.purettu=='t'"></span>
+				                        <span i18n="common.No" ng-if="h.changed_fields.purettu=='f'"></span>
+				                    </td>
+				                </tr>
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_omistaja'}).length > 0">
+				                    <td><span i18n="common.Owners"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_omistaja', action:'D'}">
+				                            {{c.row_data.sukunimi}} {{c.row_data.etunimi}}<br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_omistaja', action:'I'}">
+				                            {{c.row_data.sukunimi}} {{c.row_data.etunimi}}<br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                
+				                <!-- kuvaukset -->
+				                <tr ng-if="h.changed_fields.hasOwnProperty('rakennushistoria')">
+				                    <td>
+				                        <span i18n="common.Structure_history"></span>
+				                    </td>
+				                    <td>{{h.row_data.rakennushistoria}}</td>
+				                    <td>{{h.changed_fields.rakennushistoria}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('erityispiirteet')">
+				                    <td>
+				                        <span i18n="common.Special_characteristics"></span>
+				                    </td>
+				                    <td>{{h.row_data.erityispiirteet}}</td>
+				                    <td>{{h.changed_fields.erityispiirteet}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('sisatilakuvaus')">
+				                    <td>
+				                        <span i18n="common.Interior_description"></span>
+				                    </td>
+				                    <td>{{h.row_data.sisatilakuvaus}}</td>
+				                    <td>{{h.changed_fields.sisatilakuvaus}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('muut_tiedot')">
+				                    <td>
+				                        <span i18n="common.Other_information"></span>
+				                    </td>
+				                    <td>{{h.row_data.muut_tiedot}}</td>
+				                    <td>{{h.changed_fields.muut_tiedot}}</td>
+				                </tr>
+				                
+				                <!-- kulttuurihistorialliset arvot -->
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_rakennuskulttuurihistoriallinenarvo'}).length > 0">
+				                    <td><span i18n="common.Culturohistorical_values"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_rakennuskulttuurihistoriallinenarvo', action:'D'}">
+				                            {{c.row_data.kulttuurihistoriallinenarvo | namei18n}} <br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_rakennuskulttuurihistoriallinenarvo', action:'I'}">
+				                            {{c.row_data.kulttuurihistoriallinenarvo | namei18n}} <br/>
+				                        </span>
+				                    </td>
+				                </tr>                
+				                <tr ng-if="h.changed_fields.hasOwnProperty('arvotustyyppi')">
+				                    <td>
+				                        <span i18n="common.Valuation"></span>
+				                    </td>
+				                    <td>{{h.row_data.arvotustyyppi | namei18n}}</td>
+				                    <td>{{h.changed_fields.arvotustyyppi | namei18n}}</td>
+				                </tr>
+				                <tr ng-if="h.changed_fields.hasOwnProperty('kulttuurihistoriallisetarvot_perustelut')">
+				                    <td>
+				                        <span i18n="common.Reasonings"></span>
+				                    </td>
+				                    <td>{{h.row_data.kulttuurihistoriallisetarvot_perustelut}}</td>
+				                    <td>{{h.changed_fields.kulttuurihistoriallisetarvot_perustelut}}</td>
+				                </tr>
+				                
+				                <!-- suojelutiedot -->
+				                <tr ng-if="(h.children | filter:{table_name:'rakennus_suojelutyyppi'}).length > 0">
+				                    <td><span i18n="common.Building_protection"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_suojelutyyppi', action:'D'}">
+				                            {{c.row_data.suojelutyyppi | namei18n}}
+				                            <br/>
+				                            <span ng-if="c.row_data.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+				                                <span i18n="common.Mark"></span>: {{c.row_data.merkinta}}, 
+				                            </span>
+				                            <span i18n="common.Explanation"></span>: {{c.row_data.selite}}
+				                            <br/><br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'rakennus_suojelutyyppi', action:'I'}">
+				                            {{c.row_data.suojelutyyppi | namei18n}}
+				                            <br/>
+				                            <span ng-if="c.row_data.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+				                                <span i18n="common.Mark"></span>: {{c.row_data.merkinta}}, 
+				                            </span>
+				                            <span i18n="common.Explanation"></span>: {{c.row_data.selite}}
+				                            <br/><br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                
+				                <!-- suunnittelijat -->
+				                <tr ng-if="(h.children | filter:{table_name:'suunnittelija_rakennus'}).length > 0">
+				                    <td><span i18n="common.Architects"></span></td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'suunnittelija_rakennus', action:'D'}">
+				                            {{c.row_data.suunnittelija.sukunimi}} <span ng-if="c.row_data.suunnittelija.etunimi.length > 0">{{c.row_data.suunnittelija.etunimi}}</span>, {{c.row_data.suunnittelijatyyppi | namei18n}}
+				                            <br/>                                                          
+				                              <span ng-if="c.row_data.suunnitteluvuosi_alku">{{c.row_data.suunnitteluvuosi_alku}}</span><span ng-if="c.row_data.suunnitteluvuosi_loppu"> - {{c.row_data.suunnitteluvuosi_loppu}}</span> 
+				                            <span ng-if="c.row_data.suunnitteluvuosi_alku || c.row_data.sunnitteluvuosi_loppu"><br /></span>
+				                            <span ng-if="c.row_data.lisatieto.length > 0"> {{c.row_data.lisatieto}}</span>
+				                            <br/><br/>
+				                        </span>
+				                    </td>
+				                    <td>
+				                        <span ng-repeat="c in h.children | filter:{table_name:'suunnittelija_rakennus', action:'I'}">
+				                            {{c.row_data.suunnittelija.sukunimi}} <span ng-if="c.row_data.suunnittelija.etunimi">{{c.row_data.suunnittelija.etunimi}}</span>, {{c.row_data.suunnittelijatyyppi | namei18n}}                                                                                
+				                            <br/>                                                          
+				                            <span ng-if="c.row_data.suunnitteluvuosi_alku">{{c.row_data.suunnitteluvuosi_alku}}</span><span ng-if="c.row_data.suunnitteluvuosi_loppu"> - {{c.row_data.suunnitteluvuosi_loppu}}</span> 
+				                            <span ng-if="c.row_data.suunnitteluvuosi_alku || c.row_data.sunnitteluvuosi_loppu"><br /></span>
+				                            <span ng-if="c.row_data.lisatieto.length > 0"> {{c.row_data.lisatieto}}</span>
+				                            <br/><br/>
+				                        </span>
+				                    </td>
+				                </tr>
+				                 
+				              </table>
+				              
+				            </div>
+				            
+				            <!-- rakennuksen kuvan lisäystiedot -->
+				            <div class="panel panel-default" ng-if="h.table_name=='kuva_rakennus'">
+				              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>
+				
+				              <table class="table">
+				                <tr>
+				                    <td colspan="3">
+				                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+				                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+				                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+				
+				                        <span i18n="common.Image"></span>:
+				                        {{h.row_data.kuva.alkuperainen_nimi}} -
+				                        {{h.row_data.kuva.otsikko}}
+				                    </td>
+				                </tr>
+				              </table>
+				            </div>
+				            
+				            <!-- rakennuksen tiedoston lisäystiedot -->
+				            <div class="panel panel-default" ng-if="h.table_name=='tiedosto_rakennus'">
+				              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>              
+				              <table class="table">
+				                <tr>
+				                    <td colspan="3">
+				                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+				                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+				                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+				
+				                        <span i18n="common.File"></span>:
+				                        {{h.row_data.tiedosto.alkuperainen_nimi}} -
+				                        {{h.row_data.tiedosto.otsikko}}
+				                    </td>
+				                </tr>
+				              </table>
+				            </div>
+				
+				            <!-- porrashuoneiden lisäykset -->
+				            <div class="panel panel-default" ng-if="h.table_name=='porrashuone'">
+				              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>              
+				              <table class="table">
+				                <tr>
+				                    <td colspan="3">
+				                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+				                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+				                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+				
+				                        <span i18n="common.Staircase"></span>:
+				                        {{h.row_data.porrashuoneen_tunnus}} - {{h.row_data.porrashuonetyyppi | namei18n}} 
+				                    </td>
+				                </tr>
+				              </table>
+				            </div>
+				        </div>
+				    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+    </div>
+</div>

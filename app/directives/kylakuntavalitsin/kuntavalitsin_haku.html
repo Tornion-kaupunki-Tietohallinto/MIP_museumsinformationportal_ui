@@ -1,0 +1,22 @@
+<ui-select 
+    ng-model="props.kuntaId"
+    name="kunta"
+    spellcheck="false"
+    on-select="setKunta($item, $model, true)">
+    <ui-select-match 
+        data-i18n-attr="{placeholder: 'common.County'}"
+        allow-clear="true">{{$select.selected.nimi}} ({{$select.selected.kuntanumero}})</ui-select-match>
+    <ui-select-choices     
+        repeat="kunta.id as kunta in kunnat track by $index "
+        refresh="getKunnat($select.search)"
+        refresh-delay="250">
+        <div>                                                                
+            <span
+                ng-bind-html="kunta.nimi | highlight: $select.search">
+            </span>
+            <span
+                ng-bind-html="kunta.kuntanumero | highlight: $select.search">
+            </span>
+        </div>
+    </ui-select-choices> 
+</ui-select> 

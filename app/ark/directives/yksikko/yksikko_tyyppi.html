@@ -1,0 +1,15 @@
+
+<div class="form-group">
+    <label for="yksikkotyyppi" class="col-sm-4 control-label">
+        <span i18n="unit.Unit_type"></span> *
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="yksikkotyyppi" 
+        	ng-model="yksikkotyyppi" 
+        	ng-required="true"
+            ng-options="yksikkotyyppi as yksikkotyyppi.nimi_fi for yksikkotyyppi in yksikkotyypit track by yksikkotyyppi.id"
+            focus-me="focusInput">
+        </select>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{
+	"Saving_estate_successfull" : "Estate %name saved",
+	"Estate_deleted" : "Estate deleted",
+	"Estate_saved_successfully" : "Estate %name saved",
+	"Estate_created_successfully" : "The new estate created successfully",
+	"Property_identifier_pattern" : "Property identifier has to match the pattern XXX-XXX-XXXX-XXXX",
+	"Estate_count": "Estates",
+	"Delete_location": "Delete location",
+	"Set_location": "Set location",
+	"Show_location": "Show location",
+	"Get_data": "Get data",
+	"Building_images": "Images of the buildings",
+	
+	"Column_number": "Column number",
+    "Next_free_column_number_is": "The next free column number is  %freenum",
+    "Column_number_is_already_in_use": "The column number has already been taken",
+    "Column_number_must_be_positive_number": "The column number must be a positive number",
+    "Property_identifier_already_in_use_fill_column_number": "Property identifier is already in use so the column number must be filled in"
+	
+}

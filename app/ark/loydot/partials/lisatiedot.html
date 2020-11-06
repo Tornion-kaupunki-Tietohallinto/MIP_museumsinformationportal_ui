@@ -1,0 +1,22 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#lisatiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="common.Additional_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="lisatiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="col-sm-12">
+	            <textarea rows="3" class="form-control" name="lisatiedot"
+	                ng-model="vm.loyto.properties.lisatiedot">
+	            </textarea> 
+	        </div>              
+	    </div>
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="col-sm-12">
+	            <p class="form-control-static mip-multiline">{{vm.loyto.properties.lisatiedot}}</p>
+	        </div>              
+	    </div>
+    </div>    
+</div>
