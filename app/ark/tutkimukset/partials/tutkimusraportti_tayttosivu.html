@@ -1,0 +1,23 @@
+<!-- Kaivauksen, koekaivauksen ja konekaivuun valvonnasta tehtävän raportin tayttosivu -->
+<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+      <h4 class="modal-title">
+        <span i18n="ark.Research_report"></span>
+        <span> : {{vm.tutkimus.properties.nimi}}</span>
+      </h4>
+    </div>
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-footer">
+      <div class="mip-footer-btn-group">
+        <button type="button" class="btn btn-success" ng-click="vm.createReport('WORD', 'tutkimusraportti')">
+          <span i18n="common.Create_report"></span>
+        </button>
+        <button type="button" class="btn btn-default" ng-click="vm.close()" i18n="common.Close"></button>
+      </div>
+    </div>
+  </div>
+</div>

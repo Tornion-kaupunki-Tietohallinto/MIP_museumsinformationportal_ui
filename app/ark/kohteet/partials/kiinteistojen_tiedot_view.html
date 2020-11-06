@@ -1,0 +1,43 @@
+<!-- Kiinteistojen tiedot -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading collapsed" data-toggle="collapse" data-target="#kiinteistonTiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.Estates"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="kiinteistonTiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse">
+        <ul class="list-group">
+            <!-- Kohde -->
+            <li class="list-group-item" ng-if="vm.kohde.properties.kiinteistotrakennukset" ng-repeat="kr in vm.kohde.properties.kiinteistotrakennukset">
+				<a
+					class="link"
+					ng-click="vm.showKiinteistoModal(kr.kiinteistotunnus);">{{kr.kiinteistotunnus}} {{kr.kiinteisto_nimi}}
+				</a>
+                <p>
+                	<span ng-repeat="osoite in kr.osoitteet">
+                		<span i18n="common.Street_address"></span>: {{osoite.katunimi}} {{osoite.katunumero}} <br>
+                	</span>
+                	<span ng-repeat="osoite in kr.osoitteet | limitTo:1">
+                		<span i18n="common.Postal_code"></span>: {{osoite.postinumero}} {{osoite.kuntanimi}}
+                	</span>
+                </p>
+            </li>
+            <!-- Tutkimus -->
+            <li class="list-group-item" ng-if="vm.tutkimus.properties.kiinteistotrakennukset" ng-repeat="kr in vm.tutkimus.properties.kiinteistotrakennukset">
+				<a
+					class="link"
+					ng-click="vm.showKiinteistoModal(kr.kiinteistotunnus);">{{kr.kiinteistotunnus}} {{kr.kiinteisto_nimi}}
+				</a>
+                <p>
+                	<span ng-repeat="osoite in kr.osoitteet">
+                		<span i18n="common.Street_address"></span>: {{osoite.katunimi}} {{osoite.katunumero}} <br>
+                	</span>
+                	<span ng-repeat="osoite in kr.osoitteet | limitTo:1">
+                		<span i18n="common.Postal_code"></span>: {{osoite.postinumero}} {{osoite.kuntanimi}}
+                	</span>
+                </p>
+            </li>            
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#naytteetPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="sample.Samples"></span> : 
+            <span i18n="common.Results"></span> : {{vm.tpNaytteetTable.total()}}
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="naytteetPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body">
+			<table ng-table="vm.tpNaytteetTable" template-pagination="pages/templates/table-pagination.html" class="table table-striped table-bordered" show-filter="false">
+				<tr ng-repeat="nayte in $data">
+					<td data-title="vm.getColumnName('Listing_number', 'ark')" style="width:25%" sortable="'nayte.luettelointinumero'">
+						<a class="link" ng-show="!vm.editNayte" ng-click="vm.avaaNayte(nayte.ark_nayte_id)">{{nayte.luettelointinumero}}</a>
+                        <span ng-show="vm.editNayte">
+                            <input type="text" class="form-control" name="luettelointinumero"
+	                           	ng-change="vm.tarkistaNayte(form, $index)"
+	                           	ng-model-options='{debounce: 300}'
+	                           	ng-keypress="nayte.luettelointinumero && vm.nayteEnter($event)"
+	                           	ng-disabled="vm.aktiiviNayte != $index"
+	                           	focus-me="{{$last}}"
+	                           	ng-required="true"                            
+	                            ng-model="nayte.luettelointinumero"
+	                            data-i18n-attr="{placeholder: 'ark.Listing_number'}" spellcheck="false" autocomplete="off">
+	                       	<span class="help-block" ng-show="!vm.uniikkiNayte && vm.rivi == $index" >
+			                    <span class="text-danger" data-i18n="common.already_in_use" data-field="{{ 'ark.Listing_number' | i18n }}"></span>
+			                </span>
+	                       	<span class="help-block" ng-show="!vm.validiNayte && vm.rivi == $index" >
+			                    <span class="text-danger" data-i18n="ark.Unknown_listing_number"></span>
+			                </span>			                                            
+                        </span>						
+					</td>
+					<td data-title="vm.getColumnName('Begin', 'ark')">
+						<span>
+							{{nayte.alkaa | pvm:'dd.MM.yyyy'}}
+						</span>
+					</td>
+					<td data-title="vm.getColumnName('End', 'ark')">
+						<span ng-show="!vm.editNayte && !vm.editNaytePaattyy">
+							{{nayte.paattyy | pvm:'dd.MM.yyyy'}}
+						</span>
+				        <span ng-show="vm.editNayte && nayte.id === null">
+							<input bs-datepicker 
+								data-model-date-format="yyyy-MM-dd"
+								data-date-format="dd.MM.yyyy"
+							    data-date-type="string" 
+							    data-autoclose="1" 
+							    type="text"
+							    start-week="1"
+							    class="form-control" name="nayte_paattyy"
+								ng-disabled="vm.aktiiviNayte != $index"
+							    ng-model="nayte.paattyy">
+			             </span>
+				        <span ng-show="vm.editNaytePaattyy && vm.editNaytePaattyy.id === nayte.id">
+							<input bs-datepicker data-date-format="dd.MM.yyyy"
+							    data-model-date-format="yyyy-MM-dd" 
+							    data-date-type="string"
+							    data-autoclose="1" 
+							    type="text"
+							    start-week="1"
+							    class="form-control" name="nayte_paattyy"
+							    ng-model="nayte.paattyy">
+			             </span>			             						    	                
+					</td>
+					<td data-title="vm.getColumnName('Actions', 'common')" style="width:10%">
+                        <button type="button" class="btn btn-sm mip-transparent" data-i18n-attr="{title: 'common.Edit'}" 
+                        	ng-show="!vm.edit && !vm.editNayte && !vm.editNaytePaattyy"
+                        	ng-click="vm.muokkaaNayte(nayte)">
+                                <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" data-i18n-attr="{title: 'common.Delete'}" 
+                        	ng-show="!vm.edit && !vm.editNayte && !vm.editNaytePaattyy" 
+                        	ng-click="vm.poistaNayte(nayte)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm" data-i18n-attr="{title: 'common.Cancel'}" 
+                        	ng-show="!vm.edit && vm.editNayte && vm.aktiiviNayte == $index" 
+                        	ng-click="vm.peruutaNayte()">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>	                        						
+					</td>
+				</tr>
+			</table>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-2">
+			        <span data-i18n-attr="{title: 'ark.Add_sample_to_operation'}">                
+			            <button type="button" class="btn btn-success pull-left"
+			            	ng-class="{ disabled: vm.disableButtons || form.$invalid || vm.editNaytePaattyy}"
+			            	ng-if="vm.permissions.muokkaus && !vm.edit"
+			            	ng-click="vm.disableButtons || form.$invalid || vm.editNaytePaattyy || vm.lisaaNayte()">
+			                <span class="fa fa-plus"></span>
+			            </button>
+		            </span>                                                                                                
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                    &nbsp;                               
+                </div>
+            </div>				        
+	    </div>
+    </div>
+</div>

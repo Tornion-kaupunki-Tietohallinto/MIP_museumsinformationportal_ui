@@ -1,0 +1,25 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse"
+        data-target="#suojeluTiedotPanel{{modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.ValueArea_protection"></span> 
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="suojeluTiedotPanel{{modalId}}"
+        class="panel-body panel-collapse collapse in">
+
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="suojelu in arvoalue.properties.suojelutiedot">
+
+                <h4 class="list-group-item-heading">{{suojelu.suojelutyyppi.nimi_fi}}</h4>
+                <p ng-if="suojelu.suojelutyyppi.suojelutyyppi_ryhma_id==1 && suojelu.merkinta">
+                    <span i18n="common.Mark"></span>: {{suojelu.merkinta}}
+                </p>
+                <p class="mip-multiline">{{suojelu.selite}}</p>
+            </li>
+        </ul>
+
+    </div>
+</div>

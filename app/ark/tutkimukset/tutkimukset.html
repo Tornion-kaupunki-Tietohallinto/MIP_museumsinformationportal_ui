@@ -1,0 +1,85 @@
+<div class="panel">
+	<div class="panel-body">
+		<div ng-include="'pages/tabs.html'"></div>
+		<div ng-include="'pages/subtabs.html'"></div>
+		<div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-collapsible panel-default table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse" data-target="#hakukentat">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span>
+                            : {{vm.tutkimuksetTable.total()}}
+                            <span i18n="common.Shown"></span>
+                            : {{vm.searchResults}}
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body form-horizontal panel-collapse collapse in" id="hakukentat"
+                    	ng-include="'ark/tutkimukset/tutkimus_hakukentat.html'"
+                    	style="margin-bottom: 1em;">
+                   </div>
+					<div class="panel-heading" role="tab" data-toggle="collapse" data-target="#tarkennettu_haku">
+                        <h4 class="panel-title">
+                            <span i18n="common.Advanced_search"></span>
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+					</div>
+                    <div class="panel-body form-horizontal panel-collapse collapse" id="tarkennettu_haku"
+                    	ng-include="'ark/tutkimukset/tutkimus_tarkennettu_haku.html'"
+                    	style="margin-bottom: 1em;">
+                   </div>
+					<!-- Taulukko -->
+					<table ng-table="vm.tutkimuksetTable"
+						class="table table-striped table-bordered" show-filter="false">
+						<tr ng-repeat="tutkimus in $data" style="cursor: pointer" ng-click="vm.selectTutkimus(tutkimus)">
+                            <td data-title="vm.getColumnName('Type', 'common')" ng-if="vm.colVisibilities.showTutkimustyyppiCol">
+                                {{tutkimus.properties.tutkimuslaji | namei18n}}
+                            </td>
+							<td data-title="vm.getColumnName('Name')" sortable="'properties.nimi'" ng-if="vm.colVisibilities.showTutkimuksenNimiCol">
+								{{tutkimus.properties.nimi}}
+							</td>
+							<td data-title="vm.getColumnName('Research_abbreviation', 'ark')" ng-if="vm.colVisibilities.showTutkimusLyhenneCol">
+								{{tutkimus.properties.tutkimuksen_lyhenne}}
+							</td>
+							<td data-title="vm.getColumnName('Discovery_main_number', 'ark')" ng-if="vm.colVisibilities.showLoytoPaanumeroCol">
+								{{tutkimus.properties.loyto_paanumero}}
+							</td>
+							<td data-title="vm.getColumnName('Ready', 'common')" ng-if="vm.colVisibilities.showTutkimusValmisCol">
+								<span>{{tutkimus.properties.valmis | trueFalseToText}}</span>
+							</td>
+							<td data-title="vm.getColumnName('Public', 'common')" ng-if="vm.colVisibilities.showTutkimusJulkinenCol">
+								<span>{{tutkimus.properties.julkinen | trueFalseToText}}</span>
+							</td>
+                            <td data-title="vm.getColumnName('Field_work', 'ark')" sortable="'properties.alkuvuosi'" ng-if="vm.colVisibilities.showKenttatyoCol">
+                                {{tutkimus.properties.kenttatyo_alkupvm | date:'dd.MM.yyyy'}}<font ng-if="tutkimus.properties.kenttatyo_loppupvm"> -</font>
+                                {{tutkimus.properties.kenttatyo_loppupvm | date:'dd.MM.yyyy'}}
+                            </td>
+							<td data-title="vm.getColumnName('Field_work_manager', 'ark')" ng-if="vm.colVisibilities.showKenttatyojohtajaCol">
+								{{tutkimus.properties.kenttatyojohtaja}}
+							</td>
+							<td data-title="vm.getColumnName('KL_code', 'ark')" ng-if="vm.colVisibilities.showKLKoodiCol">
+								{{tutkimus.properties.kl_koodi}}
+							</td>
+							<td data-title="vm.getColumnName('Researcher', 'common')" ng-if="vm.colVisibilities.showTutkijaCol" style="width:15%">
+								<span ng-repeat="tutkija in tutkimus.properties.tutkimuskayttajat">
+									{{tutkija.kayttaja.etunimi}} {{tutkija.kayttaja.sukunimi}} <font ng-show="!$last">,</font>
+								</span>
+							</td>
+							<td data-title="vm.getColumnName('Organization', 'common')" ng-if="vm.colVisibilities.showOrganisaatioCol" style="width:15%">
+								<span ng-repeat="org in tutkimus.properties.organisaatiot">
+									{{org}}<font ng-show="!$last">,</font>
+								</span>
+							</td>
+							<td data-title="vm.getColumnName('Summary', 'ark')" ng-if="vm.colVisibilities.showTiivistelmaCol">
+								{{tutkimus.properties.tiivistelma}}
+							</td>
+							<td data-title="vm.getColumnName('Financier', 'ark')" ng-if="vm.colVisibilities.showRahoittajaCol">
+								{{tutkimus.properties.rahoittaja}}
+							</td>
+						</tr>
+					</table>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>

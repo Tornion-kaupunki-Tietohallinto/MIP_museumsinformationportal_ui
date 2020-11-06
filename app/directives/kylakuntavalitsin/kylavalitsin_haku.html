@@ -1,0 +1,25 @@
+<ui-select 
+    ng-model="props.kylaId"
+    name="kyla"
+    spellcheck="false"
+    on-select="setKyla($item, $model)">
+    <ui-select-match 
+        data-i18n-attr="{placeholder: 'common.Village'}"
+        allow-clear="true">{{$select.selected.nimi}} ({{$select.selected.kylanumero}}) {{$select.selected.kunta.nimi}} </ui-select-match>
+    <ui-select-choices     
+        repeat="kyla.id as kyla in kylat track by $index "
+        refresh="getKylat($select.search)"
+        refresh-delay="250">
+        <div>                                                                
+            <span
+                ng-bind-html="kyla.nimi | highlight: $select.search">
+            </span>
+            <span
+                ng-bind-html="kyla.kylanumero | highlight: $select.search">
+            </span>
+            <span
+                ng-bind-html="kyla.kunta.nimi | highlight: $select.search">
+            </span>
+        </div>
+    </ui-select-choices> 
+</ui-select> 

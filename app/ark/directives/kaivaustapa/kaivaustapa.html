@@ -1,0 +1,14 @@
+
+<div class="form-group">
+    <label for="kaivaustapa" class="col-sm-4 control-label">
+        <span i18n="unit.Digging_method"></span>
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="kaivaustapa" 
+        	ng-model="kaivaustapa" 
+            ng-options="kaivaustapa as kaivaustapa.nimi_fi for kaivaustapa in kaivaustavat track by kaivaustapa.id"
+            focus-me="focusInput">
+        </select>        
+    </div>
+</div>

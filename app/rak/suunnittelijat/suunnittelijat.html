@@ -1,0 +1,145 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-collapsible panel-default table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span>
+                            : {{suunnittelijatTable.total()}}
+                            <span i18n="common.Shown"></span>
+                            : {{searchResults}}
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body form-horizontal panel-collapse collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                             <div class="col-md-2 col-sm-2 col-xs-2">
+                                
+                                    <button type="button"
+                                        class="btn btn-default"
+                                        ng-click="clearSearchFilter()"
+                                        data-i18n-attr="{title: 'common.Clear_filter'}">
+                                        <span class="fa fa-ban"></span>
+                                    </button>
+                                    
+                                    <button type="button"
+                                        class="btn btn-default"
+                                        ng-click="refreshTable()"
+                                        data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                        <span class="fa fa-refresh"></span>
+                                    </button> 
+                                
+                                
+                                    <button type="button"
+                                        class="btn btn-success"
+                                        data-ng-show="showCreateNewButton"
+                                        id="btn-create" ng-click="selectSuunnittelija()"
+                                        data-i18n-attr="{title: 'common.Add_designer'}">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                
+                            </div>
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showSuunnittelijaNimiCol" ng-change="saveColVisibility('showSuunnittelijaNimiCol', colVisibilities.showSuunnittelijaNimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>    
+                                            <input type="text" class="form-control" name="sukunimi"
+                                                ng-model="suunnittelijatTable.filter().properties.sukunimi"
+                                                data-i18n-attr="{placeholder: 'designer.Lastname_or_name'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showSuunnittelijaNimiCol" ng-change="saveColVisibility('showSuunnittelijaNimiCol', colVisibilities.showSuunnittelijaNimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                            <input type="text" class="form-control" name="etunimi"
+                                                ng-model="suunnittelijatTable.filter().properties.etunimi"
+                                                data-i18n-attr="{placeholder: 'common.Firstname'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">   
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showAmmattiarvoCol" ng-change="saveColVisibility('showAmmattiarvoCol', colVisibilities.showAmmattiarvoCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                      
+                                        	<ui-select ng-model="suunnittelijatTable.filter().properties.ammattiarvo"
+    											name="ammatti_arvo" theme="bootstrap" multiple="true"
+    											ng-required="false"
+    											on-remove="addItemBackToList($item, ammattiarvot)"
+                                                spellcheck="false">
+    										<ui-select-match data-i18n-attr="{placeholder: 'common.Profession_or_title'}">{{$item | namei18n}}</ui-select-match>
+    										<ui-select-choices
+    											repeat="suunnittelija_ammattiarvo.id as suunnittelija_ammattiarvo in ammattiarvot | filter: {'nimi_fi': $select.search}">
+    										<div ng-bind-html="suunnittelija_ammattiarvo | namei18n | highlight: $select.search">
+												</div>
+    										</ui-select-choices> </ui-select>    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                            <div class="col-md-12">         
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="checkbox" ng-model="colVisibilities.showAddedByCol" ng-change="saveColVisibility('showAddedByCol', colVisibilities.showAddedByCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                                    </span>                                       
+                                                    <ui-select 
+                                                        ng-model="suunnittelijatTable.filter().properties.luoja"
+                                                        name="luoja"
+                                                        spellcheck="false">
+                                                        <ui-select-match 
+                                                            data-i18n-attr="{placeholder: 'common.Created_by'}"
+                                                            allow-clear="true">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}</ui-select-match>
+                                                        <ui-select-choices       
+                                                            repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                            refresh="getKayttajat($select.search)"
+                                                            refresh-delay="250">
+                                                            <div>                                                                
+                                                                <span
+                                                                    ng-bind-html="kayttaja.etunimi | highlight: $select.search">
+                                                                </span>
+                                                                <span
+                                                                    ng-bind-html="kayttaja.sukunimi | highlight: $select.search">
+                                                                </span>
+                                                            </div>
+                                                        </ui-select-choices> 
+                                                    </ui-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>                           
+                        </div>
+                    </div>
+                    <table ng-table="suunnittelijatTable" class="table table-striped table-bordered"
+                        template-pagination="pages/templates/table-pagination.html"
+                        show-filter="false">
+                        <tr ng-repeat="suunnittelija in $data" style="cursor: pointer"
+                            ng-click="selectSuunnittelija(suunnittelija)">
+                            <td data-title="getColumnName('common.Name')"  ng-if="colVisibilities.showSuunnittelijaNimiCol"
+                                sortable="'properties.nimi'"
+                                filter="{ 'properties.nimi': 'text' }">{{suunnittelija.properties.kokonimi}}</td>                            
+                            <td data-title="getColumnName('Profession_or_title')"  ng-if="colVisibilities.showAmmattiarvoCol"
+                                sortable="'properties.ammattiarvo'">{{suunnittelija.properties.ammattiarvo | namei18n}}</td>
+                            <td data-title="getColumnName('Added_by')" ng-if="colVisibilities.showAddedByCol"
+                                filter="{ 'properties.luoja': 'number' }">                                                                
+                                {{suunnittelija.properties.luoja.etunimi}} {{suunnittelija.properties.luoja.sukunimi}}                                                             
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

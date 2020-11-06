@@ -1,0 +1,52 @@
+<div class="form-group">
+    <label for="kunta" class="col-sm-3 control-label">
+        <span i18n="common.County"></span> / <span i18n="common.Village"></span>
+    </label>
+    <div class="col-sm-9">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="k in kylakuntaselections">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="kunta_{{$index}}"
+                                ng-model="k.kunta"
+                                ng-options="kunta as kunta.nimi+ ' ('+kunta.kuntanumero+')' for kunta in kunnat track by kunta.id"
+                                ng-change="kuntaChanged($index)">
+                                <option value=""></option>
+                            </select>                                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="kyla_{{$index}}"
+                                ng-model="k.kyla"
+                                ng-options="kyla as kyla.nimi+' ('+kyla.kylanumero+')' for kyla in k.kylaOptions track by kyla.id"
+                                ng-change="">
+                                <option value=""></option>
+                            </select>                                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="deleteKylaKuntaSelection($index)"
+                                class="btn btn-danger pull-right">
+                                <span i18n="common.Delete"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+            <!-- Show the add button only if we support multiple selections -->
+            <li class="list-group-item"  ng-if="multiple == true || kylakuntaselections.length == 0">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="button" ng-click="addKylaKuntaSelection()"
+                            class="btn btn-success pull-right">
+                            <span i18n="common.Add"></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

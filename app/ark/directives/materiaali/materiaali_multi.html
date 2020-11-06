@@ -1,0 +1,24 @@
+<div class="form-group" ng-if="!haku">
+    <label for="materiaali" class="col-sm-3 control-label">
+        <span i18n="ark.Other_material"></span>
+    </label>
+    <div class="col-sm-9">
+        <ui-select multiple="true" ng-model="muutMateriaalit.materiaalit" theme="bootstrap" name="muu_materiaali"> 
+            <ui-select-match>{{$item | namei18n}}</ui-select-match> 
+            <ui-select-choices repeat="materiaali in materiaalit | filter: $select.search">
+	          <div>
+	              <span ng-bind-html="materiaali | namei18n | highlight: $select.search"></span>
+	          </div>
+        	</ui-select-choices> 
+        </ui-select> 		
+    </div>
+</div>
+<!-- Hakusivu -->
+<ui-select multiple="true" ng-if="haku" ng-model="muutMateriaalit.materiaalit" theme="bootstrap" name="muu_materiaali"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'ark.Other_material'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="materiaali.id as materiaali in materiaalit | filter: $select.search">
+   <div>
+       <span ng-bind-html="materiaali | namei18n | highlight: $select.search"></span>
+   </div>
+	</ui-select-choices> 
+</ui-select>

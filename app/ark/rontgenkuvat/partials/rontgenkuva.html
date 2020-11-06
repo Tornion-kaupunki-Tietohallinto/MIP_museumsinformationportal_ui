@@ -1,0 +1,33 @@
+<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title">
+                <span ng-if="!vm.create"><span i18n="ark.XRay_image"></span> {{vm.xray.properties.numero}}</span>
+                <span i18n="ark.Add_XRay_image" ng-if="vm.create"></span>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <form
+            class="form-horizontal"
+            name="form"
+            novalidate>
+                <div class="row">
+                    <div class="col-md-6 column-left" ng-if="!vm.edit">
+                        <div class="col-md-12" ng-include="'ark/rontgenkuvat/partials/perustiedot_view.html'"></div>
+                        <div class="col-md-12" ng-if="vm.images.length > 0" ng-include="'ark/rontgenkuvat/partials/kuvat.html'"></div>
+                    </div>
+                    <div class="col-md-6 column-right" ng-if="!vm.edit">
+                   		<div class="col-md-12" ng-show="!vm.create && vm.files.length>0" ng-include="'ark/rontgenkuvat/partials/tiedostot_view.html'"></div>
+                        <div class="col-md-12" ng-include="'ark/rontgenkuvat/partials/muokkaustiedot_view.html'"></div>
+                    </div>
+                    <!-- Muokkaus -->
+                    <div class="col-md-12" ng-if="vm.edit" ng-include="'ark/rontgenkuvat/partials/perustiedot_edit.html'"></div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-12" ng-include="'ark/rontgenkuvat/partials/footer.html'"></div>
+        </div>
+    </div>
+</div>

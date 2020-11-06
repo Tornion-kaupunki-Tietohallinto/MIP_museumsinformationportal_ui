@@ -1,0 +1,20 @@
+<div class="form-group">
+    <label for="naytetila" class="col-sm-4 control-label">
+        <span i18n="sample.Sample_status"></span> *
+    </label>
+    <div class="col-sm-8">
+        <ui-select class="ng-animate-disabled" 
+        	ng-model="tila.tila" 
+        	name="naytetila"
+        	ng-change="vm.avaaTilanMuutosKentat()" 
+        	ng-required="true"
+        	theme="bootstrap"> 
+		    <ui-select-match data-i18n-attr="{placeholder: 'sample.Sample_status'}">{{$select.selected | namei18n}}</ui-select-match> 
+		    <ui-select-choices ui-disable-choice="tila.id == 4" 
+		    	repeat="tila as tila in nayteTilat | filter: $select.search">
+ 		       <span ng-bind-html="tila | namei18n | highlight: $select.search"></span>
+			</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>
+ 

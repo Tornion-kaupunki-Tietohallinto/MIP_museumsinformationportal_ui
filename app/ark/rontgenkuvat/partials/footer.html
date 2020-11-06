@@ -1,0 +1,50 @@
+<div class="dropup">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span i18n="common.Actions"></span> <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li><a href="" ng-click="vm.deleteRontgenkuva()" class="bg-danger"
+               i18n="common.Delete"
+               ng-show="!vm.create" data-ng-if="vm.permissions.poisto"></a>
+        </li>
+        <li role="separator" class="divider" data-ng-if="vm.permissions.poisto && !vm.create"></li>
+        <li><a href="" ng-click="vm.showMuutoshistoria()"
+               i18n="common.Show_history"
+               ng-show="!vm.create" data-ng-if="vm.editRelatedPermissions.katselu"></a>
+        </li>
+        <li role="separator" class="divider" data-ng-if="vm.editRelatedPermissions.katselu && !vm.create"></li>
+
+        <li><a href="" ng-click="vm.lisaaTiedosto()" i18n="common.Add_file" data-ng-if="vm.permissions.muokkaus && !vm.create"></a>
+        <li><a href="" ng-click="vm.lisaaKuva()" i18n="common.Add_image" data-ng-if="vm.permissions.muokkaus && !vm.create"></a>
+        </li>
+        <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.create"></li>
+        <li><a href="" ng-click="vm.close()"
+               i18n="common.Close"
+               ng-show="!vm.edit"></a>
+        </li>
+        <li><a href="" ng-click="vm.close()"
+               i18n="common.Cancel"
+               ng-show="vm.create"></a>
+        </li>
+        <li ng-class="{ 'disabled' : vm.disableButtons }"><a href="" ng-click="vm.disableButtons || vm.cancelEdit()"
+               i18n="common.Cancel_edit"
+               ng-show="vm.edit && !vm.create"></a>
+        </li>
+        <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus"></li>
+
+        <li><a href="" ng-click="vm.editMode()"
+               i18n="common.Edit"
+               ng-show="!vm.edit" ng-if="vm.permissions.muokkaus"></a>
+        </li>
+        <li ng-class="{ disabled: form.$invalid || vm.disableButtons }"><a href="" ng-click="(form.$invalid || vm.disableButtons) || vm.save()" class="bg-success"
+               i18n="common.Save"
+               ng-show="vm.edit" ng-if="vm.permissions.muokkaus"></a>
+        </li>
+    </ul>
+</div>
+
+<!--
+<button type="button" class="btn btn-default" ng-show="!create" i18n="common.Show_link"
+    data-placement="top" title="{{popover.title}}" data-content="{{popover.content}}"
+    data-trigger="click" auto-close="true" bs-popover></button>
+-->

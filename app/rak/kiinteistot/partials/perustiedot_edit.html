@@ -1,0 +1,180 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Estate_details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.kunta.$invalid && kiinteistoForm.kunta.$touched }">
+            <label for="kunta" class="col-sm-3 control-label">
+                <span i18n="common.County"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select ng-model="selectedKunta.kunta" title="Valitse kunta" name="kunta"
+                    theme="bootstrap" ng-required="true" on-select="kuntaChanged($item)">
+                <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">
+                    <span ng-if="$select.selected.nimi">
+                    {{$select.selected | kuntaKylaNamei18n}} ({{$select.selected.kuntanumero}})
+                    </span>
+                    <span ng-if="!$select.selected.nimi" data-i18n="common.Select">
+                    </span>
+                    
+                </ui-select-match>
+                <ui-select-choices repeat="k in kunnat | filter: $select.search">
+                 <div>
+                    <span ng-bind-html="k | kuntaKylaNamei18n | highlight: $select.search"></span>
+                    (<span ng-bind-html="k.kuntanumero | highlight: $select.search"></span>)
+                </div>
+                </ui-select-choices> </ui-select>
+                <span class="help-block"
+                    ng-show="kiinteistoForm.selectedKunta.kunta.$invalid && kiinteistoForm.selectedKunta.kunta.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.County' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.paikkakunta.$invalid && kiinteistoForm.paikkakunta.$touched }">
+            <label for="paikkakunta" class="col-sm-3 control-label">
+                <span i18n="common.District"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="paikkakunta" ng-minlength="2"
+                    data-i18n-attr="{placeholder: 'common.District'}"
+                    ng-model="kiinteisto.properties.paikkakunta" ng-required="false" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="kiinteistoForm.paikkakunta.$invalid && kiinteistoForm.paikkakunta.$touched">
+                    <span data-i18n="common.err_min_length"
+                    ng-show="kiinteistoForm.paikkakunta.$error.minlength"
+                    data-field="{{ 'common.District' | i18n }}" data-minlength="2"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.kyla.$invalid && kiinteistoForm.kyla.$touched }">
+            <label for="kyla" class="col-sm-3 control-label">
+                <span i18n="common.Village"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select ng-model="kiinteisto.properties.kyla" title="Valitse kyla" name="kyla"
+                    theme="bootstrap" ng-required="true" on-select="kylaChanged()"> <ui-select-match
+                    data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected | kuntaKylaNamei18n}} ({{$select.selected.kylanumero}})</ui-select-match>
+                <ui-select-choices repeat="kyla in kylat | filter: $select.search">
+                 <div>
+                    <span ng-bind-html="kyla | kuntaKylaNamei18n | highlight: $select.search"></span>
+                    (<span ng-bind-html="kyla.kylanumero | highlight: $select.search"></span>)
+                </div>
+                </ui-select-choices> </ui-select>
+                <span class="help-block"
+                    ng-show="kiinteistoForm.kyla.$invalid && kiinteistoForm.kyla.$touched"> <span
+                    data-i18n="common.mandatory_value" data-field="{{ 'common.Village' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.kiinteistotunnus.$invalid && kiinteistoForm.kiinteistotunnus.$touched || (!uniqueKiinteistotunnus && !kiinteisto.properties.palstanumero) }">
+            <label for="kiinteistotunnus" class="col-sm-3 control-label">
+                <span i18n="common.Property_identifier"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" maxlength="3" ng-minlength="3"
+                        name="kiinteistotunnus0" ng-model="kiinteistotunnus_osat[0]"
+                        ng-required="true" ng-change="setKiinteistotunnus()" placeholder="KKK"
+                        ng-disabled="false">
+                    <span class="input-group-addon">-</span>
+                    <input type="text" class="form-control" maxlength="3" ng-minlength="3"
+                        name="kiinteistotunnus1" ng-model="kiinteistotunnus_osat[1]"
+                        ng-required="true" ng-change="setKiinteistotunnus()" placeholder="XXX"
+                        ng-disabled="false">
+                    <span class="input-group-addon">-</span>
+                    <input type="text" class="form-control" maxlength="4" ng-minlength="4"
+                        name="kiinteistotunnus2" ng-model="kiinteistotunnus_osat[2]"
+                        ng-required="true" ng-change="setKiinteistotunnus()" placeholder="YYYY">
+                    <span class="input-group-addon">-</span>
+                    <input type="text" class="form-control" maxlength="4" ng-minlength="4"
+                        name="kiinteistotunnus3" ng-model="kiinteistotunnus_osat[3]"
+                        ng-required="true" ng-change="setKiinteistotunnus()" placeholder="ZZZZ">
+                </div>
+                <input type="hidden" class="form-control" name="kiinteistotunnus"
+                    ng-model="kiinteisto.properties.kiinteistotunnus" ng-required="true"
+                    ng-pattern="kiinteistotunnusRegex">
+                <span class="help-block"
+                    ng-show="kiinteistoForm.kiinteistotunnus.$invalid && kiinteistoForm.kiinteistotunnus.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Property_identifier' | i18n }}"></span> <br /> <span
+                    data-i18n="estate.Property_identifier_pattern"></span>
+                </span>    
+                <span class="help-block"
+                    ng-show="!uniqueKiinteistotunnus && !kiinteisto.properties.palstanumero">                    
+                    <span data-i18n="estate.Property_identifier_already_in_use_fill_column_number"></span>            
+                </span>   
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.palstanumero.$invalid && kiinteistoForm.palstanumero.$touched || (!uniqueKiinteistotunnus && !kiinteisto.properties.palstanumero) || kiinteisto.properties.palstanumero < 0 || !uniquePalstanumero}">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="estate.Column_number"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" name="nimi" 
+                    data-i18n-attr="{placeholder: 'estate.Column_number'}"
+                    ng-model="kiinteisto.properties.palstanumero" ng-change="palstanumero_change()"
+                    ng-model-options="{debounce: 500}">                
+                <span class="help-block" ng-show="!uniquePalstanumero && kiinteisto.properties.palstanumero">                    
+                    <span data-i18n="estate.Column_number_is_already_in_use"></span>                    
+                </span>
+                 <span class="help-block" ng-show="!uniqueKiinteistotunnus && !kiinteisto.properties.palstanumero || !uniquePalstanumero">                    
+                    <span data-i18n="estate.Next_free_column_number_is" data-freenum="{{nextFreeColumnNumber}}"></span>
+                </span>                                            
+                <span class="help-block" ng-show="kiinteisto.properties.palstanumero != null && kiinteisto.properties.palstanumero < 1">                    
+                    <span data-i18n="estate.Column_number_must_be_positive_number"></span>                    
+                </span>                
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.nimi.$invalid && kiinteistoForm.nimi.$touched }">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="common.Name"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}" ng-minlength="2"
+                    ng-model="kiinteisto.properties.nimi" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="kiinteistoForm.nimi.$invalid && kiinteistoForm.nimi.$touched"> <span
+                    data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.osoite.$invalid && kiinteistoForm.osoite.$touched }">
+            <label for="osoite" class="col-sm-3 control-label">
+                <span i18n="common.Address"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="osoite"
+                    data-i18n-attr="{placeholder: 'common.Address'}"
+                    ng-model="kiinteisto.properties.osoite" ng-required="false" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': kiinteistoForm.postinumero.$invalid && kiinteistoForm.postinumero.$touched }">
+            <label for="postinumero" class="col-sm-3 control-label">
+                <span i18n="common.Postal_code"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="postinumero"
+                    data-i18n-attr="{placeholder: 'common.Postal_code'}"
+                    ng-model="kiinteisto.properties.postinumero" ng-required="false" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="kiinteistoForm.postinumero.$invalid && kiinteistoForm.postinumero.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Postal_code' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Timing"></span>
+        </h4>
+    </div>
+    <div class="panel-body" ng-if="vm.edit || vm.create">
+        <div class="form-group">
+            <label for="ajoitus" class="col-sm-3 control-label">
+                <span i18n="unit.Timing"></span> 
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="ajoitus"
+                    ng-model="vm.yksikko.properties.ajoitus_note"
+                    ng-if="vm.create" 
+                    spellcheck="false" autocomplete="off">
+                <p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.ajoitus_note}}</p>
+                <input type="text" class="form-control" name="ajoitus"
+                    ng-model="vm.yksikko.properties.ajoitus"
+                    ng-if="!vm.create" 
+                    spellcheck="false" autocomplete="off">                    
+            </div>    
+        </div>
+        <div class="form-group">
+            <label for="ajoituksen_perusteet" class="col-sm-3 control-label">
+                <span i18n="unit.Timing_reasons"></span> 
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="ajoituksen_perusteet"
+                    ng-model="vm.yksikko.properties.ajoituksen_perusteet_note"
+                    ng-if="vm.create"  
+                    spellcheck="false" autocomplete="off">
+				<p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.ajoituksen_perusteet_note}}</p>                    
+                <input type="text" class="form-control" name="ajoituksen_perusteet"
+                    ng-model="vm.yksikko.properties.ajoituksen_perusteet" 
+                    ng-if="!vm.create"
+                    spellcheck="false" autocomplete="off">
+            </div>    
+        </div>
+    </div>
+    <div class="panel-body" ng-if="!vm.edit && !vm.create">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Timing"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static" ng-if="vm.showNotes && vm.yksikko.properties.ajoitus_note">{{vm.yksikko.properties.ajoitus_note}}</p>
+                <p class="form-control-static" ng-if="vm.yksikko.properties.ajoitus">{{vm.yksikko.properties.ajoitus}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Timing_reasons"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static" ng-if="vm.showNotes && vm.yksikko.properties.ajoituksen_perusteet_note">{{vm.yksikko.properties.ajoituksen_perusteet_note}}</p>
+                <p class="form-control-static" ng-if="vm.yksikko.properties.ajoituksen_perusteet">{{vm.yksikko.properties.ajoituksen_perusteet}}</p>
+            </div>
+        </div>
+    </div>    
+</div>

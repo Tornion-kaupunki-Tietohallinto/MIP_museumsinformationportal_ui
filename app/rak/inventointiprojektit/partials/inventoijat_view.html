@@ -1,0 +1,50 @@
+<!-- Inventoijat -->
+<div class="panel panel-default panel-collapsible">
+	<div
+		class="panel-heading"
+		data-toggle="collapse"
+		data-target="#inventoijatPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Inventors"></span> <span
+				class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div
+		id="inventoijatPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+		<table
+			ng-table="inventoijaTable"
+			class="table table-striped table-bordered"
+			show-filter="false">
+			<tr
+				ng-repeat="inventoija in $data"
+				style="cursor: pointer">
+				<td
+					data-title="getColumnName('Name')"
+					filter="{ 'inventoija.properties.inventoija_nimi': 'text' }"
+					ng-click="selectInventoija(inventoija)">{{inventoija.properties.inventoija_nimi}}</td>
+				<td
+					data-title="getColumnName('Profession_or_title')"
+					filter="{ 'inventoija.properties.inventoija_arvo': 'text' }">{{inventoija.properties.inventoija_arvo}}</td>
+				<td
+					data-title="getColumnName('Organization')"
+					filter="{ 'inventoija.properties.inventoija_organisaatio': 'text' }"
+					ng-click="selectInventoija(inventoija)">{{inventoija.properties.inventoija_organisaatio}}</td>
+				<td data-title="getColumnName('Actions')">
+					<button
+						type="button"
+						class="btn btn-default"
+						ng-show="!edit && !filter"
+						ng-click="filterByInventor(inventoija)"
+						i18n="common.Filter"></button>
+					<button
+						type="button"
+						class="btn btn-default"
+						ng-show="!edit && filter==inventoija.properties.inventoija_id"
+						ng-click="filterByInventor(inventoija)"
+						i18n="common.Clear_filter"></button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

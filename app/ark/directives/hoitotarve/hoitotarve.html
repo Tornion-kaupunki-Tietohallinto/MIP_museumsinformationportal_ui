@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label for="hoitotarve" class="col-sm-3 control-label">
+        <span i18n="ark.Necessity_for_renovation"></span>
+    </label>
+    <div class="col-sm-9">
+        <select class="form-control" name="hoitotarve" ng-model="hoitotarve"
+            ng-options="o as o.nimi_fi for o in opts track by o.id">
+            <option value=""></option>
+        </select>
+    </div>
+</div>

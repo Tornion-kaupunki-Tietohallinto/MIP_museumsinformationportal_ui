@@ -1,0 +1,81 @@
+<!-- Tiedot - muokkausmoodi -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group"
+                            ng-class="{ 'has-error': imageForm.otsikko.$invalid && imageForm.otsikko.$touched }">
+                            <label class="col-md-12 control-label">
+                                <span i18n="common.Caption" class="pull-left"></span><span
+                                    class="pull-left">*</span>
+                            </label>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" name="otsikko"
+                                    ng-model="image.properties.otsikko" ng-required="true"
+                                    data-i18n-attr="{placeholder: 'common.Caption'}" spellcheck="false" autocomplete="off">
+                                <span class="help-block"
+                                    ng-show="imageForm.otsikko.$invalid && imageForm.otsikko.$touched">
+                                    <span data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Caption' | i18n }}"> </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="col-md-12 control-label">
+                                <span i18n="common.Taken_by" class="pull-left"></span>
+                            </label>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" name="kuvaaja"
+                                    ng-model="image.properties.kuvaaja"
+                                    data-i18-attr="{placeholder: 'common.Taken_by'}"
+                                    ng-disabled="uploading == true || disableButtons" spellcheck="false" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-12 col-sm-12 col-xs-12">
+                                <span i18n="common.Shoot_date_and_time" class="pull-left"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-right: 0;">
+                                <input bs-datepicker data-autoclose="1" placement="bottom-left"
+                                    start-week="1" class="form-control" name="pvm_kuvaus_{{$index}}"
+                                    ng-model="image.properties.pvm_kuvaus"
+                                    data-date-format="dd.MM.yyyy" type="text">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0;">
+                                <input bs-timepicker class="form-control"
+                                    ng-model="image.properties.pvm_kuvaus"
+                                    data-time-format="HH:mm:ss" data-autoclose="1" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-12 control-label">
+                        <span i18n="common.Description" class="pull-left"></span>
+                    </label>
+                    <div class="col-md-12">
+                        <textarea rows="4" class="form-control" name="kuvaus"
+                            ng-model="image.properties.kuvaus"
+                            data-i18n-attr="{placeholder: 'common.Description'}" spellcheck="false" autocomplete="off"></textarea>
+                    </div>
+                </div>
+                    <mip-tekijanoikeuslausekevalitsin valittulauseketeksti="image.properties.tekijanoikeuslauseke" dis="false" osio="'rakennusinventointi'"></mip-tekijanoikeuslausekevalitsin>
+            </div>
+        </div>
+    </div>
+</div>

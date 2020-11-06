@@ -1,0 +1,116 @@
+<!-- Muut Tiedot -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#muutTiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="ark.Other_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="muutTiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">        
+        <div class="form-group" ng-if="vm.kohde.properties.jarjestysnumero">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Order_number"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.jarjestysnumero}}</p>
+            </div>
+        </div>                       
+        <div class="form-group" ng-if="vm.kohde_suodelutiedot">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Protection_information"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde_suodelutiedot}}</p>
+            </div>
+        </div>       
+        <div class="form-group" ng-if="vm.kohde.properties.rauhoitusluokka">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Protection_class"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.rauhoitusluokka | namei18n}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.alkuperaisyys">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Originality"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.alkuperaisyys | namei18n}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.kunto">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Condition"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.kunto | namei18n}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.hoitotarve">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Necessity_for_renovation"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.hoitotarve | namei18n}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.huomautus">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Remarks"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static mip-multiline">{{vm.kohde.properties.huomautus}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.lahteet">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Sources"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static mip-multiline">{{vm.kohde.properties.lahteet}}</p>
+            </div>
+        </div>
+        <!-- 9634
+        <div class="form-group" ng-if="vm.kohde.properties.haaksirikkovuosi">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Shipwreck_year"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.haaksirikkovuosi}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.alkuperamaa">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Ships_country_of_origin"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.alkuperamaa}}</p>
+            </div>
+        </div> 
+        <div class="form-group" ng-if="vm.kohde.properties.alkuperamaanperustelu">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Country_of_origin_reasoning"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.alkuperamaanperustelu}}</p>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Examination_required"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{vm.kohde.properties.vaatii_tarkastusta | trueFalseToText}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="vm.kohde.properties.vaatii_tarkastusta == true" ng-if="vm.permissions.muokkaus">
+            <label class="col-sm-3 control-label"> 
+            	<span i18n="common.Notes"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static mip-multiline">{{vm.kohde.properties.tarkastus_muistiinpano}}</p>
+            </div>
+        </div>
+    </div>
+</div>

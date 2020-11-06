@@ -1,0 +1,13 @@
+{
+	"Save_ok": "Rakennuksen %name tiedot tallennettu",
+	"Delete_ok": "Rakennus poistettu",
+	"Delete_failed": "Rakennuksen poisto epäonnistui",
+	"Save_fail" : "Rakennuksen tallennus epäonnistui",
+	"Create_ok" : "Rakennus luotu onnistuneesti",
+	"Create_fail" : "Rakennuksen luonti epäonnistui",
+	"No_view_permission" : "Ei katseluoikeutta rakennuksiin",
+	"Building_count": "Rakennuksia",
+	"Building_or_structure": "Rakennus/rakennelma",
+	"Building_type_description": "Rakennustyypin kuvaus",
+    "Move_to_estate": "Siirrä kiinteistöön"
+}

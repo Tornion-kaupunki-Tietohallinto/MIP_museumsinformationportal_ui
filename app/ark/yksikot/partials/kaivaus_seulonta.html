@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Digging_method_and_sieving"></span>
+        </h4>
+    </div>
+    <!-- Muistiinpanojen tai yksikön muokkaus -->
+    <div class="panel-body" ng-if="vm.edit || vm.create">
+        <mip-kaivaustapa kaivaustapa="vm.yksikko.properties.yksikko_kaivaustapa" focus-input="focusInput"></mip-kaivaustapa>        
+        <mip-seulontatapa seulontatapa="vm.yksikko.properties.yksikko_seulontatapa"></mip-seulontatapa>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                <span i18n="common.Additional_information"></span> 
+            </label>
+            <div class="col-sm-8">
+                <textarea rows="3" class="form-control" name="kaivaustapa_lisatieto_note"
+                    ng-model="vm.yksikko.properties.kaivaustapa_lisatieto_note"
+                    ng-if="vm.create">
+                </textarea>
+                <p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.kaivaustapa_lisatieto_note}}</p>
+                <textarea rows="3" class="form-control" name="kaivaustapa_lisatieto"
+                    ng-model="vm.yksikko.properties.kaivaustapa_lisatieto"
+                    ng-if="!vm.create">
+                </textarea>                
+            </div>    
+        </div>
+    </div>
+    <div class="panel-body" ng-if="!vm.edit && !vm.create">
+        <div class="form-group" ng-if="vm.yksikko.properties.yksikko_kaivaustapa">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Digging_method"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.yksikko_kaivaustapa | namei18n}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.yksikko.properties.yksikko_seulontatapa">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Sieving"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.yksikko_seulontatapa | namei18n}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.yksikko.properties.kaivaustapa_lisatieto">
+            <label class="col-sm-4 control-label">
+                <span i18n="common.Additional_information"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.kaivaustapa_lisatieto_note}}</p>
+                <p class="form-control-static">{{vm.yksikko.properties.kaivaustapa_lisatieto}}</p>
+            </div>
+        </div>
+    </div>    
+</div>

@@ -1,0 +1,74 @@
+<!-- LEFT SIDE - hakuehdot -->
+<div class="col-md-6 column-left">
+    <div class="panel panel-default">               
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Name"></h4>
+        </div>
+        <div class="panel-body"> 
+            <div class="form-group">
+                <label for="nimi" class="col-md-3 control-label" i18n="common.Name"></label>
+                <div class="col-md-9">                    
+                    <input type="text" class="form-control" name="nimi"
+                        data-i18n-attr="{placeholder: 'common.Name'}"
+                        ng-model="raportti.reportDisplayName" spellcheck="false" autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">               
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Report_query"></h4>
+        </div>
+        <div class="panel-body">        
+            <mip-kylakuntavalitsin kylakuntaselections="raportti.kylaKuntaSelections" multiple="true"></mip-kylakuntavalitsin>        
+        
+            <div class="form-group">
+                <label for="paikkakunta" class="col-sm-3 control-label">
+                    <span i18n="common.Municipality"></span>
+                </label>
+                <div class="col-sm-9">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="p in raportti.paikkakuntaSelections">
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" ng-model="p.value" name="paikkakunta_{{$index}}" />                                       
+                                    </div>
+                                </div>                                
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button type="button" ng-click="deletePaikkakuntaSelection($index)"
+                                            class="btn btn-danger pull-right">
+                                            <span i18n="common.Delete"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="button" ng-click="addPaikkakuntaSelection()"
+                                        class="btn btn-success pull-right">
+                                        <span i18n="common.Add"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RIGHT SIDE - näytettävät kentät-->
+<div class="col-md-6 column-right">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Report_fields"></h4>
+        </div>
+        <div class="panel-body">
+            <mip-kenttavalitsin valittavissaolevatkentat="valittavissaolevatKentat" valitutkentat="raportti.valitutKentat"></mip-kenttavalitsin>
+        </div>
+    </div>
+</div>

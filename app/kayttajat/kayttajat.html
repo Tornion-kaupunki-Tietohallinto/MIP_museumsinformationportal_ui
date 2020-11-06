@@ -1,0 +1,131 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default panel-collapsible table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> : {{usersTable.total()}} <span
+                                i18n="common.Shown"></span> : {{searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse form-horizontal collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="clearSearchFilter()"
+                                    data-i18n-attr="{title: 'common.Clear_filter'}">
+                                    <span class="fa fa-ban"></span>
+                                </button>                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="refreshTable()"
+                                    data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                    <span class="fa fa-refresh"></span>
+                                </button>                               
+                                <button type="button"
+                                    data-ng-show="showCreateNewButton"
+                                    class="btn btn-success"
+                                    id="btn-create" ng-click="selectUser()"
+                                    data-i18n-attr="{title: 'common.Add_user'}">
+                                    <span class="fa fa-plus"></span>
+                                </button>                                
+                            </div>
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                                <div class="form-group col-md-3">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showEtunimiCol" ng-change="saveColVisibility('showEtunimiCol', colVisibilities.showEtunimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>    
+                                            <input type="text" class="form-control" name="etunimi"
+                                                ng-model="usersTable.filter().properties.etunimi"
+                                                data-i18n-attr="{placeholder: 'common.Firstname'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showSukunimiCol" ng-change="saveColVisibility('showSukunimiCol', colVisibilities.showSukunimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>    
+                                            <input type="text" class="form-control" name="sukunimi"
+                                                ng-model="usersTable.filter().properties.sukunimi"
+                                                data-i18n-attr="{placeholder: 'common.Lastname'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showSahkopostiCol" ng-change="saveColVisibility('showSahkopostiCol', colVisibilities.showSahkopostiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>    
+                                            <input type="text" class="form-control" name="sahkoposti"
+                                                ng-model="usersTable.filter().properties.sahkoposti"
+                                                data-i18n-attr="{placeholder: 'common.Email'}" spellcheck="false" autocomplete="off">
+                                        </div>                                                
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showOrganisaatioCol" ng-change="saveColVisibility('showOrganisaatioCol', colVisibilities.showOrganisaatioCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>    
+                                            <input type="text" class="form-control" name="organisaatio"
+                                                ng-model="usersTable.filter().properties.organisaatio"
+                                                data-i18n-attr="{placeholder: 'common.Organization'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">                                    
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showAktiivinenCol" ng-change="saveColVisibility('showAktiivinenCol', colVisibilities.showAktiivinenCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>    
+                                            <select class="form-control"
+                                                ng-model="usersTable.filter().properties.aktiivinen" name="aktiivinen"
+                                                ng-value="true"
+                                                ng-options="option.value as option.label for option in noYes">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>                            
+                        </div>
+                    </div>
+                    <table ng-table="usersTable" class="table table-striped table-bordered"
+                        template-pagination="pages/templates/table-pagination.html"
+                        show-filter="false">
+                        <tr ng-repeat="user in $data" style="cursor: pointer"
+                            ng-click="selectUser(user)">
+                            <td data-title="getColumnName('Firstname')" ng-if="colVisibilities.showEtunimiCol"
+                                sortable="'properties.etunimi'"
+                                filter="{'properties.etunimi': 'text'}">{{user.properties.etunimi}}</td>
+                            <td data-title="getColumnName('Lastname')" ng-if="colVisibilities.showSukunimiCol"
+                                sortable="'properties.sukunimi'"
+                                filter="{'properties.sukunimi': 'text'}">{{user.properties.sukunimi}}</td>
+                            <td data-title="getColumnName('Email')" ng-if="colVisibilities.showSahkopostiCol"
+                                sortable="'properties.sahkoposti'"
+                                filter="{'properties.sahkoposti': 'text'}">{{user.properties.sahkoposti}}</td>
+                            <td data-title="getColumnName('Organization')" ng-if="colVisibilities.showOrganisaatioCol"
+                                sortable="'properties.organisaatio'"
+                                filter="{'properties.organisaatio': 'text'}">{{user.properties.organisaatio}}</td>
+                            <td data-title="getColumnName('Active')" ng-if="colVisibilities.showAktiivinenCol"
+                                sortable="'properties.aktiivinen'"
+                                filter="{'properties.aktiivinen': 'text'}">{{user.properties.aktiivinen | trueFalseToText}}</td>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

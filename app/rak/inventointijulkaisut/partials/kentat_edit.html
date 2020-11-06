@@ -1,0 +1,24 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title" i18n="common.Report_fields"></h4>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12" ng-show="isSelected('kiinteisto')">
+            <h4 i18n="common.Estate"></h4>
+	        <mip-kenttavalitsin valittavissaolevatkentat="kiinteistoValittavissaolevatKentat" valitutkentat="inventointijulkaisu.properties.kentat.kiinteisto"></mip-kenttavalitsin>
+	    </div>
+	    <div class="col-md-12" ng-show="isSelected('rakennus')">
+	       <h4 i18n="common.Building"></h4>
+            <mip-kenttavalitsin valittavissaolevatkentat="rakennusValittavissaolevatKentat" valitutkentat="inventointijulkaisu.properties.kentat.rakennus"></mip-kenttavalitsin>
+        </div>
+        <div class="col-md-12" ng-show="isSelected('alue')">
+            <h4 i18n="common.Area"></h4>
+            <mip-kenttavalitsin valittavissaolevatkentat="alueValittavissaolevatKentat" valitutkentat="inventointijulkaisu.properties.kentat.alue"></mip-kenttavalitsin>
+        </div>
+        <div class="col-md-12" ng-show="isSelected('arvoalue')">
+            <h4 i18n="common.Valuearea"></h4>
+            <mip-kenttavalitsin valittavissaolevatkentat="arvoalueValittavissaolevatKentat" valitutkentat="inventointijulkaisu.properties.kentat.arvoalue"></mip-kenttavalitsin>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+    <div class="modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+				<h4><span i18n="common.Coordinate_information"></span></h4>
+			</div>
+			<div class="modal-body">
+				<div class="row" ng-repeat="result in results">					
+					<div class="col-md-10">
+						<label class="col-sm-4 control-label"><span i18n="common.Property_identifier"></span></label>
+						<div class="col-sm-6">
+							<p class="form-control-static">{{result.properties.kiinteistotunnus}}</p>
+						</div>
+					</div>
+						<div class="col-md-10">
+						<label class="col-sm-4 control-label"><span i18n="common.Name"></span></label>
+						<div class="col-sm-6">
+							<p class="form-control-static">{{result.properties.nimi}}</p>
+						</div>						 
+					</div>
+
+					<div class="col-md-10">
+						<label class="col-sm-4 control-label"><span i18n="common.County"></span></label>
+						<div class="col-sm-6">
+							<p class="form-control-static">{{result.properties.kuntanimi_fi}} / {{result.properties.kuntanimi_se}} ({{result.properties.kuntanumero}})</p>
+						</div>
+					</div>					
+                    <div class="col-md-10">
+                        <label class="col-sm-4 control-label"><span i18n="common.Owner_information"></span></label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static" ng-repeat="omistaja in result.properties.omistajat">
+                                    {{omistaja.sukunimi}}, {{omistaja.etunimet}}
+                            </p>
+                        </div>
+                    </div>
+                    
+					<div class="col-md-10">
+						<button type="button" class="btn btn-primary pull-right"
+							id="btn-save" ng-click="save(result, modalNameId)">
+							<span i18n="common.Save"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default pull-right"
+					id="btn-cancel" ng-click="close()">
+					<span i18n="common.Cancel"></span>
+				</button>
+			</div>
+		</div>
+	</div>

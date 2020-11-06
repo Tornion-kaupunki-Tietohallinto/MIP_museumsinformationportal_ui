@@ -1,0 +1,112 @@
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="close()">&times;</button>
+				<button type="button" class="close" ng-click="resize()">{{resizeIcon}}</button>
+				<h4 class="modal-title">
+					<span i18n="common.Image" ng-show="mode == 'image'"></span>
+					<span i18n="common.File" ng-show="mode == 'file'"></span>
+					(objektille {{related_id}})
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form name="myForm" class="form-horizontal" novalidate ng-show="mode=='image'">
+					<div class="form-group">
+						<label for="tiedosto" class="col-sm-3 control-label" i18n="common.Image"></label>
+						<input type="file" ngf-select ngf-model-invalid="errorFile"
+							id="file" accept="image/*" name="tiedosto" ng-model="tiedosto"
+							ng-required="true" ng-readonly="false">
+						<i ng-show="myForm.tiedosto.$error.maxSize">File too large
+							{{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+						<img
+							ng-show="myForm.tiedosto.$valid" ngf-thumbnail="tiedosto"
+							width="200" class="thumb">
+						<button type="button" ng-click="tiedosto = null" ng-show="tiedosto" i18n="common.Delete"></button>
+						<button type="button" ng-click="getExifData()" ng-show="tiedosto" i18n="common.Get_exif_data"></button>
+					</div>
+					<div class="form-group">
+						<label for="liite_tyyppi_id" class="col-sm-3 control-label" i18n="common.Attachment_type"></label>
+						<div class="col-sm-9">
+							<select class="form-control" name="liite_tyyppi_id"
+								data-i18n-attr="{placeholder: 'common.Attachment_type'}"
+								ng-model="kuva.liite_tyyppi_id" ng-required="true" ng-readonly="false">
+								<option value=""></option>
+								<option value="1">Valokuva</option>
+								<option value="2">Dokumentti</option>
+								<option value="3">Kartta</option>
+								<option value="4">Piirros</option>
+								<option value="5">Muu</option>
+							</select>
+							<!-- TODO ei saa kovakoodata optioneita -->
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="kuvan_numero" class="col-sm-3 control-label" i18n="common.Image_number"></label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="kuvan_numero"
+								data-i18n-attr="{placeholder: 'common.Image_number'}"
+								ng-model="kuva.kuvan_numero" ng-required="false" ng-readonly="false">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="kuvaaja" class="col-sm-3 control-label" i18n="common.Taken_by"></label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="kuvaaja"
+								data-i18n-attr="{placeholder: 'common.Taken_by'}"
+								ng-model="kuva.kuvaaja" ng-required="false" ng-readonly="false">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="kuvauspvm" class="col-sm-3 control-label" i18n="common.Shoot_date"></label>
+						<div class="col-sm-9">
+							<input bs-datepicker data-date-format="yyyy-MM-dd"
+								model-date-format="yyyy-MM-dd" data-autoclose="1"
+								data-date-type="string" placement="top-left"
+								class="form-control" name="kuvauspvm"
+								ng-model="kuva.kuvauspvm">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="aihe" class="col-sm-3 control-label" i18n="common.Subject"></label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="aihe"
+								data-i18n-attr="{placeholder: 'common.Subject'}"
+								ng-model="kuva.aihe" ng-required="false" ng-readonly="false">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tekijanoikeushuomautus" class="col-sm-3 control-label" i18n="common.Copyright_notice"></label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="tekijanoikeushuomautus"
+								data-i18n-attr="{placeholder: 'common.Copyright_notice'}"
+								ng-model="kuva.tekijanoikeushuomautus" ng-required="true" ng-readonly="false">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="metatiedot" class="col-sm-3 control-label" i18n="common.Metadata"></label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="metatiedot"
+								data-i18n-attr="{placeholder: 'common.Metadata'}"
+								ng-model="kuva.metatiedot" ng-required="false" ng-readonly="false">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="julkinen" class="col-sm-3 control-label" i18n="common.Public"></label>
+						<div class="col-sm-9">
+							<input type="checkbox" class="form-control" name="julkinen"
+								ng-model="kuva.julkinen" ng-required="false" ng-true-value="1"
+								ng-false-value="0" ng-readonly="false">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="close()"
+					ng-show="!edit" span i18n="common.Close"></button>
+				<button type="button" class="btn btn-primary"
+					ng-click="uploadPic(tiedosto)" ng-show="mode=='image'" i18n="common.Save"></button>
+			</div>
+		</div>
+	</div>
+</div>

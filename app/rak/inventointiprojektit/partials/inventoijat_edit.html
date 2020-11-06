@@ -1,0 +1,73 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Inventors"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12" style="padding-bottom: 1.25em; padding-right:30px;">
+            <div class="form-group">
+                <label for="inventoija" class="col-sm-3 control-label">
+                    <span i18n="common.Inventor"></span>
+                </label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <ui-select ng-model="tmp_inventoija.inventoija" name="tmp_inventoija"
+                            theme="bootstrap"> <ui-select-match
+                            data-i18n-attr="{placeholder: 'common.Select'}">
+                        {{$select.selected.properties.etunimi}}
+                        {{$select.selected.properties.sukunimi}}
+                        {{$select.selected.properties.sahkoposti}} </ui-select-match> <ui-select-choices
+                            repeat="k in kayttajat | filter: $select.search track by $index">
+                        <span ng-bind-html="k.properties.etunimi | highlight: $select.search"></span>
+                        <span ng-bind-html="k.properties.sukunimi | highlight: $select.search"></span>
+                        <span ng-bind-html="k.properties.sahkoposti | highlight: $select.search"></span>
+                        </ui-select-choices> </ui-select>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                ng-click="createInventor()" ng-if="showCreateNewButton"
+                                style="height: 2.3em;" i18n="inventoryproject.Create_new_inventor"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inventoija_arvo" class="col-sm-3 control-label">
+                    <span i18n="common.Profession_or_title"></span>
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" ng-disabled="!tmp_inventoija.inventoija.properties.id" class="form-control" name="inventoija_arvo"
+                        data-i18n-attr="{placeholder: 'common.Profession_or_title'}"
+                        ng-model="tmp_inventoija.inventoija.properties.inventoija_arvo" spellcheck="false" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inventoija_organisaatio"  class="col-sm-3 control-label">
+                    <span i18n="common.Organization"></span>
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="inventoija_organisaatio"
+                        data-i18n-attr="{placeholder: 'common.Organization'}"
+                        ng-disabled="!tmp_inventoija.inventoija.properties.id"
+                        ng-model="tmp_inventoija.inventoija.properties.organisaatio" spellcheck="false" autocomplete="off">
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="button" ng-disabled="!tmp_inventoija.inventoija.properties.id" class="btn btn-primary pull-right" ng-click="addInventor()"
+                    i18n="common.Add"></button>
+            </div>
+        </div>        
+        <div class="col-md-12">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="inventoija in inventoijat"
+                    style="border: 0; padding-bottom: 1.25em;">
+                    <span style="font-weight: bold">{{inventoija.properties.etunimi}} {{inventoija.properties.sukunimi}} </span> 
+                    <span ng-if="inventoija.properties.pivot.inventoija_arvo">({{inventoija.properties.pivot.inventoija_arvo}})</span> 
+                    <span ng-if="inventoija.properties.pivot.inventoija_organisaatio">, {{inventoija.properties.pivot.inventoija_organisaatio}}</span>
+                    <button type="button" class="btn btn-danger pull-right" ng-show="edit"
+                        ng-click="deleteInventor(inventoija)" i18n="common.Delete"></button>
+                </li>
+            </ul>           
+        </div>
+    </div>
+</div>

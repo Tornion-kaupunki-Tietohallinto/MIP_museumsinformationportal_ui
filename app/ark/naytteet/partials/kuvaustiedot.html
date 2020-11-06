@@ -1,0 +1,482 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#kuvaustiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="sample.Description_details"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="kuvaustiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="panel-body" ng-if="vm.edit">
+	        <mip-naytetyyppi naytetyypit="vm.naytetyypit" naytetyyppi="vm.nayte.properties.naytetyyppi" vm="vm"></mip-naytetyyppi>     
+	        <div class="form-group" ng-class="{ 'has-error': form.kuvaus.$invalid && form.kuvaus.$touched}">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="common.Description"></span> *
+	            </label>
+	            <div class="col-sm-8">
+		            <textarea rows="3" class="form-control" 
+		            	name="kuvaus" 
+		            	ng-required="true" 
+		            	ng-model="vm.nayte.properties.kuvaus">
+		            </textarea>
+	                <span class="help-block" ng-show="form.kuvaus.$invalid && form.kuvaus.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Description' | i18n }}"></span>
+	                </span>		            	                	                
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-if="vm.nayte.properties.naytekoodi.id == 2" 
+	        	ng-class="{ 'has-error': form.luunayte_maara.$invalid && form.luunayte_maara.$touched || 
+	        				form.luunayte_maara_yksikko.$invalid && form.luunayte_maara_yksikko.$touched}">
+	            <label for="luunayte_maara" class="col-sm-4 control-label">
+	                <span i18n="sample.Amount"></span> *
+	            </label>
+	            <div class="col-sm-5">
+	                <input type="number" class="form-control" 
+	                	name="luunayte_maara"
+	                    ng-required="true"
+	                    ng-model="vm.nayte.properties.luunayte_maara"
+	                    spellcheck="false" autocomplete="off">
+	                <span class="help-block" ng-show="form.luunayte_maara.$invalid && form.luunayte_maara.$touched || 
+	        				form.luunayte_maara_yksikko.$invalid && form.luunayte_maara_yksikko.$touched">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'sample.Amount' | i18n }}"></span>
+	                </span>	                    	            
+	            </div>
+	            <div class="col-sm-3">
+					<select class="form-control"
+						style="padding-left: 0px"
+						name="luunayte_maara_yksikko"
+						ng-options="yksikko.id as yksikko.nimi_fi for yksikko in vm.painoyksikot"
+						ng-required="true"
+						ng-model="vm.nayte.properties.luunayte_maara_yksikko">
+					</select>
+	            </div>	                
+	        </div>
+            <mip-talteenottotapa ng-if="vm.nayte.properties.naytekoodi.id == 2" talteenottotapa="vm.nayte.properties.talteenottotapa"></mip-talteenottotapa>	        
+	        <div class="form-group" ng-show="vm.nayte.properties.naytekoodi.id == 3">
+	            <label for="maanayte_maara" class="col-sm-4 control-label">
+	                <span i18n="sample.Amount"></span> 
+	            </label>
+	            <div class="col-sm-4">
+	                <input type="number" class="form-control" name="maanayte_maara"
+	                    ng-model="vm.nayte.properties.maanayte_maara"
+	                    spellcheck="false" autocomplete="off">	            
+	            </div>
+	            <div class="col-sm-4">
+					<span i18n="sample.Liters"></span>	            
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-if="vm.nayte.properties.naytekoodi.id == 4">
+	            <label for="rf_naytteen_koko" class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_size"></span> 
+	            </label>
+	            <div class="col-sm-8">
+		            <textarea rows="3" class="form-control" style="min-height:69px" 
+		            	name="rf_naytteen_koko" 
+		            	ng-model="vm.nayte.properties.rf_naytteen_koko">
+		            </textarea>					
+	            </div>    
+	        </div>	        
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Coordinates_central_point"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_n.$invalid && form.koordinaatti_n.$touched}">
+					            <label for="koordinaatti_n" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_n"></span> 
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="text" class="form-control" name="koordinaatti_n"
+					               		ng-disabled="vm.minMaxAnnettu"
+					                    ng-model="vm.nayte.properties.koordinaatti_n"
+					                    ng-minlength="11"
+					                    ng-maxlength="11" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    ng-change="vm.validoiKeskipisteKoordinaatit()"
+					                    empty-to-null 
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_n.$invalid && form.koordinaatti_n.$touched">
+					                    <span data-i18n="ark.Coordinate_n_rule"></span>
+					                </span>						                    
+				                </div>
+			                </div>
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_e.$invalid && form.koordinaatti_e.$touched}">
+					            <label for="koordinaatti_e" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_e"></span> 
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="text" class="form-control" name="koordinaatti_e"
+					               		ng-disabled="vm.minMaxAnnettu"
+					                    ng-model="vm.nayte.properties.koordinaatti_e"
+										ng-minlength="10"
+					                    ng-maxlength="10" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    ng-change="vm.validoiKeskipisteKoordinaatit()"
+					                    empty-to-null
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_e.$invalid && form.koordinaatti_e.$touched">
+					                    <span data-i18n="ark.Coordinate_e_rule"></span>
+					                </span>						                    
+				                </div>						
+							</div>
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_z.$invalid && form.koordinaatti_z.$touched}">
+				            <label for="koordinaatti_z" class="col-sm-3 control-label">
+				                <span i18n="ark.Coordinate_z"></span> 
+				            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="number" class="form-control" name="koordinaatti_z"
+					                    ng-disabled="vm.minMaxAnnettu"
+					                    ng-model="vm.nayte.properties.koordinaatti_z"
+					                    empty-to-null
+					                    step="0.01"
+					                    ng-change="vm.validoiKeskipisteKoordinaatit()"
+					                    data-i18n-attr="{placeholder: 'ark.Above_sea_level'}"
+					                    spellcheck="false" autocomplete="off">
+				                </div> 						
+							</div>
+						</li>
+					</ul>            
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Coordinates_min_max"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_n_min.$invalid && form.koordinaatti_n_min.$touched || vm.minMaxNSamat}">
+					            <label for="koordinaatti_n_min" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_n"></span> <span i18n="sample.Min"></span>
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="text" class="form-control" name="koordinaatti_n_min"
+					                    ng-disabled="vm.keskipisteAnnettu"
+					                    ng-change="vm.validoiMinMaxKoordinaatit(form)"
+					                    ng-model="vm.nayte.properties.koordinaatti_n_min"
+					                    ng-minlength="11"
+					                    ng-maxlength="11" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    empty-to-null 
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_n_min.$invalid && form.koordinaatti_n_min.$touched">
+					                    <span data-i18n="ark.Coordinate_n_rule"></span>
+					                </span>
+					                <span class="help-block" ng-show="vm.minMaxNSamat">
+					                    <span data-i18n="ark.Coordinate_min_max_rule"></span>
+					                </span>					                						                    
+				                </div>
+			                </div>
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_n_max.$invalid && form.koordinaatti_n_max.$touched}">
+					            <label for="koordinaatti_n_max" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_n"></span> <span i18n="sample.Max"></span>
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="text" class="form-control" name="koordinaatti_n_max"
+					                	ng-disabled="vm.keskipisteAnnettu"
+					                	ng-change="vm.validoiMinMaxKoordinaatit(form)"
+					                    ng-model="vm.nayte.properties.koordinaatti_n_max"
+					                    ng-minlength="11"
+					                    ng-maxlength="11" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    empty-to-null 
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_n_max.$invalid && form.koordinaatti_n_max.$touched">
+					                    <span data-i18n="ark.Coordinate_n_rule"></span>
+					                </span>						                    
+				                </div>
+			                </div>			                
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_e_min.$invalid && form.koordinaatti_e_min.$touched || vm.minMaxESamat}">
+					            <label for="koordinaatti_e_min" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_e"></span> <span i18n="sample.Min"></span>
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="text" class="form-control" name="koordinaatti_e_min"
+					                    ng-disabled="vm.keskipisteAnnettu"
+					                    ng-change="vm.validoiMinMaxKoordinaatit(form)"
+					                    ng-model="vm.nayte.properties.koordinaatti_e_min"
+										ng-minlength="10"
+					                    ng-maxlength="10" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    empty-to-null
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_e_min.$invalid && form.koordinaatti_e_min.$touched">
+					                    <span data-i18n="ark.Coordinate_e_rule"></span>
+					                </span>
+					                <span class="help-block" ng-show="vm.minMaxESamat">
+					                    <span data-i18n="ark.Coordinate_min_max_rule"></span>
+					                </span>					                						                    
+				                </div>						
+							</div>
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_e_max.$invalid && form.koordinaatti_e_max.$touched}">
+					            <label for="koordinaatti_e_max" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_e"></span> <span i18n="sample.Max"></span>
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="text" class="form-control" name="koordinaatti_e_max"
+					                    ng-disabled="vm.keskipisteAnnettu"
+					                    ng-change="vm.validoiMinMaxKoordinaatit(form)"
+					                    ng-model="vm.nayte.properties.koordinaatti_e_max"
+										ng-minlength="10"
+					                    ng-maxlength="10" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    empty-to-null
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_e_max.$invalid && form.koordinaatti_e_max.$touched">
+					                    <span data-i18n="ark.Coordinate_e_rule"></span>
+					                </span>						                    
+				                </div>						
+							</div>							
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_z_min.$invalid && form.koordinaatti_z_min.$touched || vm.minMaxZSamat}">
+					            <label for="koordinaatti_z_min" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_z"></span> <span i18n="sample.Min"></span>
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="number" class="form-control" name="koordinaatti_z_min"
+					                    ng-disabled="vm.keskipisteAnnettu"
+					                    ng-change="vm.validoiMinMaxKoordinaatit(form)"
+					                    ng-model="vm.nayte.properties.koordinaatti_z_min"
+					                    empty-to-null
+					                    step="0.01"
+					                    data-i18n-attr="{placeholder: 'ark.Above_sea_level'}"
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="vm.minMaxZSamat">
+					                    <span data-i18n="ark.Coordinate_min_max_rule"></span>
+					                </span>					                						                    
+				                </div> 						
+							</div>
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_z_max.$invalid && form.koordinaatti_z_max.$touched}">
+					            <label for="koordinaatti_z_max" class="col-sm-3 control-label">
+					                <span i18n="ark.Coordinate_z"></span> <span i18n="sample.Max"></span>
+					            </label>	            
+				            	<div class="col-sm-9">
+					                <input type="number" class="form-control" name="koordinaatti_z_max"
+					                    ng-disabled="vm.keskipisteAnnettu"
+					                    ng-change="vm.validoiMinMaxKoordinaatit(form)"
+					                    ng-model="vm.nayte.properties.koordinaatti_z_max"
+					                    empty-to-null
+					                    step="0.01"
+					                    data-i18n-attr="{placeholder: 'ark.Above_sea_level'}"
+					                    spellcheck="false" autocomplete="off">
+				                </div> 						
+							</div>							
+						</li>
+					</ul>            
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-if="vm.nayte.properties.naytekoodi.id == 1">
+	            <label for="laboratorion_arvio" class="col-sm-4 control-label">
+	                <span i18n="sample.Laboratory_rating"></span> 
+	            </label>
+	            <div class="col-sm-8">
+		            <textarea rows="3" class="form-control" style="min-height:69px"
+		            	name="laboratorion_arvio" 
+		            	ng-model="vm.nayte.properties.laboratorion_arvio">
+		            </textarea>					
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-if="vm.nayte.properties.naytetyyppi.id == 2">
+	            <label for="luokka" class="col-sm-4 control-label">
+	                <span i18n="sample.Class"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<select name="luokka" class="form-control"
+					    ng-options="luokka.id as luokka.nimi_fi for luokka in vm.ajoitusluokat"
+					    ng-model="vm.nayte.properties.luokka">
+					</select>
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label for="lisatiedot" class="col-sm-4 control-label">
+	                <span i18n="common.Additional_information"></span> 
+	            </label>
+	            <div class="col-sm-8">
+		            <textarea rows="3" class="form-control" 
+		            	name="rf_naytteen_koko" 
+		            	ng-model="vm.nayte.properties.lisatiedot">
+		            </textarea>						
+	            </div>    
+	        </div>	        	        	        	        		
+		</div>  	
+    	<!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_type"></span>
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.naytetyyppi | namei18n}}
+	                </p>
+	            </div>    
+	        </div>     
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="common.Description"></span>
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.kuvaus}}
+	                </p>	                
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-show="vm.nayte.properties.luunayte_maara && vm.nayte.properties.naytekoodi.id == 2">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Amount"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<p class="form-control-static">{{vm.nayte.properties.luunayte_maara}}
+		               	<span ng-repeat="yksikko in vm.painoyksikot">
+		               		<span ng-show="yksikko.id == vm.nayte.properties.luunayte_maara_yksikko">{{yksikko.nimi_fi}}</span>
+		               	</span>				
+	               	</p>	
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-show="vm.nayte.properties.talteenottotapa && vm.nayte.properties.naytekoodi.id == 2">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="sample.Recovery_manner"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">{{vm.nayte.properties.talteenottotapa | namei18n}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group" ng-show="vm.nayte.properties.maanayte_maara && vm.nayte.properties.naytekoodi.id == 3">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Amount"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<span class="form-control-static">{{vm.nayte.properties.maanayte_maara}}</span> <span i18n="sample.Liters" ng-show="vm.nayte.properties.maanayte_maara"></span>
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-show="vm.nayte.properties.rf_naytteen_koko && vm.nayte.properties.naytekoodi.id == 4">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_size"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.nayte.properties.rf_naytteen_koko}}</p>
+	            </div>    
+	        </div>	        	        
+	        <div class="form-group" ng-show="vm.naytaKeskipisteKoordinaatit()">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="sample.Coordinates_central_point"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="form-group">
+					            <label for="koordinaatti_n" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_n"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_n}}</p>
+				                </div>
+			                </div>
+							<div class="form-group">
+					            <label for="koordinaatti_e" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_e"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_e}}</p>
+				                </div>						
+							</div>
+							<div class="form-group">
+				            <label for="koordinaatti_z" class="col-sm-2 control-label">
+				                <span i18n="ark.Coordinate_z"></span> 
+				            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_z}}</p>
+				                </div> 						
+							</div>
+						</li>
+					</ul>                 
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-show="vm.naytaMinMaxKoordinaatit()">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="sample.Coordinates_min_max"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="form-group" ng-show="vm.nayte.properties.koordinaatti_n_min">
+					            <label for="koordinaatti_n" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_n"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_n_min}}</p>
+				                </div>
+			                </div>
+							<div class="form-group" ng-show="vm.nayte.properties.koordinaatti_n_max">
+					            <label for="koordinaatti_n" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_n"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_n_max}}</p>
+				                </div>
+			                </div>			                
+							<div class="form-group" ng-show="vm.nayte.properties.koordinaatti_e_min">
+					            <label for="koordinaatti_e" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_e"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_e_min}}</p>
+				                </div>						
+							</div>
+							<div class="form-group" ng-show="vm.nayte.properties.koordinaatti_e_max">
+					            <label for="koordinaatti_e" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_e"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_e_max}}</p>
+				                </div>						
+							</div>							
+							<div class="form-group" ng-show="vm.nayte.properties.koordinaatti_z_min">
+				            <label for="koordinaatti_z" class="col-sm-2 control-label">
+				                <span i18n="ark.Coordinate_z"></span> 
+				            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_z_min}}</p>
+				                </div> 						
+							</div>
+							<div class="form-group" ng-show="vm.nayte.properties.koordinaatti_z_max">
+				            <label for="koordinaatti_z" class="col-sm-2 control-label">
+				                <span i18n="ark.Coordinate_z"></span> 
+				            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.nayte.properties.koordinaatti_z_max}}</p>
+				                </div> 						
+							</div>							
+						</li>
+					</ul>                 
+	            </div>    
+	        </div>	                
+	        <div class="form-group" ng-show="vm.nayte.properties.laboratorion_arvio && vm.nayte.properties.naytekoodi.id == 1">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Laboratory_rating"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.nayte.properties.laboratorion_arvio}}</p>
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-show="vm.nayte.properties.luokka && vm.nayte.properties.naytetyyppi.id == 2">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Class"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	               	<span ng-repeat="luokka in vm.ajoitusluokat">
+	               		<span ng-show="luokka.id == vm.nayte.properties.luokka">{{luokka.nimi_fi}}</span>
+	               	</span>					
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-show="vm.nayte.properties.lisatiedot">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="common.Additional_information"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.nayte.properties.lisatiedot}}</p>
+	            </div>    
+	        </div>	        	        	        	        	        	        
+	    </div>
+    </div>
+</div>

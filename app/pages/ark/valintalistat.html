@@ -1,0 +1,644 @@
+<div class="panel">
+	<div class="panel-body">
+		<div data-ng-include="'pages/tabs.html'"></div>
+		<div data-ng-include="'pages/subtabs.html'"></div>
+		<div class="panel">
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Projektityyppi</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('projektityyppi')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="projektityyppi in lists.projektityyppi.values">
+							<td>{{projektityyppi.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(projektityyppi.properties.id)">{{projektityyppi.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(projektityyppi.properties.id)"
+									data-ng-model="projektityyppi.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(projektityyppi.properties.id)">{{projektityyppi.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(projektityyppi.properties.id)"
+									data-ng-model="projektityyppi.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(projektityyppi.properties.id, 'projektityyppi')"
+									data-ng-show="!editing(projektityyppi.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(projektityyppi.properties.id, 'projektityyppi')"
+									data-ng-show="!editing(projektityyppi.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(projektityyppi.properties.id, 'projektityyppi')"
+									data-ng-show="editing(projektityyppi.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(projektityyppi.properties.id, 'projektityyppi')"
+									data-ng-show="editing(projektityyppi.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Yksikkötyyppi</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('yksikkotyyppi')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="yksikkotyyppi in lists.yksikkotyyppi.values">
+							<td>{{yksikkotyyppi.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(yksikkotyyppi.properties.id)">{{yksikkotyyppi.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(yksikkotyyppi.properties.id)"
+									data-ng-model="yksikkotyyppi.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(yksikkotyyppi.properties.id)">{{yksikkotyyppi.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(yksikkotyyppi.properties.id)"
+									data-ng-model="yksikkotyyppi.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(yksikkotyyppi.properties.id, 'yksikkotyyppi')"
+									data-ng-show="!editing(yksikkotyyppi.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(yksikkotyyppi.properties.id, 'yksikkotyyppi')"
+									data-ng-show="!editing(yksikkotyyppi.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(yksikkotyyppi.properties.id, 'yksikkotyyppi')"
+									data-ng-show="editing(yksikkotyyppi.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(yksikkotyyppi.properties.id, 'yksikkotyyppi')"
+									data-ng-show="editing(yksikkotyyppi.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Talteenottotapa</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('talteenottotapa')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="talteenottotapa in lists.talteenottotapa.values">
+							<td>{{talteenottotapa.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(talteenottotapa.properties.id)">{{talteenottotapa.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(talteenottotapa.properties.id)"
+									data-ng-model="talteenottotapa.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(talteenottotapa.properties.id)">{{talteenottotapa.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(talteenottotapa.properties.id)"
+									data-ng-model="talteenottotapa.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(talteenottotapa.properties.id, 'talteenottotapa')"
+									data-ng-show="!editing(talteenottotapa.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(talteenottotapa.properties.id, 'talteenottotapa')"
+									data-ng-show="!editing(talteenottotapa.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(talteenottotapa.properties.id, 'talteenottotapa')"
+									data-ng-show="editing(talteenottotapa.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(talteenottotapa.properties.id, 'talteenottotapa')"
+									data-ng-show="editing(talteenottotapa.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Yksikön elinkaari</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('yksikon_elinkaari')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="yksikon_elinkaari in lists.yksikon_elinkaari.values">
+							<td>{{yksikon_elinkaari.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(yksikon_elinkaari.properties.id)">{{yksikon_elinkaari.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(yksikon_elinkaari.properties.id)"
+									data-ng-model="yksikon_elinkaari.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(yksikon_elinkaari.properties.id)">{{yksikon_elinkaari.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(yksikon_elinkaari.properties.id)"
+									data-ng-model="yksikon_elinkaari.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(yksikon_elinkaari.properties.id, 'yksikon_elinkaari')"
+									data-ng-show="!editing(yksikon_elinkaari.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(yksikon_elinkaari.properties.id, 'yksikon_elinkaari')"
+									data-ng-show="!editing(yksikon_elinkaari.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(yksikon_elinkaari.properties.id, 'yksikon_elinkaari')"
+									data-ng-show="editing(yksikon_elinkaari.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(yksikon_elinkaari.properties.id, 'yksikon_elinkaari')"
+									data-ng-show="editing(yksikon_elinkaari.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Löytökategoria</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('loytokategoria')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="loytokategoria in lists.loytokategoria.values">
+							<td>{{loytokategoria.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(loytokategoria.properties.id)">{{loytokategoria.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(loytokategoria.properties.id)"
+									data-ng-model="loytokategoria.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(loytokategoria.properties.id)">{{loytokategoria.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(loytokategoria.properties.id)"
+									data-ng-model="loytokategoria.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(loytokategoria.properties.id, 'loytokategoria')"
+									data-ng-show="!editing(loytokategoria.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(loytokategoria.properties.id, 'loytokategoria')"
+									data-ng-show="!editing(loytokategoria.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(loytokategoria.properties.id, 'loytokategoria')"
+									data-ng-show="editing(loytokategoria.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(loytokategoria.properties.id, 'loytokategoria')"
+									data-ng-show="editing(loytokategoria.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Keramiikkatyyppi</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('keramiikkatyyppi')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="keramiikkatyyppi in lists.keramiikkatyyppi.values">
+							<td>{{keramiikkatyyppi.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(keramiikkatyyppi.properties.id)">{{keramiikkatyyppi.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(keramiikkatyyppi.properties.id)"
+									data-ng-model="keramiikkatyyppi.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(keramiikkatyyppi.properties.id)">{{keramiikkatyyppi.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(keramiikkatyyppi.properties.id)"
+									data-ng-model="keramiikkatyyppi.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(keramiikkatyyppi.properties.id, 'keramiikkatyyppi')"
+									data-ng-show="!editing(keramiikkatyyppi.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(keramiikkatyyppi.properties.id, 'keramiikkatyyppi')"
+									data-ng-show="!editing(keramiikkatyyppi.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(keramiikkatyyppi.properties.id, 'keramiikkatyyppi')"
+									data-ng-show="editing(keramiikkatyyppi.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(keramiikkatyyppi.properties.id, 'keramiikkatyyppi')"
+									data-ng-show="editing(keramiikkatyyppi.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>OCM-luokka</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('ocmluokka')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="ocmluokka in lists.ocmluokka.values">
+							<td>{{ocmluokka.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(ocmluokka.properties.id)">{{ocmluokka.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(ocmluokka.properties.id)"
+									data-ng-model="ocmluokka.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(ocmluokka.properties.id)">{{ocmluokka.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(ocmluokka.properties.id)"
+									data-ng-model="ocmluokka.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(ocmluokka.properties.id, 'ocmluokka')"
+									data-ng-show="!editing(ocmluokka.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(ocmluokka.properties.id, 'ocmluokka')"
+									data-ng-show="editing(ocmluokka.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(ocmluokka.properties.id, 'ocmluokka')"
+									data-ng-show="editing(ocmluokka.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Laatu</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('laatu')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="laatu in lists.laatu.values">
+							<td>{{laatu.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(laatu.properties.id)">{{laatu.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(laatu.properties.id)"
+									data-ng-model="laatu.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(laatu.properties.id)">{{laatu.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(laatu.properties.id)"
+									data-ng-model="laatu.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(laatu.properties.id, 'laatu')"
+									data-ng-show="!editing(laatu.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(laatu.properties.id, 'laatu')"
+									data-ng-show="!editing(laatu.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(laatu.properties.id, 'laatu')"
+									data-ng-show="editing(laatu.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(laatu.properties.id, 'laatu')"
+									data-ng-show="editing(laatu.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Löytötyyppi</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('loytotyyppi')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="loytotyyppi in lists.loytotyyppi.values">
+							<td>{{loytotyyppi.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(loytotyyppi.properties.id)">{{loytotyyppi.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(loytotyyppi.properties.id)"
+									data-ng-model="loytotyyppi.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(loytotyyppi.properties.id)">{{loytotyyppi.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(loytotyyppi.properties.id)"
+									data-ng-model="loytotyyppi.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(loytotyyppi.properties.id, 'loytotyyppi')"
+									data-ng-show="!editing(loytotyyppi.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(loytotyyppi.properties.id, 'loytotyyppi')"
+									data-ng-show="!editing(loytotyyppi.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(loytotyyppi.properties.id, 'loytotyyppi')"
+									data-ng-show="editing(loytotyyppi.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(loytotyyppi.properties.id, 'loytotyyppi')"
+									data-ng-show="editing(loytotyyppi.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Materiaali</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('materiaali')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="materiaali in lists.materiaali.values">
+							<td>{{materiaali.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(materiaali.properties.id)">{{materiaali.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(materiaali.properties.id)"
+									data-ng-model="materiaali.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(materiaali.properties.id)">{{materiaali.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(materiaali.properties.id)"
+									data-ng-model="materiaali.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(materiaali.properties.id, 'materiaali')"
+									data-ng-show="!editing(materiaali.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(materiaali.properties.id, 'materiaali')"
+									data-ng-show="!editing(materiaali.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(materiaali.properties.id, 'materiaali')"
+									data-ng-show="editing(materiaali.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(materiaali.properties.id, 'materiaali')"
+									data-ng-show="editing(materiaali.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Konservoinnin prioriteetti</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('konservoinninprioriteetti')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="konservoinninprioriteetti in lists.konservoinninprioriteetti.values">
+							<td>{{konservoinninprioriteetti.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(konservoinninprioriteetti.properties.id)">{{konservoinninprioriteetti.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(konservoinninprioriteetti.properties.id)"
+									data-ng-model="konservoinninprioriteetti.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(konservoinninprioriteetti.properties.id)">{{konservoinninprioriteetti.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(konservoinninprioriteetti.properties.id)"
+									data-ng-model="konservoinninprioriteetti.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(konservoinninprioriteetti.properties.id, 'konservoinninprioriteetti')"
+									data-ng-show="!editing(konservoinninprioriteetti.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(konservoinninprioriteetti.properties.id, 'konservoinninprioriteetti')"
+									data-ng-show="!editing(konservoinninprioriteetti.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(konservoinninprioriteetti.properties.id, 'konservoinninprioriteetti')"
+									data-ng-show="editing(konservoinninprioriteetti.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(konservoinninprioriteetti.properties.id, 'konservoinninprioriteetti')"
+									data-ng-show="editing(konservoinninprioriteetti.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Konservoinnin laatuluokka</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('konservoinninlaatuluokka')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="konservoinninlaatuluokka in lists.konservoinninlaatuluokka.values">
+							<td>{{konservoinninlaatuluokka.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(konservoinninlaatuluokka.properties.id)">{{konservoinninlaatuluokka.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(konservoinninlaatuluokka.properties.id)"
+									data-ng-model="konservoinninlaatuluokka.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(konservoinninlaatuluokka.properties.id)">{{konservoinninlaatuluokka.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(konservoinninlaatuluokka.properties.id)"
+									data-ng-model="konservoinninlaatuluokka.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(konservoinninlaatuluokka.properties.id, 'konservoinninlaatuluokka')"
+									data-ng-show="!editing(konservoinninlaatuluokka.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(konservoinninlaatuluokka.properties.id, 'konservoinninlaatuluokka')"
+									data-ng-show="!editing(konservoinninlaatuluokka.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(konservoinninlaatuluokka.properties.id, 'konservoinninlaatuluokka')"
+									data-ng-show="editing(konservoinninlaatuluokka.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(konservoinninlaatuluokka.properties.id, 'konservoinninlaatuluokka')"
+									data-ng-show="editing(konservoinninlaatuluokka.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Konservoinnin kiireellisyys</h4>
+					<button type="button" class="btn btn-default"
+						data-ng-click="add('konservoinninkiireellisyys')">
+						<span data-i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span data-i18n="common.Id"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value"></span>
+							</td>
+							<td>
+								<span data-i18n="common.Value_in_swedish"></span>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr data-ng-repeat="konservoinninkiireellisyys in lists.konservoinninkiireellisyys.values">
+							<td>{{konservoinninkiireellisyys.properties.id}}</td>
+							<td>
+								<span data-ng-show="!editing(konservoinninkiireellisyys.properties.id)">{{konservoinninkiireellisyys.properties.nimi_fi}}</span>
+								<input type="text" data-ng-show="editing(konservoinninkiireellisyys.properties.id)"
+									data-ng-model="konservoinninkiireellisyys.properties.nimi_fi">
+							</td>
+							<td>
+								<span data-ng-show="!editing(konservoinninkiireellisyys.properties.id)">{{konservoinninkiireellisyys.properties.nimi_se}}</span>
+								<input type="text" data-ng-show="editing(konservoinninkiireellisyys.properties.id)"
+									data-ng-model="konservoinninkiireellisyys.properties.nimi_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-ng-click="edit(konservoinninkiireellisyys.properties.id, 'konservoinninkiireellisyys')"
+									data-ng-show="!editing(konservoinninkiireellisyys.properties.id)" data-i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="deleteOption(konservoinninkiireellisyys.properties.id, 'konservoinninkiireellisyys')"
+									data-ng-show="!editing(konservoinninkiireellisyys.properties.id)" data-i18n="common.Delete"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="cancel_edit(konservoinninkiireellisyys.properties.id, 'konservoinninkiireellisyys')"
+									data-ng-show="editing(konservoinninkiireellisyys.properties.id)" data-i18n="common.Cancel"></button>
+								<button type="button" class="btn btn-default"
+									data-ng-click="save(konservoinninkiireellisyys.properties.id, 'konservoinninkiireellisyys')"
+									data-ng-show="editing(konservoinninkiireellisyys.properties.id)" data-i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

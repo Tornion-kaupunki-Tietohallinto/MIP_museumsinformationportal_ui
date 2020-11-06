@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Estate_protection"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group" ng-class="{ 'has-error': form.suojelukriteeri.$invalid && form.suojelukriteeri.$touched }">
+            <label for="suojelukriteeri" class="col-sm-3 control-label">
+                <span i18n="ark.Protection_criteria"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="suojelukriteeri" ng-maxlength="100"
+                    ng-model="vm.kohde.properties.suojelukriteeri" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <mip-suojelutiedot valitutsuojelutiedot="vm.kohde.properties.suojelutiedot"></mip-suojelutiedot>          
+    </div>
+</div>

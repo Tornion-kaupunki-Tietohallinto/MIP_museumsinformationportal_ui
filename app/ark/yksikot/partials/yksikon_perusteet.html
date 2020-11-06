@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Unit_reasons"></span>
+        </h4>
+    </div>
+    <div class="panel-body" ng-if="vm.edit || vm.create">
+        <div class="form-group">
+            <div class="col-md-12">
+                <textarea rows="3" class="form-control" name="yksikon_perusteet"
+                    ng-model="vm.yksikko.properties.yksikon_perusteet_note"
+                    ng-if="vm.create">
+                </textarea>
+                <p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.yksikon_perusteet_note}}</p>              
+                <textarea rows="3" class="form-control" name="yksikon_perusteet"
+                    ng-model="vm.yksikko.properties.yksikon_perusteet"
+                    ng-if="!vm.create">
+                </textarea>
+            </div>    
+        </div>
+	</div>
+	<div class="panel-body" ng-if="!vm.edit && !vm.create">
+	    <div class="form-group">
+	        <div class="col-sm-12" ng-if="vm.showNotes && vm.yksikko.properties.yksikon_perusteet_note">
+	            <p class="form-control-static">{{vm.yksikko.properties.yksikon_perusteet_note}}</p>
+	        </div>
+	        <div class="col-sm-12" ng-if="vm.yksikko.properties.yksikon_perusteet">
+	            <p class="form-control-static">{{vm.yksikko.properties.yksikon_perusteet}}</p>
+	        </div>            
+	    </div>
+	</div>        
+</div>

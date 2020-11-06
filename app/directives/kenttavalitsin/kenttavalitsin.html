@@ -1,0 +1,26 @@
+<div class="col-md-5">
+    <div class="form-group">
+        <select class="form-control" name="valittavissaolevatkentat" ng-model="valittavakentta" multiple
+            ng-options="vok as vok.label for vok in valittavissaolevatkentat track by vok.name" size="10">
+            <option disabled value="" i18n="common.SELECTABLE_FIELDS"></option>
+        </select>
+    </div>
+</div>
+<div class="col-md-1">
+    <button class="btn btn-default" style="margin-bottom: 10px"
+        ng-click="addSelectedField(valittavakentta)" ng-disabled="valittavakentta.length == 0 || valittavakentta == undefined">
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    </button>   
+    <button class="btn btn-default" ng-click="removeSelectedField(valittukentta)"
+        ng-disabled="valittukentta.length == 0 || valittukentta == undefined">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </button>
+</div>
+<div class="col-md-5">
+    <div class="form-group">
+        <select class="form-control" name="valitutkentat" ng-model="valittukentta" multiple
+            ng-options="vk as vk.label for vk in valitutkentat track by vk.name" size="10">
+            <option disabled value="" i18n="common.SELECTED_FIELDS"></option>
+        </select>
+    </div>
+</div>

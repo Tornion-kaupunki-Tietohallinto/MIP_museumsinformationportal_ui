@@ -1,0 +1,13 @@
+{
+	"Inventory_project_saved_successfully" : "Inventointiprojekti %name tallennettu onnistuneesti",
+	"Inventory_project_deleted": "Inventointiprojekti poistettu",
+	"No_view_permission" : "Ei katseluoikeutta inventointiprojekteihin",
+	"Estate_added_to_inventory_project_success": "Kiinteistö lisätty inventointiprojektiin onnistuneesti",
+	"Estate_deleted_from_inventory_project_success": "Kiinteistö poistettu inventointiprojektista onnistuneesti",
+	"Inventor_count": "Inventoijia",
+	"Save_failed": "Inventointiprojektin tallennus epäonnistui",
+	"Inventoryproject_deleted": "Inventointiprojekti poistettu onnistuneesti",
+	"Start_date": "Aloituspäivämäärä",
+	"End_date": "Lopetuspäivämäärä",
+	"Create_new_inventor": "Luo uusi käyttäjä"
+}

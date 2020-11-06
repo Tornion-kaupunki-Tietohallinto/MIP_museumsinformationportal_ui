@@ -1,0 +1,19 @@
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#tutkijatPanel{{vm.modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="ark.Research_users"></span>
+			<span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="tutkijatPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="col-md-12">
+			<ul class="list-group">
+				<li class="list-group-item col-xs-12" ng-repeat="k in vm.tutkimus.properties.tutkimuskayttajat">
+					<span>{{k.etunimi}} {{k.sukunimi}} {{k.sahkoposti}}</span>
+					<span ng-if="k.inv_tutkija_organisaatio"> <small>( {{k.inv_tutkija_organisaatio}} )</small></span>
+					<span ng-if="! k.inv_tutkija_organisaatio"> <small>( {{k.organisaatio}} )</small></span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

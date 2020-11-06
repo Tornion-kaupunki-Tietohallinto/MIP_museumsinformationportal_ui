@@ -1,0 +1,117 @@
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+        <button type="button" class="btn btn-default" ng-click="vm.clearSearchFilter()"
+            data-i18n-attr="{title: 'common.Clear_filter'}">
+            <span class="fa fa-ban"></span>
+        </button>	
+		<button type="button" class="btn btn-default" ng-click="vm.refreshTable('toimenpideCache', 'toimenpiteetTable')"
+			data-i18n-attr="{title: 'common.Refresh_search_results'}">
+			<span class="fa fa-refresh"></span>
+		</button>
+        <button type="button"
+            class="btn btn-success"
+            id="btn-create" ng-click="vm.lisaaToimenpide()"
+            data-i18n-attr="{title: 'ark.Add_operation'}">
+            <span class="fa fa-plus"></span>
+        </button>		
+	</div>
+	<!-- Suodattimet -->
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<div class="col-md-12">
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showToimenpideCol"
+							ng-change="vm.saveColVisibility('showToimenpideCol', vm.colVisibilities.showToimenpideCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<mip-konservointi-toimenpide-multi lista="vm.toimenpiteetTable.filter().properties" haku="true"></mip-konservointi-toimenpide-multi>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showMenetelmaCol"
+							ng-change="vm.saveColVisibility('showMenetelmaCol', vm.colVisibilities.showMenetelmaCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<mip-konservointi-menetelma-multi lista="vm.toimenpiteetTable.filter().properties" haku="true"></mip-konservointi-menetelma-multi>
+					</div>					
+				</div>			
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showMateriaalitCol"
+							ng-change="vm.saveColVisibility('showMateriaalitCol', vm.colVisibilities.showMateriaalitCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<mip-konservointi-materiaali-multi lista="vm.toimenpiteetTable.filter().properties" haku="true"></mip-konservointi-materiaali-multi>
+					</div>					
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showTekijaCol"
+							ng-change="vm.saveColVisibility('showTekijaCol', vm.colVisibilities.showTekijaCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+                        <ui-select class="ng-animate-disabled" name="tekija" theme="bootstrap" 
+                        	ng-required="true"
+                        	ng-model="vm.toimenpiteetTable.filter().properties.kayttajat"> 
+                        <ui-select-match
+                            data-i18n-attr="{placeholder: 'ark.Author'}">
+                            {{$select.selected.etunimi}}
+                            {{$select.selected.sukunimi}}
+                            {{$select.selected.sahkoposti}} 
+                        </ui-select-match> 
+                        <ui-select-choices repeat="k.id as k in vm.kayttajat | filter: $select.search track by k.id">
+                        <span ng-bind-html="k.etunimi | highlight: $select.search"></span>
+                        <span ng-bind-html="k.sukunimi | highlight: $select.search"></span>
+                        <span ng-bind-html="k.sahkoposti | highlight: $select.search"></span>
+                        </ui-select-choices>
+                        </ui-select>
+					</div>					
+				</div>
+			</div>
+        </div>
+        <div class="col-md-12">
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showKasittelyCol"
+							ng-change="vm.saveColVisibility('showKasittelyCol', vm.colVisibilities.showKasittelyCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<mip-konservointi-kasittely-multi lista="vm.toimenpiteetTable.filter().properties"></mip-konservointi-kasittely-multi>
+					</div>					
+				</div>
+			</div>        
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showAlkaaCol"
+							ng-change="vm.saveColVisibility('showAlkaaCol', vm.colVisibilities.showAlkaaCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<input bs-datepicker data-date-format="dd.MM.yyyy"
+						    model-date-format="yyyy-MM-dd" data-autoclose="1" type="text"
+						    start-week="1"
+						    class="form-control" name="alkaa"
+						    data-i18n-attr="{placeholder: 'ark.Begin'}"
+						    ng-model="vm.toimenpiteetTable.filter().properties.alkaa">
+					</div>					
+				</div>
+			</div>        
+        </div>
+	</div>
+</div>
+

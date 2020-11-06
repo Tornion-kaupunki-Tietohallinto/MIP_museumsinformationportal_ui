@@ -1,0 +1,107 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="ark.Inventory_information"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+
+        <div class="form-group" ng-class="{ 'has-error': form.inventointitutkimus.$invalid && form.inventointitutkimus.$touched }">
+            <label for="inventointitutkimus" class="col-sm-3 control-label">
+                <span i18n="ark.Inventory_research"></span><span ng-if="vm.rooli == 'katselija'">*</span>
+            </label>
+            <div class="col-sm-9">
+                <select
+					ng-model="vm.inventointitiedot.inventointitutkimus_id"
+					ng-options="inventointitutkimus.properties.id as inventointitutkimus.properties.nimi for inventointitutkimus in vm.aktiivisetInventointitutkimukset"
+					name="inventointitutkimus" class="form-control"
+					ng-change="vm.inventointitutkimusChanged()" ng-required="vm.rooli == 'katselija'">
+					<option value="" i18n="common.Select"></option>
+				</select> <span class="help-block"
+					ng-show="form.inventointitutkimus.$invalid && form.inventointitutkimus.$touched">
+					<span data-i18n="common.mandatory_value"
+					data-field="{{ 'ark.Inventory_research' | i18n }}"></span>
+				</span>
+            </div>
+        </div>
+        <div class="form-group"
+			ng-class="{ 'has-error': form.inventoija.$invalid && form.inventoija.$touched }">
+			<label for="inventoija" class="col-sm-3 control-label"> <span
+				i18n="common.Inventor"></span><span ng-if="vm.rooli == 'katselija'">*</span>
+			</label>
+			<div class="col-sm-9">
+				<select
+					ng-model="vm.inventointitiedot.inventoija_id"
+					ng-options="user.properties.id as user.properties.etunimi+' '+user.properties.sukunimi+' ('+user.properties.id+')' for user in vm.users"
+					name="inventoija" class="form-control" ng-required="vm.rooli == 'katselija'">
+					<option value=""><span i18n="common.Select"></span></option>
+				</select> <span class="help-block"
+					ng-show="form.inventoija.$invalid && form.inventoija.$touched">
+					<span data-i18n="common.mandatory_value"
+					data-field="{{ 'common.Inventor' | i18n }}"></span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-class="{ 'has-error': form.inventointipaiva.$invalid && form.inventointipaiva.$touched }">
+			<label for="inventointipaiva" class="col-sm-3 control-label">
+				<span i18n="common.Inventory_date"></span><span ng-if="vm.rooli == 'katselija'">*</span>
+			</label>
+			<div class="col-sm-9">
+				<input bs-datepicker data-date-format="dd.MM.yyyy"
+					model-date-format="yyyy-MM-dd" data-date-type="string"
+					data-autoclose="1" placement="top-left" class="form-control"
+					name="inventointipaiva" ng-required="vm.rooli == 'katselija'"
+					ng-model="vm.inventointitiedot.inventointipaiva">
+				<span class="help-block"
+					ng-show="form.inventointipaiva.$invalid && form.inventointipaiva.$touched">
+					<span data-i18n="common.mandatory_value"
+					data-field="{{ 'common.Inventory_date' | i18n }}"></span>
+				</span>
+			</div>
+		</div>
+
+
+
+
+        <div class="form-group" ng-class="{ 'has-error': form.taustatiedot.$invalid && form.taustatiedot.$touched }">
+            <label for="taustatiedot" class="col-sm-3 control-label">
+                <span i18n="ark.Background_information"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea type="text" class="form-control" name="taustatiedot" rows="3"
+                    ng-model="vm.kohde.properties.taustatiedot" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.havainnot.$invalid && form.havainnot.$touched }">
+            <label for="havainnot" class="col-sm-3 control-label">
+                <span i18n="ark.Findings"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea type="text" class="form-control" name="havainnot" rows="3"
+                    ng-model="vm.kohde.properties.havainnot" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.tulkinta.$invalid && form.tulkinta.$touched }">
+            <label for="tulkinta" class="col-sm-3 control-label">
+                <span i18n="ark.Interpretation"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea type="text" class="form-control" name="tulkinta" rows="3"
+                    data-i18n-attr="{placeholder: 'ark.Interpretation'}"
+                    ng-model="vm.kohde.properties.tulkinta" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.lisatiedot.$invalid && form.lisatiedot.$touched }">
+            <label for="lisatiedot" class="col-sm-3 control-label">
+                <span i18n="ark.Additional_information"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea type="text" class="form-control" name="lisatiedot"
+                    data-i18n-attr="{placeholder: 'ark.Additional_information'}" rows="3"
+                    ng-model="vm.kohde.properties.lisatiedot" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>

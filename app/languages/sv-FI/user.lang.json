@@ -1,0 +1,8 @@
+{
+    "Role_watcher" : "Tittare",
+    "Role_inventory_auditor" : "Inventerare",
+    "Role_researcher" : "Forskare",
+    "Role_outside_researcher" : "Utomstående forskare",
+    "Role_admin" : "Administratör",
+    "Role_is_mandatory_field": "Roll är en obligatorisk uppgift"
+}

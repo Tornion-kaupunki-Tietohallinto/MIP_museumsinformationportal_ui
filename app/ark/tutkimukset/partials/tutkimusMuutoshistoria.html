@@ -1,0 +1,655 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span> : <span i18n="common.Research"></span>
+                    {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-body panel-collapse collapse in">
+                            <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+                                <!-- tutkimuksen lisäystiedot -->
+                                <div class="panel panel-default" ng-if="h.action=='I' && h.table_name=='ark_tutkimus'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tyyppi">
+                                            <td>
+                                                <span i18n="common.Type"></span>
+                                            </td>
+                                            <td>{{h.row_data.tyyppi | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.nimi">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                        </tr>
+                                         <tr ng-if="h.row_data.nimi_se">
+                                            <td>
+                                                <span i18n="common.Name_in_swedish"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi_se}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tutkimuksen_lyhenne">
+                                            <td>
+                                                <span i18n="ark.Research_abbreviation"></span>
+                                            </td>
+                                            <td>{{h.row_data.tutkimuksen_lyhenne}}</td>
+                                        </tr>                                        
+						                <tr ng-repeat="c in h.children | filter:{table_name:'ark_kohde_tutkimus'}">
+						                    <td><span i18n="ark.Target"></span></td>
+						                    <td>{{c.row_data.tutkimuksen_kohde.nimi}}</td>
+						                </tr>
+						                <tr ng-repeat="c in h.children | filter:{table_name:'ark_kohde_tutkimus'}">
+						                    <td><span i18n="common.County"></span> - <span i18n="common.Village"></span></td>
+						                    <td>{{c.row_data.tutkimuksen_kohde.kunnatkylat[0].kunta | kuntaKylaNamei18n}} - {{c.row_data.tutkimuksen_kohde.kunnatkylat[0].kyla | kuntaKylaNamei18n}}</td>
+						                </tr>						                                                         
+                                        <tr ng-if="h.row_data.rahoittaja">
+                                            <td>
+                                                <span i18n="ark.Financier"></span>
+                                            </td>
+                                            <td>{{h.row_data.rahoittaja}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.alkupvm">
+                                            <td>
+                                                <span i18n="common.Research"></span>: <span i18n="common.Start_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.alkupvm}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.loppupvm">
+                                            <td>
+                                                <span i18n="common.Research"></span>: <span i18n="common.End_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.loppupvm}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kenttatyojohtaja">
+                                            <td>
+                                                <span i18n="ark.Field_work_manager"></span>
+                                            </td>
+                                            <td>{{h.row_data.kenttatyojohtaja}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.row_data.kenttatyo_alkupvm">
+                                            <td>
+                                                <span i18n="ark.Field_work"></span>: <span i18n="common.Start_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.kenttatyo_alkupvm}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kenttatyo_loppupvm">
+                                            <td>
+                                                <span i18n="ark.Field_work"></span> <span i18n="common.End_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.kenttatyo_loppupvm}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.julkinen">
+                                            <td>
+                                                <span i18n="common.Public"></span>
+                                            </td>
+                                            <td>{{h.row_data.julkinen | trueFalseToText}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.valmis">
+                                            <td>
+                                                <span i18n="common.Ready"></span>
+                                            </td>
+                                            <td>{{h.row_data.valmis | trueFalseToText}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.loyto_paanumero">
+                                            <td>
+                                                <span i18n="ark.Discoveries"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.loyto_paanumero}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.digikuva_paanumero">
+                                            <td>
+                                                <span i18n="ark.Digital_pictures"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.digikuva_paanumero}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.mustavalko_paanumero">
+                                            <td>
+                                                <span i18n="ark.Black_white_negatives"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.mustavalko_paanumero}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.dia_paanumero">
+                                            <td>
+                                                <span i18n="ark.Slide_positives"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.dia_paanumero}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.loyto_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Discoveries"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.loyto_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.raportti_kokoelma">
+                                            <td>
+                                                <span i18n="common.Reports"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.raportti_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kartta_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Maps"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.kartta_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.valokuva_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Maps"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.valokuva_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.nayte_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Samples"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.nayte_kokoelma | namei18n}}</td>
+                                        </tr>                                                                                                                                                                 
+                                       <tr ng-if="h.row_data.kl_koodi">
+                                            <td>
+                                                <span i18n="ark.KL_code"></span>
+                                            </td>
+                                            <td>{{h.row_data.kl_koodi}}</td>
+                                        </tr>
+                                       <tr ng-if="h.row_data.tiivistelma">
+                                            <td>
+                                                <span i18n="ark.Summary"></span>
+                                            </td>
+                                            <td>{{h.row_data.tiivistelma}}</td>
+                                        </tr>
+                                        <tr>
+                                        	<td><span i18n="common.Estates"></span></td>
+								            <td>
+								                <span ng-repeat="c in h.children | filter:{table_name:'ark_tutkimus_kiinteistorakennus', action:'I'}">
+								                    <span i18n="common.Property_identifier"></span>: {{c.row_data.kiinteistotunnus}}
+								                    <span ng-if="c.row_data.kiinteisto_nimi">
+								                    	<br/>
+								                   		<span i18n="common.Name"></span>: {{c.row_data.kiinteisto_nimi}}
+								                   	</span>
+								                   	<!-- Kiinteistön osoitteet -->
+								                   	<span ng-repeat="osoite in h.children | filter:{table_name:'ark_tutkimus_osoite', action:'I'}">
+								                   		<span ng-if="c.row_data.id == osoite.row_data.ark_tutkimus_kiinteistorakennus_id">
+								                   			<br/>
+								                   			<span i18n="common.Street_address"></span>: {{osoite.row_data.katunimi}}
+								                   		
+								                   			<span ng-if="osoite.row_data.katunumero">
+								                   				<br/>
+								                   				<span i18n="common.Street_number"></span>: {{osoite.row_data.katunumero}}
+								                   			</span>
+								                   			<span ng-if="osoite.row_data.postinumero">
+								                   				<br/>
+								                   				<span i18n="common.Postal_code"></span>: {{osoite.row_data.postinumero}}
+								                   			</span>
+								                   			<span ng-if="osoite.row_data.kuntanimi">
+								                   				<br/>
+								                   				<span i18n="common.County"></span>: {{osoite.row_data.kuntanimi}}
+								                   			</span> 
+								                   		</span>                  		
+								                   	</span>
+								                   	<br/>                   	                    
+								                </span>
+								            </td>                                        
+                                        </tr>                                                                                                                                                            
+                                    </table>
+                                </div>
+                                <!-- Tarkastustutkimuksen lisäystiedot -->
+                                <div class="panel panel-default" ng-if="h.action=='I' && h.table_name=='ark_tarkastus'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>                                                                    
+                                        <tr ng-if="h.row_data.tarkastaja">
+                                            <td>
+                                                <span i18n="ark.Inspector"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastaja}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.aiemmat_tiedot">
+                                            <td>
+                                                <span i18n="ark.Previous_information"></span>
+                                            </td>
+                                            <td>{{h.row_data.aiemmat_tiedot}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.aiemmat_loydot">
+                                            <td>
+                                                <span i18n="ark.Previous_discoveries"></span>
+                                            </td>
+                                            <td>{{h.row_data.aiemmat_loydot}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tarkastusloydot">
+                                            <td>
+                                                <span i18n="ark.Inspection_discoveries"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastusloydot}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.liitteet">
+                                            <td>
+                                                <span i18n="ark.Attachments"></span>
+                                            </td>
+                                            <td>{{h.row_data.liitteet}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tarkastusolosuhteet">
+                                            <td>
+                                                <span i18n="ark.Inspection_circumstances"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastusolosuhteet}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.muuta">
+                                            <td>
+                                                <span i18n="ark.Other_stuff"></span>
+                                            </td>
+                                            <td>{{h.row_data.muuta}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tarkastuksen_syy">
+                                            <td>
+                                                <span i18n="ark.Inspection_reason"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastuksen_syy}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.ymparisto_maasto">
+                                            <td>
+                                                <span i18n="ark.Environment_terrain"></span>
+                                            </td>
+                                            <td>{{h.row_data.ymparisto_maasto}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kohteen_kuvaus">
+                                            <td>
+                                                <span i18n="ark.Arch_target_specifications"></span>
+                                            </td>
+                                            <td>{{h.row_data.kohteen_kuvaus}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.muut_tiedot">
+                                            <td>
+                                                <span i18n="ark.Other_information"></span>
+                                            </td>
+                                            <td>{{h.row_data.muut_tiedot}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kohteen_kunto">
+                                            <td>
+                                                <span i18n="ark.Targets_condition"></span>
+                                            </td>
+                                            <td>{{h.row_data.kohteen_kunto}}</td>
+                                        </tr> 
+                                        <tr ng-if="h.row_data.hoitotarve">
+                                            <td>
+                                                <span i18n="ark.Necessity_for_renovation"></span>
+                                            </td>
+                                            <td>{{h.row_data.hoitotarve}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.suoja_alueeksi">
+                                            <td>
+                                                <span i18n="ark.Protected_area_proposal"></span>
+                                            </td>
+                                            <td>{{h.row_data.suoja_alueeksi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.maankayttohankkeet">
+                                            <td>
+                                                <span i18n="ark.Known_land_usage_plan"></span>
+                                            </td>
+                                            <td>{{h.row_data.maankayttohankkeet}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.sailymisen_asiat">
+                                            <td>
+                                                <span i18n="ark.Preservation_factors"></span>
+                                            </td>
+                                            <td>{{h.row_data.sailymisen_asiat}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kohteen_tiedon_maara">
+                                            <td>
+                                                <span i18n="ark.Target_information_value"></span>
+                                            </td>
+                                            <td>{{h.row_data.kohteen_tiedon_maara}}</td>
+                                        </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                    </table>                                 
+                                </div>
+                                <!-- Tutkimuksen muokkaustiedot -->
+                                <div class="panel panel-default" ng-if="h.action=='U' && h.table_name=='ark_tutkimus'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.tyyppi">
+                                            <td>
+                                                <span i18n="common.Type"></span>
+                                            </td>
+                                            <td>{{h.row_data.tyyppi | namei18n}}</td>
+                                            <td>{{h.changed_fields.tyyppi | namei18n}}</td>
+                                        </tr>                                    
+                                        <tr ng-if="h.changed_fields.nimi">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                            <td>{{h.changed_fields.nimi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.nimi_se">
+                                            <td>
+                                                <span i18n="common.Name_in_swedish"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi_se}}</td>
+                                            <td>{{h.changed_fields.nimi_se}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.tutkimuksen_lyhenne">
+                                            <td>
+                                                <span i18n="ark.Research_abbreviation"></span>
+                                            </td>
+                                            <td>{{h.row_data.tutkimuksen_lyhenne}}</td>
+                                            <td>{{h.changed_fields.tutkimuksen_lyhenne}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.rahoittaja">
+                                            <td>
+                                                <span i18n="ark.Financier"></span>
+                                            </td>
+                                            <td>{{h.row_data.rahoittaja}}</td>
+                                            <td>{{h.changed_fields.rahoittaja}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.kenttatyojohtaja">
+                                            <td>
+                                                <span i18n="ark.Field_work_manager"></span>
+                                            </td>
+                                            <td>{{h.row_data.kenttatyojohtaja}}</td>
+                                            <td>{{h.changed_fields.kenttatyojohtaja}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.alkupvm">
+                                            <td>
+                                                <span i18n="common.Research"></span>: <span i18n="common.Start_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.alkupvm}}</td>
+                                            <td>{{h.changed_fields.alkupvm}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.loppupvm">
+                                            <td>
+                                                <span i18n="common.Research"></span>: <span i18n="common.End_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.loppupvm}}</td>
+                                            <td>{{h.changed_fields.loppupvm}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.kenttatyo_alkupvm">
+                                            <td>
+                                                <span i18n="ark.Field_work"></span>: <span i18n="common.Start_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.kenttatyo_alkupvm}}</td>
+                                            <td>{{h.changed_fields.kenttatyo_alkupvm}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.kenttatyo_loppupvm">
+                                            <td>
+                                                <span i18n="ark.Field_work"></span> <span i18n="common.End_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.kenttatyo_loppupvm}}</td>
+                                            <td>{{h.changed_fields.kenttatyo_loppupvm}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.julkinen">
+                                            <td>
+                                                <span i18n="common.Public"></span>
+                                            </td>
+                                            <td>{{h.row_data.julkinen | trueFalseToText}}</td>
+                                            <td>{{h.changed_fields.julkinen | trueFalseToText}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.valmis">
+                                            <td>
+                                                <span i18n="common.Ready"></span>
+                                            </td>
+                                            <td>{{h.row_data.valmis | trueFalseToText}}</td>
+                                            <td>{{h.changed_fields.valmis | trueFalseToText}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.loyto_paanumero">
+                                            <td>
+                                                <span i18n="ark.Discoveries"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.loyto_paanumero}}</td>
+                                            <td>{{h.changed_fields.loyto_paanumero}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.digikuva_paanumero">
+                                            <td>
+                                                <span i18n="ark.Digital_pictures"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.digikuva_paanumero}}</td>
+                                            <td>{{h.changed_fields.digikuva_paanumero}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.mustavalko_paanumero">
+                                            <td>
+                                                <span i18n="ark.Black_white_negatives"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.mustavalko_paanumero}}</td>
+                                            <td>{{h.changed_fields.mustavalko_paanumero}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.dia_paanumero">
+                                            <td>
+                                                <span i18n="ark.Slide_positives"></span>: <span i18n="common.Main_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.dia_paanumero}}</td>
+                                            <td>{{h.changed_fields.dia_paanumero}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.loyto_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Discoveries"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.loyto_kokoelma | namei18n}}</td>
+                                            <td>{{h.changed_fields.loyto_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.raportti_kokoelma">
+                                            <td>
+                                                <span i18n="common.Reports"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.raportti_kokoelma | namei18n}}</td>
+                                            <td>{{h.changed_fields.raportti_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.kartta_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Maps"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.kartta_kokoelma | namei18n}}</td>
+                                            <td>{{h.changed_fields.kartta_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.valokuva_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Maps"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.valokuva_kokoelma | namei18n}}</td>
+                                            <td>{{h.changed_fields.valokuva_kokoelma | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.nayte_kokoelma">
+                                            <td>
+                                                <span i18n="ark.Samples"></span>: <span i18n="ark.Collections_archives"></span>
+                                            </td>
+                                            <td>{{h.row_data.nayte_kokoelma | namei18n}}</td>
+                                            <td>{{h.changed_fields.nayte_kokoelma | namei18n}}</td>
+                                        </tr>                                                                                                                                                                 
+                                       <tr ng-if="h.changed_fields.kl_koodi">
+                                            <td>
+                                                <span i18n="ark.KL_code"></span>
+                                            </td>
+                                            <td>{{h.row_data.kl_koodi}}</td>
+                                            <td>{{h.changed_fields.kl_koodi}}</td>
+                                        </tr>
+                                       <tr ng-if="h.changed_fields.tiivistelma">
+                                            <td>
+                                                <span i18n="ark.Summary"></span>
+                                            </td>
+                                            <td>{{h.row_data.tiivistelma}}</td>
+                                            <td>{{h.changed_fields.tiivistelma}}</td>
+                                        </tr>
+								        <!-- Kiinteistöt -->
+								        <tr ng-if="(h.children | filter:{table_name:'ark_tutkimus_kiinteistorakennus'}).length > 0">
+								            <td><span i18n="common.Estates"></span></td>
+								            <td>
+								                <span ng-repeat="c in h.children | filter:{table_name:'ark_tutkimus_kiinteistorakennus', action:'D'}">
+								                    <span i18n="common.Property_identifier"></span>: {{c.row_data.kiinteistotunnus}}
+								                    <span ng-if="c.row_data.kiinteisto_nimi">
+								                    	<br>
+								                   		<span i18n="common.Name"></span>: {{c.row_data.kiinteisto_nimi}}
+								                   	</span>
+								                   	<!-- Kiinteistön osoitteet -->
+								                   	<span ng-repeat="osoite in h.children | filter:{table_name:'ark_tutkimus_osoite', action:'D'}">
+								                   		<span ng-if="c.row_data.id == osoite.row_data.ark_tutkimus_kiinteistorakennus_id">
+								                   			<br/>
+								                   			<span i18n="common.Street_address"></span>: {{osoite.row_data.katunimi}}
+								                   			<span ng-if="osoite.row_data.katunumero">
+								                   				<br/>
+								                   				<span i18n="common.Street_number"></span>: {{osoite.row_data.katunumero}}
+								                   			</span>
+								                   			<span ng-if="osoite.row_data.postinumero">
+								                   				<br/>
+								                   				<span i18n="common.Postal_code"></span>: {{osoite.row_data.postinumero}}
+								                   			</span>
+								                   			<span ng-if="osoite.row_data.kuntanimi">
+								                   				<br/>
+								                   				<span i18n="common.County"></span>: {{osoite.row_data.kuntanimi}}
+								                   			</span>                    			                   			                   			
+								                   		</span>
+								                   	</span>
+								                   	<br/>                   	                    
+								                </span>
+								            </td>
+								            <td>
+								                <span ng-repeat="c in h.children | filter:{table_name:'ark_tutkimus_kiinteistorakennus', action:'I'}">
+								                    <span i18n="common.Property_identifier"></span>: {{c.row_data.kiinteistotunnus}}
+								                    <span ng-if="c.row_data.kiinteisto_nimi">
+								                    	<br/>
+								                   		<span i18n="common.Name"></span>: {{c.row_data.kiinteisto_nimi}}
+								                   	</span>
+								                   	<!-- Kiinteistön osoitteet -->
+								                   	<span ng-repeat="osoite in h.children | filter:{table_name:'ark_tutkimus_osoite', action:'I'}">
+								                   		<span ng-if="c.row_data.id == osoite.row_data.ark_tutkimus_kiinteistorakennus_id">
+								                   			<br/>
+								                   			<span i18n="common.Street_address"></span>: {{osoite.row_data.katunimi}}
+								                   		
+								                   			<span ng-if="osoite.row_data.katunumero">
+								                   				<br/>
+								                   				<span i18n="common.Street_number"></span>: {{osoite.row_data.katunumero}}
+								                   			</span>
+								                   			<span ng-if="osoite.row_data.postinumero">
+								                   				<br/>
+								                   				<span i18n="common.Postal_code"></span>: {{osoite.row_data.postinumero}}
+								                   			</span>
+								                   			<span ng-if="osoite.row_data.kuntanimi">
+								                   				<br/>
+								                   				<span i18n="common.County"></span>: {{osoite.row_data.kuntanimi}}
+								                   			</span> 
+								                   		</span>                  		
+								                   	</span>
+								                   	<br/>                   	                    
+								                </span>
+								            </td>
+								        </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                                    </table>
+                                </div>
+                                <!-- Tarkastuksen muokkaustiedot -->
+                                <div class="panel panel-default" ng-if="h.action=='U' && h.table_name=='ark_tarkastus'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.tarkastaja">
+                                            <td>
+                                                <span i18n="ark.Inspector"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastaja}}</td>
+                                            <td>{{h.changed_fields.tarkastaja}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.aiemmat_tiedot">
+                                            <td>
+                                                <span i18n="ark.Previous_information"></span>
+                                            </td>
+                                            <td>{{h.row_data.aiemmat_tiedot}}</td>
+                                            <td>{{h.changed_fields.aiemmat_tiedot}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.aiemmat_loydot">
+                                            <td>
+                                                <span i18n="ark.Previous_discoveries"></span>
+                                            </td>
+                                            <td>{{h.row_data.aiemmat_loydot}}</td>
+                                            <td>{{h.changed_fields.aiemmat_loydot}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.tarkastusloydot">
+                                            <td>
+                                                <span i18n="ark.Inspection_discoveries"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastusloydot}}</td>
+                                            <td>{{h.changed_fields.tarkastusloydot}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.liitteet">
+                                            <td>
+                                                <span i18n="ark.Attachments"></span>
+                                            </td>
+                                            <td>{{h.row_data.liitteet}}</td>
+                                            <td>{{h.changed_fields.liitteet}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.tarkastusolosuhteet">
+                                            <td>
+                                                <span i18n="ark.Inspection_circumstances"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastusolosuhteet}}</td>
+                                            <td>{{h.changed_fields.tarkastusolosuhteet}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.muuta">
+                                            <td>
+                                                <span i18n="ark.Other_stuff"></span>
+                                            </td>
+                                            <td>{{h.row_data.muuta}}</td>
+                                            <td>{{h.changed_fields.muuta}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.tarkastuksen_syy">
+                                            <td>
+                                                <span i18n="ark.Inspection_reason"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkastuksen_syy}}</td>
+                                            <td>{{h.changed_fields.tarkastuksen_syy}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.ymparisto_maasto">
+                                            <td>
+                                                <span i18n="ark.Environment_terrain"></span>
+                                            </td>
+                                            <td>{{h.row_data.ymparisto_maasto}}</td>
+                                            <td>{{h.changed_fields.ymparisto_maasto}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.kohteen_kuvaus">
+                                            <td>
+                                                <span i18n="ark.Arch_target_specifications"></span>
+                                            </td>
+                                            <td>{{h.row_data.kohteen_kuvaus}}</td>
+                                            <td>{{h.changed_fields.kohteen_kuvaus}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.muut_tiedot">
+                                            <td>
+                                                <span i18n="ark.Other_information"></span>
+                                            </td>
+                                            <td>{{h.row_data.muut_tiedot}}</td>
+                                            <td>{{h.changed_fields.muut_tiedot}}</td>
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

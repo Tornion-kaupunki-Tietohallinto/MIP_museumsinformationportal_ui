@@ -1,0 +1,6 @@
+<ui-select multiple ng-model="lista.kasittelyt" theme="bootstrap" name="kasittely"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'ark.Treatments'}">{{$item.kasittelytunnus}}</ui-select-match> 
+    <ui-select-choices repeat="kasittely.id as kasittely in kasittelyt | filter: $select.search track by kasittely.id">
+       <span ng-bind-html="kasittely.kasittelytunnus | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

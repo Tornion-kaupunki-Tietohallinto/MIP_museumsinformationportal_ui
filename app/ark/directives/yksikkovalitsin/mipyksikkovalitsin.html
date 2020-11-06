@@ -1,0 +1,28 @@
+<div class="col-md-12">
+	<div class="form-group">
+	   <label i18n="common.Units" class="control-label"></label>
+	    <ui-select multiple 
+	        ng-model="valitutYksikot"  
+	        theme="bootstrap" 
+	        name="yksikot"
+	        on-select="addYksikko($item)"
+	        on-remove="deleteYksikko($item, valitutYksikot); addItemBackToList($item, yhakutulos);"
+            ng-disabled="dis"> 
+	        <ui-select-match data-i18n-attr="{placeholder: 'ark.Search_units'}">{{$item.yksikkotunnus}}</ui-select-match> 
+	        <ui-select-choices 
+		        repeat="yksikko in yhakutulos track by $index"
+		        refresh="yksikkoHaku($select.search)"
+		        refresh-delay="0">
+	          <div>
+	              <span ng-bind-html="yksikko.yksikkotunnus | highlight: $select.search"></span>
+	          </div>
+	        </ui-select-choices> 
+	    </ui-select>        
+	</div>
+</div>
+<span class="help-block has-error"
+    ng-show="valitutYksikot.length === 0 && linkedNayteCount === 0 && linkedLoytoCount === 0 && req === true">
+     <span ng-show="mode === 'kartta'" data-i18n="ark.must_be_linked" data-type="{{ 'common.Map' | i18n }}"></span>
+    <span ng-show="mode === 'kuva'" data-i18n="ark.must_be_linked" data-type="{{ 'common.Image' | i18n }}"></span>
+    <span ng-show="mode === 'tiedosto'" data-i18n="ark.must_be_linked" data-type="{{ 'common.File' | i18n }}"></span>
+</span>

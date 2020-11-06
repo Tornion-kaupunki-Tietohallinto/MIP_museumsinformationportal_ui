@@ -1,0 +1,134 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Architects"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="suunnittelija in rakennus.properties.suunnittelijat">
+                <fieldset>
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suunnittelija_{{$index}}_id.$invalid && form.suunnittelija_{{$index}}_id.$touched }">
+                        <label for="suunnittelija_{{$index}}_id" class="col-sm-3 control-label">
+                            <span i18n="common.Architect"></span>
+                            *
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                            <ui-select 
+                                    ng-model="suunnittelija.suunnittelija"
+                                    theme="bootstrap"
+                                    sortable="true"
+                                    close-on-select="true">                                    
+                                    <ui-select-match data-i18n-attr="{placeholder: 'common.Select_or_type_to_search'}">{{$select.selected.properties.sukunimi}} {{$select.selected.properties.etunimi}}                                
+                                    </ui-select-match>
+                                    <ui-select-choices 
+                                        repeat="suunnittelija in suunnittelijat track by suunnittelija.properties.id"
+                                        refresh="getSuunnittelijat($select.search)"
+                                        refresh-delay="250">
+                                        <div>
+                                            <span ng-bind-html="suunnittelija.properties.kokonimi | highlight: $select.search"></span>
+                                        </div>                                                                                
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="help-block"
+                                    ng-show="form.suunnittelija_{{$index}}_id.$invalid && form.suunnittelija_{{$index}}_id.$touched">
+                                    <span data-i18n="common.mandatory_value"
+                                        data-field="{{ 'common.Architect' | i18n }}"></span>
+                                </span>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                        ng-click="createSuunnittelija($index)"
+                                        style="height: 2.3em;"                                        
+                                        i18n="designer.Create_new_designer"></button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suunnittelija_{{$index}}_tyyppi.$invalid && form.suunnittelija_{{$index}}_tyyppi.$touched }">
+                        <label for="suunnittelija_{{$index}}_tyyppi" class="col-sm-3 control-label">
+                            <span i18n="common.Type"></span>
+                            *
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="suunnittelija_{{$index}}_tyyppi"
+                                data-i18n-attr="{placeholder: 'common.Type'}"
+                                ng-model="suunnittelija.suunnittelijatyyppi"
+                                ng-options="t as t.nimi_fi for t in suunnittelijatyypit track by t.id"
+                                ng-required="true">
+                            </select>
+                            <span class="help-block"
+                                ng-show="form.suunnittelija_{{$index}}_tyyppi.$invalid && form.suunnittelija_{{$index}}_tyyppi.$touched">
+                                <span data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Type' | i18n }}"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suunnittelija_{{$index}}_suunnitteluvuosi_alku.$invalid && form.suunnittelija_{{$index}}_suunnitteluvuosi_alku.$touched }">
+                        <label for="suunnittelija_{{$index}}_suunnitteluvuosi_alku"
+                            class="col-sm-3 control-label">
+                            <span i18n="designer.Design_years"></span>
+                        </label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                    name="suunnittelija_{{$index}}_suunnitteluvuosi_alku"
+                                    ng-model="suunnittelija.suunnitteluvuosi_alku"
+                                    ng-required="false" ng-readonly="false" maxlength="4"
+                                    minlength="4" ng-maxlength="4" ng-minlength="4" positiveinteger spellcheck="false" autocomplete="off">
+                                <span class="input-group-addon">-</span>
+                                <input type="text" class="form-control"
+                                    name="suunnittelija_{{$index}}_suunnitteluvuosi_loppu"
+                                    ng-model="suunnittelija.suunnitteluvuosi_loppu"
+                                    ng-required="false" ng-readonly="false" maxlength="4"
+                                    minlength="4" ng-maxlength="4" ng-minlength="4" positiveinteger spellcheck="false" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suunnittelija_{{$index}}_lisatieto.$invalid && form.suunnittelija_{{$index}}_lisatieto.$touched }">
+                        <label for="suunnittelija_{{$index}}_lisatieto"
+                            class="col-sm-3 control-label">
+                            <span i18n="common.Additional_information"></span>
+                        </label>
+                        <div class="col-sm-9">
+                            <textarea rows="3" class="form-control"
+                                name="suunnittelija_{{$index}}_lisatieto"
+                                data-i18n-attr="{placeholder: 'common.Additional_information'}"
+                                ng-model="suunnittelija.lisatieto" ng-required="false" spellcheck="false" autocomplete="off"></textarea>
+                            <span class="help-block"
+                                ng-show="form.suunnittelija_{{$index}}_lisatieto.$invalid && form.suunnittelija_{{$index}}_lisatieto.$touched">
+                                <span data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Additional_information' | i18n }}"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="deleteSuunnittelija($index)"
+                                class="btn btn-danger pull-right">
+                                <span i18n="common.Delete"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+            <li class="list-group-item">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="addSuunnittelija()" class="btn btn-success pull-right">
+                                <span i18n="common.Add"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+{
+	"No_view_permission" : "Ei katseluoikeutta alueisiin",
+	"Area_count": "Alueita",
+    "Opening_inventoryproject_failed": "Inventointiprojektin avaaminen epäonnistui",
+    "Delete_failed": "Alueen poisto epäonnistui",
+    "Save_failed": "Alueen tallennus epäonnistui"
+}

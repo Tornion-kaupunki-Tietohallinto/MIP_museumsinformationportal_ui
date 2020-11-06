@@ -1,0 +1,9 @@
+<ui-select 
+    ng-model="kttModel.kohdetyyppitarkenteet"
+    multiple="true"
+    ng-required="false">
+    <ui-select-match data-i18n-attr="{placeholder: 'ark.Type_extension'}">{{$item | namei18n}}</ui-select-match>
+    <ui-select-choices repeat="tyyppitarkenne.id as tyyppitarkenne in kohdetyyppitarkenteet | propInArray:'ark_kohdetyyppi_id':tyypit">
+        <div ng-bind-html="tyyppitarkenne | namei18n | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

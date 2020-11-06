@@ -1,0 +1,287 @@
+    <div class="modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.User"></span>
+                    {{user.etunimi}} {{user.sukunimi}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form name="formUserSettings" class="form-horizontal" novalidate>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.firstname.$invalid && formUserSettings.firstname.$touched }">
+                                <label for="firstname" class="col-sm-3 control-label">
+                                    <span i18n="common.Firstname"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control temporaryReadonly" name="firstname"
+                                        data-i18n-attr="{placeholder: 'common.Firstname'}"
+                                        ng-model="user.etunimi" ng-maxlength="30" ng-required="true" spellcheck="false" readonly temp-readonly>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.firstname.$invalid && formUserSettings.firstname.$touched">
+                                        <span i18n="common.Firstname_is_mandatory_value"></span>
+                                    </span>
+                                    <span class="help-block" ng-show="formUserSettings.firstname.$error.maxlength">
+                                        <span data-i18n="error.User_firstname_length_error"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.lastname.$invalid && formUserSettings.lastname.$touched }">
+                                <label for="lastname" class="col-sm-3 control-label">
+                                    <span i18n="common.Lastname"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control temporaryReadonly" name="lastname"
+                                        data-i18n-attr="{placeholder: 'common.Lastname'}"
+                                        ng-model="user.sukunimi" ng-required="true" ng-maxlength="30" spellcheck="false" readonly temp-readonly>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.lastname.$invalid && formUserSettings.lastname.$touched">
+                                        <span i18n="common.Lastname_is_mandatory_value"></span>
+                                    </span>
+                                    <span class="help-block" ng-show="formUserSettings.lastname.$error.maxlength">
+                                        <span data-i18n="error.User_lastname_length_error"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.email.$invalid && formUserSettings.email.$touched }">
+                                <label for="email" class="col-sm-3 control-label">
+                                    <span i18n="common.Email"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control temporaryReadonly" name="email"
+                                        data-i18n-attr="{placeholder: 'common.Email'}"
+                                        ng-model="user.sahkoposti" ng-required="true" ng-maxlength="100" spellcheck="false" readonly temp-readonly>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.email.$invalid && formUserSettings.email.$touched">
+                                        <span i18n="common.Email_is_mandatory_value"></span>
+                                    </span>
+                                    <span class="help-block" ng-show="formUserSettings.email.$error.maxlength">
+                                        <span data-i18n="error.Email_length_error"></span>
+                                    </span>
+                                </div>
+                            </div>                           
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.active.$invalid && formUserSettings.active.$touched }">
+                                <label for="active" class="col-sm-3 control-label">
+                                    <span data-i18n="common.Active"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <select name="role" class="form-control"
+                                        data-ng-model="user.aktiivinen" ng-required="true" ng-options="o.value as o.label for o in activeOptions">                                                                             
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.role.$invalid && formUserSettings.role.$touched }">
+                                <label for="role" class="col-sm-3 control-label">
+                                    <span data-i18n="common.Role"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <select name="role" class="form-control"
+                                        data-ng-model="user.rooli" ng-required="true"
+                                        ng-disabled="currentUserRole!='pääkäyttäjä' && currentUserArkRole != 'pääkäyttäjä'">
+                                        <option></option>
+                                        <option value="katselija" data-i18n="user.Role_watcher"></option>
+                                        <option value="inventoija"
+                                            data-i18n="user.Role_inventory_auditor"></option>
+                                        <option value="tutkija" data-i18n="user.Role_researcher"></option>
+                                        <option value="pääkäyttäjä" data-i18n="user.Role_admin"></option>
+                                    </select>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.role.$invalid && formUserSettings.role.$touched">
+                                        <span i18n="user.Role_is_mandatory_field"></span>
+                                    </span>
+                                </div>
+                            </div>
+                             <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.arkRole.$invalid && formUserSettings.arkRole.$touched }">
+                                <label for="arkRole" class="col-sm-3 control-label">
+                                    <span data-i18n="common.Archeology_role"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <select name="arkRole" class="form-control"
+                                        data-ng-model="user.ark_rooli" ng-required="true"
+                                        ng-disabled="currentUserRole!='pääkäyttäjä' && currentUserArkRole != 'pääkäyttäjä'">
+                                        <option></option>
+                                        <option value="katselija" data-i18n="user.Role_watcher"></option>
+                                        <option value="tutkija" data-i18n="user.Role_researcher"></option>
+                                        <option value="pääkäyttäjä" data-i18n="user.Role_admin"></option>
+                                    </select>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.arkRole.$invalid && formUserSettings.arkRole.$touched">
+                                        <span i18n="user.Role_is_mandatory_field"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.organization.$invalid && formUserSettings.organization.$touched }">
+                                <label for="organization" class="col-sm-3 control-label">
+                                    <span i18n="common.Organization"></span>
+                                    <span>*</span>
+                                </label>
+                                {{done}}
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control temporaryReadonly" name="organization"
+                                        data-i18n-attr="{placeholder: 'common.Organization'}"
+                                        ng-model="user.organisaatio" ng-required="true" ng-maxlength="150" spellcheck="false" readonly temp-readonly>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.organization.$invalid && formUserSettings.organization.$touched">
+                                        <span i18n="common.Organization_is_mandatory_value"></span>
+                                    </span>
+                                    <span class="help-block" ng-show="formUserSettings.organization.$error.maxlength">
+                                        <span data-i18n="error.Organization_length_error"></span>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.language.$invalid && formUserSettings.language.$touched }">
+                                <label for="language" class="col-sm-3 control-label">
+                                    <span i18n="common.Default_language"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="language"
+                                        ng-model="user.kieli" ng-required="true">
+                                        <option value="fi" i18n="common.Finnish"></option>
+                                        <option value="se" i18n="common.Swedish"></option>
+                                        <!-- 	<option
+											value="en"
+											i18n="common.English"></option> -->
+                                    </select>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.language.$invalid && formUserSettings.language.$touched">
+                                        <span i18n="common.Language_is_mandatory_value"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.karttaVanhatvarit.$invalid && formUserSettings.karttaVanhatvarit.$touched }">
+                                <label for="karttaVanhatvarit" class="col-sm-3 control-label">
+                                    <span data-i18n="common.Use_old_map_colors"></span>
+                                    <span>*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <select name="karttaVanhatvarit" class="form-control"
+                                        data-ng-model="user.vanhatKarttavarit" ng-required="true" ng-options="o.value as o.label for o in activeOptions">                                                                             
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tekijanoikeus" class="col-sm-3 control-label">
+                                    <span data-i18n="common.Copyright_clause"></span>
+                                </label>
+                                <div class="col-sm-9">
+						            <textarea rows="3" class="form-control" style="min-height: 72px"
+						            	name="tekijanoikeus"
+						            	data-i18n-attr="{placeholder: 'common.User_copyright_clause'}" 
+						            	ng-model="user.tekijanoikeuslauseke">
+						            </textarea>                                    
+                                </div>
+                            </div>                            
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.password.$invalid && formUserSettings.password.$dirty }">
+                                <label for="password" class="col-sm-3 control-label">
+                                    <span i18n="common.Password"></span>
+                                    <span ng-if="!user.id">*</span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control temporaryReadonly" name="password"
+                                        ng-model="user.salasana" id="password"
+                                        ng-required="!user.id" ng-maxlength="60" spellcheck="false" ng-change="pswChanged()" readonly temp-readonly>
+                                    <span class="help-block">
+                                        <span
+                                            i18n="common.Fill_password_only_if_you_want_to_change_it"></span>
+                                    </span>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.password.$invalid && formUserSettings.password.$touched && formUserSettings.password.$error.pwvalid">
+                                        <span i18n="common.Invalid_password"></span>
+                                    </span>
+                                    <span class="help-block" ng-show="formUserSettings.password.$error.maxlength">
+                                        <span data-i18n="error.Password_length_error"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-class="{'has-error': formUserSettings.passwordConfirmation.$error.pwmatch }">
+                                <label for="passwordConfirmation" class="col-sm-3 control-label">
+                                    <span i18n="common.PasswordConfirmation"></span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="password" ng-disabled="!user.salasana"
+                                        class="form-control" name="passwordConfirmation"
+                                        id="passwordConfirmation" ng-maxlength="60"
+                                        ng-model="user.salasanaUudelleen" spellcheck="false" ng-change="psw2Changed()" readonly temp-readonly>
+                                    <span class="help-block"
+                                        ng-show="formUserSettings.passwordConfirmation.$error.pwmatch">
+                                        <span i18n="common.Passwords_dont_match"></span>
+                                    </span>
+                                    <span class="help-block" ng-show="formUserSettings.passwordConfirmation.$error.maxlength">
+                                        <span data-i18n="error.Password_confirmation_length_error"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="created" class="col-sm-3 control-label">
+                                    <span i18n="common.Created"></span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="timestamp" class="form-control" name="created"
+                                        ng-model="user.luotu" ng-readonly="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="modified" class="col-sm-3 control-label">
+                                    <span i18n="common.Modified"></span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="timestamp" class="form-control" name="modified"
+                                        ng-model="user.muokattu" ng-readonly="true">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+            <div class="pull-left" mip-entiteettiselain etype="'kayttaja'" eid="user.id" close="close()" ></div>
+            
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+                        <span i18n="common.Actions"></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="" ng-click="deleteUser(modalNameId)" class="bg-danger" 
+                               i18n="common.Delete"                                
+                               ng-show="showDelete()"></a>
+                        </li>
+                    
+                        <li role="separator" class="divider" data-ng-if="showDelete()"></li>
+                        
+                        
+                        <li><a href="" ng-click="close()"
+                               i18n="common.Cancel"></a>
+                        </li>    
+                        
+                        <li role="separator" class="divider"></li>
+                        
+                        <li ng-class="{ 'disabled' : formUserSettings.$invalid }"><a href="" ng-click="formUserSettings.$invalid || saveUserSettings(modalNameId)" class="bg-success" 
+                               i18n="common.Save"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

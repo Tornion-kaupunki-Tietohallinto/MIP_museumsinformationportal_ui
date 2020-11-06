@@ -1,0 +1,107 @@
+
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="sample.Sample"></span>
+                    <span> : {{ vm.nayte.properties.luettelointinumero }}</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="form"
+                    ng-class="{'form-horizontal-tight':!vm.edit}" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <div class="col-md-12" ng-include="'ark/naytteet/partials/perustiedot.html'"></div>
+                            <div class="col-md-12" ng-include="'ark/naytteet/partials/kuvaustiedot.html'"></div>
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <!-- RIGHT COLUMN -->
+							<div class="col-md-12" ng-include="'ark/naytteet/partials/tila.html'"></div>
+							<div class="col-md-12" ng-include="'ark/naytteet/partials/tunnistekuva.html'" ng-show="!vm.edit && vm.tunnistekuva"></div>
+                            <mip-luetteloidut-kuvat ng-show="!vm.edit && vm.images.length > 0" vm="vm"></mip-luetteloidut-kuvat>
+                            <div class="col-md-12" ng-include="'ark/naytteet/partials/muut_kuvat.html'" ng-show="!vm.edit && vm.otherImages.length > 0"></div>
+                            <div class="col-md-12" ng-include="'ark/naytteet/partials/kartat.html'" ng-show="!vm.edit"></div>
+                            <div class="col-md-12" ng-include="'ark/naytteet/partials/tiedostot_view.html'"></div>
+							<div class="col-md-12" ng-include="'ark/naytteet/partials/tapahtumat.html'"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <div class="pull-left" mip-entiteettiselain etype="'nayte'" eid="vm.nayte.properties.id" close="vm.close()" ng-show="!vm.edit && !vm.disableButtons"></div>
+                <div class="mip-footer-btn-group">
+					<button
+						type="button"
+						class="btn btn-small mip-transparent"
+						data-placement="top"
+						bs-popover
+						data-template-url="ark/naytteet/partials/popover-migraatiodata.html"
+						ng-show="vm.nayte.properties.migraatiodata">
+						<span class="fa fa-archive" aria-hidden="true"></span>
+					</button>
+					<button type="button"
+					    class="btn btn-default"
+					    ng-click="vm.avaaKonservointi()"
+                        ng-if="vm.konservointi_oikeus && !vm.edit">
+					    <span i18n="ark.Conservation"></span>
+					</button>
+					<button type="button"
+					    class="btn btn-default"
+					    ng-if="!vm.edit && vm.permissions.luonti && vm.yksikko"
+					    ng-click="vm.uusiNayteYksikolle()">
+					    <span i18n="sample.Add_sample" data-i18n-attr="{title: 'ark.Same_unit'}" ></span> ({{vm.yksikko.yksikkotunnus}})
+					</button>
+					<button type="button"
+						class="btn btn-default"
+					    ng-class="{ disabled: form.$invalid || vm.disableButtons}"
+					    ng-if="vm.permissions.muokkaus && !vm.edit"
+					    ng-click="(form.$invalid || vm.disableButtons || vm.editMode())">
+					    <span i18n="common.Edit"></span>
+					</button>
+					<button type="button"
+						class="btn btn-success"
+					    ng-class="{ disabled: form.$invalid || vm.disableButtons}"
+					    ng-if="vm.permissions.muokkaus && vm.edit"
+					    ng-click="(vm.disableButtons || vm.save())">
+					    <span i18n="common.Save"></span>
+					</button>
+	                <div class="dropup">
+	                    <button class="btn btn-default dropdown-toggle" ng-class="{ 'disabled' : vm.disableButtons }" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                        <span i18n="common.Actions"></span> <span class="caret"></span>
+	                    </button>
+	                    <ul class="dropdown-menu dropdown-menu-right">
+	                        <li><a href="" ng-click="vm.avaaRontgenkuva()"
+                                   i18n="ark.Add_XRay_image" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons"></a>
+                            </li>
+                            <li><a href="" ng-click="vm.lisaaTiedosto()"
+                                   i18n="common.Add_file" ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons"></a>
+                            </li>
+					        <li><a href="" ng-click="vm.addImage(false)"
+					               i18n="common.Add_image"
+					               data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons"></a>
+					        </li>
+	                        <li><a href="" ng-click="vm.addImage(true)"
+                                   i18n="ark.Add_image_to_list" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons && vm.tutkimus.ark_loyto_kokoelmalaji_id == '2'"></a>
+                            </li>
+                            <li><a href="" ng-click="vm.addKartta()"
+                                   i18n="ark.Add_map_to_list" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons && vm.tutkimus.ark_loyto_kokoelmalaji_id == '2'"></a>
+                            </li>
+                            <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.edit && !vm.disableButtons"></li>
+	                        <li><a href="" ng-click="vm.close()"
+	                               i18n="common.Close"
+	                               ng-show="!vm.edit || vm.create && vm.edit"></a>
+	                        </li>
+	                        <li ng-class="{ 'disabled' : vm.disableButtons }"><a href="" ng-click="vm.disableButtons || vm._cancelEdit()"
+	                               i18n="common.Cancel_edit"
+	                               ng-show="vm.edit && !vm.create"></a>
+	                        </li>
+	                    </ul>
+	                </div>
+				</div>
+            </div>
+        </div>
+        <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

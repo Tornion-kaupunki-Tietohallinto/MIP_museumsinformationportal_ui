@@ -1,0 +1,20 @@
+<!-- Muut tiedot - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#perustelutYhteenvetoPanel{{modalId}}">
+		<h4 class="panel-title">
+		    <span data-i18n="common.Summary"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+    <div id="perustelutYhteenvetoPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="form-group"
+            ng-if="kiinteisto.properties.perustelut_yhteenveto.length > 0">
+            <label class="col-sm-3 control-label"> <span
+                i18n="common.Summary"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static mip-multiline">{{kiinteisto.properties.perustelut_yhteenveto}}</p>
+            </div>
+        </div>
+	</div>
+</div>

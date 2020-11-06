@@ -1,0 +1,13 @@
+{
+	"Save_ok": "Porrashuoneen %name tiedot tallennettu",
+	"Deleted": "Porrashuone poistettu",
+	"Delete_fail": "Porrashuoneen poisto epäonnistui",
+	"Getting_staircases_failed" : "Porrashuoneita ei löytynyt",
+	"Getting_staircase_failed" : "Porrashuoneen haku epäonnistui",
+	"Save_failed" : "Porrashuoneen tallennus epäonnistui",
+	"Creation_ok" : "Uusi porrashuone luotu onnistuneesti",
+	"Creation_fail" : "Porrashuoneen luonti epäonnistui",
+	"No_view_permission" : "Ei katseluoikeutta porrashuoneisiin",
+	"Getting_staircasetype_options_failed" : "Porrashuonetyyppien haku epäonnistui",
+	"Getting_estate_failed": "Kiinteistön tietojen haku epäonnistui"
+}

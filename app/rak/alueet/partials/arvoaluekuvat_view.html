@@ -1,0 +1,31 @@
+<!-- Kuvat, katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#kuvaPanel{{modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="valuearea.Valuearea_images"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="kuvaPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group" data-ng-model="arvoalueImages">
+                    <li class="list-group-item col-md-3 mip-image-item" data-ng-repeat="image in arvoalueImages">
+                        <div class="col-md-12">
+                            <img ng-if="image.properties.url_small" class="img-responsive mip-image-thumbnail"
+                                ng-src="{{image.properties.url_tiny}}" alt="{{image.properties.otsikko}}"
+                                ng-click="openImage(image, 'arvoalue')" > 
+                            <img
+                                ng-if="image.properties.url_small==''"  class="img-responsive mip-image-thumbnail"
+                                ng-src="/resources/images/kuva_placeholder.png" alt="..."
+                                ng-click="openImage(image, 'arvoalue')">                            
+                        </div>
+                        <div class="col-md-12 text-center mip-image-caption">
+                            <span title="{{image.properties.otsikko}}">{{image.properties.otsikko}} </span>                                
+                        </div>                       
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

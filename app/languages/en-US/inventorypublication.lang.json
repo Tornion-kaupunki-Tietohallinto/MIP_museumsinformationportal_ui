@@ -1,0 +1,10 @@
+{
+	"Inventory_publication_saved_successfully" : "Inventory publication %name saved successfully",
+	"Inventory_publication_delete_failed": "Inventory publication delete failed",
+	"No_view_permission" : "You don't have permission to view inventory publications",	
+	"Save_failed": "Saving the inventory publication failed",
+	"Inventory_publication_deleted": "Inventory project %name deleted successfully",
+	"Getting_updated_data_failed": "Getting the modified data failed. Please try reopening the view",
+	"Inventoryproject_or_county_is_mandatory": "Inventoryproject or county is mandatory value",
+	"Unallowed_special_characters_in_name": "Only special characters - and _ are allowed."
+}

@@ -1,0 +1,13 @@
+
+<div class="form-group">
+    <label for="karttatyyppi" class="col-sm-3 control-label">
+        <span i18n="common.Type"></span><span ng-show="required">*</span>
+    </label>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <select class="form-control" name="karttatyyppi" ng-model="karttatyyppi" ng-required="required" ng-disabled="dis"
+            ng-options="karttatyyppi as karttatyyppi.tyyppi for karttatyyppi in karttatyypit track by karttatyyppi.id"
+            focus-me="focusInput">
+            <option value=""></option>
+        </select>
+    </div>
+</div>

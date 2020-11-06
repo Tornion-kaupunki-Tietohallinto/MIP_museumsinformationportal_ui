@@ -1,0 +1,230 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default panel-collapsible table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> :
+                            {{inventointiprojektitTable.total()}} <span i18n="common.Shown"></span>
+                            : {{searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse form-horizontal collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
+                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="clearSearchFilter()"
+                                    data-i18n-attr="{title: 'common.Clear_filter'}">
+                                    <span class="fa fa-ban"></span>
+                                </button>
+                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="refreshTable()"
+                                    data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                    <span class="fa fa-refresh"></span>
+                                </button>    
+                                                            
+                                <button type="button"
+                                    data-ng-show="showCreateNewButton"
+                                    class="btn btn-success"
+                                    id="btn-create" ng-click="selectInventointiprojekti()"
+                                    data-i18n-attr="{title: 'common.Add_inventoryproject'}">
+                                    <span class="fa fa-plus"></span>
+                                </button>
+                                
+                            </div>
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                                <div class="form-group col-md-3">                                   
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showInventointiprojektiNimiCol" ng-change="saveColVisibility('showInventointiprojektiNimiCol', colVisibilities.showInventointiprojektiNimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>   
+                                            <input type="text" class="form-control" name="nimi"
+                                                ng-model="inventointiprojektitTable.filter().properties.nimi"
+                                                data-i18n-attr="{placeholder: 'common.Inventory_project'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="form-group col-md-3">                                    
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showInventointiaikaCol" ng-change="saveColVisibility('showInventointiaikaCol', colVisibilities.showInventointiaikaCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                                <input bs-datepicker data-date-format="dd.MM.yyyy"
+                                                    model-date-format="yyyy-MM-dd" data-autoclose="1"
+                                                    date-type="string" start-week="1"
+                                                    class="form-control" name="alkupvm"
+                                                    ng-model="inventointiprojektitTable.filter().properties.inventointiaika_aloitus"
+                                                    data-i18n-attr="{placeholder: 'common.Inventory_period_start'}">
+                                                    <span class="input-group-addon">-</span>
+                                                <input bs-datepicker data-date-format="dd.MM.yyyy"
+                                                    model-date-format="yyyy-MM-dd" data-autoclose="1"
+                                                    date-type="string" start-week="1"
+                                                    class="form-control" name="loppupvm"
+                                                    ng-model="inventointiprojektitTable.filter().properties.inventointiaika_lopetus"
+                                                    data-i18n-attr="{placeholder: 'common.Inventory_period_end'}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showToimeksiantajaCol" ng-change="saveColVisibility('showToimeksiantajaCol', colVisibilities.showToimeksiantajaCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                            <input type="text" class="form-control"
+                                                name="toimeksiantaja"
+                                                ng-model="inventointiprojektitTable.filter().properties.toimeksiantaja"
+                                                data-i18n-attr="{placeholder: 'common.Mandator'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">                    
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showInventointiprojektityyppiCol" ng-change="saveColVisibility('showInventointiprojektityyppiCol', colVisibilities.showInventointiprojektityyppiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                                             
+                                        	<ui-select ng-model="inventointiprojektitTable.filter().properties.inventointiprojektityyppi"
+    											name="tyyppi" theme="bootstrap" multiple="true"
+    											ng-required="false"
+    											on-remove="addItemBackToList($item, inventointiprojektityyppiOptions)"
+                                                spellcheck="false">
+    										<ui-select-match data-i18n-attr="{placeholder: 'common.Type'}">{{$item | namei18n}}</ui-select-match>
+    										<ui-select-choices
+    											repeat="tyyppi.id as tyyppi in inventointiprojektityyppiOptions | filter: {'nimi_fi': $select.search}">
+    										<div ng-bind-html="tyyppi | namei18n | highlight: $select.search">
+												</div>
+    										</ui-select-choices> </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">                    
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showInventointiprojektilajiCol" ng-change="saveColVisibility('showInventointiprojektilajiCol', colVisibilities.showInventointiprojektilajiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                                             
+                                            <ui-select ng-model="inventointiprojektitTable.filter().properties.inventointiprojektilaji"
+                                                name="laji" theme="bootstrap" multiple="true"
+                                                ng-required="false"
+                                                on-remove="addItemBackToList($item, inventointiprojektilajiOptions)"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Kind'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="laji.id as laji in inventointiprojektilajiOptions | filter: {'nimi_fi': $select.search}">
+                                            <div ng-bind-html="laji | namei18n | highlight: $select.search">
+                                                </div>
+                                            </ui-select-choices> </ui-select>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">         
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showAddedByCol" ng-change="saveColVisibility('showAddedByCol', colVisibilities.showAddedByCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                       
+                                            <ui-select 
+                                                ng-model="inventointiprojektitTable.filter().properties.luoja"
+                                                name="luoja"
+                                                spellcheck="false">
+                                                <ui-select-match 
+                                                    data-i18n-attr="{placeholder: 'common.Created_by'}"
+                                                    allow-clear="true">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}</ui-select-match>
+                                                <ui-select-choices                                               
+                                                    group-by="'tyyppi'"
+                                                    repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                    refresh="getKayttajat($select.search)"
+                                                    refresh-delay="250">
+                                                    <div>                                                                
+                                                        <span
+                                                            ng-bind-html="kayttaja.etunimi | highlight: $select.search">
+                                                        </span>
+                                                        <span
+                                                            ng-bind-html="kayttaja.sukunimi | highlight: $select.search">
+                                                        </span>
+                                                    </div>
+                                                </ui-select-choices> 
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <!-- 
+								<div class="form-group col-md-4">
+									<div class="col-md-12">
+										<input
+											type="text" class="form-control" name="inventoija"
+											ng-model="inventointiprojektitTable.filter().properties.inventoija"
+											data-i18n-attr="{placeholder: 'common.Inventor'}" spellcheck="false" autocomplete="off">
+									</div>
+								</div>
+                                 -->
+                                <!-- 	<div class="form-group col-md-3">
+											<label
+												for="kyla"
+												class="col-md-12"><span i18n="common.Village"></span></label>
+											<div class="col-md-12">
+												<input
+													type="text"
+													class="form-control"
+													name="kyla"
+													placeholder="TODO"
+													ng-model="inventointiprojektitTable.filter().properties.kyla">
+											</div>
+										</div>-->
+                            </div>                           
+                        </div>
+                    </div>
+                    <table ng-table="inventointiprojektitTable"
+                        template-pagination="pages/templates/table-pagination.html"
+                        class="table table-striped table-bordered" show-filter="false">
+                        <tr ng-repeat="inventointiprojekti in $data" style="cursor: pointer"
+                            ng-click="selectInventointiprojekti(inventointiprojekti)">                            
+                            <td data-title="getColumnName('Name')" ng-if="colVisibilities.showInventointiprojektiNimiCol"
+                                sortable="'properties.nimi'"
+                                filter="{ 'properties.nimi': 'text' }">{{inventointiprojekti.properties.nimi}}</td>
+                            <td data-title="getColumnName('Inventory_period')" ng-if="colVisibilities.showInventointiaikaCol"
+                                sortable="'properties.inventointiaika'"
+                                filter="{ 'properties.inventointiaika': 'text' }">
+                                <div
+                                    ng-repeat="ajanjakso in inventointiprojekti.properties.ajanjakso">{{ajanjakso.alkupvm
+                                    | date:'dd.MM.yyyy'}} - {{ajanjakso.loppupvm |
+                                    date:'dd.MM.yyyy'}}</div>
+                            </td>
+                            <td data-title="getColumnName('Mandator')" ng-if="colVisibilities.showToimeksiantajaCol"
+                                sortable="'properties.toimeksiantaja'"
+                                filter="{ 'properties.toimeksiantaja': 'text' }">{{inventointiprojekti.properties.toimeksiantaja}}</td>
+                            <td data-title="getColumnName('Type')"
+                                sortable="'properties.inventointiprojektityyppi'"  ng-if="colVisibilities.showInventointiprojektityyppiCol"
+                                filter="{ 'properties.inventointiprojektityyppi': 'text' }">{{inventointiprojekti.properties.inventointiprojektityyppi | namei18n}}</td>                          
+                            <td data-title="getColumnName('Kind')"
+                                sortable="'properties.inventointiprojektilaji'"  ng-if="colVisibilities.showInventointiprojektilajiCol"
+                                filter="{ 'properties.inventointiprojektilaji': 'text' }">{{inventointiprojekti.properties.inventointiprojektilaji | namei18n}}</td>                          
+                            <td data-title="getColumnName('Inventors')">
+                                <div ng-repeat="inventoija in inventointiprojekti.properties.inventoijat">
+                                    {{inventoija.etunimi}} {{inventoija.sukunimi}}
+                                </div>
+                            </td>
+                            <td data-title="getColumnName('Added_by')" ng-if="colVisibilities.showAddedByCol"
+                            filter="{ 'properties.luoja': 'number' }">                                                                
+                                {{inventointiprojekti.properties.luoja.etunimi}} {{inventointiprojekti.properties.luoja.sukunimi}}                                                             
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

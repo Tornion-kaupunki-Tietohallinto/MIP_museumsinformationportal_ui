@@ -1,0 +1,15 @@
+{
+	"No_view_permission" : "You don't have permission to view designers",
+	"Designer_added_to_the_building_successfully": "Designer added to the building successfully",
+	"Adding_designer_to_the_building_failed": "Adding designer to the building failed",
+	"Designer_deleted_from_the_building_successfully": "Designer deleted from the building successfully",
+	"Add_new_designer": "Add a new designer",
+	"Save_failed": "Saving the designer failed",
+	"Delete_failed": "Deleting the designer failed",
+	"Kind": "Kind",
+	"Lastname_or_name": "Lastname / name",
+	"Design_years": "Designing years",
+	"Create_new_designer": "Add a new designer",
+	"Duplicates": "existing designers found with the same name",
+	"Duplicate": "existing designer found with the same name"
+}

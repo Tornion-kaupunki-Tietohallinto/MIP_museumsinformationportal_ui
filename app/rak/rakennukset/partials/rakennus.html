@@ -1,0 +1,154 @@
+	<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+
+				<h4 class="modal-title">
+					<span i18n="common.Building"></span> {{rakennus.properties.inventointinumero}} -
+                    <span ng-repeat="rakennustyyppi in rakennus.properties.rakennustyypit"> {{rakennustyyppi | namei18n}}<span ng-if="!$last">,</span></span>
+                    <button type="button" class="btn btn-small mip-transparent" data-placement="bottom-left" bs-popover data-template-url="rak/rakennukset/partials/popover-data_sailo.html" data-i18n-attr="{title: 'common.Original_values'}" content="{{rakennus.properties.data_sailo}}" ng-show="rakennus.properties.data_sailo.length > 0"><span class="fa fa-archive" aria-hidden="true"></span></button>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form
+					class="form-horizontal"
+					name="form"
+					novalidate>
+					
+					<div class="row">
+						<div class="col-md-6 column-left">
+						    <!-- LEFT COLUMN -->
+							<div class="col-md-12" ng-if="!edit" ng-include="'rak/rakennukset/partials/perustiedot_view.html'"></div>
+							<div class="col-md-12" ng-if="edit" ng-include="'rak/rakennukset/partials/perustiedot_edit.html'"></div>
+                            
+                            <div class="col-md-12" ng-if="!edit" ng-include="'rak/rakennukset/partials/kuvaukset_view.html'"></div>
+                            <div class="col-md-12" ng-if="edit" ng-include="'rak/rakennukset/partials/kuvaukset_edit.html'"></div>
+                            
+                            <div class="col-md-12" ng-if="!edit" ng-include="'rak/rakennukset/partials/kulttuurihistorialliset_arvot_view.html'"></div>	
+	                        <div class="col-md-12" ng-if="edit" ng-include="'rak/rakennukset/partials/kulttuurihistorialliset_arvot_edit.html'"></div>  
+                            
+                            <div class="col-md-12" ng-if="!edit" ng-include="'rak/rakennukset/partials/suojelutiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="edit" ng-include="'rak/rakennukset/partials/suojelutiedot_edit.html'"></div>
+                            <div class="col-md-12"
+                                ng-if="!edit && (rakennus.properties.luoja || rakennus.properties.muokkaaja || rakennus.properties.poistaja)"
+                                ng-include="'rak/rakennukset/partials/muokkaustiedot_view.html'"></div>
+                            <div class="col-md-12"
+                                ng-if="!edit && !create && rakennus.properties.kiinteisto.inventointiprojektit.length > 0"
+                                ng-include="'rak/rakennukset/partials/inventointiprojektit_view.html'"></div>
+	                    </div>
+	                    <div class="col-md-6 column-right">
+	                       <!-- RIGHT COLUMN -->
+	                       <div class="col-md-12" ng-if="showMap" ng-include="'rak/rakennukset/partials/sijainti.html'"></div>
+	                       <div class="col-md-12" data-ng-if="porrashuoneet.length > 0 && porrashuonePermissions.katselu"
+	                           ng-include="'rak/rakennukset/partials/porrashuoneet_view.html'"></div>
+	                       <div class="col-md-12" ng-if="edit" ng-include="'rak/rakennukset/partials/suunnittelijat_edit.html'"></div>                           
+                           <div class="col-md-12" ng-if="!edit && rakennus.properties.suunnittelijat.length > 0" ng-include="'rak/rakennukset/partials/suunnittelijat_view.html'"></div>
+                           
+	                       <div class="col-md-12" ng-if="!edit && !create && images.length > 0" ng-include="'pages/templates/kuvat_view.html'"></div>
+	                       <div class="col-md-12" ng-if="edit && !create" ng-include="'rak/rakennukset/partials/kuvat_edit.html'"></div>
+                           
+	                       <div class="col-md-12" ng-if="!edit && files.length > 0" ng-include="'rak/rakennukset/partials/tiedostot_view.html'"></div>
+	                    </div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+                <div class="pull-left" mip-entiteettiselain etype="'rakennus'" eid="rakennus.properties.id" close="close()" ng-show="!edit"></div>
+                <div class="mip-footer-btn-group">
+                     <button class="btn btn-default" type="button" ng-click="addImage()" 
+                         i18n="common.Add_image" 
+                         ng-show="!edit && !create" data-ng-if="permissions.muokkaus">
+                     </button>
+                     
+                     <button class="btn btn-default" type="button" ng-click="editMode()"
+                         i18n="common.Edit" 
+                         ng-show="!edit" ng-if="permissions.muokkaus">
+                     </button>
+                     <button class="btn btn-default" type="button" ng-class="{ 'disabled' : disableButtons }"
+                         ng-click="disableButtons || cancelEdit()"
+                         i18n="common.Cancel_edit" 
+                         ng-show="edit && !create">
+                     </button>
+                     <button class="btn btn-success" type="button" ng-class="{ disabled: form.$invalid || disableButtons || !rakennus.properties.sijainti || !validateSuojelutyypit() }"
+                         ng-click="(form.$invalid || disableButtons || !rakennus.properties.sijainti) || !validateSuojelutyypit() || save()" class="bg-success"
+                         i18n="common.Save" 
+                         ng-show="edit" ng-if="permissions.muokkaus">
+                     </button>
+                                          
+	                 <div class="dropup">
+	                      <button class="btn btn-default dropdown-toggle" type="button" ng-class="{ 'disabled' : disableButtons }" 
+	                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+	                        <span i18n="common.Actions"></span> <span class="caret"></span>
+	                      </button>
+	                      <ul class="dropdown-menu dropdown-menu-right">
+	                        <li><a href="" ng-click="deleteRakennus(modalNameId)" class="bg-danger" 
+	                               i18n="common.Delete"                                
+	                               ng-show="!create" data-ng-if="permissions.poisto"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.poisto && !create"></li>
+	                        
+	                        <li><a href="" ng-click="showMuutoshistoria()" 
+	                               i18n="common.Show_history" 
+	                               ng-show="!create" data-ng-if="permissions.muokkaus"></a>
+	                        </li>                        
+	                        <li><a href="" ng-click="showMoveRakennusModal()" 
+	                               i18n="building.Move_to_estate" 
+	                               ng-show="!edit && rakennus.properties.id" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus && !create"></li>
+	                        
+	                        <li><a href="" ng-click="addFile()" 
+	                               i18n="common.Add_file" 
+	                               ng-show="!edit && !create" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        <li><a href="" ng-click="_selectedImages.length == 0 || showMoveImageModal(rakennus, 'rakennus')" mip-kuvasiirrin
+	                               i18n="common.Move_images" ng-class="{'mip-disabled': _selectedImages.length == 0}" 
+	                               ng-show="!create && edit" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        <li><a href="" ng-click="addImage()" 
+	                               i18n="common.Add_image" 
+	                               ng-show="!edit && !create" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        <li><a href="" ng-click="addPorrashuone()"
+	                               i18n="common.Add_staircase" 
+	                               ng-show="!edit && rakennus.properties.id" data-ng-if="porrashuonePermissions.luonti"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus && !create"></li>
+	                         
+	                        <li><a href="" ng-click="close()"
+	                               i18n="common.Close" 
+	                               ng-show="!edit"></a>
+	                        </li>
+	                        <li><a href="" ng-click="close()"
+	                               i18n="common.Cancel" 
+	                               ng-show="create"></a>
+	                        </li>
+	                        <li ng-class="{ 'disabled' : disableButtons }"><a href="" ng-click="disableButtons || cancelEdit()"
+	                               i18n="common.Cancel_edit" 
+	                               ng-show="edit && !create"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus"></li>
+	                        
+	                        <li><a href="" ng-click="editMode()"
+	                               i18n="common.Edit" 
+	                               ng-show="!edit" ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        <li ng-class="{ disabled: form.$invalid || disableButtons || !rakennus.properties.sijainti || !validateSuojelutyypit() }">
+	                        <a href="" ng-click="(form.$invalid || disableButtons || !rakennus.properties.sijainti) || !validateSuojelutyypit() || save()" class="bg-success"
+	                               i18n="common.Save" 
+	                               ng-show="edit" ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        
+	                   
+	                   </ul>
+	               </div>
+	            </div>
+			</div>
+		</div>
+        <div id="{{mapPopupId}}" class="mapPopup">POPUP</div>
+	</div>

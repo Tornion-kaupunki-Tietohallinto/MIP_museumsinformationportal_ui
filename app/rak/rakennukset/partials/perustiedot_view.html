@@ -1,0 +1,331 @@
+
+<div class="panel panel-default panel-collapsible">
+	<div
+		class="panel-heading"
+		data-toggle="collapse"
+		data-target="#perusTiedotPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Common"></span> <span
+				class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div
+		id="perusTiedotPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+		<!-- {{rakennus.properties.id}} -->
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.kiinteisto.kyla | kuntaKylaNamei18n">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.County"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a
+						class="link"
+						ng-click="showKuntaModal(rakennus.properties.kiinteisto.kyla.kunta.id)">{{rakennus.properties.kiinteisto.kyla.kunta | kuntaKylaNamei18n}}</a>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.kiinteisto | kuntaKylaNamei18n">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Village"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a
+						class="link"
+						ng-click="showKylaModal(rakennus.properties.kiinteisto.kyla.id)">{{rakennus.properties.kiinteisto.kyla | kuntaKylaNamei18n}}</a>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.kiinteisto.kiinteistotunnus.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Estate"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a
+						class="link"
+						ng-click="showKiinteistoModal(rakennus.properties.kiinteisto.id);">{{rakennus.properties.kiinteisto.kiinteistotunnus}} {{rakennus.properties.kiinteisto.nimi}}
+					</a>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.osoitteet.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Addresses"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<p class="form-control-static"
+							ng-repeat="osoite in rakennus.properties.osoitteet">{{osoite.katunimi}}
+							{{osoite.katunumero}}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.postinumero.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Postal_code"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.postinumero}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.rakennustunnus.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Building_identifier"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.rakennustunnus}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="(rakennus.properties.inventointinumero + '').length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Inventory_number"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.inventointinumero}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.rakennustyypit.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Building_type"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="rt in rakennus.properties.rakennustyypit"><span ng-if="!$first">,
+					</span>{{rt | namei18n}}</span>
+				</p>
+			</div>
+		</div>
+        <div
+            class="form-group"
+            ng-show="rakennus.properties.rakennustyyppi_kuvaus.length > 0">
+            <label class="col-sm-3 control-label">
+                <span i18n="building.Building_type_description"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{rakennus.properties.rakennustyyppi_kuvaus}}</p>
+            </div>
+        </div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.rakennusvuosi_alku || rakennus.properties.rakennusvuosi_loppu">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Construction_year"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h5 class="list-group-item-heading ">
+							<span ng-if="rakennus.properties.rakennusvuosi_alku">
+								{{rakennus.properties.rakennusvuosi_alku}} </span> <span
+								ng-if="rakennus.properties.rakennusvuosi_loppu"> -
+								{{rakennus.properties.rakennusvuosi_loppu}} </span>
+						</h5>
+						<p
+							ng-show="rakennus.properties.rakennusvuosi_selite.length > 0"
+							class="mip-multiline">{{rakennus.properties.rakennusvuosi_selite}}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.muutosvuodet.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Alteration_years"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li
+						class="list-group-item"
+						ng-repeat="mv in rakennus.properties.muutosvuodet">
+						<h5 class="list-group-item-heading">{{mv.alkuvuosi}} - {{mv.loppuvuosi}}</h5>
+						<p class="mip-multiline">{{mv.selite}}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.alkuperaisetkaytot.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Original_usage"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="ak in rakennus.properties.alkuperaisetkaytot"><span ng-if="!$first">,
+					</span>{{ak | namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.nykykaytot.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Common_usage"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="nk in rakennus.properties.nykykaytot"><span ng-if="!$first">, </span>{{nk
+						| namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.kerroslukumaara.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Number_of_floors"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.kerroslukumaara}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="{{rakennus.properties.asuin_ja_liikehuoneistoja.length > 0}}">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Residences_and_offices"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.asuin_ja_liikehuoneistoja}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.perustustyypit.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Foundation"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="pt in rakennus.properties.perustustyypit"><span ng-if="!$first">,
+					</span>{{pt | namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.runkotyypit.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Frame"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="rt in rakennus.properties.runkotyypit"><span ng-if="!$first">, </span>{{rt
+						| namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.vuoraustyypit.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Lining"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="vt in rakennus.properties.vuoraustyypit"><span ng-if="!$first">,
+					</span>{{vt | namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.ulkovari.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Outside_color"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.ulkovari}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.kattotyypit.length>0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Ceiling"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="kt in rakennus.properties.kattotyypit"><span ng-if="!$first">, </span>{{kt
+						| namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.katetyypit.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Cover"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span ng-repeat="kt in rakennus.properties.katetyypit"><span ng-if="!$first">, </span>{{kt
+						| namei18n}}</span>
+				</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.kuntotyyppi">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Condition"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.kuntotyyppi | namei18n}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.nykyinentyyli">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Contemporary_style"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{rakennus.properties.nykyinentyyli | namei18n}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="rakennus.properties.purettu == true">
+			<div class="col-sm-9 col-sm-offset-3">
+                <strong><p i18n="common.Demolished"></p></strong>				
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="rakennus.properties.omistajat.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Owners"></span>
+			</label>
+			<div class="col-sm-9">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<p
+							class="form-control-static"
+							ng-repeat="omistaja in rakennus.properties.omistajat">{{omistaja.sukunimi}},
+							{{omistaja.etunimi}}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

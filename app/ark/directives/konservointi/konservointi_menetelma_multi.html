@@ -1,0 +1,12 @@
+<ui-select multiple ng-model="lista.menetelmat" theme="bootstrap" name="menetelma" ng-if="!haku"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'ark.Methods'}">{{$item.nimi}}</ui-select-match> 
+    <ui-select-choices repeat="menetelma in menetelmat | filter: $select.search track by menetelma.id">
+       <span ng-bind-html="menetelma.nimi | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>
+<ui-select multiple ng-model="lista.menetelmat" theme="bootstrap" name="menetelma" ng-if="haku"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'ark.Methods'}">{{$item.nimi}}</ui-select-match> 
+    <ui-select-choices repeat="menetelma.id as menetelma in menetelmat | filter: $select.search track by menetelma.id">
+       <span ng-bind-html="menetelma.nimi | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

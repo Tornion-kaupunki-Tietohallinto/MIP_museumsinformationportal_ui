@@ -1,0 +1,140 @@
+
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="ark.Target"></span>
+                    {{vm.kohde.properties.nimi}}
+                </h4>
+                <span data-ng-if="vm.kohde.properties.kyppi_updated && vm.permissions.muokkaus">
+            		 <span class="kyppi-changed" i18n="ark.Mjr_data_changed"></span>
+            		 <a href="" ng-click="vm.tarkistaKyppiTiedot()">
+            		 	<span i18n="ark.Update_information"></span>
+            		 </a>
+            	</span>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="form"
+                    ng-class="{'form-horizontal-tight':!vm.edit}" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/perustiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/perustiedot_edit.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/lisatiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/lisatiedot_edit.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/muut_tiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/muut_tiedot_edit.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/suojelutiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/suojelutiedot_edit.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/alakohteet_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/alakohteet_edit.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/muokkaustiedot_view.html'"></div>
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <!-- RIGHT COLUMN -->
+                            <div class="col-md-12" ng-if="vm.showMap"
+                                ng-include="'ark/kohteet/partials/sijainti.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/tutkimukset_view.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/mjrtutkimukset_view.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/kiinteistojen_tiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/kiinteistojen_tiedot_edit.html'"></div>
+                            <div class="col-md-12" ng-if="vm.images.length > 0"
+                                ng-include="'ark/kohteet/partials/kuvat.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.create && vm.files.length>0"
+                                ng-include="'ark/kohteet/partials/tiedostot_view.html'"></div>
+                            <div class="col-md-12" ng-if="!vm.edit"
+                                ng-include="'ark/kohteet/partials/yllapitotiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="vm.edit"
+                                ng-include="'ark/kohteet/partials/yllapitotiedot_edit.html'"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="mip-footer-btn-group">
+                    <div class="pull-left" mip-entiteettiselain etype="'kohde'" eid="vm.kohde.properties.id" close="vm.close()" ng-show="!vm.edit && !vm.disableButtons"></div>
+                        <button type="button"
+                            class="btn btn-default"
+                            ng-if="vm.permissions.muokkaus && !vm.edit && vm.lisaa_muinaisjaannos_oikeus"
+                            ng-click="vm.lisaaMuinaisJaannos()">
+                            <span i18n="ark.Add_relic_register"></span>
+                        </button>
+                    <div class="dropup">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span i18n="common.Actions"></span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="" ng-click="vm.deleteKohde(vm.modalNameId)" class="bg-danger"
+                                i18n="common.Delete"
+                                ng-show="!create" data-ng-if="vm.permissions.poisto"></a>
+                            </li>
+
+                            <li role="separator" class="divider" data-ng-if="vm.permissions.poisto && !create"></li>
+
+                            <li><a href="" ng-click="vm.showMuutoshistoria()"
+                                i18n="common.Show_history"
+                                ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus"></a>
+                            </li>
+
+                            <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.create"></li>
+                            <li><a href="" ng-click="vm.lisaaTiedosto()"
+                                i18n="common.Add_file"
+                                ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus"></a>
+                            </li>
+                            <li><a href="" ng-click="vm.addImage()"
+                                i18n="common.Add_image"
+                                ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus"></a>
+                            </li>
+                            <li><a href="" ng-click="vm.liitaTutkimukseen()"
+                                i18n="ark.Attach_to_research"
+                                ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus"></a>
+                            </li>
+                            <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.create"></li>
+
+                            <li><a href="" ng-click="vm.close()"
+                                i18n="common.Close"
+                                ng-show="!vm.edit"></a>
+                            </li>
+                            <li><a href="" ng-click="vm.close()"
+                                i18n="common.Cancel"
+                                ng-show="vm.create"></a>
+                            </li>
+                            <li ng-class="{ 'disabled' : vm.disableButtons }"><a href="" ng-click="vm.disableButtons || vm.cancelEdit()"
+                                i18n="common.Cancel_edit"
+                                ng-show="vm.edit && !vm.create"></a>
+                            </li>
+
+                            <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus"></li>
+
+                            <li><a href="" ng-click="vm.editMode()"
+                                i18n="common.Edit" ng-if="!vm.edit && (vm.permissions.muokkaus || (vm.rooli == 'katselija' && vm.aktiivisetInventointitutkimukset.length > 0))"></a>
+                            </li>
+                            <li ng-class="{ disabled: form.$invalid || vm.disableButtons || (vm.kohde.properties.tyhja == false && (vm.kohde.properties.ajoitukset.length == 0 || vm.kohde.properties.tyypit.length == 0)) || (vm.rooli == 'katselija' && (!vm.inventointitiedot.inventointitutkimus_id || !vm.inventointitiedot.inventoija_id || !vm.inventointitiedot.inventointipaiva)) }">
+                            <a href="" ng-click="(form.$invalid || vm.disableButtons || (vm.kohde.properties.tyhja == false && (vm.kohde.properties.ajoitukset.length == 0 || vm.kohde.properties.tyypit.length == 0)) || (vm.rooli == 'katselija' && (!vm.inventointitiedot.inventointitutkimus_id || !vm.inventointitiedot.inventoija_id || !vm.inventointitiedot.inventointipaiva)) || vm.save())" class="bg-success"
+                                i18n="common.Save" ng-if="vm.edit && (vm.permissions.muokkaus || (vm.rooli == 'katselija' && vm.aktiivisetInventointitutkimukset.length > 0))"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

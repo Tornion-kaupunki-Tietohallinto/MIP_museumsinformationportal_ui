@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label for="naytetyyppi" class="col-sm-4 control-label">
+        <span i18n="sample.Sample_type"></span> *
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="naytetyyppi" 
+        	ng-required="true" 
+            ng-options="naytetyyppi.nimi_fi for naytetyyppi in naytetyypit track by naytetyyppi.id"
+            ng-change="vm.vaihdaNaytetyyppi(naytetyyppi)"
+            ng-model="naytetyyppi">
+        </select>
+    </div>
+</div>

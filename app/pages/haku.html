@@ -1,0 +1,46 @@
+<div class="panel">
+	<div class="panel-body">
+		<div ng-include="'pages/tabs.html'"></div>
+		<div ng-include="'pages/subtabs.html'"></div>
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="panel-group col-md-12"
+						ng-model="multiplePanels.activePanels" role="tablist" bs-collapse
+						data-allow-multiple="true" aria-multiselectable="true">
+						<div class="col-md-8">
+							<!-- <input type="text" name="qry" class="form-control" ng-model="qry"
+								ng-change="search(qry)" ng-model-options='{debounce: 500}'
+								placeholder="Etsi ..." bs-typeahead
+								bs-options="tulos as tulos.nimi + ' ' + tulos.doc_type for tulos in search(qry)"
+								limit={{searchLimit}} comparator="comp">-->
+							<input type="text" class="form-control" name="nimi"
+								ng-model="resultsTable.filter().qry" placeholder="">
+						</div>
+						<div class="col-md-4">
+							<button class="btn btn-default" i18n="common.Search"
+								ng-click="search()"></button>
+							<button class="btn btn-default" i18n="common.Clear"
+								ng-click="clearResults()"></button>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<span>Tuloksia: {{ resultsTable.total() }}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table ng-table="resultsTable"
+						class="table table-striped table-bordered" show-filter="false">
+						<tr ng-repeat="result in $data" style="cursor: pointer"
+							ng-click="selectResult(result)">
+							<td data-title="getColumnName('Id')">{{result.id}}</td>
+							<td data-title="getColumnName('Type')">{{result.doc_type}}</td>
+							<td data-title="getColumnName('Name')">{{result.nimi}}</td>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

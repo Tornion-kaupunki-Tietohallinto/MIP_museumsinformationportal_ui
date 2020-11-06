@@ -1,0 +1,125 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#loytoyhteysPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Discovery_connection"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="loytoyhteysPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="form-group">
+	            <label for="loytopaikan_tarkenne" class="col-sm-3 control-label">
+	                <span i18n="ark.Discovery_location_extension"></span> 
+	            </label>
+	            <div class="col-sm-9">
+	                <input type="text" class="form-control" name="loytopaikan_tarkenne"
+	                    ng-model="vm.loyto.properties.loytopaikan_tarkenne"
+	                    spellcheck="false" autocomplete="off">
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label class="col-sm-3 control-label">
+	                <span i18n="ark.Coordinates"></span> 
+	            </label>
+	            <div class="col-sm-9">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_n.$invalid && form.koordinaatti_n.$touched}">
+					            <label for="koordinaatti_n" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_n"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <input type="text" class="form-control" name="koordinaatti_n"
+					                    ng-model="vm.loyto.properties.koordinaatti_n"
+					                    ng-minlength="11"
+					                    ng-maxlength="11" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    empty-to-null
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_n.$invalid && form.koordinaatti_n.$touched">
+					                    <span data-i18n="ark.Coordinate_n_rule"></span>
+					                </span>						                    
+				                </div>
+			                </div>
+							<div class="form-group" ng-class="{ 'has-error': form.koordinaatti_e.$invalid && form.koordinaatti_e.$touched}">
+					            <label for="koordinaatti_e" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_e"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <input type="text" class="form-control" name="koordinaatti_e"
+					                    ng-model="vm.loyto.properties.koordinaatti_e"
+										ng-minlength="10"
+					                    ng-maxlength="10" 
+					                    ng-pattern="/^[0-9]+(\,[0-9]{1,3})?$/"
+					                    empty-to-null
+					                    spellcheck="false" autocomplete="off">
+					                <span class="help-block" ng-show="form.koordinaatti_e.$invalid && form.koordinaatti_e.$touched">
+					                    <span data-i18n="ark.Coordinate_e_rule"></span>
+					                </span>						                    
+				                </div>						
+							</div>
+							<div class="form-group">
+				            <label for="koordinaatti_z" class="col-sm-2 control-label">
+				                <span i18n="ark.Coordinate_z"></span> 
+				            </label>	            
+				            	<div class="col-sm-10">
+					                <input type="number" class="form-control" name="koordinaatti_z"
+					                    ng-model="vm.loyto.properties.koordinaatti_z"
+					                    empty-to-null
+					                    step="0.01"
+					                    data-i18n-attr="{placeholder: 'ark.Above_sea_level'}"
+					                    spellcheck="false" autocomplete="off">
+				                </div> 						
+							</div>
+						</li>
+					</ul>            
+	            </div>    
+	        </div>
+	    </div>
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group" ng-if="vm.loyto.properties.loytopaikan_tarkenne">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Discovery_location_extension"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static mip-multiline">{{vm.loyto.properties.loytopaikan_tarkenne}}</p>
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="vm.loyto.properties.koordinaatti_n || vm.loyto.properties.koordinaatti_e || vm.loyto.properties.koordinaatti_z">
+	            <label class="col-sm-4 control-label">
+	            	<span i18n="ark.Coordinates"></span> 
+	            </label>
+	            <div class="col-sm-8">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<div class="form-group" ng-if="vm.loyto.properties.koordinaatti_n">
+					            <label for="koordinaatti_n" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_n"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.loyto.properties.koordinaatti_n}}</p>
+				                </div>
+			                </div>
+							<div class="form-group" ng-if="vm.loyto.properties.koordinaatti_e">
+					            <label for="koordinaatti_e" class="col-sm-2 control-label">
+					                <span i18n="ark.Coordinate_e"></span> 
+					            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.loyto.properties.koordinaatti_e}}</p>
+				                </div>						
+							</div>
+							<div class="form-group" ng-if="vm.loyto.properties.koordinaatti_z">
+				            <label for="koordinaatti_z" class="col-sm-2 control-label">
+				                <span i18n="ark.Coordinate_z"></span> 
+				            </label>	            
+				            	<div class="col-sm-10">
+					                <p class="form-control-static">{{vm.loyto.properties.koordinaatti_z}}</p>
+				                </div> 						
+							</div>
+						</li>
+					</ul>                 
+	            </div>
+	        </div>
+	    </div>
+    </div>    
+</div>

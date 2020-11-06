@@ -1,0 +1,6 @@
+<ui-select multiple ng-model="lista.tutkimuslajit" theme="bootstrap" name="tutkimustyyppi"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'common.Type'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="tutkimuslaji.id as tutkimuslaji in tutkimuslajit | filter: $select.search">
+       <span ng-bind-html="tutkimuslaji | namei18n | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label for="sailytystila" class="col-md-4 col-sm-4 col-xs-4 control-label">
+        <span i18n="ark.Archive_location"></span><span ng-show="req">*</span>
+    </label>
+    <div class="col-md-8 col-sm-8 col-xs-8">
+        <select class="form-control" name="sailytystila" ng-model="sailytystila" ng-required="req" ng-disabled="dis"
+            ng-options="st as st.nimi_fi for st in sailytystilat track by st.id">
+            <option value="" ng-show="!req"></option>
+        </select>
+    </div>
+</div>

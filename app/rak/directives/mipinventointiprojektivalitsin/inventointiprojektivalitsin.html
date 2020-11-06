@@ -1,0 +1,17 @@
+ <ui-select 
+    ng-model="inventointiprojektiselection"
+    name="inventointiprojekti"    
+    spellcheck="false"
+    ng-required="isrequired"
+    on-select="setInventointiprojektiselection($item);">
+    <ui-select-match 
+            allow-clear="true"
+            data-i18n-attr="{placeholder: 'common.Inventory_project'}">{{$select.selected.nimi}}</ui-select-match>
+    <ui-select-choices
+        position="down"
+        repeat="ip.id as ip in inventointiprojektit | filter: {'nimi': $select.search} track by $index "
+        refresh="getInventointiprojektit($select.search)"
+        refresh-delay="250">
+        <div ng-bind-html="ip.nimi | highlight: $select.search"></div>
+    </ui-select-choices> 
+</ui-select>

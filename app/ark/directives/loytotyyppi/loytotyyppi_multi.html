@@ -1,0 +1,9 @@
+<ui-select multiple="true" ng-model="tyypit.loytotyypit" theme="bootstrap" name="loytotyypit"> 
+	<ui-select-match data-i18n-attr="{placeholder: 'common.Type'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="tyyppi.id as tyyppi in loytotyypit | filter: $select.search">
+        <div>
+            <span ng-bind-html="tyyppi | namei18n | highlight: $select.search"></span>
+        </div>
+    </ui-select-choices> 
+</ui-select>
+

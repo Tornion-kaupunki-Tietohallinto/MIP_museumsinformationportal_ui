@@ -1,0 +1,108 @@
+
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="kiinteistorakennus in krModel">
+        <fieldset>
+            <div class="form-group"
+                ng-class="{ 'has-error': form.kiinteistorakennus_{{$index}}_kiinteistotunnus.$invalid && form.kiinteistorakennus_{{$index}}_kiinteistotunnus.$touched }">
+                <label for="kiinteistorakennus_{{$index}}_kiinteistotunnus" class="col-sm-3 control-label">
+                    <span i18n="common.Property_identifier"></span>
+                    *
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" name="form.kiinteistorakennus_{{$index}}_kiinteistotunnus" class="form-control"
+                        ng-model="kiinteistorakennus.kiinteistotunnus" ng-required="true"/>
+                    <span class="help-block"
+                        ng-show="form.kiinteistorakennus_{{$index}}_kiinteistotunnus.$invalid && form.kiinteistorakennus_{{$index}}_kiinteistotunnus.$touched">
+                        <span data-i18n="common.mandatory_value"
+                            data-field="{{ 'common.Property_identifier' | i18n }}"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kiinteistorakennus_{{$index}}_kiinteistonimi" class="col-sm-3 control-label">
+                    <span i18n="common.Estate_name"></span>
+                </label>
+                <div class="col-sm-9">
+                    <input type="text" name="kiinteistorakennus_{{$index}}_kiinteistonimi" class="form-control"
+                        ng-model="kiinteistorakennus.kiinteisto_nimi" ng-required="false"/>
+                </div>
+            </div>
+			<!-- Osoitteet -->
+           	<div ng-repeat="osoite in kiinteistorakennus.osoitteet">
+	            <div class="form-group"
+	                ng-class="{ 'has-error': form.kiinteistorakennus_{{$index}}_osoite_katunimi.$invalid && form.kiinteistorakennus_{{$index}}_osoite_katunimi.$touched }">
+	                <label for="kiinteistorakennus_{{$index}}_osoite_katunimi" class="col-sm-3 control-label">
+	                    <span i18n="common.Street_address_and_number"></span>
+	                </label>
+	                <div class="col-sm-5">
+	                    <input type="text" class="form-control" name="form.kiinteistorakennus_{{$index}}_osoite_katunimi"
+	                        data-i18n-attr="{placeholder: 'common.Street_address'}" 
+	                        ng-model="osoite.katunimi"
+	                        ng-required="true" spellcheck="false" autocomplete="off">
+	                    <span class="help-block"
+	                        ng-show="form.kiinteistorakennus_{{$index}}_osoite_katunimi.$invalid && form.kiinteistorakennus_{{$index}}_osoite_katunimi.$touched">
+	                        <span data-i18n="common.mandatory_value"
+	                            data-field="{{ 'common.Street_address' | i18n }}"></span>
+	                    </span>
+	                </div>
+	                <div class="col-sm-2">
+	                    <input type="text" class="form-control" name="kiinteistorakennus_{{$index}}_osoite_katunumero"
+	                        data-i18n-attr="{placeholder: 'common.Number_abbr'}" 
+	                        ng-model="osoite.katunumero"
+	                        ng-required="false" spellcheck="false" autocomplete="off">
+	                </div>
+	                <div class="col-sm-2">
+	                    <button type="button" ng-click="deleteOsoite(osoite, kiinteistorakennus)"
+	                        class="btn btn-danger pull-right" data-i18n-attr="{title: 'common.Address'}">
+	                        <span i18n="common.Delete"></span>
+	                    </button>
+	                </div>		                
+	            </div>
+           	</div>
+           	<div ng-repeat="osoite in kiinteistorakennus.osoitteet | limitTo:1">
+	          	<div class="form-group">
+	                <label for="kiinteistorakennus_{{$index}}_osoite_katunimi" class="col-sm-3 control-label">
+	                    <span i18n="common.Postal_code"></span>, <span i18n="common.Municipality"></span>
+	                </label>
+	                <div class="col-sm-3">
+	                    <input type="text" class="form-control" name="kiinteistorakennus_{{$index}}_osoite_postinumero"
+	                        data-i18n-attr="{placeholder: 'common.Postal_code'}" 
+	                        ng-model="osoite.postinumero"
+	                        ng-required="false" spellcheck="false" autocomplete="off">
+	                </div>
+	                <div class="col-sm-6">
+	                    <input type="text" class="form-control" name="kiinteistorakennus_{{$index}}_osoite_kuntanimi"
+	                        data-i18n-attr="{placeholder: 'common.Municipality'}" 
+	                        ng-model="osoite.kuntanimi"
+	                        ng-required="false" spellcheck="false" autocomplete="off">
+	                </div>
+	            </div>
+			</div>
+			
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="button" ng-click="deleteKiinteistoRakennus($index)"
+                     class="btn btn-danger pull-right" data-i18n-attr="{title: 'common.Estate'}">
+                        <span i18n="common.Delete"></span>
+                    </button>
+                    <button type="button" ng-click="addOsoite($index)"
+                        class="btn btn-success pull-right" style="margin-right : 5px" data-i18n-attr="{title: 'common.Address'}">
+                        <span i18n="common.Add"></span>
+                    </button>                    
+                </div>
+            </div>
+        </fieldset>
+    </li>
+    <li class="list-group-item">
+        <fieldset>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="button" ng-click="addKiinteistoRakennus()"
+                        class="btn btn-success pull-right" data-i18n-attr="{title: 'common.Estate'}">
+                        <span i18n="common.Add"></span>
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </li>
+</ul>

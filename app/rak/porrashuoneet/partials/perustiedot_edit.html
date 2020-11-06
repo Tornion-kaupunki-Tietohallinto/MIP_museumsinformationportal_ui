@@ -1,0 +1,127 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Common"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="kunta" class="col-sm-3 control-label">
+                <span i18n="common.County"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+					{{kiinteisto.properties.kyla.kunta | kuntaKylaNamei18n}}
+				</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="kyla" class="col-sm-3 control-label">
+                <span i18n="common.Village"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+					{{kiinteisto.properties.kyla | kuntaKylaNamei18n}}
+				</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="kiinteisto" class="col-sm-3 control-label">
+                <span i18n="common.Estate"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+                    {{kiinteisto.properties.kiinteistotunnus}}
+                </p>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.porrashuoneen_tunnus.$invalid && form.porrashuoneen_tunnus.$touched }">
+            <label for="porrashuoneen_tunnus" class="col-sm-3 control-label">
+                <span i18n="common.Staircase_identifier"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="porrashuoneen_tunnus"
+                    ng-model="porrashuone.properties.porrashuoneen_tunnus" ng-required="true" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="form.porrashuoneen_tunnus.$invalid && form.porrashuoneen_tunnus.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Staircase_identifier' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.porrashuonetyyppi.$invalid && form.porrashuonetyyppi.$touched }">
+            <label for="porrashuonetyyppi" class="col-sm-3 control-label">
+                <span i18n="common.Staircase_type"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <select ng-model="porrashuone.properties.porrashuonetyyppi"
+                    ng-options="porrastyyppi as porrastyyppi.nimi_fi for porrastyyppi in porrastyyppiOptions track by porrastyyppi.id"
+                    name="porrashuonetyyppi" class="form-control" ng-required="true" spellcheck="false" autocomplete="off">
+                    <option value=""><span i18n="common.Select | i18n"></span></option>
+                </select>
+                <span class="help-block"
+                    ng-show="form.porrashuonetyyppi.$invalid && form.porrashuonetyyppi.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Staircase_type' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.huoneistojen_maara.$invalid && form.huoneistojen_maara.$touched }">
+            <label for="huoneistojen_maara" class="col-sm-3 control-label">
+                <span i18n="common.Number_of_apartments"></span><span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="huoneistojen_maara"
+                    ng-model="porrashuone.properties.huoneistojen_maara" ng-required="true" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="form.huoneistojen_maara.$invalid && form.huoneistojen_maara.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Number_of_apartments' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="portaiden_muoto" class="col-sm-3 control-label">
+                <span i18n="common.Stair_type"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="portaiden_muoto"
+                    ng-model="porrashuone.properties.portaiden_muoto" ng-required="false" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hissi" class="col-sm-3 control-label">
+                <span i18n="common.Elevator"></span>
+            </label>
+            <div class="col-sm-9">
+                <select class="form-control" ng-model="porrashuone.properties.hissi" name="hissi"
+                    ng-required="false" ng-options="option.value as option.label for option in noYes">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hissin_kuvaus" class="col-sm-3 control-label">
+                <span i18n="common.Elevator_description"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="hissin_kuvaus"
+                    data-i18n-attr="{placeholder: 'common.Elevator_description'}"
+                    ng-model="porrashuone.properties.hissin_kuvaus" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="kattoikkuna" class="col-sm-3 control-label">
+                <span i18n="common.Skylight_window"></span>
+            </label>
+            <div class="col-sm-9">
+                <select class="form-control" ng-model="porrashuone.properties.kattoikkuna"
+                    name="kattoikkuna" ng-required="false"
+                    ng-options="option.value as option.label for option in noYes">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

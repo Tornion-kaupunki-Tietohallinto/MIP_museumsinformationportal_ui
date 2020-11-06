@@ -1,0 +1,170 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading">
+        <h4 class="panel-title" data-toggle="collapse" data-target="#perusTiedotPanel{{vm.modalId}}">
+            <span i18n="ark.Basic_information"></span>
+			<span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perusTiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+    	<div class="col-md-6 column-left">
+	        <mip-tutkimuslaji laji="vm.tutkimus.properties" lajirequired="!vm.tutkimus.properties.tyhja" vm="vm" haku="false" focus-input="focusInput"></mip-tutkimuslaji>  
+	        <div ng-if="vm.tutkimus.properties.tutkimuslaji">
+		        <div class="form-group" ng-if="vm.tutkimusKohde == undefined" ng-class="{ 'has-error': form.kohde.$invalid && form.kohde.$touched}">
+		            <label class="col-sm-3 control-label">
+		                <span i18n="ark.Target"></span> *
+		            </label>
+		            <div class="col-sm-9">
+                        <ui-select theme="bootstrap"
+                            ng-model="vm.tutkimus.properties.kohde"
+                            name="kohde"
+                            spellcheck="false"
+                            ng-required="true"
+                            on-select="vm.paivitaKohdeKunta($select.selected)">
+                            <ui-select-match 
+                                data-i18n-attr="{placeholder: 'common.Name'}"
+                                allow-clear="true">{{$select.selected.nimi}} {{$select.selected.properties.nimi}}
+                            </ui-select-match>
+                            <ui-select-choices        
+                                repeat="kohde in vm.kohteet track by kohde.properties.id"
+                                refresh="vm.haeKohteet($select.search)"
+                                refresh-delay="300">
+                                <span
+                                    ng-bind-html="kohde.properties.nimi | highlight: $select.search">
+                                </span>
+                            </ui-select-choices> 
+                        </ui-select>
+		                <span class="help-block" ng-show="form.kohde.$invalid && form.kohde.$touched">
+		                    <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Target' | i18n }}"></span>
+		                </span>                                                                        
+		            </div>
+		        </div>	            	
+		        <div class="form-group" ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$touched || !vm.uniikkiNimi}">
+		            <label class="col-sm-3 control-label">
+		            	<span i18n="common.Name"></span> *
+		            </label>
+		            <div class="col-sm-9">
+		                <input type="text" class="form-control" 
+		                	name="nimi"
+		                    ng-model="vm.tutkimus.properties.nimi" 
+		                    ng-change="vm.tarkistaNimi(form)" 
+		                    ng-model-options='{debounce: 500}'
+		                    ng-required="true">
+		                <span class="help-block" ng-show="form.nimi.$invalid && form.nimi.$touched && vm.uniikkiNimi">
+		                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+		                </span>
+		                <span class="help-block" ng-show="!vm.uniikkiNimi">
+		                    <span data-i18n="common.already_in_use" data-field="{{ 'common.Name' | i18n }}"></span>
+		                </span>	                
+		            </div>
+		        </div>
+		        <div class="form-group" ng-if="vm.tutkimus.properties.kohde_nimi">
+		            <label class="col-sm-3 control-label">
+		                <span i18n="ark.Target"></span>
+		            </label>
+		            <div class="col-sm-9">
+		                <p class="form-control-static">{{vm.tutkimus.properties.kohde_nimi}}</p>
+		            </div>
+		        </div>
+				<div class="form-group" ng-if="vm.tutkimus.properties.kohde_kunta">
+					<label
+						for="kunta"
+						class="col-sm-3 control-label">
+						<span i18n="common.County"></span>
+					</label>
+					<div class="col-sm-9">
+		                <p class="form-control-static">
+		                    {{vm.tutkimus.properties.kohde_kunta | kuntaKylaNamei18n}}
+		                </p>
+		            </div>
+				</div>
+				<div class="row">&nbsp;</div>
+                <div class="form-group" ng-class="{ 'has-error': form.tarkastaja.$invalid && form.tarkastaja.$touched}">
+                    <label for="tarkastaja" class="col-sm-3 control-label">
+                        <span i18n="ark.Inspector"></span> *
+                    </label>
+                    <div class="col-sm-9">
+                        <ui-select class="ng-animate-disabled" name="tarkastaja" theme="bootstrap" 
+                        	ng-required="true"
+                        	ng-model="vm.tutkimus.properties.tarkastus.tarkastaja"> 
+                        <ui-select-match
+                            data-i18n-attr="{placeholder: 'common.Select'}">
+                            {{$select.selected.etunimi}}
+                            {{$select.selected.sukunimi}}
+                            {{$select.selected.sahkoposti}} 
+                        </ui-select-match> 
+                        <ui-select-choices repeat="k in vm.kayttajat | filter: $select.search track by k.id">
+                        <span ng-bind-html="k.etunimi | highlight: $select.search"></span>
+                        <span ng-bind-html="k.sukunimi | highlight: $select.search"></span>
+                        <span ng-bind-html="k.sahkoposti | highlight: $select.search"></span>
+                        </ui-select-choices>
+                        </ui-select>
+		                <span class="help-block" ng-show="form.tarkastaja.$invalid && form.tarkastaja.$touched">
+		                    <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Inspector' | i18n }}"></span>
+		                </span>                        
+                    </div>
+                </div>							
+	            <div class="form-group">                                   
+	                <label class="col-sm-3 control-label">
+	                    <span i18n="ark.Field_work"></span>
+	                </label>
+	                <div class="col-md-9">
+	                    <div class="input-group">                        
+	                        <input bs-datepicker data-date-format="dd.MM.yyyy"
+	                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+	                            start-week="1"
+	                            class="form-control" name="kenttatyo_alkupvm"
+	                            ng-model="vm.tutkimus.properties.kenttatyo_alkupvm"
+	                            data-i18n-attr="{placeholder: 'common.Start_date'}">
+	                            <span class="input-group-addon">-</span>
+	                        <input bs-datepicker data-date-format="dd.MM.yyyy"                        
+	                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+	                            start-week="1"
+	                            class="form-control" name="kenttatyo_loppupvm"
+	                            ng-model="vm.tutkimus.properties.kenttatyo_loppupvm"
+	                            data-i18n-attr="{placeholder: 'common.End_date'}">
+	                    </div>
+	                </div>
+	            </div>
+				<div class="form-group">
+					<label for="julkinen" class="col-sm-3 control-label"> 
+						<span i18n="common.Public"></span>
+					</label>
+					<div class="col-sm-9">
+						<select ng-model="vm.tutkimus.properties.julkinen"
+							ng-init="vm.tutkimus.properties.julkinen = vm.tutkimus.properties.julkinen || vm.noYes[0].value"
+							ng-options="option.value as option.label for option in vm.noYes"
+							ng-required="true"
+							name="julkinen" class="form-control">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="valmis" class="col-sm-3 control-label"> 
+						<span i18n="common.Ready"></span>
+					</label>
+					<div class="col-sm-9">
+						<select ng-model="vm.tutkimus.properties.valmis"
+							ng-init="vm.tutkimus.properties.valmis = vm.tutkimus.properties.valmis || vm.noYes[0].value"
+							ng-options="option.value as option.label for option in vm.noYes"
+							ng-required="true"
+							name="valmis" class="form-control">
+						</select>
+					</div>
+				</div>
+                <div ng-if="vm.tutkimus.properties.tutkimuslaji !== undefined">             
+                <div class="form-group">
+                    <label for="lisatiedot" class="col-sm-3 control-label" i18n="common.Additional_information"> </label>
+                    <div class="col-sm-9">
+                        <textarea rows="3" class="form-control" name="lisatiedot"
+                            ng-model="vm.tutkimus.properties.lisatiedot"></textarea>                       
+                    </div>
+                </div>
+            </div> 
+			</div>
+        </div>
+		<!-- Right column -->
+        <div class="col-md-6 column-right">
+            <div ng-include="'ark/tutkimukset/partials/kaivaustutkimus_kokoelmat_edit.html'"></div>
+        </div>        
+    </div>
+</div>

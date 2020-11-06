@@ -1,0 +1,170 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Stratigraphic_relationships"></span>
+        </h4>
+    </div>
+    <div>
+        <svg id = "svgElement" class = "svgGraph" ng-attr-height="{{400}}" ng-attr-width="{{650}}">
+            <g ng-repeat = "rectangle in rectangles"
+              ng-attr-transform = translate({{rectangle.xPosition}},{{rectangle.yPosition}})
+              ng-click = "selectNode(rectangle.id)">
+              <rect
+                class = {{rectangle.class}}
+                ng-attr-stroke = {{strokeColour}}
+                ng-attr-stroke-width = {{strokeWidth}}
+                ng-attr-width = {{size.width}} ng-attr-height = {{size.height}}
+               >
+            </rect>
+              <text
+                  x = 20 y = 20
+                  font-size = "8px"
+                  class = {{rectangle.textClass}}
+                  text-anchor="middle"
+                  dominant-baseline="middle">{{rectangle.text}}</text>
+            </g>
+            <polyline ng-repeat = "line in lines"
+            ng-attr-points = {{line.points}}
+            stroke = "black" stroke-width = "2" fill = "none">
+            </polyline>
+
+            <g ng-repeat = "sign in equalSings" ng-attr-transform = translate({{sign.xPosition}},{{sign.yPosition}})>
+              <text
+              font-size = "50px"
+              fill = "black"
+              cursor= "default"
+              text-anchor="middle"
+              dominant-baseline="middle">=</text>
+          </g>
+        </svg>
+    </div>
+    <div class="panel-body" ng-if="vm.edit || vm.create">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <ui-select ng-model="searchYksikko"
+                        theme="bootstrap" sortable="true"
+                        name="yksikko"
+                        on-select="valitseYksikko($select.selected)"
+                        title="{{$select.selected.yksikkotunnus}}"
+                        close-on-select="true"
+                        spellcheck="false">
+                <ui-select-match allow-clear="true"
+                                data-i18n-attr="{placeholder: 'unit.Unit_identifier'}">
+                    {{$select.selected.yksikkotunnus}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="yksikko.yksikkotunnus as yksikko in yhakutulos track by $index "
+                        refresh="getTutkimuksenYksikot($select.search)"
+                        refresh-delay="250">
+                    <div>
+                    <span
+                            ng-bind-html="yksikko.yksikkotunnus | highlight: $select.search"
+                            title="{{yksikko.yksikkotunnus}}">
+                    </span>
+                    </div>
+                </ui-select-choices>
+                </ui-select>
+                <button class="btn btn-default" ng-click="createNew('up', searchYksikko)"><span i18n="unit.Add_unit_up"></span></button>
+                <button class="btn btn-default" ng-click="createNew('center', searchYksikko)"><span i18n="unit.Add_unit_center"></span></button>
+                <button class="btn btn-default" ng-click="createNew('down', searchYksikko)"><span i18n="unit.Add_unit_down"></span></button>
+                <button class="btn btn-default" ng-click="poistaSuhde()">
+                    <span ng-if="!vm.removeMode" i18n="unit.Remove_unit"></span>
+                    <span class="bg-danger" ng-if="vm.removeMode" i18n="unit.Click_to_remove"></span>
+                </button>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">
+                        <span i18n="unit.Unit_cuts"></span>
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="leikkaa"
+                            ng-model="vm.yksikko.properties.yksikko_leikkaa_note"
+                            ng-if="vm.create"
+                            spellcheck="false" autocomplete="off">
+                        <!--<p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.yksikko_leikkaa}}</p>-->
+                        <input type="text" class="form-control" name="leikkaa"
+                            ng-model="vm.yksikko.properties.yksikko_leikkaa"
+                            ng-if="!vm.create"
+                            spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">
+                        <span i18n="unit.Unit_belongs"></span>
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="kuuluu"
+                            ng-model="vm.yksikko.properties.yksikko_kuuluu_note"
+                            ng-if="vm.create"
+                            spellcheck="false" autocomplete="off">
+                       <!-- <p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.yksikko_kuuluu}}</p>-->
+                        <input type="text" class="form-control" name="kuuluu"
+                            ng-model="vm.yksikko.properties.yksikko_kuuluu"
+                            ng-if="!vm.create"
+                            spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" ng-if="!vm.edit && !vm.create">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                <span i18n="unit.Unit_cuts"></span>
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static" ng-if="vm.showNotes && vm.yksikko.properties.yksikko_leikkaa_note">{{vm.yksikko.properties.yksikko_leikkaa_note}}</p>
+                <p class="form-control-static" ng-if="vm.yksikko.properties.yksikko_leikkaa">{{vm.yksikko.properties.yksikko_leikkaa}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                <span i18n="unit.Unit_belongs"></span>
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static" ng-if="vm.showNotes && vm.yksikko.properties.yksikko_kuuluu_note">{{vm.yksikko.properties.yksikko_kuuluu_note}}</p>
+                <p class="form-control-static" ng-if="vm.yksikko.properties.yksikko_kuuluu">{{vm.yksikko.properties.yksikko_kuuluu}}</p>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="panel-body" ng-if="!vm.edit">
+        <svg id = "svgElement" ng-attr-height="{{400}}" ng-attr-width="{{650}}">
+            <g ng-repeat = "rectangle in rectangles"
+              ng-attr-transform = translate({{rectangle.xPosition}},{{rectangle.yPosition}})
+              ng-click = "selectNode(rectangle.id)">
+              <rect
+                class = {{rectangle.class}}
+                ng-attr-stroke = {{strokeColour}}
+                ng-attr-stroke-width = {{strokeWidth}}
+                ng-attr-width = {{size.width}} ng-attr-height = {{size.height}}
+               >
+            </rect>
+              <text
+                  x = 20 y = 20
+                  font-size = "8px"
+                  fill = "black"
+                  text-anchor="middle"
+                  dominant-baseline="middle">{{rectangle.text}}</text>
+            </g>
+            <polyline ng-repeat = "line in lines"
+            ng-attr-points = {{line.points}}
+            stroke = "black" stroke-width = "2" fill = "none">
+            </polyline>
+
+            <g ng-repeat = "sign in equalSings" ng-attr-transform = translate({{sign.xPosition}},{{sign.yPosition}})>
+              <text
+              font-size = "50px"
+              fill = "black"
+              text-anchor="middle"
+              dominant-baseline="middle">=</text>
+          </g>
+        </svg>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <button ng-click="lataaStratigrafia()">Lataa</button>
+            </div>
+        </div>
+    </div>
+    -->
+</div>

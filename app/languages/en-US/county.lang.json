@@ -1,0 +1,9 @@
+{
+	"County_saved" : "County %name saved successfully",
+	"County_deleted" : "County deleted",
+	"No_counties_found" : "No counties found",
+	"Getting_areas_for_county_failed" : "Getting the areas for the county failed",
+	"Saving_county_ok" : "County %name saved successfully",
+	"County_added" : "New county created successfully",
+	"No_view_permission" : "You don't have permission to view counties"
+}

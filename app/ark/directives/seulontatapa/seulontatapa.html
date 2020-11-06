@@ -1,0 +1,13 @@
+
+<div class="form-group">
+    <label for="seulontatapa" class="col-sm-4 control-label">
+        <span i18n="unit.Sieving"></span>
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="seulontatapa" 
+        	ng-model="seulontatapa" 
+            ng-options="seulontatapa as seulontatapa.nimi_fi for seulontatapa in seulontatavat track by seulontatapa.id">
+        </select>
+    </div>
+</div>

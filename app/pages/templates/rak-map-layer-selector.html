@@ -1,0 +1,51 @@
+<div class="popover" style="width: 40em; max-width: 60em; height:auto" tabindex="-1">
+    <div class="arrow"></div>
+    <h3 class="popover-title" i18n="common.Adjust_layers"></h3>
+    <div class="row container-fluid">
+        <div class="col-md-12">
+            <button type="button"
+                class="btn btn-default form-control mip-text-overflow"
+                ng-model="$parent.$parent.$parent.$parent.$parent.selectedLayers"
+                data-i18n-attr="{title: 'common.Select_object_layers'}"
+                data-max-length="0"
+                data-max-length-html="{{textSelectLayers}}"
+                placeholder="{{textSelectLayers}}"
+                data-multiple="1"
+                bs-options="objectLayer.value as objectLayer.label for objectLayer in objectLayers"
+                bs-select
+                ng-change="selectLayer();"
+                style="margin-bottom:0.5em; margin-top:0.5em;">
+                <span class="caret"></span>
+            </button>
+            <br />
+            <button type="button" class="btn btn-default form-control mip-text-overflow"
+                ng-model="$parent.$parent.$parent.$parent.$parent.selectedMapLayers"
+                data-i18n-attr="{title: 'common.Select_map_layers'}" data-max-length="0"
+                data-max-length-html="{{textSelectMapLayers}}" placeholder="{{textSelectMapLayers}}"
+                data-multiple="1" sort="false"
+                bs-options="mapLayer.properties as mapLayer.properties.nimi for mapLayer in availableMapLayers"
+                bs-select ng-change="selectMapLayer();" bs-auto-close="true">
+                <span class="caret"></span>
+            </button>
+            <br /> <br />
+            <div class="row">
+                <div class="col-md-5"><b i18n="common.Map_layers"></b></div>
+                <div class="col-md-2"><b i18n="common.Order"></b></div>
+                <div class="col-md-4"><b i18n="common.Opacity"></b></div>
+            </div>
+            <div class="row" ng-repeat="layer in $parent.$parent.$parent.$parent.$parent.mapLayers | filter:{active:true} | filter:{name:'POHJAKARTTA_'}">
+                <div class="col-md-5">{{layer.name | mipMapLayerName}}</div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" ng-model="layer.zIndex" ng-init="layer.zIndex" style="width:4.5em;" data-i18-attr="{title: 'common.Change_layer_order'}">                    
+                </div>
+                <div class="col-md-4">
+                    <rzslider rz-slider-model="layer.opacity" class="custom-slider"
+                        rz-slider-options="{floor: 0.0, ceil: 1.0, step: 0.1, precision: 1.0}" data-i18-attr="{title: 'common.Change_layer_opacity'}"></rzslider>
+                </div>
+                <button type="button" class="btn btn-sm btn-success" data-i18n-attr="{title: 'common.Save'}" ng-click="tallennaTasot(layer)">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                </button>                
+            </div>
+        </div>
+    </div>
+</div>

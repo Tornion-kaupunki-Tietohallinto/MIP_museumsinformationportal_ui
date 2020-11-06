@@ -1,0 +1,36 @@
+<div class="form-group">
+    <label class="col-md-3 control-label">
+         <span i18n="ark.Old_counties"></span> 
+    </label>
+    
+    <div class="col-sm-9">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="vk in valitutvanhatkunnat">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="vk_{{$index}}"
+                                ng-model="vk.kuntanimi" ng-required="true">
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" ng-click="deleteVK($index)"
+                                class="btn btn-danger pull-right">
+                                <span i18n="common.Delete"></span>
+                            </button>
+                        </div>                
+                    </div>
+                </fieldset>
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="button" ng-click="addVK()"
+                            class="btn btn-success pull-right">
+                            <span i18n="common.Add"></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

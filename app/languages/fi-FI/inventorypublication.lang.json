@@ -1,0 +1,10 @@
+{
+    "Saved_successfully" : "Inventointijulkaisu %name tallennettu onnistuneesti",
+    "Delete_failed": "Inventointijulkaisun poisto epäonnistui",
+    "No_view_permission" : "Ei katseluoikeutta inventointijulkaisuihin",  
+    "Save_failed": "Inventointijulkaisun tallentaminen epäonnistui",
+    "Deleted": "Inventointijulkaisu %name poistettu onnistuneesti",
+    "Getting_updated_data_failed": "Muuttuneiden tietojen haku epäonnistui. Avaa näkymä uudelleen",
+    "Inventoryproject_or_county_is_mandatory": "Inventointiprojekti tai kunta on pakollinen tieto",
+    "Unallowed_special_characters_in_name": "Ainoat sallitut erikoismerkit nimessä ovat - ja _."
+}
