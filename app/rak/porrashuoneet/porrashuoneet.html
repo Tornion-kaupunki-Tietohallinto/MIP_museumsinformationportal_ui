@@ -1,0 +1,237 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default panel-collapsible table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> : {{porrashuoneetTable.total()}} <span
+                                i18n="common.Shown"></span> : {{searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse form-horizontal collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                             <div class="col-md-2 col-sm-2 col-xs-2">
+                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="clearSearchFilter()"
+                                    data-i18n-attr="{title: 'common.Clear_filter'}">
+                                    <span class="fa fa-ban"></span>
+                                </button>
+                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="refreshTable()"
+                                    data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                    <span class="fa fa-refresh"></span>
+                                </button> 
+                                
+                            </div>
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showKuntaCol" ng-change="saveColVisibility('showKuntaCol', colVisibilities.showKuntaCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>
+                                            <mip-kuntavalitsin props="porrashuoneetTable.filter().properties"></mip-kuntavalitsin>  
+                                        </div>                                                                                  
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showKylaCol" ng-change="saveColVisibility('showKylaCol', colVisibilities.showKylaCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                           <mip-kylavalitsin props="porrashuoneetTable.filter().properties"></mip-kylavalitsin>         
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 mip-input-group"
+                                                style="padding-right: 0px">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                	<input type="checkbox" ng-model="colVisibilities.showKiinteistotunnusCol" ng-change="saveColVisibility('showKiinteistotunnusCol', colVisibilities.showKiinteistotunnusCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            		</span>
+                                                <input type="text" class="form-control"
+                                                    style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                    name="kiinteistotunnus"
+                                                    ng-model="porrashuoneetTable.filter().properties.kiinteistotunnus"
+                                                    data-i18n-attr="{placeholder: 'common.Property_identifier'}"
+                                                    spellcheck="false" autocomplete="off">
+                                                    </div>
+                                            </div>
+                                            <div class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                style="padding-left: 0px;">
+                                                <input type="text" class="form-control"
+                                                    style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                    name="palstanumero"
+                                                    ng-model="porrashuoneetTable.filter().properties.palstanumero"
+                                                    data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                    spellcheck="false" autocomplete="off">
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showKiinteistoNimiCol" ng-change="saveColVisibility('showKiinteistoNimiCol', colVisibilities.showKiinteistoNimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                            <input type="text" class="form-control"
+                                                name="kiinteisto_nimi"
+                                                ng-model="porrashuoneetTable.filter().properties.kiinteisto_nimi"
+                                                data-i18n-attr="{placeholder: 'common.Estate'}" spellcheck="false" autocomplete="off">
+                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showKiinteistoOsoiteCol" ng-change="saveColVisibility('showKiinteistoOsoiteCol', colVisibilities.showKiinteistoOsoiteCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                            <input type="text" class="form-control"
+                                                name="kiinteisto_osoite"
+                                                ng-model="porrashuoneetTable.filter().properties.kiinteisto_osoite"
+                                                data-i18n-attr="{placeholder: 'common.Address'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showRakennustyyppiCol" ng-change="saveColVisibility('showRakennustyyppiCol', colVisibilities.showRakennustyyppiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                        	<ui-select ng-model="porrashuoneetTable.filter().properties.rakennustyyppi"
+    											name="rakennustyyppi" theme="bootstrap" multiple="true"
+    											ng-required="false"
+    											on-remove="addItemBackToList($item, rakennustyyppiOptions)"
+                                                spellcheck="false">
+    										<ui-select-match data-i18n-attr="{placeholder: 'common.Building_type'}">{{$item | namei18n}}</ui-select-match>
+    										<ui-select-choices
+    											repeat="rakennustyyppi.id as rakennustyyppi in rakennustyyppiOptions | filter: {'nimi_fi': $select.search}">
+    										<div ng-bind-html="rakennustyyppi | namei18n | highlight: $select.search">
+												</div>
+    										</ui-select-choices> </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showPorrashuoneentunnusCol" ng-change="saveColVisibility('showPorrashuoneentunnusCol', colVisibilities.showPorrashuoneentunnusCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                            <input type="text" class="form-control" name="tunnus"
+                                                ng-model="porrashuoneetTable.filter().properties.tunnus"
+                                                data-i18n-attr="{placeholder: 'common.Staircase_identifier'}" spellcheck="false" autocomplete="off">
+                                        </div>
+                                     </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showPorrashuonetyyppiCol" ng-change="saveColVisibility('showPorrashuonetyyppiCol', colVisibilities.showPorrashuonetyyppiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span> 
+                                            <ui-select ng-model="porrashuoneetTable.filter().properties.porrashuonetyyppi"
+                                                name="rakennustyyppi" theme="bootstrap" multiple="true"
+                                                ng-required="false"
+                                                on-remove="addItemBackToList($item, porrashuonetyyppiOptions)"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Staircase_type'}">{{$item | namei18n}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="porrashuonetyyppi.id as porrashuonetyyppi in porrashuonetyyppiOptions | filter: {'nimi_fi': $select.search}">
+    										<div ng-bind-html="porrashuonetyyppi | namei18n | highlight: $select.search">
+												</div>
+                                            </ui-select-choices> </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">         
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showAddedByCol" ng-change="saveColVisibility('showAddedByCol', colVisibilities.showAddedByCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                       
+                                            <ui-select 
+                                                ng-model="porrashuoneetTable.filter().properties.luoja"
+                                                name="luoja"
+                                                spellcheck="false">
+                                                <ui-select-match 
+                                                    data-i18n-attr="{placeholder: 'common.Created_by'}"
+                                                    allow-clear="true">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}</ui-select-match>
+                                                <ui-select-choices                                               
+                                                    group-by="'tyyppi'"
+                                                    repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                    refresh="getKayttajat($select.search)"
+                                                    refresh-delay="250">
+                                                    <div>                                                                
+                                                        <span
+                                                            ng-bind-html="kayttaja.etunimi | highlight: $select.search">
+                                                        </span>
+                                                        <span
+                                                            ng-bind-html="kayttaja.sukunimi | highlight: $select.search">
+                                                        </span>
+                                                    </div>
+                                                </ui-select-choices> 
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                    <table ng-table="porrashuoneetTable"
+                        template-pagination="pages/templates/table-pagination.html"
+                        class="table table-striped table-bordered" show-filter="false">
+                        <tr ng-repeat="porrashuone in $data" style="cursor: pointer"
+                            ng-click="selectPorrashuone(porrashuone)">
+                            <td data-title="getColumnName('County')" ng-if="colVisibilities.showKuntaCol && currentLocale === 'fi-FI'"
+                                sortable="'properties.kunta'"
+                                filter="{ 'properties.kunta': 'text' }">{{porrashuone.properties.kunta}}</td>
+                            <td data-title="getColumnName('County')" ng-if="colVisibilities.showKuntaCol && currentLocale === 'sv-FI'"
+                                sortable="'properties.kunta'"
+                                filter="{ 'properties.kunta': 'text' }">{{porrashuone.properties.kunta_se}}</td>
+                            <td data-title="getColumnName('Village')" sortable="'properties.kyla'" ng-if="colVisibilities.showKylaCol">
+                                {{porrashuone.properties.kyla}}
+                                ({{porrashuone.properties.kylanumero}})</td>
+                            <td data-title="getColumnName('Property_identifier')"
+                                sortable="'properties.kiinteistotunnus'"  ng-if="colVisibilities.showKiinteistotunnusCol">
+                                {{porrashuone.properties.kiinteistotunnus}}<span ng-if="porrashuone.properties.kiinteisto_palstanumero"> ({{porrashuone.properties.kiinteisto_palstanumero}})</span></td>
+                            <td data-title="getColumnName('Estate_name')" sortable="'properties.kiinteisto_nimi'" ng-if="colVisibilities.showKiinteistoNimiCol"
+                                filter="{ 'properties.kiinteisto_nimi': 'text' }">{{porrashuone.properties.kiinteisto_nimi}}</td>
+                            <td data-title="getColumnName('Address')" sortable="'properties.kiinteisto_osoite'" ng-if="colVisibilities.showKiinteistoOsoiteCol"
+                                filter="{ 'properties.kiinteisto_osoite': 'text' }">{{porrashuone.properties.kiinteisto_osoite}}</td>                           
+                            <td data-title="getColumnName('Building_type')" sortable="'properties.rakennus_tyyppi'" ng-if="colVisibilities.showRakennustyyppiCol"
+                                filter="{ 'properties.rakennus_tyyppi': 'text' }">
+                                <div ng-repeat="rakennustyyppi in porrashuone.properties.rakennus.rakennustyypit"> {{rakennustyyppi | namei18n}}</div></td>
+                            <td data-title="getColumnName('Staircase_identifier')" sortable="'properties.porrashuoneentunnus'" ng-if="colVisibilities.showPorrashuoneentunnusCol"
+                                filter="{ 'properties.tunnus': 'text' }">{{porrashuone.properties.tunnus}}</td>
+                            <td data-title="getColumnName('Type')" sortable="'properties.porrashuonetyyppi'" ng-if="colVisibilities.showPorrashuonetyyppiCol"
+                                filter="{ 'properties.porrashuonetyyppi': 'text' }">{{porrashuone.properties.porrashuonetyyppi}}</td>
+                             <td data-title="getColumnName('Added_by')" ng-if="colVisibilities.showAddedByCol"
+                                filter="{ 'properties.luoja': 'number' }">                                                                
+                                {{porrashuone.properties.luoja.etunimi}} {{porrashuone.properties.luoja.sukunimi}}                                                             
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

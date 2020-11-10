@@ -1,0 +1,6 @@
+{
+    "No_view_permission" : "Du har inte rättigheter att se Forskningar",
+    "No_view_permission_single" : "Du har inte rättigheter att se Forskning",
+	"Research_delete_error": "Tutkimuksella on tutkimusalueita",
+	"Delete_failed": "Tutkimuksen poisto epäonnistui"
+}

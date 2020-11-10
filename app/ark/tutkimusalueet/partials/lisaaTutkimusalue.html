@@ -1,0 +1,199 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4>
+                    <span i18n="ark.Select_research_areas"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-6 column-left">
+                    <div
+                        class="panel-group"
+                        role="tablist"
+                        aria-multiselectable="true"
+                        data-start-collapsed="true"
+                        ng-model="vm.panels.activePanel"
+                        bs-collapse>
+                        <div
+                            class="panel panel-default"
+                            ng-repeat="ta in vm.tutkimusalueet">
+                            <div
+                                class="panel-heading"
+                                role="tab">
+                                <h4 class="panel-title">
+                                    <a bs-collapse-toggle style="cursor: pointer"><span i18n="ark.Research_area"></span> {{ta.properties.label}} <span ng-show="ta.save"> - </span><span ng-show="ta.save" i18n="ark.Marked_to_be_saved"></span></a>
+                                </h4>
+                            </div>
+                            <div
+                                class="panel-collapse"
+                                role="tabpanel"
+                                bs-collapse-target>
+                                <div class="panel-body">
+                                    <div class="row" ng-if="!vm.tutkimusalue">
+                                            <span><strong i18n="ark.Info_to_be_saved_for_research_area"></strong></span>
+                                            <div class="form-group" ng-class="{ 'has-error': !vm.uniikkiNimi && vm.nimiIndex == $index}">
+                                                <label for="nimi" class="col-sm-3 control-label">
+                                                    <span i18n="common.Name"></span> <span ng-show="ta.save">*</span>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" 
+                                                    	name="nimi"
+                                                        ng-model="ta.properties.nimi" 
+                                                        ng-change="vm.uniikkiNimiTarkistus(ta.properties.nimi, $index)"
+                                                        ng-model-options='{debounce: 500}' 
+                                                        spellcheck="false" autocomplete="off">
+									                <span class="help-block" ng-show="!vm.uniikkiNimi && vm.nimiIndex == $index">
+									                    <span data-i18n="common.already_in_use" data-field="{{ 'common.Name' | i18n }}"></span>
+									                </span>
+                                                </div>    
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sijaintikuvaus" class="col-sm-3 control-label" i18n="ark.Location_description"> </label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="3" class="form-control" name="sijaintikuvaus" style="min-height:69px;"
+                                                        ng-model="ta.properties.sijaintikuvaus"></textarea>                        
+                                                </div>
+                                            </div>                                            
+                                    </div>
+                                    <div class="row">
+                                        <span><strong i18n="ark.Data_read_from_file"></strong></span>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">
+                                                <span i18n="ark.Field_name"></span>
+                                            </label>
+                                            <label class="col-sm-8 control-label">
+                                                <span i18n="ark.Field_value"></span>
+                                            </label>   
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group" ng-repeat="(key, value) in ta.properties">
+                                            <div class="col-sm-4" ng-show="(key != 'label' && key != 'sijaintikuvaus' && key != 'nimi') && (value.length > 0)">
+                                                <p>{{key}}</p>
+                                            </div>                                            
+                                            <div class="col-sm-8" ng-show="(key != 'label' && key != 'sijaintikuvaus' && key != 'nimi') && (value.length > 0)">
+                                                <p>{{value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="vm.tutkimusalue">
+                                        <div class="form-group">
+                                            <label for="tutkimusalue" class="col-sm-3 control-label" i18n="ark.Research_area"></label>
+                                            <div class="col-sm-9">
+                                                <label>{{vm.tutkimusalue.properties.nimi}}</label>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="tallenna" class="col-sm-3 control-label" i18n="common.Save"></label>
+                                            <div class="col-sm-9">
+                                                <select ng-model="ta.save"
+                                                    ng-change="vm.verifySaved(ta)"
+                                                    ng-options="tf.value as tf.label for tf in vm.noYes"
+                                                    name="tallenna" class="form-control">
+                                                </select>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 column-right">
+                    <div
+                        id="{{vm.modalId}}_sijaintiPanel"
+                        class="panel-body panel-collapse collapse in">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div
+                                    class="btn-group btn-group-map-holder"
+                                    role="group">
+                                    <div
+                                        class="col-md-6 btn-group btn-group-map"
+                                        role="group">
+                                        <button
+                                            type="button"
+                                            class="btn btn-default"
+                                            ng-model="vm.selectedMapLayers"
+                                            data-max-length="0"
+                                            data-max-length-html="{{vm.textSelectMapLayers}}"
+                                            placeholder="{{vm.textSelectMapLayers}}"
+                                            data-html="1"
+                                            data-multiple="1"
+                                            bs-options="mapLayer.properties as mapLayer.properties.nimi for mapLayer in vm.availableMapLayers"
+                                            bs-select
+                                            ng-change="vm.selectMapLayer();"
+                                            data-i18n-attr="{title: 'common.Select_map_layers'}">
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                    <div
+                                        class="col-md-6 btn-group btn-group-map"
+                                        role="group">
+                                        <button
+                                            type="button"
+                                            class="btn btn-default"
+                                            ng-model="vm.selectedLayers"
+                                            data-max-length="0"
+                                            data-max-length-html="{{vm.textSelectLayers}}"
+                                            placeholder="{{vm.textSelectLayers}}"
+                                            data-html="1"
+                                            data-multiple="1"
+                                            bs-options="objectLayer.value as objectLayer.label for objectLayer in vm.objectLayers"
+                                            bs-select
+                                            ng-change="vm.selectLayer();"
+                                            data-i18n-attr="{title: 'common.Select_object_layers'}">
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div
+                                class="col-md-12 modalMapContainer"
+                                ng-if="vm.showMap">
+                                <openlayers
+                                    id="{{vm.mapId}}"
+                                    ol-center="vm.center"
+                                    ol-defaults="vm.defaults"
+                                    height="400px"
+                                    width="100%"
+                                    custom-layers="true"> 
+                                    <ol-control
+                                        name="{{ vm.control.name }}"
+                                        ng-repeat="control in vm.controls|filter: {active: true}">
+                                    </ol-control> 
+                                    <ol-layer
+                                        ol-layer-properties="layer"
+                                        ng-repeat="layer in vm.layers|filter:{active:true}"> 
+                                    </ol-layer> 
+                                </openlayers>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                	ng-class="{ disabled: !vm.uniikkiNimi }"
+                    type="button"
+                    class="btn btn-success"
+                    id="btn-cancel"
+                    ng-click="vm.save()">
+                    <span i18n="common.Save"></span>
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-default pull-right"
+                    id="btn-cancel"
+                    ng-click="vm.close()">
+                    <span i18n="common.Cancel"></span>
+                </button>
+            </div>
+        </div>
+        <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

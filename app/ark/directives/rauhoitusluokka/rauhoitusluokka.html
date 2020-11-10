@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label for="rauhoitusluokka" class="col-sm-3 control-label">
+        <span i18n="ark.Protection_class"></span>
+    </label>
+    <div class="col-sm-9">
+        <select class="form-control" name="rauhoitusluokka" ng-model="luokka"
+            ng-options="luokka as luokka.nimi_fi for luokka in rauhoitusluokat track by luokka.id">
+            <option value=""></option>
+        </select>
+    </div>
+</div>

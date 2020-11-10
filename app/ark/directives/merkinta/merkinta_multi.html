@@ -1,0 +1,24 @@
+<div class="form-group" ng-if="!haku">
+    <label for="merkinta" class="col-sm-3 control-label">
+        <span i18n="common.Mark"></span>
+    </label>
+    <div class="col-sm-9">
+        <ui-select multiple="true" ng-model="merkinta.merkinnat" theme="bootstrap" name="merkinnat"> 
+            <ui-select-match>{{$item | namei18n}}</ui-select-match> 
+            <ui-select-choices repeat="merkinta in merkinnat | filter: $select.search">
+	          <div>
+	              <span ng-bind-html="merkinta | namei18n | highlight: $select.search"></span>
+	          </div>
+        	</ui-select-choices> 
+        </ui-select>    
+    </div>
+</div>
+<!-- Hakusivu -->
+<ui-select multiple="true" ng-if="haku" ng-model="merkinta.merkinnat" theme="bootstrap" name="merkinnat"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'common.Mark'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="merkinta.id as merkinta in merkinnat | filter: $select.search">
+   <div>
+       <span ng-bind-html="merkinta | namei18n | highlight: $select.search"></span>
+   </div>
+	</ui-select-choices> 
+</ui-select>

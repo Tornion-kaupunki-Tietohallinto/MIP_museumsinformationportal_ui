@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Interfaces_and_disruption"></span>
+        </h4>
+    </div>
+    <div class="panel-body" ng-if="vm.edit || vm.create">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea rows="3" class="form-control" name="rajapinnat"
+                    ng-model="vm.yksikko.properties.rajapinnat_note"
+                    ng-if="vm.create">
+                </textarea>
+                <p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.rajapinnat_note}}</p>             
+                <textarea rows="3" class="form-control" name="rajapinnat"
+                    ng-model="vm.yksikko.properties.rajapinnat"
+                    ng-if="!vm.create">
+                </textarea>
+            </div>    
+        </div>
+   </div>
+	<div class="panel-body" ng-if="!vm.edit && !vm.create">
+	    <div class="form-group">
+	        <div class="col-sm-12" ng-if="vm.showNotes && vm.yksikko.properties.rajapinnat_note">
+	            <p class="form-control-static">{{vm.yksikko.properties.rajapinnat_note}}</p>
+	        </div>
+	        <div class="col-sm-12" ng-if="vm.yksikko.properties.rajapinnat">
+	            <p class="form-control-static">{{vm.yksikko.properties.rajapinnat}}</p>
+	        </div>            
+	    </div>
+	</div>         
+</div>

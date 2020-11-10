@@ -1,0 +1,22 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="form-group">
+	<label i18n="ark.Glossaries" class="control-label"></label>
+	    <ui-select multiple 
+	        ng-model="asiasanat"  
+	        theme="bootstrap" 
+	        name="hakusanat"
+	        on-select="valitseAsiasana($item)"
+	        on-remove="poistaAsiasana($item, asiasanat)"
+	        ng-disabled="dis"> 
+	        <ui-select-match data-i18n-attr="{placeholder: 'ark.Search_glossary'}">{{$item}}</ui-select-match> 
+	        <ui-select-choices 
+	        repeat="sana in hakutulos track by $index"
+	        refresh="fintoHaku($select.search)"
+	        refresh-delay="0">
+	          <div>
+	              <span ng-bind-html="sana | highlight: $select.search"></span>
+	          </div>
+	        </ui-select-choices> 
+	    </ui-select>        
+	</div>
+</div>

@@ -1,0 +1,19 @@
+
+<div class="modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title" i18n="common.Details"></h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 table-responsive">
+                <div ng-bind-html="data"></div>                        
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="close()" ng-show="!edit">
+                <span i18n="common.Close"></span>
+            </button>
+        </div>
+    </div>
+</div>

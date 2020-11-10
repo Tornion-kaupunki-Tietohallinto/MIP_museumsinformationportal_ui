@@ -1,0 +1,106 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.ValueArea_protection"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="suojelu in arvoalue.properties.suojelutiedot">
+                <fieldset>
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suojelu_{{$index}}_tyyppi.$invalid && form.suojelu_{{$index}}_tyyppi.$touched }">
+
+                        <label for="suojelu_{{$index}}_tyyppi" class="col-sm-3 control-label">
+                            <span i18n="common.Protection_type"></span> *
+                        </label>
+
+                        <div class="col-sm-9">
+                            <select name="suojelu_{{$index}}_tyyppi" class="form-control"
+                                ng-model="suojelu.suojelutyyppi" 
+                                ng-required="true"
+                                ng-options="s as s.nimi_fi group by s.suojelutyyppi_ryhma_nimi for s in suojeluOptions track by s.id">
+                            </select>
+                            <span
+                                class="help-block"
+                                ng-show="form.suojelu_{{$index}}_tyyppi.$invalid && form.suojelu_{{$index}}_tyyppi.$touched"> 
+                                <span
+                                    data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Protection_type' | i18n }}"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suojelu_{{$index}}_merkinta.$invalid && form.suojelu_{{$index}}_merkinta.$touched }"
+                        ng-if="suojelu.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+
+                        <label for="suojelu_{{$index}}_merkinta" class="col-sm-3 control-label">
+                            <span i18n="common.Mark"></span>
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="suojelu_{{$index}}_merkinta"
+                                data-i18n-attr="{placeholder: 'common.Mark'}"
+                                ng-model="suojelu.merkinta" 
+                                spellcheck="false" autocomplete="off">     
+                            <span
+                                class="help-block"
+                                ng-show="form.suojelu_{{$index}}_merkinta.$invalid && form.suojelu_{{$index}}_merkinta.$touched"> 
+                                <span
+                                    data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Mark' | i18n }}"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group"
+                        ng-class="{ 'has-error': form.suojelu_{{$index}}_selite.$invalid && form.suojelu_{{$index}}_selite.$touched }">
+
+                        <label for="suojelu_{{$index}}.selite" class="col-sm-3 control-label">
+                            <span i18n="common.Description"></span>
+                        </label>
+                        <div class="col-sm-9">
+                            <textarea rows="3" class="form-control" name="suojelu_{{$index}}_selite"
+                                data-i18n-attr="{placeholder: 'common.Description'}"
+                                ng-model="suojelu.selite" 
+                                spellcheck="false" autocomplete="off"></textarea>
+                                
+                            <span
+                                class="help-block"
+                                ng-show="form.suojelu_{{$index}}_selite.$invalid && form.suojelu_{{$index}}_selite.$touched">
+                                <span
+                                    data-i18n="common.mandatory_value"
+                                    data-field="{{ 'common.Description' | i18n }}"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="deleteSuojelutieto($index)"
+                                class="btn btn-danger pull-right">
+                                <span i18n="common.Delete"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+            </li>
+            <li class="list-group-item">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="addSuojelutieto()" class="btn btn-success pull-right">
+                                <span i18n="common.Add"></span>
+                            </button>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+        </ul>
+
+    </div>
+
+</div>

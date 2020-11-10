@@ -1,0 +1,327 @@
+<div class="panel">
+	<div class="panel-body">
+		<div ng-include="'pages/tabs.html'"></div>
+		<div ng-include="'pages/subtabs.html'"></div>
+		<div class="panel">
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Arvotus</h4>
+					<button type="button" class="btn btn-default"
+						ng-click="add('arvotus')">
+						<span i18n="common.Add_new"></span>
+					</button>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="arvotus in lists.arvotus.values">
+							<td>{{arvotus.properties.id}}</td>
+							<td>
+								<span ng-show="!editing(arvotus.properties.id)">{{arvotus.properties.arvo_fi}}</span>
+								<input type="text" ng-show="editing(arvotus.properties.id)"
+									ng-model="arvotus.properties.arvo_fi">
+							</td>
+							<td>
+								<span ng-show="!editing(arvotus.properties.id)">{{arvotus.properties.arvo_se}}</span>
+								<input type="text" ng-show="editing(arvotus.properties.id)"
+									ng-model="arvotus.properties.arvo_se">
+							</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									ng-click="edit(arvotus.properties.id, 'arvotus')"
+									ng-show="!editing(arvotus.properties.id)" i18n="common.Edit"></button>
+								<button type="button" class="btn btn-default"
+									ng-click="cancel_edit(arvotus.properties.id, 'arvotus')"
+									ng-show="editing(arvotus.properties.id)" i18n="common.Cancel">
+									<button type="button" class="btn btn-default"
+									ng-click="save(arvotus.properties.id, 'arvotus')"
+									ng-show="editing(arvotus.properties.id)" i18n="common.Save"></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Kate</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="kate in lists.kate.values">
+							<td>{{kate.properties.id}}</td>
+							<td>{{kate.properties.arvo_fi}}</td>
+							<td>{{kate.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Kattotyyppi</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="kattotyyppi in kattotyyppiList">
+							<td>{{kattotyyppi.properties.id}}</td>
+							<td>{{kattotyyppi.properties.arvo_fi}}</td>
+							<td>{{kattotyyppi.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Kunto</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="kunto in kuntoList">
+							<td>{{kunto.properties.id}}</td>
+							<td>{{kunto.properties.arvo_fi}}</td>
+							<td>{{kunto.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Käyttötarkoitus</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="kayttotarkoitus in kayttotarkoitusList">
+							<td>{{kayttotarkoitus.properties.id}}</td>
+							<td>{{kayttotarkoitus.properties.arvo_fi}}</td>
+							<td>{{kayttotarkoitus.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Nykyinen tyyli</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="nykyinen_tyyli in nykyinen_tyyliList">
+							<td>{{nykyinen_tyyli.properties.id}}</td>
+							<td>{{nykyinen_tyyli.properties.arvo_fi}}</td>
+							<td>{{nykyinen_tyyli.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Perustus</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="perustus in perustusList">
+							<td>{{perustus.properties.id}}</td>
+							<td>{{perustus.properties.arvo_fi}}</td>
+							<td>{{perustus.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Porrastyyppi</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="porrastyyppi in porrastyyppiList">
+							<td>{{porrastyyppi.properties.id}}</td>
+							<td>{{porrastyyppi.properties.arvo_fi}}</td>
+							<td>{{porrastyyppi.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Rakennustyyppi</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="rakennustyyppi in rakennustyyppiList">
+							<td>{{rakennustyyppi.properties.id}}</td>
+							<td>{{rakennustyyppi.properties.arvo_fi}}</td>
+							<td>{{rakennustyyppi.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Rakentajalaji</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="rakentajalaji in rakentajalajiList">
+							<td>{{rakentajalaji.properties.id}}</td>
+							<td>{{rakentajalaji.properties.arvo_fi}}</td>
+							<td>{{rakentajalaji.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Rakentajatyyppi</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="rakentajatyyppi in rakentajatyyppiList">
+							<td>{{rakentajatyyppi.properties.id}}</td>
+							<td>{{rakentajatyyppi.properties.arvo_fi}}</td>
+							<td>{{rakentajatyyppi.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Runko</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="runko in runkoList">
+							<td>{{runko.properties.id}}</td>
+							<td>{{runko.properties.arvo_fi}}</td>
+							<td>{{runko.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Tilatyyppi</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="tilatyyppi in tilatyyppiList">
+							<td>{{tilatyyppi.properties.id}}</td>
+							<td>{{tilatyyppi.properties.arvo_fi}}</td>
+							<td>{{tilatyyppi.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-12">
+					<h4>Vuoraus</h4>
+					<table class="table table-striped table-bordered">
+						<tr>
+							<td>
+								<span i18n="common.Id"></span>
+							</td>
+							<td>
+								<span i18n="common.Value"></span>
+							</td>
+							<td>
+								<span i18n="common.Value_in_swedish"></span>
+							</td>
+						</tr>
+						<tr ng-repeat="vuoraus in vuorausList">
+							<td>{{vuoraus.properties.id}}</td>
+							<td>{{vuoraus.properties.arvo_fi}}</td>
+							<td>{{vuoraus.properties.arvo_se}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

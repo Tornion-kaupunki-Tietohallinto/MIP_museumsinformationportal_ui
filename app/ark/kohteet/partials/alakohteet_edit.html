@@ -1,0 +1,53 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+       <h4 class="panel-title">
+           <span i18n="ark.Subtargets"></span>
+           <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+       </h4>
+    </div>
+    <div class="panel-body">        
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="alakohde in vm.kohde.properties.alakohteet">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="list-group-item-heading">{{alakohde.nimi}}</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-sm btn-success pull-right" ng-click="vm.editAlakohde(alakohde)" i18n="common.Edit" style="margin-left: 3px;"></button>
+                        <button class="btn btn-sm btn-danger pull-right" ng-click="vm.deleteAlakohde($index)" i18n="common.Delete"></button>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="alakohde.tyyppi">
+                    <label class="col-sm-3"> <span
+                        i18n="common.Type"></span> / <span i18n="ark.Type_extension"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{alakohde.tyyppi | namei18n}} - {{alakohde.tyyppitarkenne | namei18n}}</p>
+                    </div>
+                </div>                                                                                  
+                
+                <label i18n="ark.Timing"></label>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="aka in alakohde.ajoitukset">{{aka.ajoitus | namei18n}} - {{aka.tarkenne | namei18n}}
+                        <p class="mip-multiline">{{aka.ajoituskriteeri}}</p>
+                    </li>
+                    
+                </ul>
+                <label i18n="common.Description"></label>
+                <p class="mip-multiline">{{alakohde.kuvaus}}</p>                
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="button" ng-click="vm.editAlakohde()"
+                            class="btn btn-success pull-right">
+                            <span i18n="common.Add"></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+</div>

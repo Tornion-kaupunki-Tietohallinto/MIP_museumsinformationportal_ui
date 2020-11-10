@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label for="loytotyyppi" class="col-sm-3 control-label">
+        <span i18n="common.Type"></span> *
+    </label>
+    <div class="col-sm-9">
+        <select class="form-control" 
+        	name="loytotyyppi" 
+        	ng-model="loytotyyppi" 
+        	ng-required="true"
+            ng-options="loytotyyppi as loytotyyppi.nimi_fi for loytotyyppi in loytotyypit track by loytotyyppi.id">
+        </select>
+    </div>
+</div>

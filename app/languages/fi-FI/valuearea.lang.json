@@ -1,0 +1,11 @@
+{
+	"Valuearea_information_saved": "Arvoalueen %name tiedot tallennettu",
+	"Valuearea_deleted": "Arvoalue poistettu",
+	"Valuearea_creation_ok": "Uusi arvoalue luotu onnistuneesti",
+	"Delete_failed": "Arvoalueen poisto epäonnistui",
+	"Valuearea": "Arvoalue",
+	"No_view_permission" : "Ei katseluoikeutta arvoalueisiin",
+	"Valuearea_count": "Arvoalueita",
+	"Save_failed": "Arvoalueen tallennus epäonnistui",
+	"Valuearea_images": "Arvoalueiden kuvat"
+}

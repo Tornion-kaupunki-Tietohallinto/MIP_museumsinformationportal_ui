@@ -1,0 +1,121 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="ark.Basic_information"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="!#{{vm.modalId}}_kohde" data-toggle="tab" i18n="ark.Target"></a></li>
+            <li><a href="!#{{vm.modalId}}_tuhoutunut_kohde" data-toggle="tab" i18n="ark.Destroyed"></a></li>
+        </ul>
+        <div class="tab-content" style="margin-top: 2px;">
+            <div class="tab-pane active" id="{{vm.modalId}}_kohde">
+                <div class="form-group" ng-if="vm.kohde.properties.muinaisjaannostunnus">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Relic_id_hyp"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.muinaisjaannostunnus}}</p>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$touched }">
+                    <label for="nimi" class="col-sm-3 control-label">
+                        <span i18n="common.Name"></span> *
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="nimi"
+                            data-i18n-attr="{placeholder: 'common.Name'}" ng-maxlength="100" ng-required="true"
+                            ng-model="vm.kohde.properties.nimi" spellcheck="false" autocomplete="off" focus-me="focusInput">
+                        <span class="help-block" ng-show="form.nimi.$invalid && form.nimi.$touched">
+	                    	<span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+	                	</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="muutnimet" class="col-sm-3 control-label">
+                        <span i18n="ark.Other_names"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="muutnimet"
+                            data-i18n-attr="{placeholder: 'ark.Other_names'}" ng-maxlength="100"
+                            ng-model="vm.kohde.properties.muutnimet" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label for="maakuntanimi" class="col-sm-3 control-label">
+                        <span i18n="ark.Province"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="maakuntanimi" ng-maxlength="100"
+                            ng-model="vm.kohde.properties.maakuntanimi" spellcheck="false" autocomplete="off" ng-disabled="true">
+                    </div>
+                </div>
+                <mip-kylakuntavalitsin kylakuntaselections="vm.kohde.properties.kunnatkylat" multiple="true" set-fn="DirectiveFn(DirFn)"></mip-kylakuntavalitsin> 
+                <mip-vanhakunta valitutvanhatkunnat="vm.kohde.properties.vanhat_kunnat"></mip-vanhakunta>                        
+                <div class="form-group">
+                    <label for="tyhja" class="col-sm-3 control-label"> <span
+                        i18n="ark.Empty"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <select ng-model="vm.kohde.properties.tyhja"
+                            ng-options="tf.value as tf.label for tf in vm.noYes"
+                            name="tyhja" class="form-control">
+                        </select>
+                    </div>
+                </div>  
+                <mip-kohdelaji laji="vm.kohde.properties.laji" lajirequired="!vm.kohde.properties.tyhja"></mip-kohdelaji>
+                <mip-kohdetyyppi valituttyypit="vm.kohde.properties.tyypit" tyyppirequired="!vm.kohde.properties.tyhja" tarkenninrequired="false"></mip-kohdetyyppi>
+                <mip-ajoitus valitutajoitukset="vm.kohde.properties.ajoitukset" ajoitusrequired="!vm.kohde.properties.tyhja" tarkenninrequired="false"></mip-ajoitus>                 
+                <div class="form-group">
+		            <label for="lukumaara" class="col-sm-3 control-label">
+		                <span i18n="ark.Count"></span>
+		            </label>
+		            <div class="col-sm-9">
+		                <input type="number" class="form-control" name="lukumaara"
+		                    ng-model="vm.kohde.properties.lukumaara" spellcheck="false" autocomplete="off">
+		            </div>
+		        </div>
+                <div class="form-group"
+                    ng-class="{ 'has-error': form.kuvaus.$invalid && form.kuvaus.$touched }">
+                    <label for="kuvaus" class="col-sm-3 control-label" i18n="common.Description"></label>
+                    <div class="col-sm-9">
+                        <textarea rows="3" class="form-control" name="kuvaus" ng-maxlength="5000"
+                            ng-model="vm.kohde.properties.kuvaus"></textarea>
+                    </div>
+                </div>
+            </div>                 
+            <div class="tab-pane" id="{{vm.modalId}}_tuhoutunut_kohde">
+                <mip-tuhoutumissyy tuhoutumissyy="vm.kohde.properties.tuhoutumissyy"></mip-tuhoutumissyy>
+                <div class="form-group" 
+                    ng-class="{ 'has-error': form.tuhoutumiskuvaus.$invalid && form.tuhoutumiskuvaus.$touched }">
+                    <label for="tuhoutumiskuvaus" class="col-sm-3 control-label" i18n="ark.Destruction_description"></label>
+                    <div class="col-sm-9">
+                        <textarea rows="3" class="form-control" style="min-height:69px;" name="tuhoutumiskuvaus"
+                            ng-model="vm.kohde.properties.tuhoutumiskuvaus"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="virallinenkatselmus" class="col-sm-3 control-label"> <span
+                        i18n="ark.Official_review"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <select ng-model="vm.kohde.properties.virallinenkatselmus"
+                            ng-options="tf.value as tf.label for tf in vm.noYes"
+                            name="virallinenkatselmus" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"
+                    ng-class="{ 'has-error': form.mahdollisetseuraamukset.$invalid && form.mahdollisetseuraamukset.$touched }">
+                    <label for="mahdollisetseuraamukset" class="col-sm-3 control-label" i18n="ark.Possible_ramifications"></label>
+                    <div class="col-sm-9">
+                        <textarea rows="3" class="form-control" style="min-height:69px;" name="mahdollisetseuraamukset"
+                            ng-model="vm.kohde.properties.mahdollisetseuraamukset"></textarea>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

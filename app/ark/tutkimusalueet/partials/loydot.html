@@ -1,0 +1,85 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#loytoPanel{{vm.modalId}}">
+       <h4 class="panel-title">
+           <span i18n="ark.Discoveries"></span> : 
+           <span ng-if="!vm.yksikonLisays && !vm.loydonLisays">
+           		<span i18n="common.Results"></span> : {{vm.loytoja}}
+           	</span>
+           <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+       </h4>
+    </div>
+    <div id="loytoPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">        
+        <div class="panel-body">
+			<div class="col-md-2 col-sm-2 col-xs-2" 
+				ng-show="!vm.loydonLisays && vm.permissions.luonti"
+				data-i18n-attr="{title: 'unit.Add_discovery'}"> 
+			    <button type="button"
+					class="btn btn-success"
+			        ng-if="vm.permissions.luonti" 
+			        ng-click="vm.lisaaIrtoLoyto()">
+			        <span class="fa fa-plus"></span>
+			    </button>                                  
+			</div>
+            <!-- Suodattimet -->
+            <div class="col-md-10 col-sm-10 col-xs-10" ng-if="!vm.yksikonLisays && !vm.loydonLisays">
+                <div class="form-group">
+                    <div class="col-md-6">
+                         <input type="text" class="form-control"
+                             style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                             name="tutkimuslaji"
+                             ng-model="vm.loydotTable.filter().properties.luettelointinumero"
+                             data-i18n-attr="{placeholder: 'ark.Listing_number'}"
+                             spellcheck="false"
+                             autocomplete="off">
+                    </div>
+                </div>
+            </div>            
+            <!-- Löydön lisäys-ikkuna -->
+            <div class="row" ng-if="!vm.loydonLisays">&nbsp;</div> 
+			<div ng-if="vm.loydonLisays">
+				<mip-materiaalikoodi materiaalikoodi="vm.uusiLoyto.properties.materiaalikoodi" focus-input="focusInput"></mip-materiaalikoodi>			
+				<div class="row">&nbsp;</div>
+			    <div class="form-group">
+			        <div class="col-sm-12">
+			            <button type="button" ng-click="vm.peruutaLoydonLisays()"
+			                class="btn btn-default pull-right" style="margin-left : 5px">
+			                <span i18n="common.Cancel"></span>
+			            </button>
+			            <button type="button" ng-click="(form.$invalid || vm.tallennaLoytotunnus())"
+			             class="btn btn-success pull-right" ng-class="{ disabled: form.$invalid}">
+			                <span i18n="common.Save"></span>
+			            </button>
+			        </div>
+			    </div>
+		    </div>
+		    <div class="row" ng-if="!vm.yksikonLisays && !vm.loydonLisays">&nbsp;</div>
+		    <div class="form-group" ng-show="!vm.loydonLisays">
+				<table ng-table="vm.loydotTable" template-pagination="pages/templates/table-pagination.html" class="table table-striped table-bordered" show-filter="false">
+					<tr ng-repeat="loyto in $data"  style="cursor: pointer" ng-click="vm.avaaLoyto(loyto)">
+						<td data-title="vm.getColumnName('Listing_number', 'ark')" sortable="'properties.luettelointinumero'">
+                            {{loyto.properties.luettelointinumero}}
+                        </td>        
+                        <td data-title="vm.getColumnName('Timing', 'ark')" sortable="'properties.alkuvuosi'">
+                            {{loyto.properties.alkuvuosi}} {{loyto.properties.alkuvuosi_ajanlasku}} <font ng-if="loyto.properties.paatosvuosi"> -</font>
+                            {{loyto.properties.paatosvuosi}} {{loyto.properties.paatosvuosi_ajanlasku}} 
+                        </td>
+                        <td data-title="vm.getColumnName('Primary_material', 'ark')">
+                            {{loyto.properties.ensisijainen_materiaali | namei18n}}
+                        </td>
+                        <td data-title="vm.getColumnName('Type', 'common')">
+                            {{loyto.properties.loytotyyppi | namei18n}}
+                        </td>
+                        <td data-title="vm.getColumnName('Artifact_name', 'ark')">
+                            <span ng-repeat="tarkenne in loyto.properties.loytotyyppi_tarkenteet">
+                                {{tarkenne | namei18n}} <font ng-show="!$last">,</font>
+                            </span>
+                        </td>
+                        <td data-title="vm.getColumnName('Description', 'common')">
+                            {{loyto.properties.kuvaus}}
+                        </td>              								
+					</tr>
+				</table>		    
+			</div>
+        </div>
+    </div>
+</div>

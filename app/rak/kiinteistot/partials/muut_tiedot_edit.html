@@ -1,0 +1,77 @@
+<!-- Muut tiedot - muokkausmoodi -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<span i18n="common.Other_information"></span>
+		</h4>
+	</div>
+	<div class="panel-body">
+
+		<div class="form-group">
+			<label for="lahteet" class="col-sm-3 control-label"> <span
+				i18n="common.Sources"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea class='form-control'
+					ng-model='kiinteisto.properties.lahteet' rows="3"
+					ng-required="false"
+					data-i18n-attr="{placeholder: 'common.Sources'}" name="lahteet" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="lisatiedot" class="col-sm-3 control-label"> <span
+				i18n="common.Additional_information"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="lisatiedot"
+					data-i18n-attr="{placeholder: 'common.Additional_information'}"
+					ng-model="kiinteisto.properties.lisatiedot" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="omistajatiedot" class="col-sm-3 control-label"> <span
+				i18n="common.Owner_information"></span>
+			</label>
+			<div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="omistajatiedot"
+                    data-i18n-attr="{placeholder: 'common.Owner_information'}"
+                    ng-model="kiinteisto.properties.omistajatiedot" ng-required="false"
+                    ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="julkinen" class="col-sm-3 control-label"> <span
+				i18n="common.Public"></span>
+			</label>
+			<div class="col-sm-9">
+				<select ng-model="kiinteisto.properties.julkinen"
+					ng-options="tf.value as tf.label for tf in noYes"
+					name="julkinen" class="form-control">
+				</select>
+			</div>
+		</div>
+        <div class="form-group">
+            <label for="linkit_paikallismuseoihin" class="col-sm-3 control-label"> <span
+                i18n="common.Links_to_local_museums"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="linkit_paikallismuseoihin"
+                    data-i18n-attr="{placeholder: 'common.Link_placeholder'}"
+                    ng-model="kiinteisto.properties.linkit_paikallismuseoihin" ng-required="false"
+                    ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div> 
+        <div class="form-group">
+            <label for="paikallismuseot_kuvaus" class="col-sm-3 control-label"> <span
+                i18n="common.Local_museum_description"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="paikallismuseot_kuvaus"
+                    data-i18n-attr="{placeholder: 'common.Local_museum_description'}"
+                    ng-model="kiinteisto.properties.paikallismuseot_kuvaus" ng-required="false"
+                    ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>     
+	</div>
+</div>

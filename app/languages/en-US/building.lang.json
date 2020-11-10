@@ -1,0 +1,13 @@
+{
+	"Save_ok": "Building %name information saved",
+	"Delete_ok": "Building deleted",
+	"Delete_failed": "Deleting building failed",
+	"Save_fail" : "Saving the building failed",
+	"Create_ok" : "Building created successfully",
+	"Create_fail" : "Creating the building failed",
+	"No_view_permission" : "You don't have permission to view buildings",
+	"Building_count": "Buildings",
+	"Building_or_structure": "Building/structure",
+	"Building_type_description": "Building type description",
+	"Move_to_estate": "Move to estate"
+}

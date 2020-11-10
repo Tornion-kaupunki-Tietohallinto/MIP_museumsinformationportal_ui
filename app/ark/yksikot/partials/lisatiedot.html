@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Additional_information"></span>
+        </h4>
+    </div>
+    <div class="panel-body" ng-if="vm.edit || vm.create">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea rows="3" class="form-control" name="lisatiedot"
+                    ng-model="vm.yksikko.properties.lisatiedot_note"
+                    ng-if="vm.create">
+                </textarea>
+                <p class="form-control-static" ng-if="vm.showNotes">{{vm.yksikko.properties.lisatiedot_note}}</p>
+                <textarea rows="3" class="form-control" name="lisatiedot"
+                    ng-model="vm.yksikko.properties.lisatiedot"
+                    ng-if="!vm.create">
+                </textarea>                
+            </div>    
+        </div>
+        <div class="row">&nbsp;</div>
+		<div class="form-group" ng-if="vm.create || vm.edit">
+			<label for="valmis" class="col-sm-3 control-label"> 
+				<span i18n="unit.Digging_ready"></span>
+			</label>
+			<div class="col-sm-9">
+				<select ng-model="vm.yksikko.properties.kaivaus_valmis"
+					ng-init="vm.yksikko.properties.kaivaus_valmis = vm.yksikko.properties.kaivaus_valmis || vm.noYes[0].value"
+					ng-options="option.value as option.label for option in vm.noYes"
+					ng-required="true" 
+					name="kaivaus_valmis" class="form-control">
+				</select>
+			</div>
+		</div>        
+    </div>
+    <div class="panel-body" ng-if="!vm.edit && !vm.create">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <p class="form-control-static" ng-if="vm.showNotes && vm.yksikko.properties.lisatiedot_note">{{vm.yksikko.properties.lisatiedot_note}}</p>
+            </div>
+            <div class="col-sm-12" ng-if="vm.yksikko.properties.lisatiedot">
+                <p class="form-control-static">{{vm.yksikko.properties.lisatiedot}}</p>
+            </div>            
+        </div>
+    </div>    
+</div>

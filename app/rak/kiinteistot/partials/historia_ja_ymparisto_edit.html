@@ -1,0 +1,114 @@
+<!-- Historia ja ympäristö - muokkausmoodi -->
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<span i18n="common.History_and_environment"></span>
+		</h4>
+	</div>
+	<div class="panel-body">
+
+		<div class="form-group">
+			<label for="aluetyypit" class="col-sm-3 control-label"> <span
+				i18n="common.Area_types"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select ng-model="kiinteisto.properties.aluetyypit"
+					title="Valitse" name="aluetyypit" theme="bootstrap" multiple="true"
+					ng-required="false"
+					on-remove="addItemBackToList($item, aluetyyppiOptions)">
+				<ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$item| namei18n}}</ui-select-match>
+				<ui-select-choices
+					repeat="aluetyyppi in aluetyyppiOptions | filter: {'nimi_fi': $select.search} track by aluetyyppi.id">
+				<div ng-bind-html="aluetyyppi| namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="historialliset_tilatyypit" class="col-sm-3 control-label">
+				<span i18n="common.Historical_property_types"></span>
+			</label>
+			<div class="col-sm-9">
+				<ui-select
+					ng-model="kiinteisto.properties.historialliset_tilatyypit"
+					title="Valitse" name="historialliset_tilatyypit" theme="bootstrap"
+					multiple="true" ng-required="false"
+					on-remove="addItemBackToList($item, tilatyyppiOptions)">
+				<ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$item| namei18n}}</ui-select-match>
+				<ui-select-choices
+					repeat="tilatyyppi in tilatyyppiOptions | filter: {'nimi_fi': $select.search} track by tilatyyppi.id">
+				<div ng-bind-html="tilatyyppi| namei18n | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="asutushistoria" class="col-sm-3 control-label"> <span
+				i18n="common.Settlement_history"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="asutushistoria"
+					data-i18n-attr="{placeholder: 'common.Settlement_history'}"
+					ng-model="kiinteisto.properties.asutushistoria" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="lahiymparisto" class="col-sm-3 control-label"> <span
+				i18n="common.Surroundings"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="lahiymparisto"
+					data-i18n-attr="{placeholder: 'common.Surroundings'}"
+					ng-model="kiinteisto.properties.lahiymparisto" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="pihapiiri" class="col-sm-3 control-label"> <span
+				i18n="common.Courtyard"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="pihapiiri"
+					data-i18n-attr="{placeholder: 'common.Courtyard'}"
+					ng-model="kiinteisto.properties.pihapiiri" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="arkeologinen_kohde" class="col-sm-3 control-label"> <span
+				i18n="common.Archeological_site"></span>
+			</label>
+			<div class="col-sm-9">
+				<select ng-model="kiinteisto.properties.arkeologinen_kohde"
+					ng-options="option.value as option.label for option in noYes"
+					ng-required="true"
+					name="arkeologinen_kohde" class="form-control">
+				</select>
+			</div>
+		</div>	
+		<div class="form-group">
+			<label for="arkeologinen_intressi" class="col-sm-3 control-label">
+				<span i18n="common.Archeological_interests"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="arkeologinen_intressi"
+					data-i18n-attr="{placeholder: 'common.Archeological_interests'}"
+					ng-model="kiinteisto.properties.arkeologinen_intressi"
+					ng-disabled="kiinteisto.properties.arkeologinen_kohde == false"
+					nq-required="false" ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="muu_historia" class="col-sm-3 control-label"> <span
+				i18n="common.Other_history"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="muu_historia"
+					data-i18n-attr="{placeholder: 'common.Other_history'}"
+					ng-model="kiinteisto.properties.muu_historia" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+

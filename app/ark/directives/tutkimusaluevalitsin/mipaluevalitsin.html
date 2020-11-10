@@ -1,0 +1,10 @@
+<ui-select 
+    ng-model="yksikko.properties.ark_tutkimusalue_id"
+    ng-required="true"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'common.Area'}">{{$select.selected.nimi}}</ui-select-match>
+    <ui-select-choices 
+        repeat="alue.id as alue in alueet | filter: {'nimi': $select.search}"
+        refresh="alueHaku($select.search)">
+        <div ng-bind-html="alue.nimi | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

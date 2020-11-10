@@ -1,0 +1,37 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Event"></span>: <span i18n="sample.Change_sample_status"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="tiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.korityyppi.taulu === 'ark_nayte' && vm.tilanmuutos">
+	    	<div class="col-sm-6">
+				<mip-nayte-tila tila="vm.nayte.properties" vm="vm"></mip-nayte-tila>
+			    <!-- Luetteloitu, Poistettu kokoelmasta, Puuttuu  -->
+	            <div ng-if="vm.nayte.properties.tila.id == 4 || vm.nayte.properties.tila.id == 7 || 
+	                        vm.nayte.properties.tila.id == 9"
+	             ng-include="'korit/partials/nayte_tila_luetteloitu.html'"></div>
+	            <!-- Lainassa, Näyttelyssä -->
+	            <div ng-if="vm.nayte.properties.tila.id == 5 || vm.nayte.properties.tila.id == 8" ng-include="'korit/partials/ark/nayte_tila_lainassa.html'"></div>
+	            <!-- Kokoelmassa -->
+	            <div ng-if="vm.nayte.properties.tila.id == 6" ng-include="'korit/partials/ark/nayte_tila_kokoelmassa.html'"></div>
+            	<div class="row">&nbsp;</div>
+			    <div class="form-group">
+			        <div class="col-sm-12">
+			            <button type="button" ng-click="vm.peruutaTilanMuutos()"
+			                class="btn btn-default pull-right" style="margin-left : 5px">
+			                <span i18n="common.Cancel"></span>
+			            </button>
+			            <button type="button" ng-click="form.$invalid || vm.teeTilanMuutos()"
+			             class="btn btn-success pull-right" ng-class="{ disabled: form.$invalid}">
+			                <span i18n="common.Save"></span>
+			            </button>
+			        </div>
+			  	</div>				
+		    </div>
+		    <div class="col-sm-6">&nbsp;</div>
+	    </div>
+    </div>    
+</div>

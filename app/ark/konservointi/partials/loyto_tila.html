@@ -1,0 +1,36 @@
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#sijaintiPanel{{vm.modalId}}">
+		<h4 class="panel-title">
+			<span i18n="ark.Status_and_location"></span> <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="sijaintiPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">
+					<span i18n="ark.Discovery_status"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.loyto.properties.loydon_tila | namei18n}}</p>
+				</div>
+			</div>
+			<div class="form-group" ng-if="vm.loyto.properties.sailytystila">
+				<label class="col-sm-4 control-label">
+					<span i18n="ark.Permanent_location"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.loyto.properties.sailytystila |
+						namei18n}}.{{vm.loyto.properties.vakituinen_hyllypaikka}}</p>
+				</div>
+			</div>
+			<div class="form-group" ng-if="vm.loyto.properties.tilapainen_sijainti">
+				<label class="col-sm-4 control-label">
+					<span i18n="ark.Temporary_location"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.loyto.properties.tilapainen_sijainti}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

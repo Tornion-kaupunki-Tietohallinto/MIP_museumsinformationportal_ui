@@ -1,0 +1,123 @@
+<!-- Perustiedot -->
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#perusTiedotPanel{{modalId}}">
+		<h4 class="panel-title">
+		    <span data-i18n="common.Estate_details"></span>
+		    <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+    <div id="perusTiedotPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+
+		<div class="form-group"
+			ng-if="kiinteisto.properties.kyla.kunta.nimi.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.County"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a class="link" ng-click="showKuntaModal();">
+						{{kiinteisto.properties.kyla.kunta | kuntaKylaNamei18n}}</a>
+				</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.paikkakunta.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.District"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{kiinteisto.properties.paikkakunta}}</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.kyla.nimi.length>0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Village"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<a class="link" ng-click="showKylaModal();">
+						{{kiinteisto.properties.kyla | kuntaKylaNamei18n}}</a>
+				</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.kiinteistotunnus.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Property_identifier"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{kiinteisto.properties.kiinteistotunnus}}</p>
+			</div>
+		</div>
+        <div class="form-group"
+            ng-if="kiinteisto.properties.palstanumero">
+            <label class="col-sm-3 control-label"> <span
+                i18n="estate.Column_number"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{kiinteisto.properties.palstanumero}}</p>
+            </div>
+        </div>
+		<div class="form-group" ng-if="kiinteisto.properties.nimi">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Name"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{kiinteisto.properties.nimi}}</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.osoite.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Address"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{kiinteisto.properties.osoite}}</p>
+			</div>
+		</div>
+        <div class="form-group"
+            ng-if="rakennukset.length > 0 && showRakennusOsoitteet == true">
+            <label class="col-sm-3 control-label"> <span
+                i18n="common.Building_addresses"></span>
+            </label>
+            <div class="col-sm-9">
+                <div class="panel panel-default">
+                    <h4 class="panel-title">
+                      <div style="padding-left:16px;padding-top:3px;font-size:13px;">
+                        <h5 class="list-group-item-heading">
+                            <span>{{rakennukset[0].properties.inventointinumero}}</span> -
+                            <span ng-if="rakennukset[0].properties.rakennustyypit.length==0" style="font-style:italic" data-i18n="building.Building_or_structure"></span>
+                            <span ng-repeat="t in rakennukset[0].properties.rakennustyypit"><span ng-if="!$first">, </span>{{t | namei18n}}</span>
+                        </h5>
+                        <p class="form-control-static" ng-repeat="osoite in rakennukset[0].properties.osoitteet">{{osoite.katunimi}} {{osoite.katunumero}}</p>
+                        <span ng-if="showShowMoreAddressesButton" data-toggle="collapse" style="float:right; margin-right:10px; margin-top:-32px;" 
+                              class="collapsed pull-right fa fa-ellipsis-h btn-sm btn-default" aria-expanded="false" data-target="#collapse1_{{modalId}}"></span>
+                      </div>
+                    </h4>
+                    <div id="collapse1_{{modalId}}" class="panel-collapse collapse" aria-expanded="true" style="">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="r in rakennukset" ng-if="r.properties.osoitteet.length > 0" ng-show="!$first">
+                                <h5 class="list-group-item-heading">
+                                    <span>{{r.properties.inventointinumero}}</span> -
+                                    <span ng-if="r.properties.rakennustyypit.length==0" style="font-style:italic" data-i18n="building.Building_or_structure"></span>
+                                    <span ng-repeat="t in r.properties.rakennustyypit"><span ng-if="!$first">, </span>{{t | namei18n}}</span>    
+                                </h5>
+                                <p class="form-control-static" ng-repeat="osoite in r.properties.osoitteet">{{osoite.katunimi}} {{osoite.katunumero}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="form-group"
+			ng-if="kiinteisto.properties.postinumero.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Postal_code"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{kiinteisto.properties.postinumero}}</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,124 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span> : <span i18n="common.Village"></span>
+                    {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-body panel-collapse collapse in">
+                            <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+                                <!-- kiinteiston lisäystiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='I' && h.table_name=='kyla'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.row_data.kyla">
+                                            <td>
+                                                <span i18n="common.County"></span>
+                                            </td>
+                                            <td>{{h.row_data.kunta.nimi}}</td>
+                                        </tr>
+                                       
+                                        <tr ng-if="h.row_data.nimi">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                        </tr>
+                                         <tr ng-if="h.row_data.nimi_se">
+                                            <td>
+                                                <span i18n="common.Name_in_swedish"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi_se}}</td>
+                                        </tr>
+                                        
+                                        <tr ng-if="h.row_data.kylanumero">
+                                            <td>
+                                                <span i18n="common.Village_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.kylanumero}}</td>
+                                        </tr>                                       
+                                    </table>
+                                </div>
+                                <!-- kylan muokkaustiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='U' && h.table_name=='kyla'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.changed_fields.kunta">
+                                            <td>
+                                                <span i18n="common.County"></span>
+                                            </td>
+                                            <td>{{h.row_data.kunta.nimi}}</td>
+                                            <td>{{h.changed_fields.kunta.nimi}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.nimi">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                            <td>{{h.changed_fields.nimi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.nimi_se">
+                                            <td>
+                                                <span i18n="common.Name_in_swedish"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi_se}}</td>
+                                            <td>{{h.changed_fields.nimi_se}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.kylanumero">
+                                            <td>
+                                                <span i18n="common.Village_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.kylanumero}}</td>
+                                            <td>{{h.changed_fields.kylanumero}}</td>
+                                        </tr>                                        
+                                    </table>
+                                </div>
+                                <!-- kylan kuvan tiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.table_name=='kuva_kyla'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <td colspan="3">
+                                                <span i18n="common.Added" ng-if="h.action=='I'"></span>
+                                                <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+                                                <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+                                                <span i18n="common.Image"></span>:
+                                                {{h.row_data.kuva.alkuperainen_nimi}} -
+                                                {{h.row_data.kuva.otsikko}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>                                                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

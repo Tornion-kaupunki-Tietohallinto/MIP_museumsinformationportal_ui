@@ -1,0 +1,76 @@
+<!-- LEFT SIDE - hakuehdot -->
+<div class="col-md-6 column-left">
+    <div class="panel panel-default">               
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Kind_and_name"></h4>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="laji" class="col-md-3 control-label">
+                    <span i18n="common.Kind"></span>*
+                </label>
+                <div class="col-md-9">                   
+                    <select class="form-control" name="laji" ng-model="data.raportti.laji" ng-required="true" ng-change="selectLaji(data.raportti.laji)">
+                        <option ng-repeat="laji in lajit" value="{{laji.id}}">{{laji.name}}</option>
+                    </select>
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="nimi" class="col-md-3 control-label" i18n="common.Name"></label>
+                <div class="col-md-9">                    
+                    <input type="text" class="form-control" name="nimi"
+                        data-i18n-attr="{placeholder: 'common.Name'}"
+                        ng-model="raportti.reportDisplayName" spellcheck="false" autocomplete="off">
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div class="panel panel-default">               
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Report_query"></h4>
+        </div>
+        <div class="panel-body">      
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Inventory_project"></span>
+                </label>  
+                <div class="col-md-9">
+                    <mip-inventointiprojektivalitsin inventointiprojektiselection="raportti.inventointiprojektiselection" isrequired="true" multiple="false"></mip-inventointiprojektivalitsin>
+                </div>
+            </div>
+            <div class="form-group">  
+                <label class="col-sm-3 control-label">
+                    <span i18n="common.Time_frame"></span>
+                </label>                                 
+                <div class="col-md-9">
+                    <div class="input-group">                        
+                        <input bs-datepicker data-date-format="dd.MM.yyyy"
+                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+                            start-week="1"
+                            class="form-control" name="alkupvm"
+                            ng-model="raportti.inventointiaika_aloitus"
+                            data-i18n-attr="{placeholder: 'common.Inventory_period_start'}">
+                            <span class="input-group-addon">-</span>
+                        <input bs-datepicker data-date-format="dd.MM.yyyy"                        
+                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+                            start-week="1"
+                            class="form-control" name="loppupvm"
+                            ng-model="raportti.inventointiaika_lopetus"
+                            data-i18n-attr="{placeholder: 'common.Inventory_period_end'}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RIGHT SIDE - näytettävät kentät-->
+<div class="col-md-6 column-right">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Report_fields"></h4>
+        </div>
+        <div class="panel-body">
+            <mip-kenttavalitsin valittavissaolevatkentat="valittavissaolevatKentat" valitutkentat="raportti.valitutKentat"></mip-kenttavalitsin>
+        </div>
+    </div>
+</div>

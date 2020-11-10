@@ -1,0 +1,12 @@
+{
+	"Search_failed" : "Search failed",
+	"Visible_layers": "Visible object layers",
+	"Visible_map_layers" : "Visible map layers",
+	"Visible_amount" : "Visible amount",
+	"Select_inventory_project": "Select inventory project",
+	"Select_inventor": "Select inventor",
+	"Amount_to_show_on_map": "Amount of search results to be shown on the map",    
+    "Layer": "Layer",
+    "Layers": "Layers",
+    "Remove_marker": "Remove marker"
+}

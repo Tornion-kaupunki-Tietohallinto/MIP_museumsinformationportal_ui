@@ -1,0 +1,111 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<span i18n="common.Details"></span>
+		</h4>
+	</div>
+	<div class="panel-body">		
+		<div
+			class="form-group"
+			ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$dirty }">
+			<label
+				for="nimi"
+				class="col-sm-3 control-label">
+				<span i18n="common.Name"></span><span>*</span>
+			</label>
+			<div class="col-sm-9">
+				<input
+					type="text"
+					class="form-control"
+					name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}"
+                    ng-model="inventointijulkaisu.properties.nimi"
+                    ng-pattern="/^[a-zA-Z0-9ä-öÄ-Ö_\- ]*$/"
+					ng-required="true" spellcheck="false" autocomplete="off">
+				<span
+					class="help-block"
+					ng-show="form.nimi.$dirty && form.nimi.$error.pattern"> <span
+					data-i18n="inventorypublication.Unallowed_special_characters_in_name"></span>
+                </span>
+                <span
+					class="help-block"
+					ng-show="form.nimi.$dirty && form.nimi.$error.required"> <span
+					data-i18n="common.Name_is_mandatory"
+					data-field="{{ 'common.Name' | i18n }}"></span>
+				</span>
+			</div>
+		</div>
+                
+		<div
+			class="form-group"
+			ng-class="{ 'has-error': form.kuvaus.$invalid && form.kuvaus.$touched }">
+			<label
+				for="kuvaus"
+				class="col-sm-3 control-label">
+				<span i18n="common.Description"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea
+					rows="3"
+					class="form-control"
+					name="kuvaus"
+					data-i18n-attr="{placeholder: 'common.Description'}"
+					ng-model="inventointijulkaisu.properties.kuvaus"
+					ng-required="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>	
+        
+        <div class="form-group"
+            ng-class="{ 'has-error': form.inventointiprojektit.$invalid && form.inventointiprojektit.$touched }">
+            <label for="kunta" class="col-sm-3 control-label">
+                <span i18n="common.Inventory_projects"></span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select multiple="true" ng-model="inventointijulkaisu.properties.inventointiprojektit"
+                    theme="bootstrap" name="inventointiprojektit" sortable="true"
+                    on-remove="addItemBackToList($item, inventointiprojektit)"> 
+                    <ui-select-match
+                        data-i18n-attr="{placeholder: 'common.Select'}">{{$item.nimi}}
+                    </ui-select-match> 
+                    <ui-select-choices
+                    refresh="getInventointiprojektit($select.search)"
+                    refresh-delay="250"
+                    repeat="inventointiprojekti in inventointiprojektit | filter: $select.search track by inventointiprojekti.id">
+                        <div>
+                            <span ng-bind-html="inventointiprojekti.nimi | highlight: $select.search"></span>                    
+                        </div>
+                    </ui-select-choices> 
+                </ui-select>               
+            </div>
+        </div>
+        
+        <div>
+            <mip-kylakuntavalitsin kylakuntaselections="inventointijulkaisu.properties.kunnatkylat" multiple="true"></mip-kylakuntavalitsin>
+        </div>
+        
+        <div class="form-group"
+            ng-class="{ 'has-error': form.tasot.$invalid && form.tasot.$touched }">
+            <label for="tasot" class="col-sm-3 control-label">
+                <span i18n="map.Layers"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select multiple="true" ng-model="inventointijulkaisu.properties.tasot"
+                    theme="bootstrap" name="tasot" sortable="true" 
+                    ng-required="true" on-remove="addItemBackToList($item, tasot)"> <ui-select-match
+                    data-i18n-attr="{placeholder: 'common.Select'}">{{$item.nimi}}</ui-select-match> <ui-select-choices
+                    repeat="taso in tasot | filter: $select.search track by taso.id">
+                <div>
+                    <span ng-bind-html="taso.nimi | highlight: $select.search"></span>                    
+                </div>
+                </ui-select-choices> </ui-select>
+                <span class="help-block"
+                    ng-show="form.tasot.$invalid && form.tasot.$touched || (form.tasot.$touched && inventointijulkaisu.properties.tasot.length == 0)">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'map.Layer' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        
+	</div>
+</div>

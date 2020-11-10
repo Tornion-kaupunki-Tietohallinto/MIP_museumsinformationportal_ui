@@ -1,0 +1,11 @@
+{
+	"Valuearea_information_saved": "Value area %name saved",
+	"Valuearea_deleted": "Value area deleted",
+	"Valuearea_creation_ok": "Value area created successfully",
+	"Delete_failed": "Deleting the value area failed",
+	"Valuearea": "Value area",
+	"No_view_permission" : "You don't have permission to view value areas",
+	"Valuearea_count": "Value areas",
+	"Save_failed": "Saving the value area failed",
+    "Valuearea_images": "Value area images"
+}

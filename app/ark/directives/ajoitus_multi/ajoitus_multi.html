@@ -1,0 +1,9 @@
+<ui-select 
+    ng-model="ajModel.ajoitukset"
+    multiple="true"
+    ng-required="false"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'ark.Timing'}">{{$item | namei18n}}</span></ui-select-match>
+    <ui-select-choices repeat="ajoitus.id as ajoitus in ajoitukset | filter: {'nimi_fi': $select.search}">
+        <div ng-bind-html="ajoitus | namei18n | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

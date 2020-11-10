@@ -1,0 +1,10 @@
+{
+    "Inventory_publication_saved_successfully" : "Inventeringspublikation %name har sparats",
+    "Inventory_publication_delete_failed": "Misslyckades med att radera inventeringspublikation",
+    "No_view_permission" : "Du har inte rättigheter att se inventeringspublikationer", 
+    "Save_failed": "Misslyckades med att spara inventeringspublikation",
+    "Inventory_publication_deleted": "Inventeringspublikation %name har raderats",
+    "Getting_updated_data_failed": "Misslyckades med att söka uppdaterad inventeringspublikation",
+    "Inventoryproject_or_county_is_mandatory": "Inventeringprojekt eller kommunen är obligatorisk uppgift",
+    "Unallowed_special_characters_in_name": "Ainoat sallitut erikoismerkit nimessä ovat - ja _."    
+}

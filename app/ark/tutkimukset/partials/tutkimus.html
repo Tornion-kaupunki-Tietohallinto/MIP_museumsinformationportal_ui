@@ -1,0 +1,58 @@
+<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title">
+                <span i18n="common.Research" ng-if="!vm.create"></span>
+                <span i18n="ark.Add_research" ng-if="vm.create"></span>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <form 
+            class="form-horizontal" 
+            name="form" 
+            novalidate>
+                <div class="row">
+                    <div class="col-md-6 column-left" ng-if="!vm.edit">
+                        <div class="col-md-12" ng-include="'ark/tutkimukset/partials/perustiedot_view.html'"></div>
+                        <div class="col-md-12" ng-include="'ark/kohteet/partials/kiinteistojen_tiedot_view.html'"></div>
+                        <div class="col-md-12" ng-include="'ark/tutkimukset/partials/tutkimusalueet.html'"></div>
+                    	<div class="col-md-12" ng-if="vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastus_taustatiedot.html'"></div>
+                    	<div class="col-md-12" ng-if="vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastus_suojelutiedot.html'"></div>
+                    </div>
+                    <div class="col-md-6 column-right" ng-if="!vm.edit">
+                   		<div class="col-md-12" ng-if="vm.showMap" ng-include="'ark/tutkimukset/partials/sijainti.html'"></div>                   		
+                        <div class="col-md-12" ng-if="vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastushavainnot.html'"></div>
+                   		<div class="col-md-12" ng-include="'ark/tutkimukset/partials/kayttajat_view.html'"></div>
+                   		<div class="col-md-12" ng-include="'ark/tutkimukset/partials/muokkaustiedot_view.html'"></div>
+                        <div class="col-md-12" ng-if="vm.otherImages.length > 0" ng-include="'ark/tutkimukset/partials/muut_kuvat.html'"></div>                   		
+                   		<mip-luetteloidut-kuvat ng-show="!vm.create && vm.images.length > 0" vm="vm"></mip-luetteloidut-kuvat>
+                        
+                        <div class="col-md-12" ng-show="!vm.create && vm.files.length>0"
+                            ng-include="'ark/tutkimukset/partials/tiedostot_view.html'"></div>
+                        <div class="col-md-12" ng-show="!vm.create && vm.kartat.length>0"
+                            ng-include="'ark/tutkimukset/partials/kartat.html'"></div>
+                    </div>
+                    <!-- Muokkaus -->
+                    <div class="col-md-12" ng-if="vm.edit && vm.tutkimus.properties.tutkimuslaji.id !== 11" ng-include="'ark/tutkimukset/partials/perustiedot_edit.html'"></div>
+                    <div class="col-md-12" ng-if="vm.edit && vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastus_perustiedot_edit.html'"></div>
+                    <div class="row" ng-if="vm.edit && vm.tutkimus.properties.tutkimuslaji.id === 11">
+                    	<div class="col-md-6 column-left">
+                    		<div class="col-md-12" ng-if="vm.edit && vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastus_taustatiedot.html'"></div>
+                    		<div class="col-md-12" ng-if="vm.edit && vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastus_suojelutiedot.html'"></div>
+                    	</div>
+                    	<div class="col-md-6 column-right">							
+                            <div class="col-md-12" ng-if="vm.edit && vm.tutkimus.properties.tutkimuslaji.id === 11" ng-include="'ark/tutkimukset/partials/tarkastushavainnot.html'"></div>                    	
+                    	</div>                    	
+                    </div>
+                    <div class="col-md-12" ng-if="vm.edit && vm.tyyppiValittu" ng-include="'ark/kohteet/partials/kiinteistojen_tiedot_edit.html'"></div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+        <div class="pull-left" mip-entiteettiselain etype="'tutkimus'" eid="vm.tutkimus.properties.id" close="vm.close()" ng-show="!vm.edit && !vm.disableButtons"></div>
+            <div ng-include="'ark/tutkimukset/partials/footer.html'"></div>                        
+        </div>
+    </div>
+    <div id="{{vm.mapPopupId}}" class="mapPopup">POPUP</div>
+</div>

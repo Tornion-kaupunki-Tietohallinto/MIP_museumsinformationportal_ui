@@ -1,0 +1,116 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+               <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">{{inventointiprojekti.properties.nimi}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="form" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <div class="col-md-12" ng-if="!edit"
+                                ng-include="'rak/inventointiprojektit/partials/perustiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="edit"
+                                ng-include="'rak/inventointiprojektit/partials/perustiedot_edit.html'"></div>
+                            <div class="col-md-12"
+                                ng-if="!edit && (inventointiprojekti.properties.luoja || inventointiprojekti.properties.muokkaaja || inventointiprojekti.properties.poistaja)"
+                                ng-include="'rak/inventointiprojektit/partials/muokkaustiedot_view.html'"></div>
+                            
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <!-- RIGHT COLUMN -->
+                            <div class="col-md-12" ng-if="showMap && !edit"
+                                ng-include="'rak/inventointiprojektit/partials/sijainti.html'"></div>
+                            <div add-inventor ng-if="edit" class="col-md-12"
+                                permissions='permissions'></div>
+                            <div class="col-md-12" ng-if="edit"
+                                ng-include="'rak/inventointiprojektit/partials/inventoijat_edit.html'"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" ng-if="!edit"
+                            ng-show="showKiinteistot && visibleKiinteisto"
+                            ng-include="'rak/inventointiprojektit/partials/kiinteistot_view.html'"></div>
+                        <div class="col-md-12" ng-if="!edit"
+                            ng-show="showRakennukset && visibleRakennus"
+                            ng-include="'rak/inventointiprojektit/partials/rakennukset_view.html'"></div>
+                        <div class="col-md-12" ng-if="!edit" ng-show="showAlueet && visibleAlue"
+                            ng-include="'rak/inventointiprojektit/partials/alueet_view.html'"></div>
+                        <div class="col-md-12" ng-if="!edit"
+                            ng-show="showArvoalueet && visibleArvoalue"
+                            ng-include="'rak/inventointiprojektit/partials/arvoalueet_view.html'"></div>
+                        <div class="col-md-12" ng-if="!edit" ng-show="showKylat && visibleKyla"
+                            ng-include="'rak/inventointiprojektit/partials/kylat_view.html'"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left" mip-entiteettiselain etype="'inventointiprojekti'" eid="inventointiprojekti.properties.id" close="close()" ng-show="!edit"></div>
+                <div class="mip-footer-btn-group">
+                    <button class="btn btn-default" type="button" ng-click="editMode()"
+                        i18n="common.Edit" 
+                        ng-show="!edit" ng-if="permissions.muokkaus">
+                    </button>
+                    <button class="btn btn-default" type="button" ng-class="{ 'disabled' : disableButtons }" 
+                        ng-click="disableButtons || cancelEdit()"
+                        i18n="common.Cancel_edit" 
+                        ng-show="edit && !create">
+                    </button>
+                    <button class="btn btn-success" type="button" ng-class="{ disabled: form.$invalid || disableButtons }"
+                        id="inv_tallenna" ng-click="(form.$invalid || disableButtons) || save()"
+                        i18n="common.Save" 
+                        ng-show="edit" ng-if="permissions.muokkaus">
+                    </button> 
+                    
+	                 <div class="dropup">
+	                      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+	                        <span i18n="common.Actions"></span> <span class="caret"></span>
+	                      </button>
+	                      <ul class="dropdown-menu dropdown-menu-right">
+	                        <li><a href="" ng-click="deleteInventointiprojekti(modalNameId)" class="bg-danger" 
+	                               i18n="common.Delete"                                
+	                               ng-show="!create" data-ng-if="permissions.poisto"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.poisto && !create"></li>
+	                        
+	                        <li><a href="" ng-click="showMuutoshistoria()" 
+	                               i18n="common.Show_history" 
+	                               ng-show="!create" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus && !create"></li>
+	                       
+	                        <li><a href="" ng-click="close()"
+	                               i18n="common.Close" 
+	                               ng-show="!edit"></a>
+	                        </li>
+	                        <li><a href="" ng-click="close()"
+	                               i18n="common.Cancel" 
+	                               ng-show="create"></a>
+	                        </li>
+	                        <li ng-class="{ 'disabled' : disableButtons }"><a href="" ng-click="disableButtons || cancelEdit()"
+	                               i18n="common.Cancel_edit" 
+	                               ng-show="edit && !create"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus"></li>
+	                        
+	                        <li><a href="" ng-click="editMode()"
+	                               i18n="common.Edit" 
+	                               ng-show="!edit" ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        <li ng-class="{ disabled: form.$invalid || disableButtons }"><a href="" id="inv_tallenna" ng-click="(form.$invalid || disableButtons) || save()" class="bg-success"
+	                               i18n="common.Save" 
+	                               ng-show="edit" ng-if="permissions.muokkaus"></a>
+	                        </li> 
+	                        
+	                        
+	                    </ul>
+	                </div>
+                 </div>
+             </div>
+        </div>
+        <div id="{{mapPopupId}}" class="mapPopup">POPUP</div>
+    </div>

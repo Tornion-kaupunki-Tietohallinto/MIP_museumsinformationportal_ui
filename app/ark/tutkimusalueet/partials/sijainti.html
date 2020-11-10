@@ -1,0 +1,87 @@
+<!-- Sijainti - katselu- ja muokkausmoodi -->
+<div class="panel panel-default panel-collapsible">
+    <div
+        class="panel-heading"
+        data-toggle="collapse"
+        data-target="#sijaintiPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.Location"></span> <span
+                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div
+        id="sijaintiPanel{{vm.modalId}}"
+        class="panel-body panel-collapse collapse in">
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                    class="btn-group btn-group-map-holder"
+                    role="group">
+                    <div
+                        class="col-md-6 btn-group btn-group-map"
+                        role="group">
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            ng-model="vm.selectedMapLayers"
+                            data-max-length="0"
+                            data-max-length-html="{{vm.textSelectMapLayers}}"
+                            placeholder="{{vm.textSelectMapLayers}}"
+                            data-html="1"
+                            data-multiple="1"
+                            bs-options="mapLayer.properties as mapLayer.properties.nimi group by mapLayer.properties.ryhma for mapLayer in vm.availableMapLayers"
+                            bs-select
+                            sort="false"
+                            ng-change="vm.selectMapLayer();" data-i18n-attr="{title: 'common.Select_map_layers'}">
+                            <span class="caret"></span>
+                        </button>
+                    </div>
+                    <div
+                        class="col-md-6 btn-group btn-group-map"
+                        role="group">
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            ng-model="vm.selectedLayers"
+                            data-max-length="0"
+                            data-max-length-html="{{vm.textSelectLayers}}"
+                            placeholder="{{vm.textSelectLayers}}"
+                            data-html="1"
+                            data-multiple="1"
+                            bs-options="objectLayer.value as objectLayer.label for objectLayer in vm.objectLayers"
+                            bs-select
+                            ng-change="vm.selectLayer();" data-i18n-attr="{title: 'common.Select_object_layers'}">
+                            <span class="caret"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div
+                class="col-md-12">
+                <openlayers
+                    id="{{vm.mapId}}"
+                    ol-center="vm.center"
+                    ol-defaults="vm.defaults"
+                    height="400px"
+                    width="100%"
+                    custom-layers="true"> 
+                    <ol-control
+                        name="{{ control.name }}"
+                        ng-repeat="control in vm.controls|filter: {active: true}">
+                    </ol-control> 
+                    <ol-layer
+                        ol-layer-properties="layer"
+                        ng-repeat="layer in vm.layers|filter:{active:true}"> 
+                    </ol-layer> 
+                    <ol-marker 
+                        ng-repeat="marker in vm.markers" 
+                        lat="marker.lat" 
+                        lon="marker.lon">
+                    </ol-marker> 
+                </openlayers>               
+            </div>
+        </div>
+    </div>
+</div>

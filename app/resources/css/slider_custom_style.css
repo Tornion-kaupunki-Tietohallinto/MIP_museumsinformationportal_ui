@@ -1,0 +1,60 @@
+.custom-slider.rzslider .rz-bar {  
+  height: 2px;
+}
+.custom-slider.rzslider .rz-selection {
+  background: #400080;
+}
+
+.custom-slider.rzslider .rz-pointer {
+  z-index: 3;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-color: #0db9f0;
+  border-radius: 8px;
+}
+
+.custom-slider.rzslider .rz-pointer:after {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 4px;
+  content: '';
+}
+
+.custom-slider.rzslider .rz-pointer:after {
+  display: none;
+}
+
+.custom-slider.rzslider .rz-bubble {
+  bottom: 14px;
+}
+
+.custom-slider.rzslider .rz-limit {
+  font-weight: bold;
+  color: black;
+}
+
+.custom-slider.rzslider .rz-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: #ffe4d1;
+  top: -1px;
+}
+
+.custom-slider.rzslider .rz-tick.rz-selected {
+  background: orange;
+}
+
+.custom-slider.rzslider .rz-bar-wrapper {
+	padding-top: 8px;
+}
+
+.custom-slider.rzslider {
+	height: 0px;
+}

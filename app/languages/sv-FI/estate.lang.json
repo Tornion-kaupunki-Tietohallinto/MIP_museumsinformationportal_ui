@@ -1,0 +1,18 @@
+{
+    "Saving_estate_successfull" : "Information om fastigheten %name har sparats",
+    "Estate_deleted" : "Fastigheten har raderats",
+    "Estate_saved_successfully" : "Information om fastigheten %name har sparats",
+    "Estate_created_successfully" : "Ny fastighet har skapats",
+    "Property_identifier_pattern" : "Fastighetsbeteckningen skrivs enligt modellen XXX-XXX-XXXX-XXXX",
+    "Estate_count": "Fastigheter",
+    "Delete_location": "Radera läge",
+    "Set_location": "Ange läge",
+    "Show_location": "Visa läge",
+    "Get_data": "Sök information",
+    "Building_images": "Byggnadsbilder",    
+    "Column_number": "Kolumnnummer",    
+    "Next_free_column_number_is": "Följande fritt kolumnnummer är %freenum",
+    "Column_number_is_already_in_use": "Kolumnnumret har redan tagits i bruk",
+    "Column_number_must_be_positive_number": "Kolumnnumret ska vara ett positivt tal",
+    "Property_identifier_already_in_use_fill_column_number": "Fastighetsbeteckningen är redan i bruk så att kolumnnumret ska ifyllas"
+    }

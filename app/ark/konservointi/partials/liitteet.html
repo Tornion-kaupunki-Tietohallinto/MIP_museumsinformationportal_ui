@@ -1,0 +1,20 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#liitteetPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Attachments"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="liitteetPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="col-sm-12">
+	            
+	        </div>              
+	    </div>
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="col-sm-12">
+	            
+	        </div>              
+	    </div>
+    </div>    
+</div>

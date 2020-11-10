@@ -1,0 +1,156 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+				<h4>
+					<span i18n="common.Coordinate_information"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-6 column-left">
+					<div
+						class="panel-group"
+						role="tablist"
+						aria-multiselectable="true"
+						data-start-collapsed="true"
+						ng-model="panels.activePanel"
+						bs-collapse>
+						<div
+							class="panel panel-default"
+							ng-repeat="result in results">
+							<div
+								class="panel-heading"
+								role="tab">
+								<h4 class="panel-title">
+									<a bs-collapse-toggle> {{$index + 1}} - {{result.properties.rakennustunnus}} </a>									
+									<button
+										type="button"
+										class="btn btn-primary pull-right"
+										style="margin-top:-8px;"
+										id="btn-save"
+										ng-click="save(result, modalNameId)">
+										<span i18n="common.Select"></span>
+									</button>
+								</h4>
+							</div>
+							<div
+								class="panel-collapse"
+								role="tabpanel"
+								bs-collapse-target>
+								<div class="panel-body">
+									<table									
+										class="table table-bordered table-striped"
+										style="margin-bottom: 10px">
+										<tr
+											ng-repeat="(key, value) in result.properties"
+											ng-show="value && key != 'showLabel' && key != 'MMLFeatureIndex'">
+											<td ng-class="{'mip-table-header': key == 'rakennustunnus'}">
+												<span ng-show="key != 'osoitteet' && key != 'omistajat'">{{key | capitalize}}</span> 
+												<span ng-show="key == 'osoitteet'">{{key | capitalize}}</span> 
+												<span ng-show="key == 'omistajat'">{{key | capitalize}}</span>
+											</td>
+											<td ng-class="{'mip-table-header': key == 'rakennustunnus'}">
+												<span ng-show="key != 'osoitteet' && key != 'omistajat'">{{value | MMLnamei18n |
+													capitalize}} </span> 
+												<span
+													ng-show="key == 'osoitteet'"
+													ng-repeat="osoite in value track by $index">{{osoite.jarjestysnumero}}: {{osoite.katunimi}}
+													{{osoite.katunumero}} <br />
+												</span> 
+												<span
+													ng-show="key == 'omistajat'"
+													ng-repeat="omistaja in value track by $index">{{omistaja.sukunimi}} {{omistaja.etunimi}} 
+													<span
+														ng-show="!$last">, 
+													</span>
+												</span>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 column-right">
+					<div
+						id="sijaintiPanel1"
+						class="panel-body panel-collapse collapse in">
+						<div class="row">
+							<div class="col-md-12">
+								<div
+									class="btn-group btn-group-map-holder"
+									role="group">
+									<div
+										class="col-md-6 btn-group btn-group-map"
+										role="group">
+										<button
+											type="button"
+											class="btn btn-default"
+											ng-model="selectedMapLayers"
+											data-max-length="0"
+											data-max-length-html="{{textSelectMapLayers}}"
+											placeholder="{{textSelectMapLayers}}"
+											data-html="1"
+											data-multiple="1"
+											bs-options="mapLayer.properties as mapLayer.properties.nimi for mapLayer in availableMapLayers"
+											bs-select
+											ng-change="selectMapLayer();"
+											data-i18n-attr="{title: 'common.Select_map_layers'}">
+											<span class="caret"></span>
+										</button>
+									</div>
+									<div
+										class="col-md-6 btn-group btn-group-map"
+										role="group">
+										<button
+											type="button"
+											class="btn btn-default"
+											ng-model="selectedLayers"
+											data-max-length="0"
+											data-max-length-html="{{textSelectLayers}}"
+											placeholder="{{textSelectLayers}}"
+											data-html="1"
+											data-multiple="1"
+											bs-options="objectLayer.value as objectLayer.label for objectLayer in objectLayers"
+											bs-select
+											ng-change="selectLayer();"
+											data-i18n-attr="{title: 'common.Select_object_layers'}">
+											<span class="caret"></span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div
+								class="col-md-12 modalMapContainer"
+								ng-if="showMap">
+								<openlayers
+									id="{{mapId}}"
+									ol-center="center"
+									ol-defaults="defaults"
+									height="400px"
+									width="100%"
+									custom-layers="true"> <ol-control
+									name="{{ control.name }}"
+									ng-repeat="control in controls|filter: {active: true}"></ol-control> <ol-layer
+									ol-layer-properties="layer"
+									ng-repeat="layer in layers|filter:{active:true}"> </ol-layer> </openlayers>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-default pull-right"
+					id="btn-cancel"
+					ng-click="close()">
+					<span i18n="common.Cancel"></span>
+				</button>
+			</div>
+		</div>
+        <div id="{{mapPopupId}}" class="mapPopup">POPUP</div>
+	</div>

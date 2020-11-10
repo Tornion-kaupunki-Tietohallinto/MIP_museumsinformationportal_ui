@@ -1,0 +1,381 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span>
+                    :
+                    <span i18n="common.Valuearea"></span>
+                    {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-body panel-collapse collapse in">
+                            <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+                                <!-- lisäystiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='I' && h.table_name=='arvoalue'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.row_data.nimi">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                        </tr>
+						                <tr ng-if="h.row_data.paikkakunta">
+						                    <td><span i18n="common.District"></span></td>
+						                    <td>{{h.row_data.paikkakunta}}</td>
+						                </tr>                                         
+                                        <tr ng-if="h.row_data.inventointinumero">
+                                            <td>
+                                                <span i18n="common.Inventory_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.inventointinumero}}</td>
+                                        </tr>
+						                <tr ng-if="h.row_data.aluerajaus">
+						                    <td><span i18n="common.Location_area"></span></td>
+						                    <td>{{h.row_data.aluerajaus}}</td>
+						                </tr>
+						                <tr ng-if="h.row_data.keskipiste">
+						                    <td><span i18n="common.Location_point"></span></td>
+						                    <td>{{h.row_data.keskipiste}}</td>
+						                </tr>
+                                        <tr ng-if="h.row_data.alue">
+                                            <td>
+                                                <span i18n="common.Area"></span>
+                                            </td>
+                                            <td>{{h.row_data.alue.nimi}}</td>
+                                        </tr>
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'arvoalue_kyla'} as kylat">
+                                            <td rowspan="{{kylat.length}}" ng-if="$index==0">
+                                                <span i18n="common.Villages"></span>
+                                                /
+                                                <span i18n="common.Counties"></span>
+                                            </td>
+                                            <td>{{c.row_data.kyla.nimi}} /
+                                                {{c.row_data.kyla.kunta.nimi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kuvaus">
+                                            <td>
+                                                <span i18n="common.Description"></span>
+                                            </td>
+                                            <td>{{h.row_data.kuvaus}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.aluetyyppi">
+                                            <td>
+                                                <span i18n="common.Area_type"></span>
+                                            </td>
+                                            <td>{{h.row_data.aluetyyppi | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tarkistettu">
+                                            <td>
+                                                <span i18n="common.Inspected"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkistettu | date:'dd.MM.yyyy'}}</td>
+                                        </tr>
+                                        <!-- kulttuurihistorialliset arvot -->
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'arvoalue_kulttuurihistoriallinenarvo'} as arvot">
+                                            <td rowspan="{{arvot.length}}" ng-if="$index==0">
+                                                <span i18n="common.Culturohistorical_values"></span>
+                                            </td>
+                                            <td>{{c.row_data.kulttuurihistoriallinenarvo |
+                                                namei18n }}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.arvotustyyppi">
+                                            <td>
+                                                <span i18n="common.Valuation"></span>
+                                            </td>
+                                            <td>{{h.row_data.arvotustyyppi | namei18n}}</td>
+                                        </tr>
+                                        <!-- suojelutiedot -->
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'arvoalue_suojelutyyppi'} as arvot">
+                                            <td rowspan="{{arvot.length}}" ng-if="$index==0">
+                                                <span i18n="common.Estate_protection"></span>
+                                            </td>
+                                            <td>
+                                                {{c.row_data.suojelutyyppi | namei18n}} <br />
+                                                <span
+                                                    ng-if="c.row_data.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+                                                    <span i18n="common.Mark"></span>
+                                                    : {{c.row_data.merkinta}},
+                                                </span>
+                                                <span i18n="common.Explanation"></span>
+                                                : {{c.row_data.selite}}
+                                            </td>
+                                        </tr>
+                                        <!-- yhteenveto -->
+                                        <tr ng-if="h.row_data.yhteenveto">
+                                            <td>
+                                                <span i18n="common.Summary"></span>
+                                            </td>
+                                            <td>{{h.row_data.yhteenveto}}</td>
+                                        </tr>
+                                        <!-- inv proj -->
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'inventointiprojekti_arvoalue'}">
+					                    	<td>
+					                    		<span i18n="common.Inventory_project"></span><br />
+					                    		<span i18n="common.Inventors"></span><br />
+					                    		<span i18n="common.Inventory_date"></span><br />
+					                    		<span i18n="common.Field_date"></span><br />
+					                    	</td>					                    
+					                   		<td>
+					                   			{{c.row_data.inventointiprojekti.nimi}}<br />
+					                    		{{c.row_data.inventoija_nimi}}<br />
+					                   			{{c.row_data.inventointipaiva | pvm:'dd.MM.yyyy'}}<br />
+					                   			{{c.row_data.kenttapaiva | pvm:'dd.MM.yyyy'}}<br />
+					                    	</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- muokkaustiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='U' && h.table_name=='arvoalue'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('nimi')">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                            <td>{{h.changed_fields.nimi}}</td>
+                                        </tr>
+						                <tr ng-if="h.changed_fields.hasOwnProperty('paikkakunta')">
+						                    <td><span i18n="common.District"></span></td>
+						                    <td>{{h.row_data.paikkakunta}}</td>
+						                    <td>{{h.changed_fields.paikkakunta}}</td>
+						                </tr>                                        
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('inventointinumero')">
+                                            <td>
+                                                <span i18n="common.Inventory_number"></span>
+                                            </td>
+                                            <td>{{h.row_data.inventointinumero}}</td>
+                                            <td>{{h.changed_fields.inventointinumero}}</td>
+                                        </tr>
+						                <tr ng-if="h.changed_fields.hasOwnProperty('aluerajaus')">
+						                    <td><span i18n="common.Location_area"></span></td>
+						                    <td>{{h.row_data.aluerajaus}}</td>
+						                    <td>{{h.changed_fields.aluerajaus}}</td>
+						                </tr>
+						                <tr ng-if="h.changed_fields.hasOwnProperty('keskipiste')">
+						                    <td><span i18n="common.Location_point"></span></td>
+						                    <td>{{h.row_data.keskipiste}}</td>
+						                    <td>{{h.changed_fields.keskipiste}}</td>
+						                </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('alue')">
+                                            <td>
+                                                <span i18n="common.Area"></span>
+                                            </td>
+                                            <td>{{h.row_data.alue.nimi}}</td>
+                                            <td>{{h.changed_fields.alue.nimi}}</td>
+                                        </tr>
+                                        <tr
+                                            ng-if="(h.children | filter:{table_name:'arvoalue_kyla'}).length > 0">
+                                            <td>
+                                                <span i18n="common.Villages"></span>
+                                                /
+                                                <span i18n="common.Counties">
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'alue_kyla', action:'D'}">
+                                                    {{c.row_data.kyla.nimi}} /
+                                                    {{c.row_data.kyla.kunta.nimi}}<br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'arvoalue_kyla', action:'I'}">
+                                                    {{c.row_data.kyla.nimi}} /
+                                                    {{c.row_data.kyla.kunta.nimi}}<br />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('kuvaus')">
+                                            <td>
+                                                <span i18n="common.Description"></span>
+                                            </td>
+                                            <td>{{h.row_data.kuvaus}}</td>
+                                            <td>{{h.changed_fields.kuvaus}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('aluetyyppi')">
+                                            <td>
+                                                <span i18n="common.Area_type"></span>
+                                            </td>
+                                            <td>{{h.row_data.aluetyyppi | namei18n}}</td>
+                                            <td>{{h.changed_fields.aluetyyppi | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('tarkistettu')">
+                                            <td>
+                                                <span i18n="common.Inspected"></span>
+                                            </td>
+                                            <td>{{h.row_data.tarkistettu | date:'dd.MM.yyyy'}}</td>
+                                            <td>{{h.changed_fields.tarkistettu |
+                                                date:'dd.MM.yyyy'}}</td>
+                                        </tr>
+                                        <!-- kulttuurihistorialliset arvot -->
+                                        <tr
+                                            ng-if="(h.children | filter:{table_name:'arvoalue_arvoaluekulttuurihistoriallinenarvo'}).length > 0">
+                                            <td>
+                                                <span i18n="common.Culturohistorical_values"></span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'arvoalue_arvoaluekulttuurihistoriallinenarvo', action:'D'}">
+                                                    {{c.row_data.kulttuurihistoriallinenarvo |
+                                                    namei18n}} <br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'arvoalue_arvoaluekulttuurihistoriallinenarvo', action:'I'}">
+                                                    {{c.row_data.kulttuurihistoriallinenarvo |
+                                                    namei18n}} <br />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('arvotustyyppi')">
+                                            <td>
+                                                <span i18n="common.Valuation"></span>
+                                            </td>
+                                            <td>{{h.row_data.arvotustyyppi | namei18n}}</td>
+                                            <td>{{h.changed_fields.arvotustyyppi | namei18n}}</td>
+                                        </tr>
+                                        <!-- suojelutiedot -->
+                                        <tr
+                                            ng-if="(h.children | filter:{table_name:'arvoalue_suojelutyyppi'}).length > 0">
+                                            <td>
+                                                <span i18n="common.ValueArea_protection"></span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'arvoalue_suojelutyyppi', action:'D'}">
+                                                    {{c.row_data.suojelutyyppi | namei18n}} <br />
+                                                    <span
+                                                        ng-if="c.row_data.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+                                                        <span i18n="common.Mark"></span>
+                                                        : {{c.row_data.merkinta}},
+                                                    </span>
+                                                    <span i18n="common.Explanation"></span>
+                                                    : {{c.row_data.selite}} <br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'arvoalue_suojelutyyppi', action:'I'}">
+                                                    {{c.row_data.suojelutyyppi | namei18n}} <br />
+                                                    <span
+                                                        ng-if="c.row_data.suojelutyyppi.suojelutyyppi_ryhma_id==1">
+                                                        <span i18n="common.Mark"></span>
+                                                        : {{c.row_data.merkinta}},
+                                                    </span>
+                                                    <span i18n="common.Explanation"></span>
+                                                    : {{c.row_data.selite}} <br />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <!-- yhteenveto -->
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('yhteenveto')">
+                                            <td>
+                                                <span i18n="common.Summary"></span>
+                                            </td>
+                                            <td>{{h.row_data.yhteenveto}}</td>
+                                            <td>{{h.changed_fields.yhteenveto}}</td>
+                                        </tr>
+                                        <!-- inv proj -->
+                                        <tr
+                                            ng-if="(h.children | filter:{table_name:'inventointiprojekti_arvoalue'}).length > 0">
+                                            <td>
+					                    		<span i18n="common.Inventory_project"></span><br />
+					                    		<span i18n="common.Inventors"></span><br />
+					                    		<span i18n="common.Inventory_date"></span><br />
+					                    		<span i18n="common.Field_date"></span><br />
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'inventointiprojekti_arvoalue', action:'U'}">
+					                            		{{c.row_data.inventointiprojekti.nimi}}<br/>
+					                    				{{c.row_data.inventoija_nimi}}<br />
+					                   					{{c.row_data.inventointipaiva | pvm:'dd.MM.yyyy'}}<br />
+					                   					{{c.row_data.kenttapaiva | pvm:'dd.MM.yyyy'}}<br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'inventointiprojekti_arvoalue', action:'I'}">
+					                            		{{c.row_data.inventointiprojekti.nimi}}<br/>
+					                    				{{c.row_data.inventoija_nimi}}<br />
+					                   					{{c.row_data.inventointipaiva | pvm:'dd.MM.yyyy'}}<br />
+					                   					{{c.row_data.kenttapaiva | pvm:'dd.MM.yyyy'}}<br />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- kuvan tiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.table_name=='kuva_arvoalue'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <td colspan="3">
+                                                <span i18n="common.Added" ng-if="h.action=='I'"></span>
+                                                <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+                                                <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+                                                <span i18n="common.Image"></span>
+                                                : {{h.row_data.kuva.alkuperainen_nimi}} -
+                                                {{h.row_data.kuva.otsikko}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- tiedoston tiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.table_name=='tiedosto_arvoalue'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <td colspan="3">
+                                                <span i18n="common.Added" ng-if="h.action=='I'"></span>
+                                                <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+                                                <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+                                                <span i18n="common.File"></span>
+                                                : {{h.row_data.tiedosto.alkuperainen_nimi}} -
+                                                {{h.row_data.tiedosto.otsikko}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

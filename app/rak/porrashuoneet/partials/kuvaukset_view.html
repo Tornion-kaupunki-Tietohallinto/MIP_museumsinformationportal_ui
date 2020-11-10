@@ -1,0 +1,106 @@
+<!-- Kuvaukset - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div
+		class="panel-heading"
+		data-toggle="collapse"
+		data-target="#kuvauksetPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Descriptions"></span> <span
+				class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div
+		id="kuvauksetPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.yleiskuvaus">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Outline"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.yleiskuvaus}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.sisaantulokerros">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Entrance_floor"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.sisaantulokerros}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.ovet_ja_ikkunat">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Doors_and_windows"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.ovet_ja_ikkunat}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.portaat_tasanteet_kaiteet">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Stairs_decks_and_railings"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.portaat_tasanteet_kaiteet}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.pintamateriaalit">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Surface_finish"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.pintamateriaalit}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.muu_kiintea_sisustus">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Other_fixed_decorations"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.muu_kiintea_sisustus}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.talotekniikka">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Building_service_technology"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.talotekniikka}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.tehdyt_korjaukset">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Repairs"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.tehdyt_korjaukset}}</p>
+			</div>
+		</div>
+		<div
+			class="form-group"
+			ng-show="porrashuone.properties.lisatiedot">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Additional_information"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{porrashuone.properties.lisatiedot}}</p>
+			</div>
+		</div>
+	</div>
+</div>

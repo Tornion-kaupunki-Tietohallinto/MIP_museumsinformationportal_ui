@@ -1,0 +1,26 @@
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse"
+		data-target="#suunnittelijatPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Architects"></span> 
+			<span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="suunnittelijatPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+
+		<ul class="list-group">
+			<li class="list-group-item"
+				ng-repeat="suunnittelija in rakennus.properties.suunnittelijat" ng-click="selectSuunnittelija(suunnittelija)" style="cursor:pointer">
+
+				<h4 class="list-group-item-heading">{{suunnittelija.suunnittelija.properties.sukunimi}}<span ng-if="suunnittelija.suunnittelija.properties.etunimi.length > 0"> {{suunnittelija.suunnittelija.properties.etunimi}}</span><span ng-if="suunnittelija.suunnittelija.properties.ammattiarvo">, {{suunnittelija.suunnittelija.properties.ammattiarvo.nimi_fi}}</span></h4>
+				<p>
+                    <span ng-if="suunnittelija.suunnittelijatyyppi"></span>{{suunnittelija.suunnittelijatyyppi.nimi_fi}}<span ng-if="suunnittelija.suunnitteluvuosi_alku">, {{suunnittelija.suunnitteluvuosi_alku}}</span><span ng-if="suunnittelija.suunnitteluvuosi_loppu">- {{suunnittelija.suunnitteluvuosi_loppu}}</span>
+				</p>
+				<p class="mip-multiline">{{suunnittelija.lisatieto}}</p>
+			</li>
+		</ul>
+
+
+	</div>
+</div>

@@ -1,0 +1,12 @@
+{
+    "Search_failed" : "Sökning misslyckades",
+    "Visible_layers": "Lager som visas",
+    "Visible_map_layers" : "Kartlager som visas",
+    "Visible_amount" : "Antal som visas",
+    "Select_inventory_project": "Välj inventeringsprojekt",
+    "Select_inventor": "Välj inventerare",
+    "Amount_to_show_on_map": "Antalet sökresultat visas på kartan",    
+    "Layer": "Lager",
+    "Layers": "Lager",
+    "Remove_marker": "Klar markör"
+}

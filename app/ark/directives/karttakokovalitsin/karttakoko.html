@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label for="karttakoko" class="col-sm-3 control-label">
+        <span i18n="common.Size"></span><span ng-show="required">*</span>
+    </label>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <select class="form-control" name="karttakoko" ng-model="karttakoko" ng-required="required" ng-disabled="dis"
+            ng-options="karttakoko as karttakoko.koko for karttakoko in karttakoot track by karttakoko.id">
+            <option value=""></option>
+        </select>
+    </div>
+</div>

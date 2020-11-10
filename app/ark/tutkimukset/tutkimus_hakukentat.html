@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-md-2 col-sm-2 col-xs-2"> 
+        <button type="button"
+            class="btn btn-default"
+            ng-click="vm._clearSearchFilter()"
+            data-i18n-attr="{title: 'common.Clear_filter'}">
+            <span class="fa fa-ban"></span>
+        </button>  
+        <button type="button"
+            class="btn btn-default"
+            ng-click="vm.refreshTable('tutkimusCache', 'tutkimuksetTable')"
+            data-i18n-attr="{title: 'common.Refresh_search_results'}">
+            <span class="fa fa-refresh"></span>
+        </button> 
+        <button type="button"
+            class="btn btn-success"
+            data-ng-show="vm.showCreateNewButton"
+            id="btn-create" ng-click="vm.selectTutkimus()"
+            data-i18n-attr="{title: 'ark.Add_research'}">
+            <span class="fa fa-plus"></span>
+        </button>                                  
+    </div>
+	<!-- Suodattimet -->
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<div class="col-md-12">
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showTutkimustyyppiCol"
+							ng-change="vm.saveColVisibility('showTutkimustyyppiCol', vm.colVisibilities.showTutkimustyyppiCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<mip-tutkimuslaji-multi lista="vm.tutkimuksetTable.filter().properties"></mip-tutkimuslaji-multi>
+					</div>
+				</div>
+			</div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showTutkimuksenNimiCol"
+                            ng-change="vm.saveColVisibility('showTutkimuksenNimiCol', vm.colVisibilities.showTutkimuksenNimiCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                            name="tutkimusnimi" ng-model="vm.tutkimuksetTable.filter().properties.tutkimuksen_nimi"
+                            data-i18n-attr="{placeholder: 'ark.Research_name'}" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                            <input type="checkbox" ng-model="vm.colVisibilities.showTutkimusLyhenneCol"
+                            ng-change="vm.saveColVisibility('showTutkimusLyhenneCol', vm.colVisibilities.showTutkimusLyhenneCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span> 
+                        <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                            name="tutkimus_lyhenne" ng-model="vm.tutkimuksetTable.filter().properties.tutkimusLyhenne"
+                            data-i18n-attr="{placeholder: 'ark.Research_abbreviation'}" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+            </div>               
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showLoytoPaanumeroCol"
+							ng-change="vm.saveColVisibility('showLoytoPaanumeroCol', vm.colVisibilities.showLoytoPaanumeroCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="loyto_paanumero" ng-model="vm.tutkimuksetTable.filter().properties.loyto_paanumero"
+							data-i18n-attr="{placeholder: 'ark.Discovery_main_number'}" spellcheck="false" autocomplete="off">
+					</div>
+				</div>
+			</div>						
+		</div>
+		<!-- Rivi 2 -->
+		<div class="col-md-12">	
+		  <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showTutkimusValmisCol"
+                            ng-change="vm.saveColVisibility('showTutkimusValmisCol', vm.colVisibilities.showTutkimusValmisCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<select class="form-control" name="tutkimus_valmis"
+							style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							ng-model="vm.tutkimuksetTable.filter().properties.tutkimus_valmis"
+							ng-options="valmis.id as valmis.nimi_fi for valmis in vm.tutkimustilat">
+						</select>
+                    </div>
+                </div>
+            </div>	
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showTutkimusJulkinenCol"
+                            ng-change="vm.saveColVisibility('showTutkimusJulkinenCol', vm.colVisibilities.showTutkimusJulkinenCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<select class="form-control" name="tutkimus_julkinen"
+							style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							ng-model="vm.tutkimuksetTable.filter().properties.tutkimus_julkinen"
+							ng-options="julkinen.id as julkinen.nimi_fi for julkinen in vm.julkisuudet">
+						</select>
+                    </div>
+                </div>
+            </div>	
+           <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showKenttatyoCol"
+                            ng-change="vm.saveColVisibility('showKenttatyoCol', vm.colVisibilities.showKenttatyoCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <input type="number" min="0" class="form-control" name="alkuvuosi"
+                            ng-model="vm.tutkimuksetTable.filter().properties.kenttatyo_alkuvuosi"
+                            data-i18n-attr="{placeholder: 'ark.Field_work_begin_year'}"
+                            spellcheck="false" autocomplete="off">                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showKenttatyoCol"
+                            ng-change="vm.saveColVisibility('showKenttatyoCol', vm.colVisibilities.showKenttatyoCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <input type="number" min="0" class="form-control" name="paatosvuosi"
+                            ng-model="vm.tutkimuksetTable.filter().properties.kenttatyo_paatosvuosi"
+                            data-i18n-attr="{placeholder: 'ark.Field_work_end_year'}"
+                            spellcheck="false" autocomplete="off">                        
+                    </div>
+                </div>
+            </div>			
+        </div>
+		<!-- Rivi 3 -->
+		<div class="col-md-12">
+			<div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox" ng-model="vm.colVisibilities.showKenttatyojohtajaCol"
+                            ng-change="vm.saveColVisibility('showKenttatyojohtajaCol', vm.colVisibilities.showKenttatyojohtajaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="kaivausjohtaja" ng-model="vm.tutkimuksetTable.filter().properties.kenttatyojohtaja"
+							data-i18n-attr="{placeholder: 'ark.Field_work_manager'}" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>			
+			</div>
+		</div>        
+	</div>
+</div>
+

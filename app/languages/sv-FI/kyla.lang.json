@@ -1,0 +1,11 @@
+{
+    "Fetching_villages_failed": "Misslyckades med att söka byar",
+    "Saving_village_ok": "Information om byn %name har sparats",
+    "Village_deleted" : "Byn har raderats",
+    "Village_save_ok" : "Information om byn %name har sparats",
+    "Village_create_ok" : "Byn har skapats",
+    "Village_create_fail" : "Misslyckades med att skapa byn",
+    "Village_delete_ok" : "Byn har raderats",
+    "Village_count": "Byar",
+    "Village_details": "Basuppgifter om byn"
+}

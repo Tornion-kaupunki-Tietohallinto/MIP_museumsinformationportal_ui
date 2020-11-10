@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Timed_discoveries"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="(key, value) in vm.yksikko.properties.ajoitetutLoydot"
+                style="cursor: pointer; border:0" ng-click="vm.listaaLoydot(value, 'ajoitettu');">
+    
+                <h5 class="list-group-item-heading"><a>{{key}} {{value.length}}</a></h5>
+            </li>
+        </ul>
+    </div>    
+</div>

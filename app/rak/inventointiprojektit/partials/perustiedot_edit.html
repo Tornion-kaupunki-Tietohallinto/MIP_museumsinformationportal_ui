@@ -1,0 +1,164 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group"
+            ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$touched || !uniqueNimi }">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="common.Name"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}"
+                    ng-model="inventointiprojekti.properties.nimi" ng-change="nimi_change()"
+                    ng-required="true" ng-model-options="{debounce: 500}" ng-minlength="2" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="form.nimi.$invalid && form.nimi.$touched && uniqueNimi">
+                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+                </span>
+                <span class="help-block" ng-show="!uniqueNimi">
+                    <span data-i18n="common.already_in_use" data-field="{{ 'common.Name' | i18n }}"></span>
+                </span>
+                <span class="help-block">
+                    <span ng-show="form.nimi.$error.minlength"
+                        data-i18n="error.Inventoryproject_name_length_error"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="kuvaus" class="col-sm-3 control-label">
+                <span i18n="common.Description"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="kuvaus"
+                    data-i18n-attr="{placeholder: 'common.Description'}"
+                    ng-model="inventointiprojekti.properties.kuvaus" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inventointiaika" class="col-sm-3 control-label">
+                <span i18n="common.Inventory_period"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <div class="row">
+                    <label class="col-sm-3 col-md-5">
+                        <span i18n="inventoryproject.Start_date"></span>
+                    </label>
+                    <label class="col-sm-3 col-md-5">
+                        <span i18n="inventoryproject.End_date"></span>
+                    </label>
+                </div>
+                <div class="row" ng-repeat="ajanjakso in inventointiprojekti.properties.ajanjakso">
+                    <div class="col-sm-3 col-md-5"
+                        ng-class="{ 'has-error': form.alkupvm{{$index}}.$invalid && (form.alkupvm{{$index}}.$touched || form.loppupvm{{$index}}.$touched) }">
+                        <input bs-datepicker data-date-format="dd.MM.yyyy"
+                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+                            start-week="1" class="form-control" name="alkupvm{{$index}}"
+                            ng-model="ajanjakso.alkupvm" ng-required="true">
+                        <span class="help-block"
+                            ng-show="form.alkupvm{{$index}}.$invalid && (form.alkupvm{{$index}}.$touched || form.loppupvm{{$index}}.$touched)">
+                            <span data-i18n="common.mandatory_value"
+                                data-field="{{ 'inventoryproject.Start_date' | i18n }}"></span>
+                        </span>
+                    </div>
+                    <div class="col-sm-3 col-md-5">
+                        <input bs-datepicker data-date-format="dd.MM.yyyy"
+                            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+                            start-week="1" class="form-control" name="loppupvm{{$index}}"
+                            ng-model="ajanjakso.loppupvm" ng-required="false">
+                    </div>
+                    <button type="button" ng-click="deleteAjanjakso($index)" ng-show="!$first"
+                        class="btn btn-danger">-</button>
+                    <button type="button" ng-click="addAjanjakso()" class="btn btn-success" ng-show="$last">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.toimeksiantaja.$invalid && form.toimeksiantaja.$touched }">
+            <label for="toimeksiantaja" class="col-sm-3 control-label">
+                <span i18n="common.Mandator"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="toimeksiantaja"
+                    data-i18n-attr="{placeholder: 'common.Mandator'}"
+                    ng-model="inventointiprojekti.properties.toimeksiantaja" ng-required="true" spellcheck="false" autocomplete="off">
+                <span class="help-block"
+                    ng-show="form.toimeksiantaja.$invalid && form.toimeksiantaja.$touched">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.Mandator' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.kunta.$invalid && form.kunta.$touched }">
+            <label for="kunta" class="col-sm-3 control-label">
+                <span i18n="common.County"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select multiple="true" ng-model="inventointiprojekti.properties.kunnat"
+                    theme="bootstrap" name="kunta" sortable="true"
+                    ng-required="true" on-remove="addItemBackToList($item, kunnat)"> <ui-select-match
+                    data-i18n-attr="{placeholder: 'common.Select'}">{{$item|kuntaKylaNamei18n}} ({{$item.kuntanumero}})</ui-select-match> <ui-select-choices
+                    repeat="kunta in kunnat | filter: $select.search track by kunta.id">
+                <div>
+                    <span ng-bind-html="kunta | kuntaKylaNamei18n | highlight: $select.search"></span>
+                    (<span ng-bind-html="kunta.kuntanumero | highlight: $select.search"></span>)
+                </div>
+                </ui-select-choices> </ui-select>
+                <span class="help-block"
+                    ng-show="form.kunta.$invalid && form.kunta.$touched || (form.kunta.$touched && inventointiprojekti.properties.kunta.length == 0)">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.County' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.tyyppi.$invalid && form.tyyppi.$touched }">
+            <label for="tyyppi" class="col-sm-3 control-label">
+                <span i18n="common.Type"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select ng-model="inventointiprojekti.properties.inventointiprojektityyppi"
+                    title="Valitse" name="tyyppi" theme="bootstrap" ng-required="true"
+                    on-select="updateInventointiprojektityyppi($item)"> <ui-select-match
+                    data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected|namei18n}}</ui-select-match>
+                <ui-select-choices
+                    repeat="tyyppi in inventointiprojektityyppiOptions | filter: {'nimi_fi': $select.search}">
+                <div ng-bind-html="tyyppi | namei18n | highlight: $select.search"></div>
+                </ui-select-choices></ui-select>
+                <span class="help-block" ng-show="form.tyyppi.$invalid && form.tyyppi.$touched">
+                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Type' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="form-group"
+            ng-class="{ 'has-error': form.laji.$invalid && form.laji.$touched }">
+            <label for="laji" class="col-sm-3 control-label">
+                <span i18n="common.Kind"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select ng-model="inventointiprojekti.properties.inventointiprojektilaji"
+                    title="Valitse" name="laji" theme="bootstrap" ng-required="true"
+                    on-select="updateInventointiprojektilaji($item)"> <ui-select-match
+                    data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected|namei18n}}</ui-select-match>
+                <ui-select-choices
+                    repeat="laji in inventointiprojektilajiOptions | filter: {'nimi_fi': $select.search}">
+                <div ng-bind-html="laji | namei18n | highlight: $select.search"></div>
+                </ui-select-choices></ui-select>
+                <span class="help-block" ng-show="form.laji.$invalid && form.laji.$touched">
+                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Kind' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

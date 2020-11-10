@@ -1,0 +1,73 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#perustiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Basic_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perustiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Research_name"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	<a class="link" ng-click="vm.avaaTutkimus(vm.tutkimus.id)">{{vm.tutkimus.nimi}}</a>
+	                </p>
+	            </div>    
+	        </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Listing_number"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.loyto.properties.luettelointinumero}} {{vm.nayte.properties.luettelointinumero}}
+	                </p>
+	            </div>    
+	        </div> 	
+	        <div class="form-group" ng-if="vm.rontgenkuvat.length > 0">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.XRay_images"></span> 
+                </label>
+                <div class="col-sm-8">
+                    <span class="form-control-static" ng-repeat="rk in vm.rontgenkuvat">
+                        <a class="link" ng-click="vm.avaaRontgenkuva(rk)">{{rk.properties.numero}}</a><span ng-if="!$last">, </span>
+                    </span>
+                </div>    
+            </div>             
+	    </div>  	
+    	<!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Research_name"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	<a class="link" ng-click="vm.avaaTutkimus(vm.tutkimus.id)">{{vm.tutkimus.nimi}}</a>
+	                </p>
+	            </div>    
+	        </div>     
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="ark.Listing_number"></span> 
+	            </label>
+	            <div class="col-sm-8">
+ 	                <p class="form-control-static">{{vm.loyto.properties.luettelointinumero}} {{vm.nayte.properties.luettelointinumero}}
+	            </div>    
+	        </div>
+	        <div class="form-group" ng-if="vm.rontgenkuvat.length > 0">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.XRay_images"></span> 
+                </label>
+                <div class="col-sm-8">
+                    <span class="form-control-static" ng-repeat="rk in vm.rontgenkuvat">
+                        <a class="link" ng-click="vm.avaaRontgenkuva(rk)">{{rk.properties.numero}}</a><span ng-if="!$last">, </span>
+                    </span>
+                </div>    
+            </div> 
+	    </div>
+    </div>
+</div>

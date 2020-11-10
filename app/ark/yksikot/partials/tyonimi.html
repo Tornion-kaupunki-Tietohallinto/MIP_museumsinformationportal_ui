@@ -1,0 +1,107 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="unit.Working_title"></span>
+        </h4>
+    </div>
+    <!-- Muistiinpanojen muokkaus -->
+    <div class="panel-body" ng-if="vm.create && !vm.showNotes">
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span i18n="common.Area"></span></label>
+            <div class="col-sm-9">
+                <mip-tutkimusalue-valitsin tutkimus="vm.tutkimus" yksikko="vm.yksikko"></mip-tutkimusalue-valitsin>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tyonimi" class="col-sm-3 control-label">
+                <span i18n="unit.Working_title"></span> 
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="tyonimi"
+                    ng-model="vm.yksikko.properties.tyonimi" 
+                    spellcheck="false" autocomplete="off"
+                    focus-me="focusInput2">
+            </div>    
+        </div>
+        <div class="form-group">
+            <label for="sijainti" class="col-sm-3 control-label">
+                <span i18n="common.Location"></span> 
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="sijainti"
+                    ng-model="vm.yksikko.properties.tyo_sijainti" 
+                    spellcheck="false" autocomplete="off">
+            </div>    
+        </div>
+        <div class="form-group">
+            <label for="kaivajat" class="col-sm-3 control-label">
+                <span i18n="unit.Diggers"></span> 
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="kaivajat"
+                    ng-model="vm.yksikko.properties.tyo_kaivajat" 
+                    spellcheck="false" autocomplete="off">
+            </div>    
+        </div>        
+    </div>
+    <!-- Muistiinpanojen katselu -->
+    <div class="panel-body" ng-if="!vm.edit && !vm.create && vm.showNotes">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Working_title"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tyonimi}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="common.Location"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tyo_sijainti}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Diggers"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tyo_kaivajat}}</p>
+            </div>
+        </div>                         
+    </div>
+    <!-- Yksikön muokkaus, näytetään muistiinpanot -->
+    <div class="panel-body" ng-if="vm.edit && !vm.create && vm.showNotes">
+        <div class="form-group">
+            <label class="col-sm-4 control-label"><span i18n="common.Area"></span></label>
+            <div class="col-sm-8">
+                <mip-tutkimusalue-valitsin tutkimus="vm.tutkimus" yksikko="vm.yksikko"></mip-tutkimusalue-valitsin>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Working_title"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tyonimi}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="common.Location"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tyo_sijainti}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+            	<span i18n="unit.Diggers"></span> 
+            </label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{vm.yksikko.properties.tyo_kaivajat}}</p>
+            </div>
+        </div>        
+    </div>
+</div>

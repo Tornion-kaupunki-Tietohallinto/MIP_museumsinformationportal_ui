@@ -1,0 +1,27 @@
+<!-- Arvoalueet - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div
+		class="panel-heading"
+		data-toggle="collapse"
+		data-target="#arvoalueetPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Valueareas"></span> <span
+				class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div
+		id="arvoalueetPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+		<div class="row">
+			<ul class="list-group">
+				<li
+					class="list-group-item col-xs-6"
+					ng-repeat="arvoalue in alue.properties.value_areas | orderBy: 'inventointinumero'"
+					style="cursor: pointer; border: 0"
+					ng-click="selectArvoalue(arvoalue);"><span style="font-weight: bold">{{arvoalue.inventointinumero}}</span> - 
+					<span ng-if="arvoalue.nimi">{{arvoalue.nimi}}</span>
+					<span ng-if="!arvoalue.nimi && arvoalue.aluetyyppi">{{arvoalue.aluetyyppi | namei18n}}</span>
+			</ul>
+		</div>
+	</div>
+</div>

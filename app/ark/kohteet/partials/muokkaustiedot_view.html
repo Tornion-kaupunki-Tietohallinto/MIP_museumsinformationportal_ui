@@ -1,0 +1,64 @@
+<!-- Muokkaustiedot -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#muokkaustietoPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.Edit_info"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="muokkaustietoPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+
+        <div class="form-group" ng-if="vm.kohde.properties.luotu || vm.kohde.properties.luoja">
+            <label class="col-sm-3 control-label"> <span
+                i18n="common.Created_by"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+                    {{vm.kohde.properties.luotu | pvm:'dd.MM.yyyy HH:mm:ss'}} :
+                    {{vm.kohde.properties.luoja | kayttaja}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.muokattu || vm.kohde.properties.muokkaaja">
+            <label class="col-sm-3 control-label"> <span
+                i18n="common.Changed_by"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+                    {{vm.kohde.properties.muokattu | pvm:'dd.MM.yyyy HH:mm:ss'}}
+                    : {{vm.kohde.properties.muokkaaja | kayttaja}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.poistettu || vm.kohde.properties.poistaja">
+            <label class="col-sm-3 control-label"> <span
+                i18n="common.Deleted_by"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+                    {{vm.kohde.properties.poistettu | pvm:'dd.MM.yyyy HH:mm:ss'}}
+                    : {{vm.kohde.properties.poistaja}}</p>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="vm.kohde.properties.avattu || vm.kohde.properties.avaaja">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Created_by_mjr_hyp"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+                    {{vm.kohde.properties.avattu | pvm:'dd.MM.yyyy HH:mm:ss'}}
+                    : {{vm.kohde.properties.avaaja}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.kohde.properties.muutettu || vm.kohde.properties.muuttaja">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Changed_by_mjr_hyp"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">
+                    {{vm.kohde.properties.muutettu | pvm:'dd.MM.yyyy HH:mm:ss'}}
+                    : {{vm.kohde.properties.muuttaja}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+

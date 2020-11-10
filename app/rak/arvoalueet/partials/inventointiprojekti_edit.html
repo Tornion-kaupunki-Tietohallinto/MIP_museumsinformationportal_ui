@@ -1,0 +1,86 @@
+
+<!-- Inventointiprojekti - muokkausmoodi -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Select_inventory_project"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+
+        <div class="form-group"
+            ng-class="{ 'has-error': form.inventointiprojekti.$invalid && form.inventointiprojekti.$touched }">
+            <label for="inventointiprojekti" class="col-sm-3 control-label">
+                <span i18n="common.Inventory_project"></span><span
+                ng-if="isInventor">*</span>
+            </label>
+            <div class="col-sm-9">
+                <select
+                    ng-model="arvoalue.properties.inventointiprojekti.inventointiprojekti_id"
+                    ng-options="inventointiprojekti.properties.id as inventointiprojekti.properties.nimi for inventointiprojekti in inventointiprojektit"
+                    name="inventointiprojekti" class="form-control"
+                    ng-change="inventointiprojektiChanged()" ng-required="isInventor">
+                    <option value="" i18n="common.Select"></option>
+                </select> <span class="help-block"
+                    ng-show="form.inventointiprojekti.$invalid && form.inventointiprojekti.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Inventory_project' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.inventoija.$invalid && form.inventoija.$touched }">
+            <label for="inventoija" class="col-sm-3 control-label"> <span
+                i18n="common.Inventor"></span><span ng-if="arvoalue.properties.inventointiprojekti.inventointiprojekti_id || isInventor">*</span>
+            </label>
+            <div class="col-sm-9">
+                <select
+                    ng-model="arvoalue.properties.inventointiprojekti.inventoija_id"
+                    ng-options="user.properties.id as user.properties.etunimi+' '+user.properties.sukunimi+' ('+user.properties.id+')' for user in users"
+                    name="inventoija" class="form-control" ng-required="arvoalue.properties.inventointiprojekti.inventointiprojekti_id || isInventor">
+                    <option value=""><span i18n="common.Select"></span></option>
+                </select> <span class="help-block"
+                    ng-show="form.inventoija.$invalid && form.inventoija.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Inventor' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.inventointipaiva.$invalid && form.inventointipaiva.$touched }">
+            <label for="inventointipaiva" class="col-sm-3 control-label">
+                <span i18n="common.Inventory_date"></span><span ng-if="arvoalue.properties.inventointiprojekti.inventointiprojekti_id || isInventor">*</span>
+            </label>
+            <div class="col-sm-9">
+                <input bs-datepicker data-date-format="dd.MM.yyyy"
+                    model-date-format="yyyy-MM-dd" data-date-type="string"
+                    data-autoclose="1" placement="top-left" class="form-control"
+                    name="inventointipaiva" ng-required="arvoalue.properties.inventointiprojekti.inventointiprojekti_id || isInventor"
+                    ng-model="arvoalue.properties.inventointiprojekti.inventointipaiva">
+                <span class="help-block"
+                    ng-show="form.inventointipaiva.$invalid && form.inventointipaiva.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Inventory_date' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.kenttapaiva.$invalid && form.kenttapaiva.$touched }">
+            <label for="kenttapaiva" class="col-sm-3 control-label"> <span
+                i18n="common.Field_date"></span>
+            </label>
+            <div class="col-sm-9">
+                <input bs-datepicker data-date-format="dd.MM.yyyy"
+                    model-date-format="yyyy-MM-dd" data-autoclose="1"
+                    data-date-type="string" placement="top-left" class="form-control"
+                    name="kenttapaiva"
+                    ng-model="arvoalue.properties.inventointiprojekti.kenttapaiva">
+                <span class="help-block"
+                    ng-show="form.kenttapaiva.$invalid && form.kenttapaiva.$touched">
+                    <span data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Field_date' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

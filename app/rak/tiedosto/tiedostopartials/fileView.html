@@ -1,0 +1,53 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">{{file.properties.otsikko}}</h4>
+            </div>
+            <div class="modal-body">                                   
+                <form class="form-horizontal" name="fileForm"
+                    ng-class="{'form-horizontal-tight':!edit}" novalidate>
+                    <div class="col-md-12" ng-if="!edit"
+                        ng-include="'rak/tiedosto/tiedostopartials/tiedot_view.html'"></div>
+                    <div class="col-md-12" ng-if="edit"
+                        ng-include="'rak/tiedosto/tiedostopartials/tiedot_edit.html'"></div>
+                    <div class="col-md-12"
+                    ng-if="!edit && (file.properties.luoja || file.properties.muokkaaja || file.properties.poistaja)"
+                    ng-include="'rak/tiedosto/tiedostopartials/muokkaustiedot_view.html'"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+                        <span i18n="common.Actions"></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        
+                        <li><a href="" ng-click="deleteFile(modalNameId)" class="bg-danger" 
+                               i18n="common.Delete"                                
+                               ng-show="permissions.poisto || showEditAndDeleteButtons()"></a>
+                        </li>
+                        
+                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus"></li>
+                       
+                        <li><a href="" ng-click="close()" 
+                               i18n="common.Close"                                
+                               ng-show="!edit"></a>
+                        </li>
+                        <li><a href="" ng-click="cancelEdit()" 
+                               i18n="common.Cancel_edit"                                
+                               ng-show="edit"></a>
+                        </li>
+                        <li><a href="" ng-click="editMode()" 
+                               i18n="common.Edit"                                
+                               ng-show="!edit && (permissions.muokkaus || showEditAndDeleteButtons())"></a>
+                        </li>
+                        <li ng-class="{ disabled: fileForm.$invalid }"><a href="" ng-click="fileForm.$invalid || save()" 
+                               i18n="common.Save"                                
+                               ng-show="edit"></a>
+                        </li>
+                    </ul>
+                </div>           
+            </div>
+        </div>
+    </div>

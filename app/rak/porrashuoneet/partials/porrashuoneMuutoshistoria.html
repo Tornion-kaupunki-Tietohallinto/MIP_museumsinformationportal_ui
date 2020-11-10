@@ -1,0 +1,266 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span> : <span i18n="common.Staircase"></span> {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+  				    	<div class="panel-body panel-collapse collapse in">        
+					        <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+					            <!-- rakennuksen lisäystiedot -->
+					            <div class="panel panel-default" ng-if="h.action=='I' && h.table_name=='porrashuone'">
+					              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>
+					
+					              <table class="table">
+					                <tr>
+					                    <th><span i18n="common.Field"></span></th>
+					                    <th><span i18n="common.Value"></span></th>
+					                </tr>
+					                
+					                <!-- perustiedot -->                    
+					
+					                <tr ng-if="h.row_data.porrashuoneen_tunnus">
+					                    <td><span i18n="common.Staircase_identifier"></span></td>
+					                    <td>{{h.row_data.porrashuoneen_tunnus}}</td>
+					                </tr>
+					                <tr ng-if="h.row_data.porrashuonetyyppi">
+					                    <td><span i18n="common.Staircase_type"></span></td>
+					                    <td>{{h.row_data.porrashuonetyyppi | namei18n}}</td>
+					                </tr>
+					                <tr ng-if="h.row_data.portaiden_muoto">
+					                    <td><span i18n="common.Stair_type"></span></td>
+					                    <td>{{h.row_data.portaiden_muoto}}</td>
+					                </tr>
+					                <tr ng-if="h.row_data.hissi">
+					                    <td><span i18n="common.Elevator"></span></td>
+					                    <td>
+					                        <span i18n="common.Yes" ng-if="h.row_data.hissi=='t'"></span>
+					                        <span i18n="common.No" ng-if="h.row_data.hissi=='f'"></span>
+					                    </td>
+					                </tr>
+					                <tr ng-if="h.row_data.hissin_kuvaus">
+					                    <td><span i18n="common.Elevator_description"></span></td>
+					                    <td>{{h.row_data.hissin_kuvaus}}</td>
+					                </tr>
+					                <tr ng-if="h.row_data.kattoikkuna">
+					                    <td><span i18n="common.Skylight_window"></span></td>
+					                    <td>
+					                        <span i18n="common.Yes" ng-if="h.row_data.kattoikkuna=='t'"></span>
+					                        <span i18n="common.No" ng-if="h.row_data.kattoikkuna=='f'"></span>
+					                    </td>
+					                </tr>
+					                
+					                <!-- kuvaukset -->
+					                <tr ng-if="h.row_data.yleiskuvaus">
+					                    <td><span i18n="common.Outline"></span></td>
+					                    <td>{{h.row_data.yleiskuvaus}}</td>
+					                </tr>
+					                <tr ng-if="h.row_data.sisaantulokerros">
+					                    <td><span i18n="common.Entrance_floor"></span></td>
+					                    <td>{{h.row_data.sisaantulokerros}}</td>
+					                </tr>
+					                <tr ng-if="h.row_data.ovet_ja_ikkunat">
+					                    <td><span i18n="common.Doors_and_windows"></span></td>
+					                    <td>{{h.row_data.ovet_ja_ikkunat}}</td>
+					                </tr>               
+					                <tr ng-if="h.row_data.portaat_tasanteet_kaiteet">
+					                    <td><span i18n="common.Stairs_decks_and_railings"></span></td>
+					                    <td>{{h.row_data.portaat_tasanteet_kaiteet}}</td>
+					                </tr> 
+					                <tr ng-if="h.row_data.pintamateriaalit">
+					                    <td><span i18n="common.Surface_finish"></span></td>
+					                    <td>{{h.row_data.pintamateriaalit}}</td>
+					                </tr>                
+					                <tr ng-if="h.row_data.muu_kiintea_sisustus">
+					                    <td><span i18n="common.Other_fixed_decorations"></span></td>
+					                    <td>{{h.row_data.muu_kiintea_sisustus}}</td>
+					                </tr>                
+					                <tr ng-if="h.row_data.talotekniikka">
+					                    <td><span i18n="common.Building_service_technology"></span></td>
+					                    <td>{{h.row_data.talotekniikka}}</td>
+					                </tr>                                 
+					                <tr ng-if="h.row_data.tehdyt_korjaukset">
+					                    <td><span i18n="common.Repairs"></span></td>
+					                    <td>{{h.row_data.tehdyt_korjaukset}}</td>
+					                </tr> 
+					                <tr ng-if="h.row_data.lisatiedot">
+					                    <td><span i18n="common.Additional_information"></span></td>
+					                    <td>{{h.row_data.lisatiedot}}</td>
+					                </tr>                 
+					
+					              </table>                
+					            </div>
+					            
+					            <!-- muokkaustiedot -->
+					            <div class="panel panel-default" ng-if="h.action=='U' && h.table_name=='porrashuone'">
+					              <div class="panel-heading"><mip-history-header item="h"></mip-history-header></div>
+					              
+					              <table class="table">
+					                <tr>
+					                    <th><span i18n="common.Field"></span></th>
+					                    <th><span i18n="common.OldValue"></span></th>
+					                    <th><span i18n="common.NewValue"></span></th>
+					                </tr>
+					                <!-- perustiedot -->
+					
+					                <tr ng-if="h.changed_fields.hasOwnProperty('porrashuoneen_tunnus')">
+					                    <td><span i18n="common.Staircase_identifier"></span></td>
+					                    <td>{{h.row_data.porrashuoneen_tunnus}}</td>
+					                    <td>{{h.changed_fields.porrashuoneen_tunnus}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('porrashuonetyyppi')">
+					                    <td><span i18n="common.Staircase_type"></span></td>
+					                    <td>{{h.row_data.porrashuonetyyppi | namei18n}}</td>
+					                    <td>{{h.changed_fields.porrashuonetyyppi | namei18n}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('portaiden_muoto')">
+					                    <td><span i18n="common.Stair_type"></span></td>
+					                    <td>{{h.row_data.portaiden_muoto}}</td>
+					                    <td>{{h.changed_fields.portaiden_muoto}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hissi && h.row_data.hissi && (h.row_data.hissi != h.changed_fields.hissi)">
+					                    <td><span i18n="common.Elevator"></span></td>
+					                    <td>
+					                        <span i18n="common.Yes" ng-if="h.row_data.hissi=='t'"></span>
+					                        <span i18n="common.No" ng-if="h.row_data.hissi=='f'"></span>
+					                    </td>
+					                    <td>
+					                        <span i18n="common.Yes" ng-if="h.changed_fields.hissi=='t'"></span>
+					                        <span i18n="common.No" ng-if="h.changed_fields.hissi=='f'"></span>
+					                    </td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('hissin_kuvaus')">
+					                    <td><span i18n="common.Elevator_description"></span></td>
+					                    <td>{{h.row_data.hissin_kuvaus}}</td>
+					                    <td>{{h.changed_fields.hissin_kuvaus}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.kattoikkuna && h.row_data.kattoikkuna && (h.row_data.kattoikkuna != h.changed_fields.kattoikkuna)">
+					                    <td><span i18n="common.Skylight_window"></span></td>
+					                    <td>
+					                        <span i18n="common.Yes" ng-if="h.row_data.kattoikkuna=='t'"></span>
+					                        <span i18n="common.No" ng-if="h.row_data.kattoikkuna=='f'"></span>
+					                    </td>
+					                    <td>
+					                        <span i18n="common.Yes" ng-if="h.changed_fields.kattoikkuna=='t'"></span>
+					                        <span i18n="common.No" ng-if="h.changed_fields.kattoikkuna=='f'"></span>
+					                    </td>
+					                </tr>
+					                
+					                
+					                <!-- kuvaukset -->
+					                <tr ng-if="h.changed_fields.hasOwnProperty('yleiskuvaus')">
+					                    <td>
+					                        <span i18n="common.Outline"></span>
+					                    </td>
+					                    <td>{{h.row_data.yleiskuvaus}}</td>
+					                    <td>{{h.changed_fields.yleiskuvaus}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('sisaantulokerros')">
+					                    <td>
+					                        <span i18n="common.Entrance_floor"></span>
+					                    </td>
+					                    <td>{{h.row_data.sisaantulokerros}}</td>
+					                    <td>{{h.changed_fields.sisaantulokerros}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('ovet_ja_ikkunat')">
+					                    <td>
+					                        <span i18n="common.Doors_and_windows"></span>
+					                    </td>
+					                    <td>{{h.row_data.ovet_ja_ikkunat}}</td>
+					                    <td>{{h.changed_fields.ovet_ja_ikkunat}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('portaat_tasanteet_kaiteet')">
+					                    <td>
+					                        <span i18n="common.Stairs_decks_and_railings"></span>
+					                    </td>
+					                    <td>{{h.row_data.portaat_tasanteet_kaiteet}}</td>
+					                    <td>{{h.changed_fields.portaat_tasanteet_kaiteet}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('pintamateriaalit')">
+					                    <td>
+					                        <span i18n="common.Surface_finish"></span>
+					                    </td>
+					                    <td>{{h.row_data.pintamateriaalit}}</td>
+					                    <td>{{h.changed_fields.pintamateriaalit}}</td>
+					                </tr>
+					                <tr ng-if="h.changed_fields.hasOwnProperty('muu_kiintea_sisustus')">
+					                    <td>
+					                        <span i18n="common.Other_fixed_decorations"></span>
+					                    </td>
+					                    <td>{{h.row_data.muu_kiintea_sisustus}}</td>
+					                    <td>{{h.changed_fields.muu_kiintea_sisustus}}</td>
+					                </tr>                
+					                <tr ng-if="h.changed_fields.hasOwnProperty('talotekniikka')">
+					                    <td>
+					                        <span i18n="common.Building_service_technology"></span>
+					                    </td>
+					                    <td>{{h.row_data.talotekniikka}}</td>
+					                    <td>{{h.changed_fields.talotekniikka}}</td>
+					                </tr>    
+					                <tr ng-if="h.changed_fields.hasOwnProperty('tehdyt_korjaukset')">
+					                    <td>
+					                        <span i18n="common.Repairs"></span>
+					                    </td>
+					                    <td>{{h.row_data.tehdyt_korjaukset}}</td>
+					                    <td>{{h.changed_fields.tehdyt_korjaukset}}</td>
+					                </tr> 
+					                <tr ng-if="h.changed_fields.hasOwnProperty('lisatiedot')">
+					                    <td>
+					                        <span i18n="common.Additional_information"></span>
+					                    </td>
+					                    <td>{{h.row_data.lisatiedot}}</td>
+					                    <td>{{h.changed_fields.lisatiedot}}</td>
+					                </tr>
+					                                
+					              </table>
+					              
+					            </div>
+					            
+					            <!-- kuvan lisäys ja poisto -->
+					            <div class="panel panel-default" ng-if="h.table_name=='kuva_porrashuone'">
+					              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>
+					
+					              <table class="table">
+					                <tr>
+					                    <td colspan="3">
+					                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+					                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+					                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+					
+					                        <span i18n="common.Image"></span>:
+					                        {{h.row_data.kuva.alkuperainen_nimi}} -
+					                        {{h.row_data.kuva.otsikko}}
+					                    </td>
+					                </tr>
+					              </table>
+					            </div>
+					            
+					            <!-- tiedoston lisäys ja poisto -->
+					            <div class="panel panel-default" ng-if="h.table_name=='tiedosto_porrashuone'">
+					              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>              
+					              <table class="table">
+					                <tr>
+					                    <td colspan="3">
+					                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+					                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+					                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+					
+					                        <span i18n="common.File"></span>:
+					                        {{h.row_data.tiedosto.alkuperainen_nimi}} -
+					                        {{h.row_data.tiedosto.otsikko}}
+					                    </td>
+					                </tr>
+					              </table>
+					            </div>
+					        </div>
+					    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

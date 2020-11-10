@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label for="toimenpide" class="col-sm-4 control-label">
+        <span i18n="ark.Treatment"></span>
+    </label>
+    <div class="col-sm-8">
+		<ui-select class="ng-animate-disabled" theme="bootstrap" name="kasittely" 
+			ng-model="kasittely.kasittely"> 
+		    <ui-select-match  data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected.kasittelytunnus}}</ui-select-match> 
+		    <ui-select-choices repeat="kasittely in kasittelyt | filter: $select.search track by kasittely.id">
+		       <span ng-bind-html="kasittely.kasittelytunnus | highlight: $select.search"></span>
+			</ui-select-choices> 
+		</ui-select>        
+    </div>
+</div>

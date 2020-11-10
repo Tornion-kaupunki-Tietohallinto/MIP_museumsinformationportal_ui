@@ -1,0 +1,65 @@
+
+<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog"
+    id="myModalDialog{{modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title">
+                <span i18n="common.Report"></span>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-md-6" ng-if="!valittuKoriId">
+                    <div class="form-group form-inline">                    
+                        <label for="valitseRaportti" i18n="common.Select_report_type"> </label>                       
+                        <select class="form-control" name="valitseRaportti" ng-model="data.raporttityyppi" ng-disabled="data.raporttityyppi">
+                          <option ng-repeat="raporttityyppi in data.raporttityypit" value="{{raporttityyppi.id}}">{{raporttityyppi.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6"  ng-if="valittuKoriId">
+	 		        <div class="form-group">
+			            <label class="col-sm-3 control-label">
+			            	<span i18n="common.Report"></span> 
+			            </label>
+			            <div class="col-sm-9">
+			                <p class="form-control-static">{{data.raporttityyppi.name}}</p> 
+			            </div>
+					</div>
+                </div>
+            </div>
+            <div class="row">
+                <form class="form-horizontal" name="reportForm" novalidate>
+                    <mip-kuntaraportti ng-if="data.raporttityyppi == 'Kuntaraportti'" raportti="data.raportti"></mip-kuntaraportti>
+                    <mip-inventointiprojektiraportti ng-if="data.raporttityyppi == 'Inventointiprojektiraportti'" raportti="data.raportti"></mip-inventointiprojektiraportti>
+                    <mip-vuosiraportti ng-if="data.raporttityyppi == 'Vuosiraportti'" raportti="data.raportti"></mip-vuosiraportti>
+                    <mip-matkaraporttikooste ng-if="data.raporttityyppi == 'Matkaraporttikooste'" raportti="data.raportti"></mip-matkaraporttikooste>
+                    <mip-yhteenvetoraportti ng-if="data.raporttityyppi == 'Yhteenvetoraportti'" raportti="data.raportti"></mip-yhteenvetoraportti>
+                    <mip-koriraportti ng-if="valittuKoriId" raportti="data.raportti" laji="valittuKorityyppi.taulu"></mip-koriraportti>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="dropup">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span i18n="common.Actions"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="" ng-click="close()" i18n="common.Close"></a>
+                    </li>
+                    <li ng-if="!valittuKoriId">
+                        <a href="" ng-click="clear()" i18n="common.Clear"></a>
+                    </li>
+                    <li ng-class="{ disabled: reportForm.$invalid || disableButtons || (data.raportti.valitutKentat.length == 0 && (data.raportti.laji != 'loydot' && data.raportti.laji != 'naytteet'))}">
+                        <a href="" ng-click="(reportForm.$invalid || disableButtons) || create()"
+                            class="bg-success" i18n="common.Create_report"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<ui-select multiple ng-model="tilat.naytteen_tilat" theme="bootstrap" name="naytetila"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'sample.Sample_status'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="tila.id as tila in nayteTilat | filter: $select.search">
+       <span ng-bind-html="tila | namei18n | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

@@ -1,0 +1,153 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span> : <span i18n="common.Architect"></span>
+                    {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-body panel-collapse collapse in">
+                            <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+                                <!-- suunnittelijan lisäystiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='I' && h.table_name=='suunnittelija'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.row_data.sukunimi">
+                                            <td>
+                                                <span i18n="common.Lastname"></span>
+                                            </td>
+                                            <td>{{h.row_data.sukunimi}}</td>
+                                        </tr>
+                                       
+                                        <tr ng-if="h.row_data.etunimi">
+                                            <td>
+                                                <span i18n="common.Firstname"></span>
+                                            </td>
+                                            <td>{{h.row_data.etunimi}}</td>
+                                        </tr>
+                                         <tr ng-if="h.row_data.suunnittelija_ammattiarvo">
+                                            <td>
+                                                <span i18n="common.Profession_or_title"></span>
+                                            </td>
+                                            <td>{{h.row_data.suunnittelija_ammattiarvo | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.suunnittelija_laji">
+                                            <td>
+                                                <span i18n="designer.Kind"></span>
+                                            </td>
+                                            <td>{{h.row_data.suunnittelija_laji | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kuvaus">
+                                            <td>
+                                                <span i18n="common.Description"></span>
+                                            </td>
+                                            <td>{{h.row_data.kuvaus}}</td>
+                                        </tr>                                       
+                                    </table>
+                                </div>
+                                <!-- muokkaustiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='U' && h.table_name=='suunnittelija'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.changed_fields.sukunimi">
+                                            <td>
+                                                <span i18n="common.Lastname"></span>
+                                            </td>
+                                            <td>{{h.row_data.sukunimi}}</td>
+                                            <td>{{h.changed_fields.sukunimi}}</td>
+                                        </tr>                                        
+                                        <tr ng-if="h.changed_fields.etunimi">
+                                            <td>
+                                                <span i18n="common.Firstname"></span>
+                                            </td>
+                                            <td>{{h.row_data.etunimi}}</td>
+                                            <td>{{h.changed_fields.etunimi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.suunnittelija_ammattiarvo">
+                                            <td>
+                                                <span i18n="common.Profession_or_title"></span>
+                                            </td>
+                                            <td>{{h.row_data.suunnittelija_ammattiarvo | namei18n}}</td>
+                                            <td>{{h.changed_fields.suunnittelija_ammattiarvo | namei18n}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.suunnittelija_laji">
+                                            <td>
+                                                <span i18n="designer.Kind"></span>
+                                            </td>
+                                            <td>{{h.row_data.suunnittelija_laji | namei18n}}</td>
+                                            <td>{{h.changed_fields.suunnittelija_laji | namei18n}}</td>
+                                        </tr>                                                                    
+                                        <tr ng-if="h.changed_fields.kuvaus">
+                                            <td>
+                                                <span i18n="common.Description"></span>
+                                            </td>
+                                            <td>{{h.row_data.kuvaus}}</td>
+                                            <td>{{h.changed_fields.kuvaus}}</td>
+                                        </tr>                                        
+                                    </table>
+                                </div>
+					            <!-- kuvan tiedot -->
+					            <div class="panel panel-default" ng-if="h.table_name=='kuva_suunnittelija'">
+					              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>
+					
+					              <table class="table">
+					                <tr>
+					                    <td colspan="3">
+					                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+					                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+					                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+					
+					                        <span i18n="common.Image"></span>:
+					                        {{h.row_data.kuva.alkuperainen_nimi}} -
+					                        {{h.row_data.kuva.otsikko}}
+					                    </td>
+					                </tr>
+					              </table>
+					            </div>
+					            
+					            <!-- tiedoston tiedot -->
+					            <div class="panel panel-default" ng-if="h.table_name=='tiedosto_suunnittelija'">
+					              <div class="panel-heading" ><mip-history-header item="h"></mip-history-header></div>              
+					              <table class="table">
+					                <tr>
+					                    <td colspan="3">
+					                        <span i18n="common.Added"   ng-if="h.action=='I'"></span>
+					                        <span i18n="common.Updated" ng-if="h.action=='U'"></span>
+					                        <span i18n="common.Deleted" ng-if="h.action=='D'"></span>
+					
+					                        <span i18n="common.File"></span>:
+					                        {{h.row_data.tiedosto.alkuperainen_nimi}} -
+					                        {{h.row_data.tiedosto.otsikko}}
+					                    </td>
+					                </tr>
+					              </table>
+					            </div>                                                                                                                         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

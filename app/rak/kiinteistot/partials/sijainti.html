@@ -1,0 +1,141 @@
+<!-- Sijainti - katselu- ja muokkausmoodi -->
+<div class="panel panel-default panel-collapsible">
+    <div
+        class="panel-heading"
+        data-toggle="collapse"
+        data-target="#sijaintiPanel{{modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.Location"></span> <span
+                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div
+        id="sijaintiPanel{{modalId}}"
+        class="panel-body panel-collapse collapse in">
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                    class="btn-group btn-group-map-holder"
+                    role="group">
+                    <div class="col-md-6 btn-group-col">
+                        <div class="btn-group btn-group-justified">                         
+                            <div
+                                class="btn-group btn-group-map"
+                                role="group"
+                                ng-if="edit">
+                                <button
+                                    ng-model="addKiinteistoLocationButton"
+                                    class="btn btn-default"
+                                    type="button"
+                                    ng-click="togglePointTool()"
+                                    ng-class="pointTool == true ? 'btn btn-default active' : 'btn btn-default'" data-i18n-attr="{title: 'estate.Set_location'}">
+                                    <span
+                                        class="fa fa-thumb-tack"
+                                        aria-hidden="true"> </span>
+                                </button>
+                            </div>
+                            <div
+                                class="btn-group btn-group-map"
+                                role="group"
+                                ng-if="edit">
+                                <button
+                                    ng-disabled="pointTool || kiinteisto.properties.sijainti == null"
+                                    type="button"
+                                    class="btn btn-default"
+                                    ng-click="deletePoint()" data-i18n-attr="{title: 'estate.Delete_location'}">
+                                    <span
+                                        class="fa fa-times"
+                                        aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div
+                                class="btn-group btn-group-map"
+                                role="group"
+                                ng-if="edit">
+                                <button
+                                    ng-class="getDetailsTool == true ? 'btn btn-default active' : 'btn btn-default'"
+                                    ng-click="getDetails()"
+                                    ng-disabled="kiinteisto.properties.sijainti == null"
+                                    type="button" data-i18n-attr="{title: 'estate.Get_data'}">
+                                    <span
+                                        class="fa fa-info-circle"
+                                        aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div
+                                class="btn-group btn-group-map"
+                                role="group">
+                                <button
+                                    class="btn btn-default"
+                                    ng-click="centerToLocation()"
+                                    ng-disabled="kiinteisto.properties.sijainti == null"
+                                    type="button" data-i18n-attr="{title: 'estate.Show_location'}">
+                                    <span
+                                        class="fa fa-map-marker"
+                                        aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div
+                                class="btn-group btn-group-map"
+                                role="group">
+                                <button type="button" class="btn btn-default"
+                                    data-template-url="pages/templates/popover-address-search.html"
+                                    data-auto-close="1"   
+                                    placement="bottom"
+                                    data-i18n-attr="{title: 'common.Search_on_map'}"                                             
+                                    bs-popover>
+                                    <span class="fa fa-search" aria-hidden="true"></span>
+                                </button>                           
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 btn-group btn-group-map" role="group">
+                        <button type="button"
+                                class="btn btn-default"
+                                data-template-url="pages/templates/rak-map-layer-selector.html"
+                                data-auto-close="1" bs-popover
+                                data-i18n-attr="{title: 'common.Select_map_layers'}"
+                                ng-click="refreshSliders()"
+                                placement="bottom-right">
+                                <span data-i18n="common.Adjust_layers"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div
+                class="col-md-12"
+                ng-class="{ 'has-error': !kiinteisto.properties.sijainti }">
+                <openlayers
+                    id="{{mapId}}"
+                    ol-center="center"
+                    ol-defaults="defaults"
+                    height="400px"
+                    width="100%"
+                    custom-layers="true"> 
+                    <ol-control
+                        name="{{ control.name }}"
+                        ng-repeat="control in controls|filter: {active: true}">
+                    </ol-control> 
+                    <ol-layer
+                        ol-layer-properties="layer"
+                        ng-repeat="layer in layers|filter:{active:true}"> 
+                    </ol-layer> 
+                    <ol-marker 
+                        ng-repeat="marker in markers" 
+                        lat="marker.lat" 
+                        lon="marker.lon">
+                    </ol-marker> 
+                </openlayers>
+                <span
+                    class="help-block"
+                    ng-show="!kiinteisto.properties.sijainti && edit"> <span
+                    data-i18n="common.mandatory_value"
+                    data-field="{{ 'common.Location' | i18n }}"></span>
+                </span>
+                <!-- HIDDEN TEMPORARILY(?) -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading collapsed" data-toggle="collapse" data-target="#mjrtutkimuksetPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="ark.Researchs_mjr"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="mjrtutkimuksetPanel{{vm.modalId}}" class="panel-body panel-collapse collapse">
+        <ul class="list-group">
+            <li class="list-group-item"
+                ng-repeat="mt in vm.kohde.properties.mjrtutkimukset">
+    
+                <h4 class="list-group-item-heading">{{mt.mjrtutkimuslaji | namei18n}} {{mt.vuosi}}</h4>
+                
+                <div class="form-group" ng-if="mt.tutkija">
+                    <label class="col-sm-3"> <span i18n="ark.Researcher"></span></label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{mt.tutkija}}</p>
+                    </div>
+                </div>                                                                                  
+                <div class="form-group" ng-if="mt.huomio">
+                    <label class="col-sm-3"> <span i18n="ark.Observations"></span></label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static mip-multiline">{{mt.huomio}}</p>
+                    </div>
+                </div> 
+               
+            </li>
+        </ul>
+        
+    </div>
+</div>

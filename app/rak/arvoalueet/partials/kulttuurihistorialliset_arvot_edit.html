@@ -1,0 +1,82 @@
+<!--  Kulttuurihistorialliset arvot - muokkausmoodi -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Culturohistorical_values"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+
+        <div class="form-group">
+            <label for="kulttuurihistoriallisetarvot"
+                class="col-sm-3 control-label"> <span
+                i18n="common.Culturohistorical_values"></span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select
+                    ng-model="arvoalue.properties.kulttuurihistoriallisetarvot"
+                    title="Valitse" name="kulttuurihistoriallisetarvot"
+                    theme="bootstrap" multiple="true" ng-required="false"
+                    on-remove="addItemBackToList($item, kultHistArvot)"> <ui-select-match
+                    data-i18n-attr="{placeholder: 'common.Select'}">{{$item.nimi_fi}}</ui-select-match>
+                <ui-select-choices
+                    repeat="k in kultHistArvot | filter: {'nimi_fi': $select.search} track by k.id">
+                <div ng-bind-html="k.nimi_fi | highlight: $select.search"></div>
+                </ui-select-choices> </ui-select>
+            </div>
+        </div>                
+        <div class="form-group">
+            <label for="arvotus" class="col-sm-3 control-label"> <span
+                i18n="common.Valuation"></span>
+            </label>
+            <div class="col-sm-9">
+                <select ng-model="arvoalue.properties.arvotustyyppi"
+                    ng-options="arvotus as arvotus.nimi_fi for arvotus in arvotusOptions track by arvotus.id"
+                    name="arvotus" class="form-control">
+                    <option value=""><span data-i18n="common.Select"></span></option>
+                </select>
+            </div>
+        </div>
+        <div
+            class="form-group"
+            ng-class="{ 'has-error': form.kuvaus.$invalid }">
+            <label
+                for="kuvaus"
+                class="col-sm-3 control-label">
+                <span i18n="common.Reasonings"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea
+                    rows="3"
+                    class="form-control"
+                    name="kuvaus"
+                    data-i18n-attr="{placeholder: 'common.Reasonings'}"
+                    ng-model="arvoalue.properties.kuvaus"
+                    ng-maxlength="254"
+                    ng-required="false" spellcheck="false" autocomplete="off"></textarea>
+                     <span class="help-block" 
+                    ng-show="form.kuvaus.$invalid && form.kuvaus.$error.maxlength">
+                    <span data-i18n="common.err_max_length" ng-show="form.kuvaus.$error.maxlength" 
+                        data-field="{{ 'common.Reasonings' | i18n }}" data-maxlength="254"></span>
+                </span> 
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{'has-error': form.tarkistettu.$invalid && form.tarkistettu.$touched }">
+            <label for="tarkistettu" class="col-sm-3 control-label"> <span
+                i18n="common.Inspected"></span>
+            </label>
+            <div class="col-sm-9">
+                <input bs-datepicker data-date-format="dd-MM-yyyy"
+                    model-date-format="yyyy-MM-dd" data-autoclose="1"
+                    date-type="string" placement="top-left" start-week="1"
+                    class="form-control" name="tarkistettu"
+                    ng-model="arvoalue.properties.tarkistettu" ng-required="false">
+                <span class="help-block"
+                    ng-show="form.tarkistettu.$invalid && form.tarkistettu.$touched">
+                    <span i18n="common.Invalid_date"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

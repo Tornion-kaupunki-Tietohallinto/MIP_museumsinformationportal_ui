@@ -1,0 +1,78 @@
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#sijaintiPanel{{vm.modalId}}">
+		<h4 class="panel-title">
+			<span i18n="ark.Status_and_location"></span> <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="sijaintiPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="panel-body" ng-if="vm.edit">
+			<mip-loyto-tila tila="vm.loyto.properties" vm="vm"></mip-loyto-tila>
+			<!-- Luetteloitu, Konservoinnissa, 
+			Röntgenkuvauksessa, Poistettu löytöluettelosta, 
+			Palautettu, Poistettu kokoelmasta, 
+			Puuttuu  -->
+			<div ng-if="vm.loyto.properties.loydon_tila.id == 1 || vm.loyto.properties.loydon_tila.id == 2 ||
+                        vm.loyto.properties.loydon_tila.id == 4 || vm.loyto.properties.loydon_tila.id == 5 ||
+                        vm.loyto.properties.loydon_tila.id == 11 || vm.loyto.properties.loydon_tila.id == 9 || 
+                        vm.loyto.properties.loydon_tila.id == 10"
+			 ng-include="'ark/loydot/partials/tila_luetteloitu.html'"></div>
+			<!-- Lainassa, Näyttelyssä -->
+			<div ng-if="vm.loyto.properties.loydon_tila.id == 7 || vm.loyto.properties.loydon_tila.id == 8" ng-include="'ark/loydot/partials/tila_lainassa.html'"></div>
+			<!-- Kokoelmassa -->
+			<div ng-if="vm.loyto.properties.loydon_tila.id == 6" ng-include="'ark/loydot/partials/tila_kokoelmassa.html'"></div>
+			<div>&nbsp;</div>
+			<!-- Lisäksi näytetään vielä vakituinen sijainti (säilytystila + hyllypaikka) ja tilapainen sijainti -->
+			<mip-sailytystila ng-show="!vm.tilanmuutos" sailytystila="vm.loyto.properties.sailytystila" req="false" dis="false"></mip-sailytystila>
+			<div class="form-group" ng-show="!vm.tilanmuutos" ng-class="{ 'has-error': form.hyllypaikka.$invalid && form.hyllypaikka.$touched }">
+				<label for="hyllypaikka" class="col-sm-4 control-label">
+					<span i18n="ark.Shelf_spot"></span>
+				</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="hyllypaikka" ng-required="false" ng-disabled="false"
+					 ng-model="vm.loyto.properties.vakituinen_hyllypaikka" />
+					<span class="help-block" ng-show="form.hyllypaikka.$invalid && form.hyllypaikka.$touched">
+						<span data-i18n="common.mandatory_value" data-field="{{ 'ark.Borrower' | i18n }}"></span>
+					</span>
+				</div>
+			</div>
+			<div class="form-group" ng-show="!vm.tilanmuutos" ng-class="{ 'has-error': form.tilapainen_sijainti.$invalid && form.tilapainen_sijainti.$touched }">
+				<label for="tilapainen_sijainti" class="col-sm-4 control-label">
+					<span i18n="ark.Temporary_location"></span>
+				</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="tilapainen_sijainti" ng-required="false" ng-model="vm.loyto.properties.tilapainen_sijainti" />
+					<span class="help-block" ng-show="form.tilapainen_sijainti.$invalid && form.tilapainen_sijainti.$touched">
+						<span data-i18n="common.mandatory_value" data-field="{{ 'ark.Temporary_location' | i18n }}"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body" ng-if="!vm.edit">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">
+					<span i18n="ark.Discovery_status"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.loyto.properties.loydon_tila | namei18n}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">
+					<span i18n="ark.Permanent_location"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.loyto.properties.sailytystila |
+						namei18n}}<span ng-if="vm.loyto.properties.sailytystila && vm.loyto.properties.vakituinen_hyllypaikka">.</span>{{vm.loyto.properties.vakituinen_hyllypaikka}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">
+					<span i18n="ark.Temporary_location"></span>
+				</label>
+				<div class="col-sm-8">
+					<p class="form-control-static mip-multiline">{{vm.loyto.properties.tilapainen_sijainti}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

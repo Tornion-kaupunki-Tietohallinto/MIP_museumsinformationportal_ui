@@ -1,0 +1,182 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default panel-collapsible table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span> : {{vm.kuvatTable.total()}} <span
+                                i18n="common.Shown"></span> : {{vm.searchResults}} <span
+                                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body panel-collapse form-horizontal collapse in"
+                        id="tiedotPanel">                        
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="vm.clearSearchFilter()" 
+                                    data-i18n-attr="{title: 'common.Clear_filter'}">
+                                    <span class="fa fa-ban"></span>
+                                </button>                                
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="vm.refreshTable()"
+                                    data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                    <span class="fa fa-refresh"></span>
+                                </button>   
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="vm.toggleShowMode()"
+                                    data-i18n-attr="{title: 'common.Show'}">
+                                    <span ng-show="vm.showMode === 'thumbs'" class="fa fa-list"></span>
+                                    <span ng-show="vm.showMode === 'list'" class="fa fa-image"></span>
+                                </button>  
+                            </div>    
+                            <div class="col-md-10 searchParams">
+                                <div class="row">
+                                    <div class="col-md-12">
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <mip-kohde k-model="vm.kuvatTable.filter().properties"></mip-kohde>
+		                                    </div>
+		                                </div>                                
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <input type="text" class="form-control"
+		                                            name="muinaisjaannostunnus"
+		                                            ng-model="vm.kuvatTable.filter().properties.muinaisjaannostunnus"
+		                                            data-i18n-attr="{placeholder: 'ark.Relic_id'}" spellcheck="false" autocomplete="off">
+		                                    </div>
+		                                </div>
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <mip-kohdelaji-multi kl-model="vm.kuvatTable.filter().properties"></mip-kohdelaji-multi>
+		                                    </div>
+		                                </div>
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <mip-tutkimus t-model="vm.kuvatTable.filter().properties"></mip-tutkimus>
+		                                    </div>
+		                                </div>  
+                                    </div>
+                                </div>
+	                            <div class="row">
+                                    <div class="col-md-12">
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <input type="text" class="form-control"
+		                                            name="tutkimus_lyhenne"
+		                                            ng-model="vm.kuvatTable.filter().properties.tutkimus_lyhenne"
+		                                            data-i18n-attr="{placeholder: 'ark.Research_abbreviation'}" spellcheck="false" autocomplete="off">
+		                                    </div>
+		                                </div>
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <input type="text" class="form-control"
+		                                            name="asiasanat"
+		                                            ng-model="vm.kuvatTable.filter().properties.asiasanat"
+		                                            data-i18n-attr="{placeholder: 'ark.Glossaries'}" spellcheck="false" autocomplete="off">
+		                                    </div>
+		                                </div>
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+						                        <input type="text" class="form-control"
+						                            name="yksikkotunnus" ng-model="vm.kuvatTable.filter().properties.yksikkotunnus"
+						                            data-i18n-attr="{placeholder: 'unit.Unit_identifier'}" spellcheck="false" autocomplete="off">						                   
+		                                    </div>
+		                                </div>
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <input type="text" class="form-control"
+		                                            name="luettelointinumero" ng-model="vm.kuvatTable.filter().properties.luettelointinumero"
+		                                            data-i18n-attr="{placeholder: 'ark.Listing_number'}" spellcheck="false" autocomplete="off">                                          
+		                                    </div>
+		                                </div>
+	                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+		                                <div class="form-group col-md-3">
+		                                    <div class="col-md-12">
+		                                        <input type="text" class="form-control"
+		                                            name="otsikko" ng-model="vm.kuvatTable.filter().properties.otsikko"
+		                                            data-i18n-attr="{placeholder: 'common.Caption'}" spellcheck="false" autocomplete="off">                                          
+		                                    </div>
+		                                </div>
+	                                </div>
+                                </div>	                            
+                            </div>                        
+                        </div>
+                    </div>
+                    <div ng-show="vm.showMode === 'list'">
+	                    <table ng-table="vm.kuvatTable" class="table table-striped table-bordered"
+	                        template-pagination="pages/templates/table-pagination.html"
+	                        show-filter="false">
+	                        <tr ng-repeat="kuva in $data" style="cursor: pointer"
+	                            ng-click="vm.openImage(kuva)">
+	                            <td data-title="vm.getColumnName('Image')">
+	                                <img ng-src="{{kuva.properties.url_medium}}" class="img-responsive zoom" 
+	                                    style="vertical-align: middle; max-height:160px; width: auto; max-width:100px" title="{{file.name}}">
+	                            </td>
+	                            <td data-title="vm.getColumnName('Research')"
+                                    filter="{ 'properties.tutkimukset': 'text' }">{{kuva.properties.tutkimukset.nimi}}</td>
+	                            <td data-title="vm.getColumnName('Main_number')"
+                                    filter="{ 'properties.paanumero': 'text' }">{{kuva.properties.tutkimukset.loyto_paanumero}}</td>
+                                <td data-title="vm.getColumnName('Listing_number', 'ark')"
+                                    filter="{ 'properties.luettelointinumero': 'text' }">{{kuva.properties.luettelointinumero}}</td>
+	                            <td data-title="vm.getColumnName('Caption')"
+	                                filter="{ 'properties.nimi': 'text' }">{{kuva.properties.otsikko}}</td>
+	                            <td data-title="vm.getColumnName('Description')"
+                                    filter="{ 'properties.kuvaus': 'text' }">{{kuva.properties.kuvaus}}</td>
+                                <td data-title="vm.getColumnName('Shot_from', 'ark')"
+                                    filter="{ 'properties.kuvaussuunta': 'text' }">{{kuva.properties.kuvaussuunta}}</td>	                                
+	                            <td data-title="vm.getColumnName('Target', 'ark')"
+	                                filter="{ 'properties.kohde': 'text' }"><span ng-repeat="kk in kuva.properties.kuvakohteet">{{kk.kohde.nimi}}<span ng-if="!$last">, </span></span></td>
+	                            <td data-title="vm.getColumnName('Relic_id', 'ark')"
+	                                filter="{ 'properties.muinaisjaannostunnus': 'text' }"><span ng-repeat="kk in kuva.properties.kuvakohteet">{{kk.kohde.muinaisjaannostunnus}}<span ng-if="!$last">, </span></span></td>
+	                            
+	                            <td data-title="vm.getColumnName('Unit_identifier', 'unit')"
+                                    filter="{ 'properties.yksikko': 'text' }"><span ng-repeat="yksikko in kuva.properties.yksikot">{{yksikko.yksikkotunnus}}<span ng-if="!$last">, </span></span></td>
+	                            <td data-title="vm.getColumnName('Discovery', 'ark')"
+	                                filter="{ 'properties.loyto': 'text' }"><span ng-repeat="loyto in kuva.properties.loydot">{{loyto.luettelointinumero}}<span ng-if="!$last">, </span></span></td>
+	                            <td data-title="vm.getColumnName('Sample', 'ark')"
+	                                filter="{ 'properties.nayte': 'text' }"><span ng-repeat="nayte in kuva.properties.naytteet">{{nayte.luettelointinumero}}<span ng-if="!$last">, </span></span></td>
+	                            <td data-title="vm.getColumnName('Taken_by')"
+	                                filter="{ 'properties.kuvaaja': 'text' }">{{kuva.properties.kuvaaja}}</td>
+                                <td data-title="vm.getColumnName('Organization')"
+                                    filter="{ 'properties.organisaatio': 'text' }">{{kuva.properties.organisaatio}}</td>
+	                        </tr>
+	                    </table>
+                    </div>
+                    <div ng-show="vm.showMode === 'thumbs'">
+	                    <div class="row">
+				            <div class="col-md-12">
+				                <ul class="list-group" data-ng-model="vm.kuvatTable.data">
+				                    <li class="list-group-item col-md-3 mip-image-item-large" data-ng-repeat="image in vm.kuvatTable.data">
+				                        <div class="col-md-12" title="{{image.properties.otsikko}}{{image.properties.luettelointinumero}}">
+				                            <img ng-if="image.properties.url_medium" class="img-responsive mip-image-thumbnail-large"
+				                                ng-src="{{image.properties.url_medium}}" alt="{{image.properties.otsikko}}"
+				                                ng-click="vm.openImage(image)" > 
+				                            <img
+				                                ng-if="image.properties.url_small==''"  class="img-responsive mip-image-thumbnail-large"
+				                                ng-src="/resources/images/kuva_placeholder.png" alt="..."
+				                                ng-click="vm.openImage(image)">
+				                        </div>
+				                        <div class="col-md-12 text-center mip-image-caption">
+				                            <span>{{image.properties.otsikko}}{{image.properties.luettelointinumero}}</span>                                
+				                        </div>                       
+				                    </li>
+				                </ul>
+				            </div>
+				        </div>   
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

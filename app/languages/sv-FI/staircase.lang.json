@@ -1,0 +1,13 @@
+{
+    "Save_ok": "Information om trapphuset %name har sparats",
+    "Deleted": "Trapphuset har raderats",
+    "Delete_fail": "Misslyckades med att radera trapphuset",
+    "Getting_staircases_failed" : "Trapphus hittades inte",
+    "Getting_staircase_failed" : "Misslyckades med att söka trapphuset",
+    "Save_failed" : "Misslyckades med att spara trapphuset",
+    "Creation_ok" : "Nytt trapphus har skapats",
+    "Creation_fail" : "Misslyckades med att skapa trapphuset",
+    "No_view_permission" : "Du har inte rättigheter att se trapphusen",
+    "Getting_staircasetype_options_failed" : "Misslyckades med att söka trapphustyper",
+    "Getting_estate_failed": "Misslyckades med att söka information om fastigheten"
+}

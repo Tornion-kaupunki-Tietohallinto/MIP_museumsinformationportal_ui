@@ -1,0 +1,98 @@
+<!-- Perustiedot -->
+<div class="panel panel-default panel-collapsible">
+	<div
+		class="panel-heading"
+		data-toggle="collapse"
+		data-target="#perusTiedotPanel{{modalId}}">
+		<h4 class="panel-title">
+			<span data-i18n="common.Details"></span> <span
+				class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div
+		id="perusTiedotPanel{{modalId}}"
+		class="panel-body panel-collapse collapse in">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Name"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{alue.properties.nimi}}</p>
+			</div>
+		</div>
+		
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.County"></span> / <span i18n="common.Village"></span>
+			</label>
+			<div class="col-sm-9">
+			
+		        <ul class="list-group">
+		            <li class="list-group-item"
+		                ng-repeat="kyla in alue.properties.kylat">
+		    
+		                <h5 class="list-group-item-heading">
+		                    <a class="link"
+                                ng-click="showKuntaModal(kyla.kunta);">{{kyla.kunta | kuntaKylaNamei18n}} ({{kyla.kunta.kuntanumero}})</a>
+		                </h5>
+		                <p>
+		                    <a class="link"
+                                ng-click="showKylaModal(kyla);">{{kyla | kuntaKylaNamei18n}} ({{kyla.kylanumero}})</a>
+                        </p>
+		            </li>
+		        </ul>
+        
+			</div>
+		</div>
+
+		<div class="form-group"
+			ng-if="alue.properties.paikkakunta.length > 0">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.District"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">{{alue.properties.paikkakunta}}</p>
+			</div>
+		</div>
+
+		<div class="form-group" 
+			ng-if="alue.properties.historia.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.History"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{alue.properties.historia}}</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="alue.properties.maisema.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Scenery"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{alue.properties.maisema}}</p>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-if="alue.properties.nykytila.length > 0">
+			<label class="col-sm-3 control-label">
+				<span i18n="common.Current_condition"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static mip-multiline">{{alue.properties.nykytila}}</p>
+			</div>
+		</div>
+		<div class="form-group" ng-if="alue.properties.arkeologinen_kohde">
+			<label class="col-sm-3 control-label"> <span
+				i18n="common.Archeological_site"></span>
+			</label>
+			<div class="col-sm-9">
+				<p class="form-control-static">
+					<span i18n="common.Yes" ng-show="alue.properties.arkeologinen_kohde"></span>
+					<span i18n="common.No" ng-show="!alue.properties.arkeologinen_kohde"></span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
