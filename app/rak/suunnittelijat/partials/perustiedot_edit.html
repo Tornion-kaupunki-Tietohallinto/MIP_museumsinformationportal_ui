@@ -1,0 +1,71 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Common"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group"
+            ng-class="{ 'has-error': form.etunimi.$invalid && form.etunimi.$touched }">
+            <label for="etunimi" class="col-sm-3 control-label">
+                <span i18n="common.Firstname"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="etunimi"
+                    ng-model="suunnittelija.properties.etunimi"
+                    ng-required="false" spellcheck="false" autocomplete="off" ng-change="nimi_change()" ng-model-options="{debounce: 500}">
+                <span class="help-block" ng-show="form.etunimi.$invalid && form.etunimi.$touched">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.Firstname' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.sukunimi.$invalid && form.sukunimi.$touched }">
+            <label for="sukunimi" class="col-sm-3 control-label">
+                <span i18n="common.Lastname" ng-show="true"></span>
+                <span>*</span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="sukunimi"
+                    ng-model="suunnittelija.properties.sukunimi" ng-required="true" spellcheck="false" autocomplete="off" ng-change="nimi_change()" ng-model-options="{debounce: 500}">
+                <span class="help-block" ng-show="form.sukunimi.$invalid && form.sukunimi.$touched">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.Lastname' | i18n }}"></span>
+                </span>
+                <span class="help-block" ng-show="!uniqueNimi">
+                    <span ng-if="duplicateNameCount > 1">({{duplicateNameCount}} <span i18n="designer.Duplicates"></span>)</span>
+                    <span ng-if="duplicateNameCount == 1">({{duplicateNameCount}} <span i18n="designer.Duplicate"></span>)</span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.ammattiarvo.$invalid && form.ammattiarvo.$touched }">
+            <label for="ammatti_arvo" class="col-sm-3 control-label">
+                <span i18n="common.Profession_or_title"></span>
+            </label>
+            <div class="col-sm-9">
+                <select class="form-control" ng-model="suunnittelija.properties.ammattiarvo" name="ammattiarvo"
+                    ng-options="ammattiarvo as ammattiarvo | namei18n for ammattiarvo in ammattiarvot track by ammattiarvo.id">
+                </select>
+                <span class="help-block" ng-show="form.ammattiarvo.$invalid && form.ammattiarvo.$touched">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.Profession_or_title' | i18n }}"></span>
+                </span>
+            </div>
+        </div>       
+        <div class="form-group"
+            ng-class="{'has-error': form.kuvaus.$touched && form.kuvaus.$invalid}">
+            <label for="kuvaus" class="col-sm-3 control-label">
+                <span i18n="common.Description"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="kuvaus"
+                    ng-model="suunnittelija.properties.kuvaus" spellcheck="false" autocomplete="off"></textarea>
+                <span class="help-block" ng-show="form.kuvaus.$invalid && form.kuvaus.$touched">
+                    <span data-i18n="common.mandatory_value"
+                        data-field="{{ 'common.Description' | i18n }}"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

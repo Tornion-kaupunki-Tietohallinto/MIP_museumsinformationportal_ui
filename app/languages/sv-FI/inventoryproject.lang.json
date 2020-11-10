@@ -1,0 +1,13 @@
+{
+    "Inventory_project_saved_successfully" : "Inventeringsprojekt %name har sparats",
+    "Inventory_project_deleted": "Inventeringsprojektet har raderats",
+    "No_view_permission" : "Du har inte rättigheter att se inventeringsprojekt",
+    "Estate_added_to_inventory_project_success": "Fastigheten har lagts till inventeringsprojektet",
+    "Estate_deleted_from_inventory_project_success": "Fastigheten har raderats från inventeringsprojektet",
+    "Inventor_count": "Inventerare",
+    "Save_failed": "Misslyckades med att spara inventeringsprojektet",
+    "Inventoryproject_deleted": "Inventeringsprojektet har raderats",
+    "Start_date": "Startdatum",
+    "End_date": "Slutdatum",
+    "Create_new_inventor": "Skapa ny användare"
+}

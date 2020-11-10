@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-12">
+         <label class="col-md-12 control-label">
+             <span i18n="common.Copyright_clause" class="pull-left"></span>
+         </label>
+        <select class="form-control" name="lausekevalitsin"
+            ng-model="valittulauseke"
+            ng-options="lauseke as lauseke.properties.otsikko for lauseke in lausekkeet track by lauseke.properties.id"
+            ng-change="lausekeChanged()"
+            ng-disabled="dis">
+            <option value="" data-i18n="common.Select"></option>
+        </select>
+    </div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+		    <label class="col-md-12 control-label">
+		        <span i18n="common.Copyright_clause" class="pull-left"></span>
+		    </label>
+		    <div class="col-md-12">
+		        <textarea rows="4" class="form-control"
+		            ng-model="valittulauseketeksti"
+		            data-i18n-attr="{placeholder: 'common.Copyright_clause'}"
+		            ng-disabled="dis"></textarea>
+		    </div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,141 @@
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+        <button type="button" class="btn btn-default" ng-click="vm.clearSearchFilter()"
+            data-i18n-attr="{title: 'common.Clear_filter'}">
+            <span class="fa fa-ban"></span>
+        </button>	
+		<button type="button" class="btn btn-default" ng-click="vm.refreshTable('nayteCache', 'naytteetTable')"
+			data-i18n-attr="{title: 'common.Refresh_search_results'}">
+			<span class="fa fa-refresh"></span>
+		</button>
+		<button type="button" class="btn btn-default" ng-click="vm.lisaaKoriin()"
+			data-i18n-attr="{title: 'common.Add_to_cart'}">
+			<i class="fa fa-cart-plus"></i>
+		</button>
+	</div>
+	<!-- Suodattimet -->
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<div class="col-md-12">
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showPaanumeroCol"
+							ng-change="vm.saveColVisibility('showPaanumeroCol', vm.colVisibilities.showPaanumeroCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="luettelointinumero" ng-model="vm.naytteetTable.filter().properties.nayte_paanumero"
+							data-i18n-attr="{placeholder: 'ark.Main_number'}" spellcheck="false" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                            <input type="checkbox" ng-model="vm.colVisibilities.showTutkimusLyhenneCol"
+                            ng-change="vm.saveColVisibility('showTutkimusLyhenneCol', vm.colVisibilities.showTutkimusLyhenneCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span> 
+                        <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                            name="TutkimusLyhenne" ng-model="vm.naytteetTable.filter().properties.tutkimusLyhenne"
+                            data-i18n-attr="{placeholder: 'ark.Research_abbreviation'}" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showTutkimuksenNimiCol"
+                            ng-change="vm.saveColVisibility('showTutkimuksenNimiCol', vm.colVisibilities.showTutkimuksenNimiCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                            name="tutkimusnimi" ng-model="vm.naytteetTable.filter().properties.tutkimuksen_nimi"
+                            data-i18n-attr="{placeholder: 'ark.Research_name'}" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+            </div>   
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showLuettelointinumeroCol"
+                            ng-change="vm.saveColVisibility('showLuettelointinumeroCol', vm.colVisibilities.showLuettelointinumeroCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span> 
+                        <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                            name="luettelointinumero" ng-model="vm.naytteetTable.filter().properties.luettelointinumero"
+                            data-i18n-attr="{placeholder: 'ark.Listing_number'}" spellcheck="false" autocomplete="off">
+                    </div>
+                </div>
+            </div> 						
+		</div>
+		<!-- Rivi 2 -->
+		<div class="col-md-12">	
+			<div class="col-md-3">
+	            <div class="form-group">
+	                <div class="input-group">
+	                    <span class="input-group-addon"> 
+	                    <input type="checkbox"
+	                        ng-model="vm.colVisibilities.showYksikkotunnusCol"
+	                        ng-change="vm.saveColVisibility('showYksikkotunnusCol', vm.colVisibilities.showYksikkotunnusCol)"
+	                        data-i18n-attr="{title: 'common.Show_field'}">
+	                    </span>
+	                    <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+	                        name="yksikkotunnus" ng-model="vm.naytteetTable.filter().properties.yksikkotunnus"
+	                        data-i18n-attr="{placeholder: 'unit.Unit_identifier'}" spellcheck="false" autocomplete="off">
+	                </div>
+	            </div>
+			</div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showNaytekoodiCol"
+                            ng-change="vm.saveColVisibility('showNaytekoodiCol', vm.colVisibilities.showNaytekoodiCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <mip-naytekoodi-multi koodit="vm.naytteetTable.filter().properties"></mip-naytekoodi-multi>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showNaytetyyppiCol"
+                            ng-change="vm.saveColVisibility('showNaytetyyppiCol', vm.colVisibilities.showNaytetyyppiCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <mip-naytetyyppi-multi tyypit="vm.naytteetTable.filter().properties"></mip-naytetyyppi-multi>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showNaytettaJaljellaCol"
+                            ng-change="vm.saveColVisibility('showNaytettaJaljellaCol', vm.colVisibilities.showNaytettaJaljellaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<select class="form-control" name="naytetta_jaljella"
+							style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							ng-model="vm.naytteetTable.filter().properties.naytetta_jaljella"
+							ng-options="jaljella.id as jaljella.nimi_fi for jaljella in vm.naytettaJaljellaArvot">
+						</select>
+                    </div>
+                </div>
+            </div>                         				
+        </div>
+	</div>
+</div>
+

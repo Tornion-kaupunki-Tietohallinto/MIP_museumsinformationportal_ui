@@ -1,0 +1,23 @@
+<div class="panel">
+	<div class="panel-body">
+		<div ng-include="'pages/tabs.html'"></div>
+		<div ng-include="'pages/subtabs.html'"></div>
+		<div class="row">
+			<div class="col-md-12">
+                <form class="form-horizontal" name="form" ng-class="{'form-horizontal-tight':!vm.edit}" novalidate>
+                    <div class="row">
+                            <div class="col-md-12" ng-include="'ark/konservointihallinta/partials/toimenpiteet.html'"
+                            	ng-show="vm.editMateriaali === null && vm.editMenetelma === null">
+                            </div>
+                            <div class="col-md-12" ng-include="'ark/konservointihallinta/partials/menetelmat.html'" 
+                            	ng-show="vm.editToimenpide === null && vm.editMateriaali === null">
+                            </div>
+	                     	<div class="col-md-12" ng-include="'ark/konservointihallinta/partials/materiaalit.html'" 
+	                     		ng-show="vm.editToimenpide === null && vm.editMenetelma === null">
+	                     	</div>
+                     </div>
+                </form>
+			</div>
+		</div>
+	</div>
+</div>

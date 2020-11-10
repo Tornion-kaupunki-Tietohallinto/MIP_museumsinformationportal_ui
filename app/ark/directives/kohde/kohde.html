@@ -1,0 +1,10 @@
+<ui-select 
+    ng-model="kModel.ark_kohde_id"
+    ng-required="false"> 
+    <ui-select-match allow-clear="true" data-i18n-attr="{placeholder: 'ark.Target'}">{{$select.selected.nimi}}</ui-select-match>
+    <ui-select-choices 
+        repeat="kohde.id as kohde in kohteet | filter: {'nimi': $select.search}"
+        refresh="kohdeHaku($select.search)">
+        <div ng-bind-html="kohde.nimi | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

@@ -1,0 +1,142 @@
+<div class="modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title" i18n="common.Move_to_estate_or_building"></h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" name="form" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" i18n="common.Image"></h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div ng-if="images.length > 1">
+                                        <div class="col-md-3" ng-repeat="image in images">                                
+                                            <img ng-if="image.properties.url_tiny" ng-src="{{image.properties.url_tiny}}" alt="...">
+                                            <img ng-if="image.properties.url_tiny==''" ng-src="/resources/images/kuva_placeholder.png" alt="...">
+                                        </div>
+                                    </div>
+                                    <div ng-if="images.length === 1">
+                                        <div class="col-md-6">
+                                            <img ng-if="images[0].properties.url_small" ng-src="{{images[0].properties.url_small}}" alt="..."> 
+                                            <img ng-if="images[0].properties.url_small==''" ng-src="/resources/images/kuva_placeholder.png" alt="...">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group"
+                                                ng-show="images[0].properties.otsikko.length > 0">
+                                                <label class="col-sm-3 control-label">
+                                                    <span i18n="common.Caption"></span>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <p class="form-control-static">
+                                                        {{images[0].properties.otsikko}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"
+                                                ng-show="images[0].properties.kuvaus.length > 0">
+                                                <label class="col-sm-3 control-label">
+                                                    <span i18n="common.Description"></span>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <p class="form-control-static">
+                                                        {{images[0].properties.kuvaus}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"
+                                                ng-show="images[0].properties.kuvaaja.length > 0">
+                                                <label class="col-sm-3 control-label">
+                                                    <span i18n="common.Taken_by"></span>
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <p class="form-control-static">
+                                                        {{images[0].properties.kuvaaja}}</p>
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                    </div>                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" i18n="building.Move_to_estate"></h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="kohde" class="col-md-4 control-label" i18n="common.Move"></label>
+                                    <div class="col-md-8">
+                                        <select name="kohde" class="form-control" ng-model="kohde"
+                                            ng-options="option.name for option in availableOptions track by option.id"
+                                            ng-change="clearSelection()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"
+                                    ng-class="{ 'has-error': form.kiinteistotunnus.$invalid && form.kiinteistotunnus.$touched }">
+                                    <label for="kiinteistotunnus" class="col-md-4 control-label">
+                                        <span i18n="common.Property_identifier"></span>
+                                        <span>*</span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                            name="kiinteistotunnus"
+                                            data-i18n-attr="{placeholder: 'common.Property_identifier'}"
+                                            ng-model="kiinteistotunnus" ng-required="true"
+                                            spellcheck="false">
+                                        <span class="help-block"
+                                            ng-show="form.kiinteistotunnus.$invalid && form.kiinteistotunnus.$touched">
+                                            <span data-i18n="common.mandatory_value"
+                                                data-field="{{ 'common.Property_identifier' | i18n }}"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="palstanumero" class="col-md-4 control-label">
+                                        <span i18n="estate.Column_number"></span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="palstanumero"
+                                            data-i18n-attr="{placeholder: 'estate.Column_number'}"
+                                            ng-model="data.palstanumero" spellcheck="false">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="kohde.id == 2" ng-class="{ 'has-error': form.inventointinumero.$invalid && form.inventointinumero.$touched }">
+                                    <label for="inventointinumero" class="col-md-4 control-label">
+                                        <span i18n="common.Inventory_number"></span>
+                                        <span>*</span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"
+                                            name="inventointinumero" ng-required="kohde.id == 2"
+                                            data-i18n-attr="{placeholder: 'common.Inventory_number'}"
+                                            ng-model="data.inventointinumero" spellcheck="false">
+                                            <span class="help-block"
+                                            ng-show="form.inventointinumero.$invalid && form.inventointinumero.$touched">
+                                            <span data-i18n="common.mandatory_value"
+                                                data-field="{{ 'common.Inventory_number' | i18n }}"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="close()" ng-show="!edit"
+                ng-disabled="disableButtons">
+                <span i18n="common.Close"></span>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="save(modalNameId)"
+                ng-disabled="form.$invalid || disableButtons">
+                <span i18n="common.Save"></span>
+            </button>
+        </div>
+    </div>
+</div>
+</div>

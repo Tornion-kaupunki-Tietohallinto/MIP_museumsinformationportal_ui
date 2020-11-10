@@ -1,0 +1,1 @@
+Kartta-kansio sisältää kartta-tiedostotyypin lataamiseen ja muokkaamiseen liittyvää toiminnallisuutta, ei OpenLayersiin tai karttatasoihin liittyvää toiminnallisuutta.

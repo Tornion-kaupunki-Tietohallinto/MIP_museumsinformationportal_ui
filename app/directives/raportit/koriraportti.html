@@ -1,0 +1,39 @@
+<!-- LEFT SIDE - hakuehdot -->
+<div class="col-md-6 column-left">
+    <div class="panel panel-default">               
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Kind_and_name"></h4>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="laji" class="col-md-3 control-label">
+                    <span i18n="common.Kind"></span>
+                </label>
+                <div class="col-md-9">                   
+                    <span ng-repeat="valittu_laji in lajit">
+                    	<span ng-show="valittu_laji.id == laji">{{valittu_laji.name}}</span>
+                    </span>
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="nimi" class="col-md-3 control-label" i18n="common.Name"></label>
+                <div class="col-md-9">                    
+                    <input type="text" class="form-control" name="nimi"
+                        data-i18n-attr="{placeholder: 'common.Name'}"
+                        ng-model="raportti.reportDisplayName" spellcheck="false" autocomplete="off">
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+<!-- RIGHT SIDE - näytettävät kentät-->
+<div class="col-md-6 column-right" ng-if="raportti.laji != 'loydot' && raportti.laji != 'naytteet'">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title" i18n="common.Report_fields"></h4>
+        </div>
+        <div class="panel-body">
+            <mip-kenttavalitsin valittavissaolevatkentat="valittavissaolevatKentat" valitutkentat="raportti.valitutKentat"></mip-kenttavalitsin>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,190 @@
+<!-- Perustiedot -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#perusTiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="ark.Basic_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perusTiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="!#{{vm.modalId}}_kohde" data-toggle="tab" i18n="ark.Target"></a></li>
+            <li><a href="!#{{vm.modalId}}_tuhoutunut_kohde" data-toggle="tab" i18n="ark.Destroyed"></a></li>
+        </ul>
+        <div class="tab-content" style="margin-top: 2px;">
+            <div class="tab-pane active" id="{{vm.modalId}}_kohde">
+                <div class="form-group" ng-if="vm.kohde.properties.muinaisjaannostunnus">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Relic_id_hyp"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.muinaisjaannostunnus}}</p>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.kohde.properties.nimi">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="common.Name"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.nimi}}</p>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.kohde.properties.muutnimet">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Other_names"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.muutnimet}}</p>
+                    </div>
+                </div>   
+                <div class="form-group" ng-if="vm.kohde.properties.maakuntanimi">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Province"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.maakuntanimi}}</p>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="common.County"></span> / <span i18n="common.Village"></span>
+                    </label>
+                    <div class="col-sm-9">
+                    
+                        <ul class="list-group">
+                            <li class="list-group-item"
+                                ng-repeat="kk in vm.kohde.properties.kunnatkylat">
+                    
+                                <h5 class="list-group-item-heading">
+                                    <a class="link"
+                                        ng-click="showKuntaModal(kk.kunta);">{{kk.kunta | kuntaKylaNamei18n}} ({{kk.kunta.kuntanumero}})</a> -
+                                        <span ng-if="kk.kyla"><a class="link"
+                                        ng-click="showKylaModal(kk);">{{kk.kyla | kuntaKylaNamei18n}} ({{kk.kyla.kylanumero}})</a></span>
+                                </h5>
+                            </li>
+                        </ul>                
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="ark.Old_counties"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="vk in vm.kohde.properties.vanhat_kunnat">
+                                <span>{{vk.kuntanimi}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.kohde.properties.tyhja != null">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Empty"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.tyhja | trueFalseToText}}</p>
+                    </div>
+                </div> 
+                <div class="form-group" ng-if="vm.kohde.properties.laji">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="common.Kind"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.laji | namei18n}}</p>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="common.Type"></span> / <span i18n="ark.Type_extension"></span>
+                    </label>
+                    <div class="col-sm-9">            
+                        <ul class="list-group">
+                            <li class="list-group-item"
+                                ng-repeat="kt in vm.kohde.properties.tyypit">            
+                                <h5 class="list-group-item-heading">
+                                   {{kt.tyyppi | namei18n}} - {{kt.tarkenne | namei18n}}
+                                </h5>                        
+                            </li>
+                        </ul>        
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.kohde.properties.tarkenne">
+		            <label class="col-sm-3 control-label"> <span
+		                i18n="ark.Extension"></span>
+		            </label>
+		            <div class="col-sm-9">
+		                <p class="form-control-static">{{vm.kohde.properties.tarkenne}}</p>
+		            </div>
+		        </div>                
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="ark.Timing"></span> / <span i18n="ark.Timing_extension"></span> / <span i18n="ark.Timing_criteria"></span>
+                    </label>
+                    <div class="col-sm-9">            
+                        <ul class="list-group">
+                            <li class="list-group-item"
+                                ng-repeat="ka in vm.kohde.properties.ajoitukset">          
+                                <h5 class="list-group-item-heading">
+                                   {{ka.ajoitus | namei18n}} - {{ka.tarkenne | namei18n}}
+                                </h5>                        
+                                <p>
+                                    {{ka.ajoituskriteeri}}
+                                </p>
+                            </li>
+                        </ul>        
+                    </div>
+                </div> 
+                <div class="form-group" ng-if="vm.kohde.properties.lukumaara">
+		            <label class="col-sm-3 control-label"> <span
+		                i18n="ark.Count"></span>
+		            </label>
+		            <div class="col-sm-9">
+		                <p class="form-control-static">{{vm.kohde.properties.lukumaara}}</p>
+		            </div>
+		        </div>               
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="common.Description"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static mip-multiline">{{vm.kohde.properties.kuvaus}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="{{vm.modalId}}_tuhoutunut_kohde">
+                <div class="form-group" ng-if="vm.kohde.properties.tuhoutumissyy">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Destruction_reason"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.tuhoutumissyy | namei18n}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="ark.Destruction_description"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static mip-multiline">{{vm.kohde.properties.tuhoutumiskuvaus}}</p>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.kohde.properties.tuhoutumissyy">
+                    <label class="col-sm-3 control-label"> <span
+                        i18n="ark.Destruction_reason"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">{{vm.kohde.properties.virallinenkatselmus | trueFalseToText}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span i18n="ark.Possible_ramifications"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static mip-multiline">{{vm.kohde.properties.mahdollisetseuraamukset}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

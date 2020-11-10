@@ -1,0 +1,133 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span>
+                    :
+                    <span i18n="common.Inventory_publication"></span>
+                    {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="historyPanel1" class="panel-body panel-collapse collapse in">
+                            <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+                                <!-- lisäystiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='I' && h.table_name=='inventointijulkaisu'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.row_data.nimi">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.kuvaus">
+                                            <td>
+                                                <span i18n="common.Description"></span>
+                                            </td>
+                                            <td>{{h.row_data.kuvaus}}</td>
+                                        </tr>                                                                              
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'inventointijulkaisu_inventointiprojekti'} as inventoitiprojektit">
+                                            <td rowspan="{{inventointiprojektit.length}}" ng-if="$index==0">
+                                                <span i18n="common.Inventory_projects"></span>
+                                            </td>
+                                            <td>{{c.row_data.inventointiprojekti.nimi}}</td>
+                                        </tr>
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'inventointijulkaisu_taso'} as tasot">
+                                            <td rowspan="{{tasot.length}}" ng-if="$index==0">
+                                                <span i18n="map.Layers"></span>
+                                            </td>
+                                            <td>
+                                                {{c.row_data.taso.nimi}}                                                
+                                            </td>
+                                        </tr>                                         
+                                    </table>
+                                </div>
+                                <!-- muokkaustiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='U' && h.table_name=='inventointijulkaisu'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('nimi')">
+                                            <td>
+                                                <span i18n="common.Name"></span>
+                                            </td>
+                                            <td>{{h.row_data.nimi}}</td>
+                                            <td>{{h.changed_fields.nimi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('kuvaus')">
+                                            <td>
+                                                <span i18n="common.Description"></span>
+                                            </td>
+                                            <td>{{h.row_data.kuvaus}}</td>
+                                            <td>{{h.changed_fields.kuvaus}}</td>
+                                        </tr>                                                                         
+                                        <tr
+                                            ng-if="(h.children | filter:{table_name:'inventointijulkaisu_inventointiprojekti'}).length > 0">
+                                            <td>
+                                                <span i18n="common.Inventory_projects"></span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'inventointijulkaisu_inventointiprojekti', action:'D'}">
+                                                    {{c.row_data.inventointiprojekti.nimi}}<br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'inventointijulkaisu_inventointiprojekti', action:'I'}">
+                                                    {{c.row_data.inventointiprojekti.nimi}}<br />
+                                                </span>
+                                            </td>
+                                        </tr> 
+                                        <tr
+                                            ng-if="(h.children | filter:{table_name:'inventointijulkaisu_taso'}).length > 0">
+                                            <td>
+                                                <span i18n="map.Layers"></span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'inventointijulkaisu_taso', action:'D'}">
+                                                    {{c.row_data.taso.nimi}}                                                    
+                                                    <br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'inventointijulkaisu_taso', action:'I'}">
+                                                    {{c.row_data.taso.nimi}}                                                    
+                                                    <br />
+                                                </span>
+                                            </td>
+                                        </tr>                                            
+                                    </table>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

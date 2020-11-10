@@ -1,0 +1,116 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#naytteenTilaPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Status_and_location"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="naytteenTilaPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="form-group" ng-if="vm.create">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_status"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.tila | namei18n}}
+	                </p>
+	            </div>    
+	        </div>	    
+	    	<mip-nayte-tila ng-if="!vm.create" tila="vm.nayte.properties" vm="vm"></mip-nayte-tila>
+	        <!-- Luetteloitu, Poistettu kokoelmasta, Puuttuu  -->
+            <div ng-if="vm.nayte.properties.tila.id == 4 || vm.nayte.properties.tila.id == 7 || 
+                        vm.nayte.properties.tila.id == 9"
+             ng-include="'ark/naytteet/partials/tila_luetteloitu.html'"></div>
+            <!-- Lainassa, Näyttelyssä -->
+            <div ng-if="vm.nayte.properties.tila.id == 5 || vm.nayte.properties.tila.id == 8" ng-include="'ark/naytteet/partials/tila_lainassa.html'"></div>
+            <!-- Kokoelmassa -->
+            <div ng-if="vm.nayte.properties.tila.id == 6" ng-include="'ark/naytteet/partials/tila_kokoelmassa.html'"></div>
+            <div>&nbsp;</div>
+            <!-- Lisäksi näytetään vielä vakituinen sijainti (säilytystila + hyllypaikka) ja tilapainen sijainti -->
+            <mip-sailytystila ng-if="!vm.tilanmuutos" sailytystila="vm.nayte.properties.sailytystila" req="false" dis="false"></mip-sailytystila>
+            <div class="form-group" ng-if="!vm.tilanmuutos" ng-class="{ 'has-error': form.hyllypaikka.$invalid && form.hyllypaikka.$touched }">
+                <label for="hyllypaikka" class="col-sm-4 control-label">
+                    <span i18n="ark.Shelf_spot"></span>
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="hyllypaikka" ng-required="false" ng-disabled="false"
+                     ng-model="vm.nayte.properties.vakituinen_hyllypaikka" />
+                    <span class="help-block" ng-show="form.hyllypaikka.$invalid && form.hyllypaikka.$touched">
+                        <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Borrower' | i18n }}"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-if="!vm.tilanmuutos" ng-class="{ 'has-error': form.tilapainen_sijainti.$invalid && form.tilapainen_sijainti.$touched }">
+                <label for="tilapainen_sijainti" class="col-sm-4 control-label">
+                    <span i18n="ark.Temporary_location"></span>
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="tilapainen_sijainti" ng-required="false" ng-model="vm.nayte.properties.tilapainen_sijainti" />
+                    <span class="help-block" ng-show="form.tilapainen_sijainti.$invalid && form.tilapainen_sijainti.$touched">
+                        <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Temporary_location' | i18n }}"></span>
+                    </span>
+                </div>
+            </div>
+	        <div class="form-group">
+	            <label for="naytetta_jaljella" class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_remaining"></span> 
+	            </label>
+	            <div class="col-sm-8" ng-if="!vm.create">
+					<select class="form-control"
+						name="naytetta_jaljella"
+						ng-model="vm.nayte.properties.naytetta_jaljella"
+						ng-init="vm.nayte.properties.naytetta_jaljella = vm.nayte.properties.naytetta_jaljella"
+						ng-options="option.value as option.label for option in vm.noYes"
+						ng-required="true">
+					</select>	                
+	            </div>
+	            <div class="col-sm-8" ng-if="vm.create">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.naytetta_jaljella | trueFalseToText}}
+	                </p>	                
+	            </div> 	                
+	        </div>
+	    </div>  	
+    	<!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_status"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.tila | namei18n}}
+	                </p>
+	            </div>    
+	        </div>     
+	        <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Permanent_location"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline">{{vm.nayte.properties.sailytystila |
+                        namei18n}}<span ng-if="vm.nayte.properties.vakituinen_hyllypaikka">.</span>{{vm.nayte.properties.vakituinen_hyllypaikka}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Temporary_location"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline">{{vm.nayte.properties.tilapainen_sijainti}}</p>
+                </div>
+            </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_remaining"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.naytetta_jaljella | trueFalseToText}}
+	                </p>	                
+	            </div>    
+	        </div>
+	    </div>
+    </div>
+</div>

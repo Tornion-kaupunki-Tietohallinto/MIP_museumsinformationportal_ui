@@ -1,0 +1,29 @@
+
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#suojeluPanel{{vm.modalId}}">
+	   <h4 class="panel-title">
+	       <span i18n="common.Estate_protection"></span>
+           <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+	   </h4>
+	</div>
+    <div id="suojeluPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+        <div class="form-group" ng-if="vm.kohde.properties.suojelukriteeri">
+            <label class="col-sm-3 control-label"> <span
+                i18n="ark.Protection_criteria"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static mip-multiline">{{vm.kohde.properties.suojelukriteeri}}</p>
+            </div>
+        </div>
+        <ul class="list-group">
+	        <li class="list-group-item"
+				ng-repeat="suojelutieto in vm.kohde.properties.suojelutiedot">
+	
+	            <h4 class="list-group-item-heading">{{suojelutieto.suojelutyyppi.nimi_fi}}</h4>
+	            <p ng-if="suojelutieto.suojelutyyppi.suojelutyyppi_ryhma_id==1"><span i18n="common.Mark"></span>: {{suojelutieto.merkinta}}</p>
+	            <p class="mip-multiline">{{suojelutieto.selite}}</p>
+		    </li>
+		</ul>
+        
+    </div>
+</div>

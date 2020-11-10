@@ -1,0 +1,57 @@
+
+<!-- Kuvaukset - muokkausmoodi -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<span i18n="common.Descriptions"></span>
+		</h4>
+	</div>
+	<div class="panel-body">
+
+		<div class="form-group">
+			<label for="Rakennushistoria" class="col-sm-3 control-label">
+				<span i18n="common.Structure_history"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="rakennushistoria"
+					data-i18n-attr="{placeholder: 'common.Structure_history'}"
+					ng-model="rakennus.properties.rakennushistoria" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+        <div class="form-group">
+            <label for="erityispiirteet" class="col-sm-3 control-label">
+                <span i18n="common.Special_characteristics"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="erityispiirteet"
+                    data-i18n-attr="{placeholder: 'common.Special_characteristics'}"
+                    ng-model="rakennus.properties.erityispiirteet" ng-required="false"
+                    ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sisatilakuvaus" class="col-sm-3 control-label"> <span
+                i18n="common.Interior_description"></span>
+            </label>
+            <div class="col-sm-9">
+                <textarea rows="3" class="form-control" name="sisatilakuvaus"
+                    data-i18n-attr="{placeholder: 'common.Interior_description'}"
+                    ng-model="rakennus.properties.sisatilakuvaus" ng-required="false"
+                    ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+            </div>
+        </div>
+		<div class="form-group">
+			<label for="muut_tiedot" class="col-sm-3 control-label"> <span
+				i18n="common.Other_information"></span>
+			</label>
+			<div class="col-sm-9">
+				<textarea rows="3" class="form-control" name="muut_tiedot"
+					data-i18n-attr="{placeholder: 'common.Other_information'}"
+					ng-model="rakennus.properties.muut_tiedot" ng-required="false"
+					ng-readonly="false" spellcheck="false" autocomplete="off"></textarea>
+			</div>
+		</div>
+
+	</div>
+</div>

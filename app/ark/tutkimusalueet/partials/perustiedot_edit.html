@@ -1,0 +1,58 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group" ng-class="{ 'has-error': form.nimi.$invalid && form.nimi.$touched || !vm.uniikkiNimi}">
+            <label for="nimi" class="col-sm-3 control-label">
+                <span i18n="common.Name"></span> *
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nimi"
+                    data-i18n-attr="{placeholder: 'common.Name'}"
+                    ng-model="vm.tutkimusalue.properties.nimi"
+					ng-change="vm.tarkistaUniikkiNimi(form)"
+		            ng-model-options='{debounce: 500}'
+                    ng-required="true"
+                    spellcheck="false"
+                    autocomplete="off"
+                    focus-me="focusInput">
+	                <span class="help-block" ng-show="form.nimi.$invalid && form.nimi.$touched && vm.uniikkiNimi">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Name' | i18n }}"></span>
+	                </span>
+	                <span class="help-block" ng-show="!vm.uniikkiNimi">
+	                    <span data-i18n="common.already_in_use" data-field="{{ 'common.Name' | i18n }}"></span>
+	                </span>
+            </div>
+        </div>
+        <div class="form-group">
+	        <label for="sijaintikuvaus" class="col-sm-3 control-label" i18n="ark.Location_description"> </label>
+	        <div class="col-sm-9">
+	            <textarea rows="3" class="form-control" name="sijaintikuvaus"
+	                ng-model="vm.tutkimusalue.properties.sijaintikuvaus"></textarea>
+	        </div>
+        </div>
+        <div class="form-group" ng-if="vm.tarkastusTutkija()">
+	        <label for="muistiinpanot" class="col-sm-3 control-label" i18n="common.Notes"> </label>
+	        <div class="col-sm-9">
+	            <textarea rows="3" class="form-control" name="muistiinpanot"
+	                ng-model="vm.tutkimusalue.properties.muistiinpanot"></textarea>
+	        </div>
+        </div>
+        <div class="form-group" ng-if="!vm.inventointiTutkimus()">
+	        <label for="havainnot" class="col-sm-3 control-label" i18n="ark.Findings"> </label>
+	        <div class="col-sm-9">
+	            <textarea rows="3" class="form-control" name="havainnot"
+	                ng-model="vm.tutkimusalue.properties.havainnot"></textarea>
+	        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

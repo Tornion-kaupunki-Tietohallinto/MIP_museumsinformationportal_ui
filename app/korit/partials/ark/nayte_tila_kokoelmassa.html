@@ -1,0 +1,30 @@
+<div class="form-group" ng-if="vm.tilanmuutos" ng-class="{ 'has-error': form.tapahtumapaiva.$invalid && form.tapahtumapaiva.$touched}">
+    <label for="tapahtumapaiva" class="col-sm-4 control-label">
+        <span i18n="common.Date"></span> *
+    </label>
+    <div class="col-sm-8">
+        <input bs-datepicker data-date-format="dd.MM.yyyy"
+            model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+            start-week="1"
+            class="form-control" name="tapahtumapaiva"
+            ng-required="true"
+            ng-model="vm.nayte.properties.tapahtumapaiva">
+        <span class="help-block" ng-show="form.tapahtumapaiva.$invalid && form.tapahtumapaiva.$touched">
+            <span data-i18n="common.mandatory_value" data-field="{{ 'common.Date' | i18n }}"></span>
+        </span>                                             
+    </div>
+</div>
+<mip-sailytystila ng-if="vm.tilanmuutos" sailytystila="vm.nayte.properties.sailytystila" req="true" dis="false"></mip-sailytystila>
+<div class="form-group" ng-if="vm.tilanmuutos" ng-class="{ 'has-error': form.hyllypaikka.$invalid && form.hyllypaikka.$touched }">
+    <label for="hyllypaikka" class="col-sm-4 control-label">
+        <span i18n="ark.Shelf_spot"></span>
+    </label>
+    <div class="col-sm-8">
+        <input type="text" class="form-control" name="hyllypaikka"
+            ng-required="false"
+            ng-model="vm.nayte.properties.vakituinen_hyllypaikka" />
+        <span class="help-block" ng-show="form.hyllypaikka.$invalid && form.hyllypaikka.$touched">
+            <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Borrower' | i18n }}"></span>
+        </span>                     
+    </div>              
+</div>    

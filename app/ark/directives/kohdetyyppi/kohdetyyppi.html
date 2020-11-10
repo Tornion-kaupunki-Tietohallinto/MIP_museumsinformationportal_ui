@@ -1,0 +1,49 @@
+<div class="form-group">
+    <label class="col-md-3 control-label">
+         <span i18n="common.Type"></span><span ng-show="tyyppirequired">*</span> / 
+        <span i18n="ark.Type_extension"></span><span ng-show="tarkenninrequired">*</span>
+    </label>
+    
+    <div class="col-sm-9">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="kt in valituttyypit">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="tyyppi_{{$index}}"
+                                ng-model="kt.tyyppi" ng-required="true" ng-change="getDefaultTarkenneForType(kt.tyyppi, $index)"
+                                ng-options="tyyppi as tyyppi.nimi_fi for tyyppi in kohdetyypit track by tyyppi.id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select class="form-control" name="tyyppitarkenne_{{$index}}"
+                                ng-model="kt.tarkenne" ng-disabled="!kt.tyyppi"
+                                ng-options="tyyppitarkennin as tyyppitarkennin.nimi_fi for tyyppitarkennin in kohdetyyppitarkenteet | filter: {ark_kohdetyyppi_id: kt.tyyppi.id}:true track by tyyppitarkennin.id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" ng-click="deleteTyyppi($index)"
+                                class="btn btn-danger pull-right">
+                                <span i18n="common.Delete"></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </li>
+            <li class="list-group-item" ng-if="single !== true || valituttyypit.length === 0">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="button" ng-click="addTyyppi()"
+                            class="btn btn-success pull-right">
+                            <span i18n="common.Add"></span>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

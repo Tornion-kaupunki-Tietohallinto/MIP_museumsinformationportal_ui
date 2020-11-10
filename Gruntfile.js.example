@@ -1,0 +1,282 @@
+'use strict';
+
+module.exports = function (grunt) {
+  // load all grunt tasks
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+  /*
+   *  CONFIGURABLE PATHS
+   */
+  var yeomanConfig = {
+    app: 'app',
+    dist: 'dist',
+    prod_url: '<url_for_prod_mip_backend>',
+    qa_url: '<url_for_qa_mip_backend>',
+    kehitys_url: '<url_for_kehitys_mip_backend>',
+    local_url: 'http://localhost:8000/api/'
+  };
+
+  try {
+    yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
+  } catch (e) {}
+
+  grunt.initConfig({
+    yeoman: yeomanConfig,
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= yeoman.dist %>/*',
+            '!<%= yeoman.dist %>/.git*'
+          ]
+        }]
+      },
+      removetemplate: {
+          files: [{
+          dot: true,
+          src: ['<%= yeoman.dist %>/app.templates.js']
+        }]
+      },
+      removehtml: {
+          files: [{
+              dot: true,
+              src: '<%= yeoman.dist %>/pages'
+          }]
+      },
+      server: '.tmp'
+    },
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      all: [
+        'Gruntfile.js',
+        '<%= yeoman.app %>//{,*/}*.js'
+      ]
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      }
+    },
+    usemin: {
+      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      options: {
+        dirs: ['<%= yeoman.dist %>']
+      }
+    },
+    htmlmin: {
+      dist: {
+        options: {
+          /*removeCommentsFromCDATA: true,
+          // https://github.com/yeoman/grunt-usemin/issues/44
+          //collapseWhitespace: true,
+          collapseBooleanAttributes: true,
+          removeAttributeQuotes: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeOptionalTags: true*/
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['*.html'],
+          dest: '<%= yeoman.dist %>'
+        }]
+      }
+    },
+    ngmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          src: '*.js',
+          dest: '<%= yeoman.dist %>'
+        }]
+      }
+    },
+    useminPrepare: {
+      html: '<%= yeoman.app %>app/index.html',
+      options: {
+        dest: '<%= yeoman.dist %>'
+      }
+    },
+    rev: {
+      dist: {
+        files: {
+          src: [
+            '<%= yeoman.dist %>/**/*.js',
+            '!<%= yeoman.dist %>/lib/**',
+            '!<%= yeoman.dist %>/languages/*',
+          ]
+        }
+      }
+    },
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            '**/*',
+          ]
+        }]
+      },
+      lib: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            //'**/*.{js,css,png,jpg,html}'
+            //'*.{ico,txt}',
+            //'.htaccess',
+            'lib/bower_components/**/*',
+            //'resources/images/{,*/}*.{gif,webp}'
+          ]
+        }]
+      }
+    },
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: '<%= yeoman.local_url %>',
+              replacement: '<%= yeoman.prod_url %>'
+            }
+          ],
+          usePrefix : false
+        },
+        files: [{
+              expand: true,
+              flatten: true,
+              src: ['<%= yeoman.dist %>/app.js'],
+              dest: '<%= yeoman.dist %>'
+            }
+        ]
+      },
+      qa: {
+        options: {
+          patterns: [
+            {
+              match: '<%= yeoman.local_url %>',
+              replacement: '<%= yeoman.qa_url %>'
+            }
+          ],
+          usePrefix : false
+        },
+        files: [
+          {expand: true, flatten: true, src: ['<%= yeoman.dist %>/app.js'], dest: '<%= yeoman.dist %>'}
+        ]
+      },
+      kehitys: {
+        options: {
+          patterns: [
+            {
+              match: '<%= yeoman.local_url %>',
+              replacement: '<%= yeoman.kehitys_url %>'
+            }
+          ],
+          usePrefix : false
+        },
+        files: [
+          {expand: true, flatten: true, src: ['<%= yeoman.dist %>/app.js'], dest: '<%= yeoman.dist %>'}
+        ]
+      }
+    },
+    ngtemplates: {
+        mip: {
+            src: '<%= yeoman.app %>/**/**/*.{html,tpl.html}',
+            dest: '<%= yeoman.dist %>/app.templates.js',
+            options: {
+                url: function(url) {
+                    return url.replace('app/', '');
+                }
+            }
+        }
+    },
+    concat: {
+        dist: {
+            src:  [ '<%= yeoman.dist %>/app.js', 'dist/app.templates.js'],
+            dest: '<%= yeoman.dist %>/app.js'
+        }
+    },
+    uglify: {
+    	js: { //target
+    		files: [{
+    			expand: true,
+    			cwd: './dist/',
+    			src: ['./**/*.js', './*.js', '!./**/lib/**'],
+    			dest: './dist/',
+    			ext: '.js'
+    		}]
+        }
+    }
+  });
+
+  /*
+   * PRODUCTION BUILD
+   * replace method expects us to create the production build from the dev version (API_URL will not be replaced if it doesn't match the dev_url)
+   */
+  grunt.registerTask('build', [
+    'clean:dist', //clean the dist folder
+    //'jshint',  //check code quality
+    'useminPrepare', //required by rev
+    'copy:dist', //copy app to dist folder
+    'ngtemplates', //create angular templates of the html files
+    'concat', //concatenate the angular templates to the app.js
+    'clean:removetemplate', //remove the created template file (it's already concatenated)
+    'clean:removehtml', //remove the html files that were turned into angular templates
+    'replace', //replace the API_URL with the production url
+    //'uglify:js', //uglify the files, each separately
+    'rev', //modify the .js file names
+    'usemin' //change the index.html to use the revved .js files
+  ]);
+
+  /*
+   * QA BUILD
+   */
+    grunt.registerTask('qa_build', [
+    'clean:dist',
+    //'jshint',
+    'useminPrepare',
+    'copy:dist',
+    'ngtemplates',
+    'concat',
+    'clean:removetemplate',
+    'clean:removehtml',
+    'replace:qa',
+    //'uglify:js',
+    'rev',
+    'usemin'
+  ]);
+
+  /*
+     * KEHITYS BUILD
+     */
+    grunt.registerTask('kehitys_build', [
+      'clean:dist',
+      //'jshint',
+      'useminPrepare',
+      'copy:dist',
+      'ngtemplates',
+      'concat',
+      'clean:removetemplate',
+      'clean:removehtml',
+      'replace:kehitys',
+      //'uglify:js',
+      'rev',
+      'usemin'
+    ]);
+
+  grunt.registerTask('default', ['kehitys_build']);
+};

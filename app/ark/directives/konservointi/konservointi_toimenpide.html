@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label for="toimenpide" class="col-sm-4 control-label">
+        <span i18n="ark.Operation"></span> *
+    </label>
+    <div class="col-sm-8">
+		<ui-select class="ng-animate-disabled" theme="bootstrap" name="toimenpide" 
+			ng-change="vm.vaihdaToimenpide(toimenpide)" 
+			ng-required="true" 
+			ng-model="toimenpide.toimenpide"> 
+		    <ui-select-match  data-i18n-attr="{placeholder: 'common.Select'}">{{$select.selected.nimi}}</ui-select-match> 
+		    <ui-select-choices repeat="toimenpide in toimenpiteet | filter: $select.search track by toimenpide.id">
+		       <span ng-bind-html="toimenpide.nimi | highlight: $select.search"></span>
+			</ui-select-choices> 
+		</ui-select>        
+    </div>
+</div>

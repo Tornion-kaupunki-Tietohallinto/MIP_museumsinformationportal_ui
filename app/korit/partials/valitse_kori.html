@@ -1,0 +1,31 @@
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#koritPanel{{vm.modalId}}">
+		<h4 class="panel-title">
+			<span i18n="common.Carts"></span> : {{vm.searchResults}}
+			<span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="koritPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<strong><span i18n="common.Select_cart"></span></strong>
+				</div>
+				<div class="col-md-8">
+					<!-- Korien taulukko -->
+					<table ng-table="vm.koriTable" class="table table-striped table-bordered"
+						show-filter="false">
+						<tr ng-repeat="kori in $data" style="cursor: pointer" ng-click="vm.lisaaKoriin(kori)">
+							<td data-title="vm.getColumnName('Cart_type', 'common')">
+                                {{kori.properties.korityyppi | namei18n}}
+                            </td>						
+							<td data-title="vm.getColumnName('Name', 'common')" sortable="'properties.nimi'">{{kori.properties.nimi}}</td>
+							<td data-title="vm.getColumnName('Description', 'common')" sortable="'properties.kuvaus'">
+								{{kori.properties.kuvaus}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

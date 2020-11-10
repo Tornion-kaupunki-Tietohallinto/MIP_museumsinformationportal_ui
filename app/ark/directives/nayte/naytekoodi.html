@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label for="naytekoodi" class="col-sm-4 control-label">
+        <span i18n="sample.Sample_code"></span> *
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="naytekoodi" 
+        	ng-model="naytekoodi" 
+        	ng-required="true" 
+            ng-options="naytekoodi.koodi + ' ' + naytekoodi.nimi_fi for naytekoodi in naytekoodit track by naytekoodi.id"
+            ng-change="vm.vaihdaNaytekoodi(naytekoodi, lomake)">
+        </select>
+    </div>
+</div>

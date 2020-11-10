@@ -1,0 +1,49 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#naytteenTilaPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Status_and_location"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="naytteenTilaPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body">
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_status"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.tila | namei18n}}
+	                </p>
+	            </div>    
+	        </div>     
+	        <div class="form-group" ng-if="vm.nayte.properties.sailytystila">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Permanent_location"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline">{{vm.nayte.properties.sailytystila |
+                        namei18n}}.{{vm.nayte.properties.vakituinen_hyllypaikka}}</p>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.nayte.properties.tilapainen_sijainti">
+                <label class="col-sm-4 control-label">
+                    <span i18n="ark.Temporary_location"></span>
+                </label>
+                <div class="col-sm-8">
+                    <p class="form-control-static mip-multiline">{{vm.nayte.properties.tilapainen_sijainti}}</p>
+                </div>
+            </div>
+	        <div class="form-group">
+	            <label class="col-sm-4 control-label">
+	                <span i18n="sample.Sample_remaining"></span> 
+	            </label>
+	            <div class="col-sm-8">
+	                <p class="form-control-static">
+	                	{{vm.nayte.properties.naytetta_jaljella | trueFalseToText}}
+	                </p>	                
+	            </div>    
+	        </div>
+	    </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+
+<div class="form-group">
+    <label for="karttamittakaava" class="col-sm-3 control-label">
+        <span i18n="common.Scale"></span><span ng-show="required">*</span>
+    </label>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="input-group">
+             <span class="input-group-addon">1:</span>
+             <select class="form-control" name="karttamittakaava" ng-model="karttamittakaava" ng-required="required" ng-disabled="dis"
+                ng-options="karttamittakaava as karttamittakaava.mittakaava for karttamittakaava in karttamittakaavat | orderBy: 'id' track by karttamittakaava.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+</div>

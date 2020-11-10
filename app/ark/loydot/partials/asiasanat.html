@@ -1,0 +1,44 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#asiasanatPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Glossaries"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="asiasanatPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-show="vm.edit">
+	    	<div class="col-sm-8 form-group">
+				<ui-select class="ng-animate-disabled" ng-model="vm.hakusana" theme="bootstrap" name="hakusana" on-select="vm.lisaaAsiasana($select.selected)">
+				     <ui-select-match data-i18n-attr="{placeholder: 'ark.Search_glossary'}">{{$select.selected}}</ui-select-match>
+				     <ui-select-choices repeat="sana in vm.hakutulos track by $index" 
+				     	refresh="vm.fintoHaku($select.search)" 
+				     	refresh-delay="1000" 
+				     	ng-disabled="disabled" 
+				     	minimum-input-length="3">
+				     	<span ng-bind-html="sana | highlight: $select.search"></span>
+				     </ui-select-choices>
+				</ui-select>
+	    	</div>
+	    	<div class="col-sm-4">
+	    		<span i18n="common.Results"></span>: {{vm.hakutuloksia}}
+	    	</div>
+	        <div class="col-sm-12 form-group">
+				<ui-select multiple ng-model="vm.loyto.properties.asiasanat" onkeypress="return false;" theme="bootstrap" name="hakusanat"> 
+		            <ui-select-match>{{$item}}</ui-select-match> 
+		            <ui-select-choices repeat="asiasana in vm.loyto.properties.asiasanat track by $index">
+			          <div>
+			              <span ng-bind-html="asiasana | highlight: $select.search"></span>
+			          </div>
+		        	</ui-select-choices> 
+		        </ui-select>        
+	        </div>              
+	    </div>
+	    <div class="panel-body" ng-hide="vm.edit">
+		    <div class="col-sm-12" ng-if="vm.loyto.properties.asiasanat.length > 0">
+               	<span class="form-control-static" ng-repeat="asiasana in vm.loyto.properties.asiasanat">
+               		{{asiasana}} <font ng-show="!$last">,</font>
+               	</span>				
+		    </div>
+	    </div> 
+    </div>   
+</div>

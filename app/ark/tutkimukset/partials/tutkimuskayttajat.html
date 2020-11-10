@@ -1,0 +1,98 @@
+<div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog"
+    id="myModalDialog{{vm.modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title" i18n="common.Manage_users">
+                {{vm.tutkimus.properties.nimi}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="selectedUser" class="col-sm-3 control-label">
+                            <span i18n="common.User"></span>
+                        </label>
+                        <div class="col-sm-9">
+                            <ui-select class="ng-animate-disabled" ng-model="vm.selectedUser.user" name="selectedUser"
+                                theme="bootstrap" on-select="vm.addUser()"> <ui-select-match
+                                data-i18n-attr="{placeholder: 'common.Select'}">
+                                {{$select.selected.properties.etunimi}}
+                                {{$select.selected.properties.sukunimi}}
+                                {{$select.selected.properties.sahkoposti}} </ui-select-match> <ui-select-choices
+                                repeat="k in vm.kayttajat | filter: $select.search track by $index">
+                            <span ng-bind-html="k.properties.etunimi | highlight: $select.search"></span>
+                            <span ng-bind-html="k.properties.sukunimi | highlight: $select.search"></span>
+                            <span ng-bind-html="k.properties.sahkoposti | highlight: $select.search"></span>
+                            </ui-select-choices> </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <form name="form" class="form-horizontal" novalidate>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th i18n="common.Firstname"></th>
+                                    <th i18n="common.Lastname"></th>
+                                    <th i18n="common.Email"></th>
+                                    <th i18n="common.Organization"></th>
+                                    <th i18n="common.Actions"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="success" ng-repeat="kayttaja in vm.lisattavatKayttajat">
+                                    <td>{{kayttaja.etunimi}}</td>
+                                    <td>{{kayttaja.sukunimi}}</td>
+                                    <td>{{kayttaja.sahkoposti}}</td>
+                                    <td ng-if="vm.tutkimus.properties.tutkimuslaji.id === 5">
+                                        <input type="text" class="form-control" name="organisaatio"
+                                        ng-model="kayttaja.inv_tutkija_organisaatio"
+                                        ng-required="true"
+                                        spellcheck="false" autocomplete="off">
+                                    </td>
+                                    <td ng-if="vm.tutkimus.properties.tutkimuslaji.id !== 5">
+                                        {{kayttaja.organisaatio}}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default"
+                                            ng-click="vm.cancelAdd(kayttaja.id)" i18n="common.Cancel"></button>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="kayttaja in vm.tutkimus.properties.tutkimuskayttajat"
+                                    ng-class="{'danger': vm.isPoistettava(kayttaja.id)}">
+                                    <td>{{kayttaja.etunimi}}</td>
+                                    <td>{{kayttaja.sukunimi}}</td>
+                                    <td>{{kayttaja.sahkoposti}}</td>
+                                    <td ng-if="vm.tutkimus.properties.tutkimuslaji.id === 5">
+                                        {{kayttaja.inv_tutkija_organisaatio}}
+                                    </td>
+                                    <td ng-if="vm.tutkimus.properties.tutkimuslaji.id !== 5">
+                                        {{kayttaja.organisaatio}}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default"
+                                            ng-click="vm.removeUser(kayttaja.id)"
+                                            i18n="common.Remove_user_from_research"
+                                            ng-show="!vm.isPoistettava(kayttaja.id)"></button>
+                                        <button type="button" class="btn btn-default"
+                                            ng-click="vm.cancelRemove(kayttaja.id)"
+                                            i18n="common.Cancel"
+                                            ng-show="vm.isPoistettava(kayttaja.id)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" ng-class="{ disabled: form.$invalid }" ng-click="vm.save()" i18n="common.Save"></button>
+            <button type="button" class="btn btn-default" ng-click="vm.close()" i18n="common.Close"></button>
+        </div>
+    </div>
+</div>

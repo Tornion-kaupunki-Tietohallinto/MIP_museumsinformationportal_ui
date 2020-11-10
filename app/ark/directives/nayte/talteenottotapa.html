@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label for="talteenottotapa" class="col-sm-4 control-label">
+        <span i18n="sample.Recovery_manner"></span>
+    </label>
+    <div class="col-sm-8">
+        <select class="form-control" 
+        	name="talteenottotapa" 
+        	ng-model="talteenottotapa" 
+            ng-options="talteenottotapa.nimi_fi for talteenottotapa in talteenottotavat track by talteenottotapa.id">
+        </select>
+    </div>
+</div>
+ 

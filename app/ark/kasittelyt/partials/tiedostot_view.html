@@ -1,0 +1,34 @@
+<!-- Tiedostot - katselumoodi -->
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#tiedostotPanel{{vm.modalId}}">
+		<h4 class="panel-title">
+		    <span i18n="common.Attachments"></span>
+		    <lukumaara ng-show="vm.kpl_maara" arvo="vm.kpl_maara"></lukumaara>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+    <div id="tiedostotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+        <div class="row">
+            <div class="col-md-12">
+				<ul class="list-group" ata-ng-model="files">
+					<li class="list-group-item clearfix" data-ng-repeat="file in vm.files">
+		
+						<h4 class="list-group-item-heading">{{file.properties.otsikko}}</h4>
+						<p>
+						    <a class="link" target="_blank" href="{{file.properties.url}}" download="{{file.properties.alkup_tiedostonimi}}">
+						        {{file.properties.alkup_tiedostonimi}}
+						    </a>
+						</p>
+						<span ng-if="file.properties.kuvaus && file.properties.kuvaus.length>0"
+		                    class="mip-multiline">{{file.properties.kuvaus}}</span>
+		                <span ng-if="!file.properties.kuvaus || file.properties.kuvaus.length==0">
+		                    <span class="no-data" data-i18n="common.No_description"></span>
+		                </span>
+		                <button class="btn btn-default pull-right" ng-click="vm.openFile(file)"><span class="fa fa-info "></span>                    
+		                </button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

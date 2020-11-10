@@ -1,0 +1,10 @@
+<tr>
+    <th>Key</th>
+    <th>OldValue</th>
+    <th>newValue</th>
+</tr>
+<tr ng-repeat="(key, value) in historyitem.changed_fields">
+    <td>{{key}}</td>
+    <td>{{historyitem.row_data[key]}}</td>
+    <td>{{value}}</td>
+</tr>

@@ -1,0 +1,1 @@
+start cmd /k protractor conf.js --params.login.url "" --params.login.email "" --params.login.password ""

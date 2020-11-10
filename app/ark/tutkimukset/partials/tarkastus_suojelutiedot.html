@@ -1,0 +1,99 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tarkastusSuojelutiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Protection_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="tarkastusSuojelutiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	        <div class="form-group">
+	        	<label for="kohteen_kunto" class="col-sm-3 control-label" i18n="ark.Targets_condition"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="kohteen_kunto"
+		                ng-model="vm.tutkimus.properties.tarkastus.kohteen_kunto">
+		            </textarea>	        	
+	        	</div>
+	        </div>
+	        <div class="form-group">
+	        	<label for="hoitotarve" class="col-sm-3 control-label" i18n="ark.Necessity_for_renovation"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="hoitotarve"
+		                ng-model="vm.tutkimus.properties.tarkastus.hoitotarve">
+		            </textarea>
+	            </div>
+	        </div>
+	        <div class="form-group">
+	        	<label for="suoja_alueeksi" class="col-sm-3 control-label" i18n="ark.Protected_area_proposal"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="suoja_alueeksi"
+		                ng-model="vm.tutkimus.properties.tarkastus.suoja_alueeksi">
+		            </textarea>
+	            </div> 
+	        </div>
+	        <div class="form-group">
+	        	<label for="maankayttohankkeet" class="col-sm-3 control-label" i18n="ark.Known_land_usage_plan"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="maankayttohankkeet"
+		                ng-model="vm.tutkimus.properties.tarkastus.maankayttohankkeet">
+		            </textarea>
+	            </div> 
+	        </div>
+	        <div class="form-group">
+	        	<label for="sailymisen_asiat" class="col-sm-3 control-label" i18n="ark.Preservation_factors"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="sailymisen_asiat"
+		                ng-model="vm.tutkimus.properties.tarkastus.sailymisen_asiat">
+		            </textarea>
+	            </div> 
+	        </div>	        
+	        <!-- <div class="form-group">
+	        	<label for="kohteen_tiedon_maara" class="col-sm-3 control-label" i18n="ark.Target_information_value"></label>
+	        	<div class="col-sm-9">
+		            <textarea rows="3" class="form-control" name="kohteen_tiedon_maara"
+		                ng-model="vm.tutkimus.properties.tarkastus.kohteen_tiedon_maara">
+		            </textarea>
+	            </div> 
+	        </div> -->	        	        	        	                      
+	    </div>
+	    <!-- Katselu -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.kohteen_kunto">
+	        	<label class="col-sm-3 control-label" i18n="ark.Targets_condition"></label>
+	        	<div class="col-sm-9">
+		            <p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.kohteen_kunto}}</p>	        	
+	        	</div>
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.hoitotarve">
+	        	<label for="aiemmat_loydot" class="col-sm-3 control-label" i18n="ark.Necessity_for_renovation"></label>
+	        	<div class="col-sm-9">
+		            <p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.hoitotarve}}</p>
+	            </div> 
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.suoja_alueeksi">
+	        	<label for="tarkastusloydot" class="col-sm-3 control-label" i18n="ark.Protected_area_proposal"></label>
+	        	<div class="col-sm-9">
+		            <p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.suoja_alueeksi}}</p>
+	            </div> 
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.maankayttohankkeet">
+	        	<label for="liitteet" class="col-sm-3 control-label" i18n="ark.Known_land_usage_plan"></label>
+	        	<div class="col-sm-9">
+		            <p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.maankayttohankkeet}}</p>
+	            </div> 
+	        </div>
+	        <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.sailymisen_asiat">
+	        	<label for="tarkastusolosuhteet" class="col-sm-3 control-label" i18n="ark.Preservation_factors"></label>
+	        	<div class="col-sm-9">
+		            <p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.sailymisen_asiat}}</p>
+	            </div> 
+	        </div>	        
+	        <!-- <div class="form-group" ng-if="vm.tutkimus.properties.tarkastus.kohteen_tiedon_maara">
+	        	<label for="muuta" class="col-sm-3 control-label" i18n="ark.Target_information_value"></label>
+	        	<div class="col-sm-9">
+		            <p class="form-control-static mip-multiline">{{vm.tutkimus.properties.tarkastus.kohteen_tiedon_maara}}</p>
+	            </div> 
+	        </div> -->	        	        	                      
+	    </div>
+    </div>    
+</div>

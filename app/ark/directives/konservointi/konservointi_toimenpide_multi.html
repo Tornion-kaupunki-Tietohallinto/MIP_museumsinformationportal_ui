@@ -1,0 +1,12 @@
+<ui-select multiple ng-model="lista.toimenpiteet" theme="bootstrap" name="toimenpide" ng-if="!haku"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'ark.Operations'}">{{$item.nimi}}</ui-select-match> 
+    <ui-select-choices repeat="toimenpide in toimenpiteet | propsFilter: {'nimi': $select.search}">
+       <span ng-bind-html="toimenpide.nimi | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>
+<ui-select multiple ng-model="lista.toimenpiteet" theme="bootstrap" name="toimenpide_haku" ng-if="haku"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'ark.Operations'}">{{$item.nimi}}</ui-select-match> 
+    <ui-select-choices repeat="toimenpide.id as toimenpide in toimenpiteet | propsFilter: {'nimi': $select.search}">
+       <span ng-bind-html="toimenpide.nimi | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

@@ -1,0 +1,109 @@
+<div class="row">
+	<!-- Tarkennettu haku -->
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="col-md-12">
+			<div class="col-md-2">
+				<div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showKLKoodiCol"
+                            ng-change="vm.saveColVisibility('showKLKoodiCol', vm.colVisibilities.showKLKoodiCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                            name="tutkimusnimi" ng-model="vm.tutkimuksetTable.filter().properties.kl_koodi"
+                            data-i18n-attr="{placeholder: 'ark.KL_code'}" spellcheck="false" autocomplete="off">
+                    </div>
+				</div>
+			</div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showTutkijaCol"
+                            ng-change="vm.saveColVisibility('showTutkijaCol', vm.colVisibilities.showTutkijaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <ui-select class="ng-animate-disabled" ng-model="vm.tutkimuksetTable.filter().properties.tutkija" name="tutkija" theme="bootstrap">
+                            <ui-select-match allow-clear="true" data-i18n-attr="{placeholder: 'common.Researcher'}">
+	                            {{$select.selected.properties.etunimi}}
+	                            {{$select.selected.properties.sukunimi}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="k.properties.id as k in vm.kayttajat | filter: $select.search track by k.properties.id">
+		                        <span ng-bind-html="k.properties.etunimi | highlight: $select.search"></span>
+		                        <span ng-bind-html="k.properties.sukunimi | highlight: $select.search"></span>
+		                        <span ng-bind-html="k.properties.sahkoposti | highlight: $select.search"></span>
+                        	</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showOrganisaatioCol"
+                            ng-change="vm.saveColVisibility('showOrganisaatioCol', vm.colVisibilities.showOrganisaatioCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <ui-select class="ng-animate-disabled" ng-model="vm.tutkimuksetTable.filter().properties.organisaatio" name="organisaatio" theme="bootstrap">
+                            <ui-select-match allow-clear="true" data-i18n-attr="{placeholder: 'common.Organization'}">
+	                            {{$select.selected}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="org in vm.organisaatiot | filter: $select.search track by $index">
+		                        <span ng-bind-html="org | highlight: $select.search"></span>
+                        	</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<input type="checkbox" ng-model="vm.colVisibilities.showNaytePaanumeroCol"
+							ng-change="vm.saveColVisibility('showNaytePaanumeroCol', vm.colVisibilities.showNaytePaanumeroCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span>
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="nayte_paanumero" ng-model="vm.tutkimuksetTable.filter().properties.nayte_paanumero"
+							data-i18n-attr="{placeholder: 'ark.Sample_main_number'}" spellcheck="false" autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Rivi 2 -->
+		<div class="col-md-12">
+		  <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showTiivistelmaCol"
+                            ng-change="vm.saveColVisibility('showTiivistelmaCol', vm.colVisibilities.showTiivistelmaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<span i18n="ark.Summary" class="form-control" disabled></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+               <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showRahoittajaCol"
+                            ng-change="vm.saveColVisibility('showRahoittajaCol', vm.colVisibilities.showRahoittajaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<span i18n="ark.Financier" class="form-control" disabled></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+

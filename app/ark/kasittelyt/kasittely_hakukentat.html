@@ -1,0 +1,54 @@
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+        <button type="button" class="btn btn-default" ng-click="vm.clearSearchFilter()"
+            data-i18n-attr="{title: 'common.Clear_filter'}">
+            <span class="fa fa-ban"></span>
+        </button>	
+		<button type="button" class="btn btn-default" ng-click="vm.refreshTable('kasittelyCache', 'kasittelytTable')"
+			data-i18n-attr="{title: 'common.Refresh_search_results'}">
+			<span class="fa fa-refresh"></span>
+		</button>
+        <button type="button"
+            class="btn btn-success"
+            id="btn-create" ng-click="vm.lisaaKasittely()"
+            data-i18n-attr="{title: 'ark.Add_treatment'}">
+            <span class="fa fa-plus"></span>
+        </button>		
+	</div>
+	<!-- Suodattimet -->
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<div class="col-md-12">
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showKasittelytunnusCol"
+							ng-change="vm.saveColVisibility('showKasittelytunnusCol', vm.colVisibilities.showKasittelytunnusCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="kasittelytunnus" ng-model="vm.kasittelytTable.filter().properties.kasittelytunnus"
+							data-i18n-attr="{placeholder: 'ark.Treatment_identifier'}" spellcheck="false" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+							<input type="checkbox" ng-model="vm.colVisibilities.showKasittelyPaattyyCol"
+							ng-change="vm.saveColVisibility('showKasittelyPaattyyCol', vm.colVisibilities.showKasittelyPaattyyCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span> 
+						<select class="form-control" name="valittu_paattyminen"
+							style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							ng-model="vm.kasittelytTable.filter().properties.valittu_paattyminen"
+							ng-options="paattyy.id as paattyy.nimi_fi for paattyy in vm.paattyneet">
+						</select>
+					</div>
+				</div>
+			</div>			
+        </div>
+	</div>
+</div>
+

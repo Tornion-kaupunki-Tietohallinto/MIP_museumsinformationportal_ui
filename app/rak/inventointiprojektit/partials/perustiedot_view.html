@@ -1,0 +1,173 @@
+<!-- Perustiedot -->
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#perusTiedotPanel{{modalId}}">
+        <h4 class="panel-title">
+            <span data-i18n="common.Details"></span> <span
+                class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perusTiedotPanel{{modalId}}" class="panel-body panel-collapse collapse in">
+        <div class="form-group" ng-show="inventointiprojekti.properties.nimi">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Name"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static" id="invproj_nimi">{{inventointiprojekti.properties.nimi}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="inventointiprojekti.properties.kuvaus.length>0">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Description"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static mip-multiline" id="kuvaus">{{inventointiprojekti.properties.kuvaus}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="!inventointiprojekti.properties.ajanjakso[0].alkupvm">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Inventory_period"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static" id="">{{inventointiprojekti.properties.inventointiaika}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="inventointiprojekti.properties.ajanjakso[0].alkupvm">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Inventory_period"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static"
+                    ng-repeat="ajanjakso in inventointiprojekti.properties.ajanjakso">{{ajanjakso.alkupvm
+                    | date:'dd.MM.yyyy'}} - {{ajanjakso.loppupvm | date:'dd.MM.yyyy'}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="inventointiprojekti.properties.toimeksiantaja.length>0">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Mandator"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static" id="toimeksiantaja">{{inventointiprojekti.properties.toimeksiantaja}}</p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="inventointiprojekti.properties.kunnat.length>0">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.County"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static"
+                    ng-repeat="kunta in inventointiprojekti.properties.kunnat">{{kunta | kuntaKylaNamei18n}}
+                    ({{kunta.kuntanumero}})</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Type"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{inventointiprojekti.properties.inventointiprojektityyppi | namei18n }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Kind"></span>
+            </label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{inventointiprojekti.properties.inventointiprojektilaji | namei18n }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Inventors"></span>
+            </label>
+            <div class="col-sm-9">
+                <div class="btn-group btn-group-sm" role="group">
+                    <button ng-repeat="inventoija in inventoijat" type="button"
+                        class="btn btn-default"
+                        ng-class="{active: filter == inventoija.properties.id}"
+                        ng-click="filterByInventor(inventoija)">{{inventoija.properties.etunimi}} {{inventoija.properties.sukunimi}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group" ng-show="muut_inventoijat && muut_inventoijat.length>0">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.OtherInventors"></span>
+            </label>
+            <div class="col-sm-9">
+                <div class="btn-group btn-group-sm" role="group">
+                    <button ng-repeat="inventoija in muut_inventoijat" type="button"
+                        class="btn btn-default"
+                        ng-class="{active: filter == inventoija.properties.id}"
+                        ng-click="filterByInventor(inventoija)">{{inventoija.properties.etunimi}} {{inventoija.properties.sukunimi}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <span i18n="common.Total"></span>
+            </label>
+            <div class="col-sm-9">
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-default" ng-click="showTable('kiinteisto')"
+                        ng-class="{active: visibleKiinteisto == true}">
+                        <span i18n="estate.Estate_count"></span>: {{kiinteistoTotal}}
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="showTable('rakennus')"
+                        ng-class="{active: visibleRakennus == true}">
+                        <span i18n="building.Building_count"></span>: {{rakennusTotal}}
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="showTable('alue')"
+                        ng-class="{active: visibleAlue == true}">
+                        <span i18n="area.Area_count"></span>: {{alueTotal}}
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="showTable('arvoalue')"
+                        ng-class="{active: visibleArvoalue == true}">
+                        <span i18n="valuearea.Valuearea_count"></span>: {{arvoalueTotal}}
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="showTable('kyla')"
+                        ng-class="{active: visibleKyla == true}">
+                        <span i18n="kyla.Village_count"></span>: {{kylaTotal}}
+                    </button>
+                    <button type="button" class="btn btn-default"
+                        ng-click="showTable('kaikki')"><span i18n="common.Show_all"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="kunta" class="col-sm-3 control-label">
+                <span i18n="common.Filter_by_municipality"></span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select multiple="true" ng-model="inventointiprojekti.properties.suodatetutKunnat" theme="bootstrap" name="kunta" sortable="true" on-select="suodataKylatJaKunnat()" on-remove="suodataKylatJaKunnat()"> 
+                    <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$item | kuntaKylaNamei18n}} ({{$item.kuntanumero}})</ui-select-match> 
+                    <ui-select-choices repeat="kunta in kunnatSuodatukseen | filter: $select.search">
+		                <div>
+		                    <span ng-bind-html="kunta | kuntaKylaNamei18n | highlight: $select.search"></span>
+		                    (<span ng-bind-html="kunta.kuntanumero | highlight: $select.search"></span>)
+		                </div>
+                	</ui-select-choices> 
+                </ui-select>                
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="kyla" class="col-sm-3 control-label">
+                <span i18n="common.Filter_by_village"></span>
+            </label>
+            <div class="col-sm-9">
+                <ui-select multiple="true" ng-model="inventointiprojekti.properties.suodatetutKylat" theme="bootstrap" name="kyla" sortable="true" on-select="suodataKylatJaKunnat()" on-remove="suodataKylatJaKunnat()"> 
+                    <ui-select-match data-i18n-attr="{placeholder: 'common.Select'}">{{$item | kuntaKylaNamei18n}} ({{$item.kylanumero}})</ui-select-match> 
+                    <ui-select-choices repeat="kyla in kylat | filter: $select.search">
+		                <div>
+		                    <span ng-bind-html="kyla | kuntaKylaNamei18n | highlight: $select.search"></span>
+		                    (<span ng-bind-html="kyla.kylanumero | highlight: $select.search"></span>)
+		                </div>
+                	</ui-select-choices> 
+                </ui-select>
+                <p>
+            </div>
+        </div>        
+    </div>
+</div>

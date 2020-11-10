@@ -1,0 +1,20 @@
+<div class="form-group">
+    <label for="loytotila" class="col-sm-4 control-label">
+        <span i18n="ark.Discovery_status"></span> *
+    </label>
+    <div class="col-sm-8">
+        <ui-select class="ng-animate-disabled" 
+        	ng-model="tila.loydon_tila" 
+        	name="loytotila"
+        	ng-change="vm.avaaTilanMuutosKentat()" 
+        	ng-required="true"
+        	theme="bootstrap"> 
+		    <ui-select-match data-i18n-attr="{placeholder: 'ark.Discovery_status'}">{{$select.selected | namei18n}}</ui-select-match> 
+		    <ui-select-choices ui-disable-choice="tila.id == 1" 
+		    	repeat="tila as tila in loytoTilat | filter: $select.search">
+ 		       <span ng-bind-html="tila | namei18n | highlight: $select.search"></span>
+			</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>
+ 

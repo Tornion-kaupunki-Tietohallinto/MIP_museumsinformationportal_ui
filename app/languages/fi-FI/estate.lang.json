@@ -1,0 +1,18 @@
+{
+	"Saving_estate_successfull" : "Kiinteistön %name tiedot tallennettu",
+	"Estate_deleted" : "Kiinteistö poistettu",
+	"Estate_saved_successfully" : "Kiinteistön %name tiedot tallennettu",
+	"Estate_created_successfully" : "Uusi kiinteistö luotu onnistuneesti",
+	"Property_identifier_pattern" : "Kiinteistötunnuksen tulee olla muotoa XXX-XXX-XXXX-XXXX",
+	"Estate_count": "Kiinteistöjä",
+    "Delete_location": "Poista sijainti",
+    "Set_location": "Aseta sijainti",
+    "Show_location": "Näytä sijainti",
+    "Get_data": "Hae tiedot",
+    "Building_images": "Rakennusten kuvat",    
+    "Column_number": "Palstanumero",
+    "Next_free_column_number_is": "Seuraava vapaa palstanumero on %freenum",
+    "Column_number_is_already_in_use": "Palstanumero on jo käytössä kiinteistöllä",
+    "Column_number_must_be_positive_number": "Palstanumeron tulee olla positiivinen numero",
+    "Property_identifier_already_in_use_fill_column_number": "Kiinteistötunnus on jo käytössä, joten palstanumero tulee täyttää" 
+}

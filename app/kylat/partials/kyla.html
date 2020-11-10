@@ -1,0 +1,123 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Village"></span> {{kyla.properties.kylanumero}}
+                    {{kyla.properties.nimi}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!-- READ ONLY -->
+                <form class="form-horizontal" name="kylaForm"
+                    ng-class="{'form-horizontal-tight': !edit}" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 column-left">
+                            <!-- LEFT COLUMN -->
+                            <!-- Kylän tiedot -->
+                            <div class="col-md-12" ng-if="!edit"
+                                ng-include="'kylat/partials/perustiedot_view.html'"></div>
+                            <div class="col-md-12" ng-if="edit"
+                                ng-include="'kylat/partials/perustiedot_edit.html'"></div>
+                            <div class="col-md-12" ng-if="!edit"
+                                ng-show="showKiinteistot && visibleKiinteisto"
+                                ng-include="'kylat/partials/kiinteistot_view.html'"></div>
+                            <div class="col-md-12" ng-if="!edit"
+                                ng-show="showRakennukset && visibleRakennus"
+                                ng-include="'kylat/partials/rakennukset_view.html'"></div>
+                            <div class="col-md-12" ng-if="!edit" ng-show="showAlueet && visibleAlue"
+                                ng-include="'kylat/partials/alueet_view.html'"></div>
+                            <div class="col-md-12" ng-if="!edit"
+                                ng-show="showArvoalueet && visibleArvoalue"
+                                ng-include="'kylat/partials/arvoalueet_view.html'"></div>
+                            <div class="col-md-12"
+                                ng-if="!edit && (kyla.properties.luoja || kyla.properties.muokkaaja || kyla.properties.poistaja)"
+                                ng-include="'kylat/partials/muokkaustiedot_view.html'"></div>
+                        </div>
+                        <div class="col-md-6 column-right">
+                            <div class="col-md-12" ng-if="!edit && !create && images.length>0"
+                                ng-include="'pages/templates/kuvat_view.html'"></div>
+                            <div class="col-md-12" ng-if="edit && !create"
+                                ng-include="'kylat/partials/kuvat_edit.html'"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left" mip-entiteettiselain etype="'kyla'" eid="kyla.properties.id" close="close()" ng-show="!edit"></div>
+                <div class="mip-footer-btn-group">
+                    <button class="btn btn-default" type="button" ng-click="addImage()" 
+                        i18n="common.Add_image" 
+                        ng-show="!edit && !create" data-ng-if="permissions.muokkaus">
+                    </button>
+                    <button class="btn btn-default" type="button" ng-click="editMode()"
+                           i18n="common.Edit" 
+                           ng-show="!edit" ng-if="permissions.muokkaus">
+                    </button>
+                    <button class="btn btn-default" type="button" ng-class="{ 'disabled' : disableButtons }" 
+                        ng-click="disableButtons || cancelEdit()"
+                        i18n="common.Cancel_edit" 
+                        ng-show="edit && !create">
+                    </button>
+                    <button class="btn btn-success" type="button" ng-class="{ disabled: kylaForm.$invalid || disableButtons }" 
+                        ng-click="(kylaForm.$invalid || disableButtons) || save()"
+                        i18n="common.Save" 
+                        ng-show="edit" ng-if="permissions.muokkaus">
+                    </button>
+                    
+	                 <div class="dropup">
+	                      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                      
+	                        <span i18n="common.Actions"></span> <span class="caret"></span>
+	                      </button>
+	                      <ul class="dropdown-menu dropdown-menu-right">
+	                        <li><a href="" ng-click="deleteKyla(modalNameId)" class="bg-danger" 
+	                               i18n="common.Delete"                                
+	                               ng-show="!create" data-ng-if="permissions.poisto"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.poisto && !create"></li>
+	                        
+	                        <li><a href="" ng-click="showMuutoshistoria()" 
+	                               i18n="common.Show_history" 
+	                               ng-show="!create" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus && !create"></li>
+	                        
+	                        <li><a href="" ng-click="addImage()" 
+	                               i18n="common.Add_image" 
+	                               ng-show="!create" data-ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus && !create"></li>
+	                         
+	                        <li><a href="" ng-click="close()"
+	                               i18n="common.Close" 
+	                               ng-show="!edit"></a>
+	                        </li>
+	                        <li><a href="" ng-click="close()"
+	                               i18n="common.Cancel" 
+	                               ng-show="create"></a>
+	                        </li>
+	                        <li ng-class="{ 'disabled' : disableButtons }"><a href="" ng-click="disableButtons || cancelEdit()"
+	                               i18n="common.Cancel_edit" 
+	                               ng-show="edit && !create"></a>
+	                        </li>
+	                        
+	                        <li role="separator" class="divider" data-ng-if="permissions.muokkaus"></li>
+	                        
+	                        <li><a href="" ng-click="editMode()"
+	                               i18n="common.Edit" 
+	                               ng-show="!edit" ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        <li ng-class="{ disabled: kylaForm.$invalid || disableButtons }"><a href="" ng-click="(kylaForm.$invalid || disableButtons) || save()" class="bg-success"
+	                               i18n="common.Save" 
+	                               ng-show="edit" ng-if="permissions.muokkaus"></a>
+	                        </li>
+	                        
+	                    </ul>
+	                </div>
+	            </div>           
+            </div>
+        </div>
+    </div>

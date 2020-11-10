@@ -1,0 +1,176 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#perustiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Basic_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perustiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	    	<div class="row">
+	    		<div class="col-sm-6">	  
+    				<mip-konservointi-toimenpide toimenpide="vm.toimenpide.properties" vm="vm"></mip-konservointi-toimenpide>
+    				<mip-konservointi-menetelma menetelma="vm.toimenpide.properties" menetelmat="vm.menetelmat" vm="vm"></mip-konservointi-menetelma>
+    				<mip-konservointi-materiaali-multi lista="vm.toimenpide.properties" haku="false"></mip-konservointi-materiaali-multi>
+			        <div class="form-group" ng-class="{ 'has-error': form.alkaa.$invalid && form.alkaa.$touched}">
+			            <label for="alkaa" class="col-sm-4 control-label">
+			                <span i18n="ark.Begin"></span> *
+			            </label>
+			            <div class="col-sm-8">
+							<input bs-datepicker
+								data-model-date-format="yyyy-MM-dd" 
+								data-date-format="dd.MM.yyyy"
+							    data-date-type="string" 
+							    data-autoclose="1" 
+							    type="text"
+							    start-week="1"
+							    class="form-control" name="alkaa"
+							    ng-required="true"
+							    ng-model="vm.toimenpide.properties.alkaa">
+			                <span class="help-block" ng-show="form.alkaa.$invalid && form.alkaa.$touched">
+			                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Date' | i18n }}"></span>
+			                </span>						    	                
+			            </div>
+			        </div>
+                    <div class="form-group">
+                        <label for="selectedUser" class="col-sm-4 control-label">
+                            <span i18n="ark.Author"></span> *
+                        </label>
+                        <div class="col-sm-8">
+                            <ui-select class="ng-animate-disabled" name="tekija" theme="bootstrap" 
+                            	ng-required="true"
+                            	ng-model="vm.toimenpide.properties.tekija"> 
+                            <ui-select-match
+                                data-i18n-attr="{placeholder: 'common.Select'}">
+                                {{$select.selected.etunimi}}
+                                {{$select.selected.sukunimi}}
+                                {{$select.selected.sahkoposti}} 
+                            </ui-select-match> 
+                            <ui-select-choices repeat="k in vm.kayttajat | filter: $select.search track by k.id">
+                            <span ng-bind-html="k.etunimi | highlight: $select.search"></span>
+                            <span ng-bind-html="k.sukunimi | highlight: $select.search"></span>
+                            <span ng-bind-html="k.sahkoposti | highlight: $select.search"></span>
+                            </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>		        	    		
+	    		</div>
+	    		<div class="col-sm-6">	  
+			        <div class="form-group">
+			            <label class="col-sm-4 control-label">
+			            	<span i18n="ark.Method_description"></span>
+			            </label>
+			            <div class="col-sm-8">
+			                <textarea class="form-control" style="min-height: 72px"
+			                	name="kuvaus"
+			                    ng-model="vm.toimenpide.properties.menetelman_kuvaus"
+			                    rows="3">
+			                </textarea> 
+			            </div>
+			        </div>
+			        <div class="form-group">
+			            <label class="col-sm-4 control-label">
+			            	<span i18n="common.Additional_information"></span>
+			            </label>
+			            <div class="col-sm-8">
+			                <textarea class="form-control" style="min-height: 72px"
+			                	name="lisatiedot"
+			                    ng-model="vm.toimenpide.properties.lisatiedot"
+			                    rows="3">
+			                </textarea> 
+			            </div>
+			        </div>
+			        <mip-konservointi-kasittely kasittely="vm.toimenpide.properties"></mip-konservointi-kasittely>
+			        <div class="form-group">
+			            <label for="paata_toimenpide" class="col-sm-4 control-label">
+			                <span i18n="ark.End_operation"></span>
+			            </label>
+			            <div class="col-sm-8" data-i18n-attr="{title: 'ark.End_operation_tooltip'}">
+							<input bs-datepicker 
+								data-model-date-format="yyyy-MM-dd" 
+								data-date-format="dd.MM.yyyy"
+							    data-date-type="string" 
+							    data-autoclose="1"
+							    start-week="1"
+							    class="form-control" name="paata_toimenpide"
+							    ng-model="vm.toimenpide.properties.paata_toimenpide">
+			            </div>
+			        </div>			        			        		    		
+	    		</div>	    		
+	    	</div>  
+	    </div>  	
+    	<!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	    	<div class="col-sm-6">
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Operation"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.toimenpide.nimi}}</p>
+		            </div>    
+		        </div>
+		        <div class="form-group" ng-if="vm.toimenpide.properties.menetelma">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Method"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.menetelma.nimi}}</p>
+		            </div>    
+		        </div>
+		        <div class="form-group" ng-if="vm.toimenpide.properties.materiaalit">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Materials"></span> 
+		            </label>
+		            <div class="col-sm-8">
+		               	<span ng-repeat="materiaali in vm.toimenpide.properties.materiaalit">
+		               		{{materiaali.nimi}} <font ng-show="!$last">,</font>
+		               	</span>
+		            </div>    
+		        </div>
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Begin"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.alkaa | pvm:'dd.MM.yyyy'}}</p>
+		            </div>    
+		        </div>
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Author"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.tekija.etunimi}} {{vm.toimenpide.properties.tekija.sukunimi}}</p>
+		            </div>    
+		        </div>		        
+		    </div>
+	        <div class="col-sm-6">
+		        <div class="form-group" ng-if="vm.toimenpide.properties.menetelman_kuvaus">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Method_description"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.menetelman_kuvaus}}
+		            </div>    
+		        </div>
+		        <div class="form-group" ng-if="vm.toimenpide.properties.kasittely">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Treatment"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.kasittely.kasittelytunnus}}
+		            </div>    
+		        </div>
+		        <div class="form-group" ng-if="vm.toimenpide.properties.lisatiedot">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="common.Additional_information"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.toimenpide.properties.lisatiedot}}
+		            </div>    
+		        </div>		        		        		        
+	        </div>
+	    </div>
+    </div>
+</div>

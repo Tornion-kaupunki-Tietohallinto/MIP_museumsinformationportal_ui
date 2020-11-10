@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label for="kunto" class="col-sm-3 control-label">
+        <span i18n="ark.Condition"></span>
+    </label>
+    <div class="col-sm-9">
+        <select class="form-control" name="kunto" ng-model="kunto"
+            ng-options="o as o.nimi_fi for o in opts track by o.id">
+            <option value=""></option>
+        </select>
+    </div>
+</div>

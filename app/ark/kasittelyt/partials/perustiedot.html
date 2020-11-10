@@ -1,0 +1,120 @@
+<div class="panel panel-default panel-collapsible">
+    <div class="panel-heading" data-toggle="collapse" data-target="#perustiedotPanel{{vm.modalId}}">
+        <h4 class="panel-title">
+            <span i18n="ark.Basic_information"></span>
+            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+        </h4>
+    </div>
+    <div id="perustiedotPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+	    <div class="panel-body" ng-if="vm.edit">
+	    	<div class="row">
+	    		<div class="col-sm-5">	  
+			        <div class="form-group" ng-class="{ 'has-error': form.kasittelytunnus.$invalid && form.kasittelytunnus.$touched} || !vm.uniikkiKasittelytunnus">
+			            <label class="col-sm-4 control-label">
+			            	<span i18n="ark.Treatment_identifier"></span> *
+			            </label>
+			            <div class="col-sm-8">
+			                <input type="text" class="form-control" 
+			                	name="kasittelytunnus" 
+	                           	ng-change="vm.tarkistaUniikkiKasittelytunnus(form)"
+	                           	ng-model-options='{debounce: 300}'			                	
+			                    ng-required="true"
+			                    focus-me="focusInput"
+			                    ng-model="vm.kasittely.properties.kasittelytunnus">
+			                <span class="help-block" ng-show="form.kasittelytunnus.$invalid && form.kasittelytunnus.$touched && vm.uniikkiKasittelytunnus">
+			                    <span data-i18n="common.mandatory_value" data-field="{{ 'ark.Treatment_identifier' | i18n }}"></span>
+			                </span>
+	                       	<span class="help-block" ng-show="!vm.uniikkiKasittelytunnus">
+			                    <span class="text-danger" data-i18n="common.already_in_use" data-field="{{ 'ark.Treatment_identifier' | i18n }}"></span>
+			                </span>				                
+			            </div>
+			        </div>	    		
+			        <div class="form-group" ng-class="{ 'has-error': form.alkaa.$invalid && form.alkaa.$touched}">
+			            <label for="alkaa" class="col-sm-4 control-label">
+			                <span i18n="ark.Begin"></span> *
+			            </label>
+			            <div class="col-sm-8">
+							<input bs-datepicker data-date-format="dd.MM.yyyy"
+							    model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+							    start-week="1"
+							    class="form-control" name="alkaa"
+							    ng-required="true"
+							    ng-model="vm.kasittely.properties.alkaa">
+			                <span class="help-block" ng-show="form.alkaa.$invalid && form.alkaa.$touched">
+			                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Date' | i18n }}"></span>
+			                </span>						    	                
+			            </div>
+			        </div>
+			        <div class="form-group">
+			            <label for="paattyy" class="col-sm-4 control-label">
+			                <span i18n="ark.End"></span>
+			            </label>
+			            <div class="col-sm-8">
+							<input bs-datepicker data-date-format="dd.MM.yyyy"
+								data-i18n-attr="{title: 'ark.Treatment_end_date_notice'}"
+							    model-date-format="yyyy-MM-dd" data-autoclose="1" date-type="string"
+							    start-week="1"
+							    class="form-control" name="paattyy"
+							    ng-model="vm.kasittely.properties.paattyy">
+			            </div>
+			        </div>			        	    		
+	    		</div>
+	    		<div class="col-sm-7">	  
+			        <div class="form-group">
+			            <label class="col-sm-4 control-label">
+			            	<span i18n="common.Description"></span>
+			            </label>
+			            <div class="col-sm-8">
+			                <textarea class="form-control" style="min-height: 72px"
+			                	name="kuvaus"
+			                    ng-model="vm.kasittely.properties.kuvaus"
+			                    rows="3">
+			                </textarea> 
+			            </div>
+			        </div>		    		
+	    		</div>	    		
+	    	</div>  
+	    </div>  	
+    	<!-- Katselutila -->
+	    <div class="panel-body" ng-if="!vm.edit">
+	    	<div class="col-sm-4">
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Treatment_identifier"></span> 
+		            </label>
+		            <div class="col-sm-8">
+		                <p class="form-control-static">
+		                	{{vm.kasittely.properties.kasittelytunnus}}
+		                </p>
+		            </div>    
+		        </div>     
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.Begin"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.kasittely.properties.alkaa | pvm:'dd.MM.yyyy'}}
+		            </div>    
+		        </div>
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="ark.End"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static">{{vm.kasittely.properties.paattyy | pvm:'dd.MM.yyyy'}}
+		            </div>    
+		        </div>		        
+	        </div>
+			<div class="col-sm-8">
+		        <div class="form-group">
+		            <label class="col-sm-4 control-label">
+		                <span i18n="common.Description"></span> 
+		            </label>
+		            <div class="col-sm-8">
+	 	                <p class="form-control-static mip-multiline">{{vm.kasittely.properties.kuvaus}}
+		            </div>    
+		        </div>			
+			</div>	        
+	    </div>
+    </div>
+</div>

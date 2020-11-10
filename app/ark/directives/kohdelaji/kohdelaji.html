@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label for="laji" class="col-sm-3 control-label">
+        <span i18n="common.Kind"></span><span ng-show="lajirequired">*</span>
+    </label>
+    <div class="col-sm-9">
+        <select class="form-control" name="laji" ng-model="laji" ng-required="lajirequired"
+            ng-options="laji as laji.nimi_fi for laji in kohdelajit track by laji.id">
+            <option value=""></option>
+        </select>
+    </div>
+</div>

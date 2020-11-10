@@ -1,0 +1,12 @@
+{
+  "name": "bootstrap-bower",
+  "_cacheHeaders": {
+    "ETag": "W/\"b45a63a76f6b0b8f9f52ffd95957e8ac\"",
+    "Content-Type": "text/html; charset=utf-8"
+  },
+  "_release": "e-tag:W/\"b45a63a",
+  "main": "index",
+  "_source": "https://github.com/angular-ui/bootstrap-bower",
+  "_target": "*",
+  "_originalSource": "https://github.com/angular-ui/bootstrap-bower"
+}

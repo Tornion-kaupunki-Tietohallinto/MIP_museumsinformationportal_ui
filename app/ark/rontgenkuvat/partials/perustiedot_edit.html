@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="common.Details"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+    	<div class="col-md-6 column-left">  	
+	        <div class="form-group" ng-class="{ 'has-error': form.numero.$invalid && form.numero.$touched || !vm.uniikkiNumero}">
+	            <label class="col-sm-3 control-label">
+	            	<span i18n="common.Number"></span> *
+	            </label>
+	            <div class="col-sm-9">
+	                <input type="text" class="form-control" 
+	                	name="numero" 
+	                    ng-model="vm.xray.properties.numero" 
+	                    ng-change="vm.tarkistaNumero()" 
+	                    ng-model-options='{debounce: 500}'
+	                    ng-required="true" 
+	                    spellcheck="false" 
+	                    autocomplete="off"
+                        focus-me="focusInput">
+	                <span class="help-block" ng-show="form.numero.$invalid && form.numero.$touched && vm.uniikkiNumero">
+	                    <span data-i18n="common.mandatory_value" data-field="{{ 'common.Number' | i18n }}"></span>
+	                </span>
+	                <span class="help-block" ng-show="!vm.uniikkiNumero">
+	                    <span data-i18n="common.already_in_use" data-field="{{ 'common.Number' | i18n }}"></span>
+	                </span>	                
+	            </div>
+	        </div>						        				        
+	        <div class="form-group">
+	            <label class="col-sm-3 control-label">
+	                <span i18n="common.Date"></span>
+	            </label>
+	            <div class="col-sm-9">
+	                <input bs-datepicker data-autoclose="1"
+                              placement="bottom-left" start-week="1"
+                              class="form-control" name="pvm"
+                              ng-model="vm.xray.properties.pvm"
+                              data-date-format="dd.MM.yyyy"
+                              type="text" 
+		                      spellcheck="false" 
+		                      autocomplete="off">
+	            </div>
+	        </div>			
+            <div class="form-group">
+               <label class="col-sm-3 control-label">
+                   <span i18n="common.Taken_by"></span>
+               </label>
+               <div class="col-sm-9">
+                   <input type="text" 
+                       class="form-control"
+                       name="kuvaaja"
+                       ng-model="vm.xray.properties.kuvaaja"
+                       data-i18-attr="{placeholder: 'common.Taken_by'}"                        
+                       spellcheck="false" 
+                       autocomplete="off">
+               </div>
+           </div>		
+           <div class="col-md-6 col-sm-6 col-xs-6">                                
+               <mip-loyto-valitsin valitut-loydot="vm.xray.properties.loydot" entity-id="vm.xray.properties.id" mode="'xray'" tutkimus-id="vm.tutkimusId" dis="false"></mip-loyto-valitsin>
+           </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">                                
+               <mip-nayte-valitsin valitut-naytteet="vm.xray.properties.naytteet" entity-id="vm.xray.properties.id" mode="'xray'" tutkimus-id="vm.tutkimusId" dis="false"></mip-nayte-valitsin>
+           </div>        
+        </div>		
+        <div class="col-md-6 column-right">
+	        <div class="form-group">
+	            <label for="lisatiedot" class="col-sm-3 control-label" i18n="common.Additional_information"> </label>
+	            <div class="col-sm-9">
+	                <textarea rows="3" class="form-control" name="lisatiedot"
+	                    ng-model="vm.xray.properties.lisatiedot"	                     
+                        spellcheck="false" 
+                        autocomplete="off"></textarea>                        
+	            </div>
+            </div>
+        </div>
+    </div>
+</div>

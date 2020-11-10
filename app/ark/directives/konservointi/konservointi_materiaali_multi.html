@@ -1,0 +1,19 @@
+<div class="form-group" ng-if="!haku">
+    <label for="menetelma" class="col-sm-4 control-label">
+        <span i18n="ark.Materials"></span>
+    </label>
+    <div class="col-sm-8">
+	<ui-select multiple ng-model="lista.materiaalit" theme="bootstrap" name="materiaali"> 
+	    <ui-select-match  data-i18n-attr="{placeholder: 'common.Select'}">{{$item.nimi}}</ui-select-match> 
+	    <ui-select-choices repeat="materiaali in materiaalit | filter: $select.search track by materiaali.id">
+	       <span ng-bind-html="materiaali.nimi | highlight: $select.search"></span>
+		</ui-select-choices> 
+	</ui-select>
+    </div>
+</div>
+<ui-select multiple ng-model="lista.materiaalit" theme="bootstrap" name="materiaali" ng-if="haku"> 
+    <ui-select-match  data-i18n-attr="{placeholder: 'ark.Materials'}">{{$item.nimi}}</ui-select-match> 
+    <ui-select-choices repeat="materiaali.id as materiaali in materiaalit | filter: $select.search track by materiaali.id">
+       <span ng-bind-html="materiaali.nimi | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

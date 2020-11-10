@@ -1,0 +1,39 @@
+<div class="modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{vm.modalId}}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+            <h4 class="modal-title" i18n="map.Route"></h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" name="form" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" i18n="map.Route"></h4>
+                            </div>
+                            <div class="panel-body">
+                                <span data-i18n="map.Remove_users_layer"></span>{{vm.reitti.properties.luoja.sukunimi}} {{vm.reitti.properties.luoja.etunimi}}: <span i18n="map.Route"></span>: {{vm.reitti.properties.id}}, <span i18n="common.Created"></span>: {{vm.reitti.properties.luotu | pvm: 'dd.MM.yyyy HH:mm'}}
+                                <br>
+                                <span data-i18n="map.Route_is_linked_to"></span>:
+                                <span ng-if="vm.relatedEntity.properties.nimi">{{vm.relatedEntity.properties.nimi}}</span>
+                                <span ng-if="vm.relatedEntity.properties.inventointinumero && vm.relatedEntity.properties.kiinteisto.kiinteistotunnus">{{vm.relatedEntity.properties.kiinteisto.kiinteistotunnus}}, </span>
+                                <span ng-if="vm.relatedEntity.properties.inventointinumero">{{vm.relatedEntity.properties.inventointinumero}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="close()"
+                ng-disabled="disableButtons">
+                <span i18n="common.Close"></span>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="vm.delete()">
+                <span i18n="common.Delete"></span>
+            </button>
+        </div>
+    </div>
+</div>
+</div>

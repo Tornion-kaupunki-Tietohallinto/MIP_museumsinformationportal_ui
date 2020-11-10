@@ -1,0 +1,91 @@
+<div class="row">
+	<!-- Tarkennettu haku -->
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="col-md-12">
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+						<input type="checkbox"
+							ng-model="vm.colVisibilities.showKuvausCol"
+							ng-change="vm.saveColVisibility('showKuvausCol', vm.colVisibilities.showKuvausCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span>
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="kuvaus" ng-model="vm.naytteetTable.filter().properties.kuvaus"
+							data-i18n-attr="{placeholder: 'common.Description'}" spellcheck="false" autocomplete="off">
+					</div>
+				</div>
+			</div>			
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"> 
+						<input type="checkbox"
+							ng-model="vm.colVisibilities.showLisatiedotCol"
+							ng-change="vm.saveColVisibility('showLisatiedotCol', vm.colVisibilities.showLisatiedotCol)"
+							data-i18n-attr="{title: 'common.Show_field'}">
+						</span>
+						<input type="text" class="form-control" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+							name="kuvaus" ng-model="vm.naytteetTable.filter().properties.lisatiedot"
+							data-i18n-attr="{placeholder: 'common.Additional_information'}" spellcheck="false" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox" ng-model="vm.colVisibilities.showNaytteenTilaCol"
+                            ng-change="vm.saveColVisibility('showNaytteenTilaCol', vm.colVisibilities.showNaytteenTilaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <mip-nayte-tila-multi tilat="vm.naytteetTable.filter().properties"></mip-nayte-tila-multi>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox" ng-model="vm.colVisibilities.showAjoitusnaytteenLuokkaCol"
+                            ng-change="vm.saveColVisibility('showAjoitusnaytteenLuokkaCol', vm.colVisibilities.showAjoitusnaytteenLuokkaCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+						<select name="luokka" class="form-control"
+						    ng-options="luokka.id as luokka.hakunimi_fi for luokka in vm.ajoitusluokat"
+						    ng-model="vm.naytteetTable.filter().properties.luokka">
+						</select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showLuunayteMaaraCol"
+                            ng-change="vm.saveColVisibility('showLuunayteMaaraCol', vm.colVisibilities.showLuunayteMaaraCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <span i18n="sample.Amount_g" class="form-control" disabled data-i18n-attr="{title: 'sample.Bone_sample_amount'}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"> 
+                        <input type="checkbox"
+                            ng-model="vm.colVisibilities.showMaanayteMaaraCol"
+                            ng-change="vm.saveColVisibility('showMaanayteMaaraCol', vm.colVisibilities.showMaanayteMaaraCol)"
+                            data-i18n-attr="{title: 'common.Show_field'}">
+                        </span>
+                        <span i18n="sample.Amount_l" class="form-control" disabled data-i18n-attr="{title: 'sample.Soil_sample_amount'}"></span>
+                    </div>
+                </div>
+            </div>                        			
+		</div>		
+	</div>
+</div>
+

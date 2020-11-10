@@ -1,0 +1,11 @@
+{
+    "Valuearea_information_saved": "Information om värdeområdet %name har sparats",
+    "Valuearea_deleted": "Värdeområdet har raderats",
+    "Valuearea_creation_ok": "Nytt värdeområde har skapats",
+    "Delete_failed": "Misslyckades med att radera värdeområdet",
+    "Valuearea": "Värdeområde",
+    "No_view_permission" : "Du har inte rättigheter att se värdeområden",
+    "Valuearea_count": "Värdeområden",
+    "Save_failed": "Misslyckades med att spara värdeområdet",
+    "Valuearea_images": "Värdeområdens bilderna"
+}

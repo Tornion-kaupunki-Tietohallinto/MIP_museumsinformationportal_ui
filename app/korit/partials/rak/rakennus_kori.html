@@ -1,0 +1,52 @@
+<div class="panel panel-default panel-collapsible">
+	<div class="panel-heading" data-toggle="collapse" data-target="#rakennuksetPanel{{vm.modalId}}">
+		<h4 class="panel-title">
+			<span i18n="common.Buildings" ng-show="!vm.uusia"></span><span ng-show="!vm.uusia">: {{vm.koriIdLista.length}}</span> 
+			<span ng-show="vm.uusia"><span i18n="common.Adding_to_cart"></span>: {{vm.uusia}}</span>
+			<span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+		</h4>
+	</div>
+	<div id="rakennuksetPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
+		<div class="col-md-12">
+			<div class="row">
+				<!-- Taulukko -->
+				<table ng-table="vm.rakennusKoriTable" template-pagination="pages/templates/table-pagination.html"
+					class="table table-striped table-bordered" show-filter="false">
+					<tr ng-repeat="rakennus in $data" style="cursor: pointer" ng-click="vm.avaaRakennus(rakennus)">
+                        <td data-title="vm.getColumnName('County')" sortable="'properties.kunta'">
+                            {{rakennus.properties.kiinteisto.kyla.kunta | kuntaKylaNamei18n}}
+                            ({{rakennus.properties.kiinteisto.kyla.kunta.kuntanumero}})</td>
+                        <td data-title="vm.getColumnName('Village')" sortable="'properties.kyla'">
+                            {{rakennus.properties.kiinteisto.kyla.nimi}}
+                            ({{rakennus.properties.kiinteisto.kyla.kylanumero}})</td>
+                        <td data-title="vm.getColumnName('Property_identifier')" sortable="'properties.kiinteistotunnus'">
+                            {{rakennus.properties.kiinteisto.kiinteistotunnus}}<span ng-if="rakennus.properties.kiinteisto.palstanumero"> ({{rakennus.properties.kiinteisto.palstanumero}})</span></td>
+                        <td data-title="vm.getColumnName('Estate_name')" sortable="'properties.kiinteisto_nimi'">
+                            {{rakennus.properties.kiinteisto.nimi}} 
+                        </td>
+                        <td data-title="vm.getColumnName('Address')">
+                            <div ng-repeat="osoite in rakennus.properties.osoitteet"
+                                ng-show="osoite.katunimi.length > 0">{{osoite.katunimi}}
+                                {{osoite.katunumero}}</div>
+                            <div style="padding-left:0.5em;">{{rakennus.properties.kiinteisto.osoite}}</div>
+                        </td>
+                        <td data-title="vm.getColumnName('Building_type')" sortable="'properties.rakennustyyppi'">
+                            <div
+                                ng-repeat="rakennustyyppi in rakennus.properties.rakennustyypit">
+                                {{rakennustyyppi | namei18n}}</div>
+                        </td>
+                        <td data-title="vm.getColumnName('Architect')" sortable="'properties.kaikki_suunnittelijat'">
+                            <span ng-bind-html="rakennus.properties.kaikki_suunnittelijat"></span>
+                        </td>                                                
+						<td data-title="vm.getColumnName('Actions', 'common')" style="width:10%" ng-if="vm.edit">
+	                        <button type="button" class="btn btn-sm btn-danger" 
+	                                data-i18n-attr="{title: 'common.Delete'}" ng-click="vm.poistaRivi(rakennus, $index)">
+	                                <span class="fa fa-remove" aria-hidden="true"></span>
+	                        </button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

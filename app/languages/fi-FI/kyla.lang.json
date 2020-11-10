@@ -1,0 +1,11 @@
+{
+	"Fetching_villages_failed": "Kylien hakeminen epäonnistui",
+	"Saving_village_ok": "Kylän %name tiedot tallennettu",
+	"Village_deleted" : "Kylän poisto onnistui",
+	"Village_save_ok" : "Kylän %name tiedot tallennettu onnistuneesti",
+	"Village_create_ok" : "Kylä luotu onnistuneesti",
+	"Village_create_fail" : "Kylän luonti epäonnistui",
+	"Village_delete_ok" : "Kylän poisto onnistui",
+	"Village_count": "Kyliä",
+	"Village_details": "Kylän perustiedot"
+}

@@ -1,0 +1,117 @@
+    <div class="modal-dialog mip-modal-dialog" mip-dialog tabindex="-1" role="dialog" id="myModalDialog{{modalId}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div ng-include="'pages/templates/modal/modal_header_painikkeet.html'"></div>
+                <h4 class="modal-title">
+                    <span i18n="common.Modification_history"></span>
+                    :
+                    <span i18n="common.Travel_report"></span>
+                    {{title}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="historyPanel1" class="panel-body panel-collapse collapse in">
+                            <div ng-repeat="h in historia | orderBy: '-action_tstamp_tx'">
+                                <!-- lisäystiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='I' && h.table_name=='matkaraportti'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.Value"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                        <tr
+                                            ng-repeat="c in h.children | filter:{table_name:'matkaraportti_syy'} as syyt">
+                                            <td rowspan="{{syyt.length}}" ng-if="$index==0">
+                                                <span i18n="common.Reasons"></span>
+                                            </td>
+                                            <td>{{c.row_data.syy.nimi_fi}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.matkapvm">
+                                            <td>
+                                                <span i18n="common.Travel_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.matkapvm | date:'dd.MM.yyyy'}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.tehtavan_kuvaus">
+                                            <td>
+                                                <span i18n="common.Task_description"></span>
+                                            </td>
+                                            <td>{{h.row_data.tehtavan_kuvaus}}</td>
+                                        </tr>
+                                        <tr ng-if="h.row_data.huomautukset">
+                                            <td>
+                                                <span i18n="common.Remarks"></span>
+                                            </td>
+                                            <td>{{h.row_data.huomautukset}}</td>
+                                        </tr>                                                                                                                                                      
+                                    </table>
+                                </div>
+                                <!-- muokkaustiedot -->
+                                <div class="panel panel-default"
+                                    ng-if="h.action=='U' && h.table_name=='matkaraportti'">
+                                    <div class="panel-heading">
+                                        <mip-history-header item="h"></mip-history-header>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th><span i18n="common.Field"></span></th>
+                                            <th><span i18n="common.OldValue"></span></th>
+                                            <th><span i18n="common.NewValue"></span></th>
+                                        </tr>
+                                        <!-- perustiedot -->
+                                         <tr
+                                            ng-if="(h.children | filter:{table_name:'matkaraportti_syy'}).length > 0">
+                                            <td>
+                                                <span i18n="common.Reasons"></span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'matkaraportti_syy', action:'D'}">
+                                                    {{c.row_data.syy.nimi_fi}}<br />
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    ng-repeat="c in h.children | filter:{table_name:'matkaraportti_syy', action:'I'}">
+                                                    {{c.row_data.syy.nimi_fi}}<br />
+                                                </span>
+                                            </td>
+                                        </tr> 
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('matkapvm')">
+                                            <td>
+                                                <span i18n="common.Travel_date"></span>
+                                            </td>
+                                            <td>{{h.row_data.matkapvm | date:'dd.MM.yyyy'}}</td>
+                                            <td>{{h.changed_fields.matkapvm | date:'dd.MM.yyyy'}}</td>
+                                        </tr>
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('tehtavan_kuvaus')">
+                                            <td>
+                                                <span i18n="common.Task_description"></span>
+                                            </td>
+                                            <td>{{h.row_data.tehtavan_kuvaus}}</td>
+                                            <td>{{h.changed_fields.tehtavan_kuvaus}}</td>
+                                        </tr>   
+                                        <tr ng-if="h.changed_fields.hasOwnProperty('huomautukset')">
+                                            <td>
+                                                <span i18n="common.Remarks"></span>
+                                            </td>
+                                            <td>{{h.row_data.huomautukset}}</td>
+                                            <td>{{h.changed_fields.huomautukset}}</td>
+                                        </tr>                                   
+                                    </table>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-include="'pages/templates/modal/modal_historia_footer_painikkeet.html'"></div>
+        </div>
+    </div>

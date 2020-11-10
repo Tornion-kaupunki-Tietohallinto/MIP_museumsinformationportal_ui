@@ -1,0 +1,52 @@
+<div class="panel">
+	<div class="panel-body">
+		<div ng-include="'pages/tabs.html'"></div>
+		<div ng-include="'pages/subtabs.html'"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-collapsible panel-default table-responsive">
+					<div class="panel-heading" role="tab" data-toggle="collapse" data-target="#hakukentat">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span>
+                            : {{vm.toimenpiteetTable.total()}}
+                            <span i18n="common.Shown"></span>
+                            : {{vm.searchResults}} 
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>					
+					</div>
+                    <div class="panel-body form-horizontal panel-collapse collapse in" id="hakukentat" 
+                    	ng-include="'ark/toimenpiteet/toimenpide_hakukentat.html'" 
+                    	style="margin-bottom: 1em;">
+                   </div>
+                   <!-- Taulukko -->
+					<table ng-table="vm.toimenpiteetTable" 
+                        template-pagination="pages/templates/table-pagination.html"
+						class="table table-striped table-bordered" show-filter="false">
+						<tr ng-repeat="toimenpide in $data" style="cursor: pointer" ng-click="vm.avaaToimenpide(toimenpide)">
+                            <td data-title="vm.getColumnName('Operation', 'ark')" style="width:20%" ng-if="vm.colVisibilities.showToimenpideCol">
+                                {{toimenpide.properties.toimenpide.nimi}}
+                            </td>
+                            <td data-title="vm.getColumnName('Method', 'ark')" style="width:20%" ng-if="vm.colVisibilities.showMenetelmaCol">
+                                {{toimenpide.properties.menetelma.nimi}}
+                            </td>
+                            <td data-title="vm.getColumnName('Materials', 'ark')" style="width:25%" ng-if="vm.colVisibilities.showMateriaalitCol">
+				               	<span ng-repeat="materiaali in toimenpide.properties.materiaalit">
+				               		{{materiaali.nimi}} <font ng-show="!$last">,</font>
+				               	</span>	                                
+                            </td>   					
+                            <td data-title="vm.getColumnName('Author', 'ark')" ng-if="vm.colVisibilities.showTekijaCol">
+                                {{toimenpide.properties.tekija.etunimi}} {{toimenpide.properties.tekija.sukunimi}}
+                            </td>
+                            <td data-title="vm.getColumnName('Treatment', 'ark')" ng-if="vm.colVisibilities.showKasittelyCol">
+				               	{{toimenpide.properties.kasittely.kasittelytunnus}}
+                            </td>
+                            <td data-title="vm.getColumnName('Begin', 'ark')" ng-if="vm.colVisibilities.showAlkaaCol">
+                                {{toimenpide.properties.alkaa | pvm:'dd.MM.yyyy'}}
+                            </td>                            
+						</tr>
+					</table>                   					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

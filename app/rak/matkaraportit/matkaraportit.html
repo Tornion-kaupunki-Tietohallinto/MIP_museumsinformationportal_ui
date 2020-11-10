@@ -1,0 +1,210 @@
+<div class="panel">
+    <div class="panel-body">
+        <div ng-include="'pages/tabs.html'"></div>
+        <div ng-include="'pages/subtabs.html'"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-collapsible panel-default table-responsive">
+                    <div class="panel-heading" role="tab" data-toggle="collapse"
+                        data-target="#tiedotPanel">
+                        <h4 class="panel-title">
+                            <span i18n="common.Results"></span>
+                            : {{matkaraportitTable.total()}}
+                            <span i18n="common.Shown"></span>
+                            : {{searchResults}}
+                            <span class="pull-right glyphicon clickable_space collapsed-indicator"></span>
+                        </h4>
+                    </div>
+                    <div class="panel-body form-horizontal panel-collapse collapse in"
+                        id="tiedotPanel" style="margin-bottom: 1em;">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-2">                               
+                                <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="clearSearchFilter()"
+                                    data-i18n-attr="{title: 'common.Clear_filter'}">
+                                    <span class="fa fa-ban"></span>
+                                </button>  
+                                                              
+                                <button type="button"
+                                        class="btn btn-default"
+                                        ng-click="refreshTable()"
+                                        data-i18n-attr="{title: 'common.Refresh_search_results'}">
+                                        <span class="fa fa-refresh"></span>
+                                </button>                                                               
+                            </div>                                    
+                            <div class="col-md-10 col-sm-10 col-xs-10">                         
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showEtunimiCol" ng-change="saveColVisibility('showEtunimiCol', colVisibilities.showEtunimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>  
+                                            <input type="text" class="form-control" name="etunimi"
+                                                ng-model="matkaraportitTable.filter().properties.etunimi"
+                                                data-i18n-attr="{placeholder: 'common.Firstname'}"
+                                                spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>                               
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showSukunimiCol" ng-change="saveColVisibility('showSukunimiCol', colVisibilities.showSukunimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>  
+                                            <input type="text" class="form-control" name="sukunimi"
+                                                ng-model="matkaraportitTable.filter().properties.sukunimi"
+                                                data-i18n-attr="{placeholder: 'common.Lastname'}"
+                                                spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>                               
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                    	<div class="row">
+                                            <div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 mip-input-group"
+                                                style="padding-right: 0px">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                	<input type="checkbox" ng-model="colVisibilities.showKiinteistotunnusCol" ng-change="saveColVisibility('showKiinteistotunnusCol', colVisibilities.showKiinteistotunnusCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            		</span>
+                                                <input type="text" class="form-control"
+                                                    style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+                                                    name="kiinteistotunnus"
+                                                    ng-model="matkaraportitTable.filter().properties.kiinteistotunnus"
+                                                    data-i18n-attr="{placeholder: 'common.Property_identifier'}"
+                                                    spellcheck="false" autocomplete="off">
+                                                    </div>
+                                            </div>
+                                            <div class="col-xs-5 col-sm-5 col-md-4 col-lg-3"
+                                                style="padding-left: 0px;">
+                                                <input type="text" class="form-control"
+                                                    style="border-top-left-radius: 0px; border-bottom-left-radius: 0px"
+                                                    name="palstanumero"
+                                                    ng-model="matkaraportitTable.filter().properties.palstanumero"
+                                                    data-i18n-attr="{placeholder: 'common.Number_abbr'}"
+                                                    spellcheck="false" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showKiinteistoNimiCol" ng-change="saveColVisibility('showKiinteistoNimiCol', colVisibilities.showKiinteistoNimiCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>  
+                                            <input type="text" class="form-control"
+                                                name="kiinteisto"
+                                                ng-model="matkaraportitTable.filter().properties.kiinteistoNimi"
+                                                data-i18n-attr="{placeholder: 'common.Estate'}"
+                                                spellcheck="false" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">   
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showMatkaraportinsyyCol" ng-change="saveColVisibility('showMatkaraportinsyyCol', colVisibilities.showMatkaraportinsyyCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                                                               
+                                            <ui-select ng-model="matkaraportitTable.filter().properties.syy"
+                                                name="tyyppi" theme="bootstrap" multiple="true"
+                                                ng-required="false"
+                                                on-remove="addItemBackToList($item, syyOptions)"
+                                                spellcheck="false">
+                                            <ui-select-match data-i18n-attr="{placeholder: 'common.Reason'}">{{$item | namei18n}}</span></ui-select-match>
+                                            <ui-select-choices
+                                                repeat="syy.id as syy in syyOptions | filter: {'nimi_fi': $select.search}">
+    										<div ng-bind-html="syy | namei18n | highlight: $select.search">
+												</div>
+                                            </ui-select-choices> </ui-select>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="form-group col-md-3">                                    
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showMatkapaivaCol" ng-change="saveColVisibility('showMatkapaivaCol', colVisibilities.showMatkapaivaCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>  
+                                            <input bs-datepicker data-date-format="dd.MM.yyyy"
+                                                model-date-format="yyyy-MM-dd" data-autoclose="1"
+                                                date-type="string" start-week="1"
+                                                class="form-control" name="alkupvm"
+                                                ng-model="matkaraportitTable.filter().properties.matkapvm_aloitus"
+                                                data-i18n-attr="{placeholder: 'common.Travel_date_start'}">
+                                                <span class="input-group-addon">-</span>
+                                            <input bs-datepicker data-date-format="dd.MM.yyyy"
+                                                model-date-format="yyyy-MM-dd" data-autoclose="1"
+                                                date-type="string" start-week="1"
+                                                class="form-control" name="loppupvm"
+                                                ng-model="matkaraportitTable.filter().properties.matkapvm_lopetus"
+                                                data-i18n-attr="{placeholder: 'common.Travel_date_end'}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">         
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" ng-model="colVisibilities.showAddedByCol" ng-change="saveColVisibility('showAddedByCol', colVisibilities.showAddedByCol)" data-i18n-attr="{title: 'common.Show_field'}">
+                                            </span>                                       
+                                            <ui-select 
+                                                ng-model="matkaraportitTable.filter().properties.luoja"
+                                                name="luoja"
+                                                spellcheck="false">
+                                                <ui-select-match 
+                                                    data-i18n-attr="{placeholder: 'common.Created_by'}"
+                                                    allow-clear="true">{{$select.selected.etunimi}} {{$select.selected.sukunimi}}</ui-select-match>
+                                                <ui-select-choices       
+                                                    repeat="kayttaja.id as kayttaja in kayttajat track by $index "
+                                                    refresh="getKayttajat($select.search)"
+                                                    refresh-delay="250">
+                                                    <div>                                                                
+                                                        <span
+                                                            ng-bind-html="kayttaja.etunimi | highlight: $select.search">
+                                                        </span>
+                                                        <span
+                                                            ng-bind-html="kayttaja.sukunimi | highlight: $select.search">
+                                                        </span>
+                                                    </div>
+                                                </ui-select-choices> 
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>   
+                            </div>                          
+                        </div>
+                    </div>
+                    <table ng-table="matkaraportitTable" class="table table-striped table-bordered"
+                        template-pagination="pages/templates/table-pagination.html"
+                        show-filter="false">
+                        <tr ng-repeat="matkaraportti in $data" style="cursor: pointer"
+                            ng-click="selectMatkaraportti(matkaraportti)">
+                            <td data-title="getColumnName('Firstname')" sortable="'properties.luoja.etunimi'" ng-if="colVisibilities.showEtunimiCol"
+                                filter="{ 'properties.etunimi': 'text' }">{{matkaraportti.properties.luoja.etunimi}}</td>
+                            <td data-title="getColumnName('Lastname')" sortable="'properties.luoja.sukunimi'" ng-if="colVisibilities.showSukunimiCol"
+                                filter="{ 'properties.sukunimi': 'text' }">{{matkaraportti.properties.luoja.sukunimi}} </td>
+                            <td data-title="getColumnName('Property_identifier')" sortable="'properties.kiinteisto.kiinteistotunnus'" ng-if="colVisibilities.showKiinteistotunnusCol"
+                                filter="{ 'properties.kiinteistotunnus': 'text' }">{{matkaraportti.properties.kiinteisto.kiinteistotunnus}}<span ng-if="matkaraportti.properties.kiinteisto.palstanumero"> ({{matkaraportti.properties.kiinteisto.palstanumero}})</span></td>     
+                            <td data-title="getColumnName('Estate')" sortable="'properties.kiinteisto.nimi'" ng-if="colVisibilities.showKiinteistoNimiCol"
+                                filter="{ 'properties.kiinteistoNimi': 'text' }">{{matkaraportti.properties.kiinteisto.nimi}} </td>                               
+                            <td data-title="getColumnName('Reason')" filter="{ 'properties.syy': 'text' }" ng-if="colVisibilities.showMatkaraportinsyyCol">                            
+                                <div ng-repeat="syy in matkaraportti.properties.syyt">{{syy | namei18n}}</div>
+                            </td>
+                            <td data-title="getColumnName('Travel_date')" sortable="'properties.matkapvm'" ng-if="colVisibilities.showMatkapaivaCol"
+                                filter="{ 'properties.matkapvm': 'text' }">{{matkaraportti.properties.matkapvm | date:'dd.MM.yyyy'}} 
+                            </td>
+                            <td data-title="getColumnName('Added_by')" ng-if="colVisibilities.showAddedByCol"
+                            filter="{ 'properties.luoja': 'number' }">                                                                
+                                {{matkaraportti.properties.luoja.etunimi}} {{matkaraportti.properties.luoja.sukunimi}}                                                             
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

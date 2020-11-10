@@ -1,0 +1,20 @@
+<div class="form-group" ng-if="!haku">
+    <label for="loytotyyppi_tarkenteet" class="col-sm-3 control-label">
+        <span i18n="ark.Artifact_name"></span> 
+    </label>
+    <div class="col-sm-9">
+		<ui-select multiple="true" ng-model="loytotyyppi.loytotyyppi_tarkenteet" theme="bootstrap" name="tarkenteet"> 
+            <ui-select-match data-i18n-attr="{placeholder: 'ark.Search_item'}">{{$item | namei18n}}</ui-select-match> 
+            <ui-select-choices repeat="tarkenne in tarkenteet | filter: $select.search | limitTo: ($select.search.length <= 1) ? 0 : undefined">
+	            <span ng-bind-html="tarkenne | namei18n | highlight: $select.search"></span>
+        	</ui-select-choices> 
+        </ui-select>
+    </div>
+</div>
+<!-- Hakusivu -->
+<ui-select multiple="true" ng-if="haku" ng-model="loytotyyppi.loytotyyppi_tarkenteet" theme="bootstrap" name="tarkenteet"> 
+    <ui-select-match data-i18n-attr="{placeholder: 'ark.Artifact_name'}">{{$item | namei18n}}</ui-select-match> 
+    <ui-select-choices repeat="tarkenne.id as tarkenne in tarkenteet | filter: $select.search">
+       <span ng-bind-html="tarkenne | namei18n | highlight: $select.search"></span>
+	</ui-select-choices> 
+</ui-select>

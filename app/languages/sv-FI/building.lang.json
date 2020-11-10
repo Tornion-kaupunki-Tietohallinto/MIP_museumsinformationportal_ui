@@ -1,0 +1,13 @@
+{
+    "Save_ok": "Information om byggnaden %name har sparats",
+    "Delete_ok": "Byggnaden har raderats",
+    "Delete_failed": "Misslyckades med att radera byggnaden",
+    "Save_fail": "Misslyckades med att spara byggnaden",
+    "Create_ok": "Byggnaden har skapats",
+    "Create_fail": "Misslyckades med att skapa byggnaden",
+    "No_view_permission": "Du har inte rättigheter att se byggnader",
+    "Building_count": "Byggnader",    
+	"Building_or_structure": "Byggnad/konstruktion",
+	"Building_type_description": "Beskrivning av byggnadstyp",
+    "Move_to_estate": "Flytta till fastighet"
+}

@@ -1,0 +1,53 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span i18n="ark.Administrative_information"></span>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group"
+            ng-class="{ 'has-error': form.yllapitoorganisaatiotunnus.$invalid && form.yllapitoorganisaatiotunnus.$touched }">
+            <label for="yllapitoorganisaatiotunnus" class="col-sm-3 control-label">
+                <span i18n="ark.Administrative_org_id"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" name="yllapitoorganisaatiotunnus" ng-readonly="true"
+                    ng-model="vm.kohde.properties.yllapitoorganisaatiotunnus" spellcheck="false"
+                    autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.yllapitoorganisaatio.$invalid && form.yllapitoorganisaatio.$touched }">
+            <label for="yllapitoorganisaatio" class="col-sm-3 control-label">
+                <span i18n="ark.Administrative_organisation"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="yllapitoorganisaatio" ng-readonly="true"
+                    ng-maxlength="100" ng-model="vm.kohde.properties.yllapitoorganisaatio"
+                    spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.julkinenurl.$invalid && form.julkinenurl.$touched }">
+            <label for="julkinenurl" class="col-sm-3 control-label">
+                <span i18n="ark.Public_url"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="julkinenurl" ng-readonly="true"
+                    ng-maxlength="1000" ng-model="vm.kohde.properties.julkinenurl"
+                    spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group"
+            ng-class="{ 'has-error': form.viranomaisurl.$invalid && form.viranomaisurl.$touched }">
+            <label for="julkinenurl" class="col-sm-3 control-label">
+                <span i18n="ark.Administrative_url"></span>
+            </label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="viranomaisurl" ng-readonly="true"
+                    ng-maxlength="1000" ng-model="vm.kohde.properties.viranomaisurl"
+                    spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+    </div>
+</div>
