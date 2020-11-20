@@ -56,7 +56,7 @@ angular.module('mip.kohde').controller(
                         'properties': {
                             'koordinaattijarjestelma': 'EUREF',
                             'sijainnit': [],
-                            'maakuntanimi': "Varsinais-Suomi",
+                            'maakuntanimi': CONFIG.PROVINCE_NAME,
                             'ajoitukset': [],
                             'tyypit': [],
                             'kunnatkylat': [],
@@ -67,8 +67,8 @@ angular.module('mip.kohde').controller(
                             'vanhat_kunnat': [],
                             'vedenalainen': false,
                             'kunto': { id: 1 }, //Oletuksena "Ei määritelty"
-                            'yllapitoorganisaatiotunnus': 17,
-                            'yllapitoorganisaatio': 'Turun Museokeskus',
+                            'yllapitoorganisaatiotunnus': CONFIG.KYPPI_ADMIN_ORGANISATION_CODE,
+                            'yllapitoorganisaatio': CONFIG.ORGANISATION,
                             'inventointitutkimukset': []
                         },
                         geometry: null,
