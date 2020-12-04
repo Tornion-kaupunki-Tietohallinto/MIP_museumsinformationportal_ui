@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <span i18n="ark.Reference_list"></span>
+    </h4>
+  </div>
+  <!-- Muokkaustila -->
+  <div class="panel-body" ng-if="vm.edit">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <textarea rows="5" style="min-height:400px;" class="form-control" name="lahteet"
+          ng-model="vm.tutkimusraportti.properties.lahdeluettelo">
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <!-- Katselutila -->
+  <div id="lahteetPanel{{vm.modalId}}" class="panel-body" ng-if="!vm.edit">
+    <div class="form-group" ng-if="vm.tutkimusraportti.properties.lahdeluettelo">
+      <div class="col-sm-12">
+        <p class="form-control-static mip-multiline">{{vm.tutkimusraportti.properties.lahdeluettelo}}</p>
+      </div>
+    </div>
+  </div>
+</div>

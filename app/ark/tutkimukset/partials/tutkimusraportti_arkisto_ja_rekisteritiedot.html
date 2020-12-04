@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <span i18n="ark.Archive_and_register_info"></span>
+    </h4>
+  </div>
+  <!-- Muokkaustila -->
+  <div class="panel-body" ng-if="vm.edit">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <textarea rows="5" style="min-height:400px;" class="form-control" name="arkisto_ja_rekisteritiedot"
+          ng-model="vm.tutkimusraportti.properties.arkisto_ja_rekisteritiedot">
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <!-- Katselutila -->
+  <div class="panel-body" ng-if="!vm.edit">
+    <div class="form-group" ng-if="vm.tutkimusraportti.properties.arkisto_ja_rekisteritiedot">
+      <div class="col-sm-12">
+        <p class="form-control-static mip-multiline">{{vm.tutkimusraportti.properties.arkisto_ja_rekisteritiedot}}</p>
+      </div>
+    </div>
+  </div>
+</div>
