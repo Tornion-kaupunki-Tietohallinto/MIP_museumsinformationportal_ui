@@ -35,7 +35,6 @@ angular.module('mip.tutkimus').controller(
         }
       };
 
-      // TODO: Erota inventointitutkimusraportille
       vm.muodostaArkistoJaRekisteritiedot = function () {
         // Muodostetaan arkisto ja rekisteritiedot, jos ne ovat tyhjät
         if (vm.tutkimusraportti.properties.arkisto_ja_rekisteritiedot && vm.tutkimusraportti.properties.arkisto_ja_rekisteritiedot.length > 0) {
@@ -52,10 +51,10 @@ angular.module('mip.tutkimus').controller(
         }, function error(data) {
           if (vm.tutkimus.ark_tutkimuslaji_id === 5) {
             // Inventointiraportti
-            vm.muodostaInventointiraportinTeksti(data.properties.digikuvatAlku, data.properties.digikuvatLoppu);
+            vm.muodostaInventointiraportinTeksti();
             AlertService.showError('Digikuvien määriä ei saatu noudettua');
           } else if (vm.tutkimus.ark_tutkimuslaji_id === 7 || vm.tutkimus.ark_tutkimuslaji_id === 10 || vm.tutkimus.ark_tutkimuslaji_id === 12) {
-            vm.muodostaKKKVraportinTeksti(data.properties.loydotCount, data.properties.naytteetCount, data.properties.digikuvatAlku, data.properties.digikuvatLoppu);
+            vm.muodostaKKKVraportinTeksti();
             AlertService.showError('Löytöjen, näytteiden ja digikuvien määriä ei saatu noudettua');
           }
         });
@@ -254,7 +253,6 @@ angular.module('mip.tutkimus').controller(
       };
 
       vm._cancelEdit = function () {
-        // TODO: Kuvien asettaminen alkutilaan!
         vm.edit = false;
         if (vm.create) {
           vm.close();
@@ -331,7 +329,8 @@ angular.module('mip.tutkimus').controller(
         }
 
         if (laji === null) {
-          AlertService.showError('Tuntematon raporttityyppi'); // TODO: LOCALIZE
+          AlertService.showError(locale.getString('ark.Unknown_report_type'));
+          return;
         }
 
         var report = {
