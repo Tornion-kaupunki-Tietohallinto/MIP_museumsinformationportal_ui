@@ -144,7 +144,8 @@ angular.module('mip.tutkimus').controller(
         text += 'Digikuvien päänumero: ';
         text += vm.tutkimus.digikuva_paanumero != null ? vm.tutkimus.digikuva_paanumero + '; ' + digikuvatAlku + ' - ' + digikuvatLoppu + ' \n' : '\n';
         // KM-päänumero ja löytöjen diariointipäivämäärät
-        text += 'KM päänumerot ja löytöjen diariointipäivämäärät: ' + vm.tutkimus.km_paanumerot_ja_diaarnum + '\n';
+        text += 'KM päänumerot ja löytöjen diariointipäivämäärät: ';
+        text += vm.tutkimus.km_paanumerot_ja_diaarnum != null ? vm.tutkimus.km_paanumerot_ja_diaarnum + '\n' : '\n';
         // Aikaisemmat tutkimukset ja tarkastuskäynnit - vapaateksti
         text += 'Aikaisemmat tutkimukset ja tarkastuskäynnit: \n';
         // Aikaisemmat löydöt - vapaateksti
@@ -228,7 +229,8 @@ angular.module('mip.tutkimus').controller(
         text += 'Löytöjen säilytyspaikka: ';
         text += vm.tutkimus.loyto_kokoelmalaji != null ? vm.tutkimus.loyto_kokoelmalaji.nimi_fi + '\n' : '\n';
         // KM päänumerot ja löytöjen diariointipäivämäärät
-        text += 'KM päänumerot ja löytöjen diariointipäivämäärät: ' + vm.tutkimus.km_paanumerot_ja_diaarnum + '\n';
+        text += 'KM päänumerot ja löytöjen diariointipäivämäärät: ';
+        text += vm.tutkimus.km_paanumerot_ja_diaarnum != null ? vm.tutkimus.km_paanumerot_ja_diaarnum + '\n' : '\n';
         // Näytteiden päänumero
         text += 'Näytteiden päänumero: ';
         text += vm.tutkimus.nayte_paanumero != null ? vm.tutkimus.nayte_paanumero + ' \n' : '\n';
