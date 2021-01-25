@@ -904,6 +904,18 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
 
                 //TODO: Jos karttaväreillä on jotain asetuksia, niin otetaan tästä käyttöön
                 //if(userProps.vanhatKarttavarit == true){
+                if(props.ark_kohdelaji_id == null) {
+                    var img = new ol.style.Circle({
+                        radius : 8,
+                        stroke : new ol.style.Stroke({
+                            color : patterns[1].colors.pisteStroke,
+                            width : 2
+                        }),
+                        fill : new ol.style.Fill({
+                            color : props.tuhoutunut ? karttaVarit.fillOpaque.kohdeTuhoutunut : patterns[1].colors.pisteFill
+                        })
+                    });
+                } else {
                     var img = new ol.style.Circle({
                         radius : 8,
                         stroke : new ol.style.Stroke({
@@ -914,8 +926,21 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                             color : props.tuhoutunut ? karttaVarit.fillOpaque.kohdeTuhoutunut : patterns[props.ark_kohdelaji_id].colors.pisteFill
                         })
                     });
-                    var pointStyle = new ol.style.Style({image: img, zIndex: zIndexit.kohde});
+                }
 
+                var pointStyle = new ol.style.Style({image: img, zIndex: zIndexit.kohde});
+
+                if(props.ark_kohdelaji_id == null) {
+                    var polygonStyle = new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: patterns[1].colors.alueStroke,
+                            width: 2
+                        }),
+                        fill: new ol.style.Fill({
+                            color: props.tuhoutunut ? karttaVarit.fillOpaque.kohdeTuhoutunut : patterns[1].pattern
+                        })
+                    });
+                } else {
                     var polygonStyle = new ol.style.Style({
                         stroke: new ol.style.Stroke({
                             color: patterns[props.ark_kohdelaji_id].colors.alueStroke,
@@ -925,8 +950,8 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                             color: props.tuhoutunut ? karttaVarit.fillOpaque.kohdeTuhoutunut : patterns[props.ark_kohdelaji_id].pattern
                         })
                     });
-
-                    return [polygonStyle, pointStyle];
+                }
+                return [polygonStyle, pointStyle];
                 //}
 
 
