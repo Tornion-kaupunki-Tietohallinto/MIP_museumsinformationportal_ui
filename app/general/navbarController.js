@@ -110,7 +110,6 @@ angular.module('mip.general').controller('NavbarController', [
 			$scope.showAllModals = function(){
 				ModalService.showAllModals();
 			};
-
 			/**
 			 * Piilottaa kaikki modaalit
 			 */

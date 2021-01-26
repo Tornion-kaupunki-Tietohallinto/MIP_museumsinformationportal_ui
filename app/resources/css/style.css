@@ -156,7 +156,6 @@ body {
 .modal-open {
 	overflow: auto;
 }
-
 .modal-backdrop.am-fade {
 	opacity: .5;
 	transition: opacity .15s linear;
@@ -731,7 +730,6 @@ td.mip-table-header {
 	margin-bottom: 0px;
 }
 
-
 /*
  * Override form-control to make it more compact
  */
@@ -832,7 +830,6 @@ td.mip-table-header {
 /*
  * Bootstrap dropdown submenu
  */
-
 .dropdown-submenu {
 	position:relative;
 }

@@ -38,7 +38,6 @@ angular.module('mip.kohde').controller(
                                 bounds: []
                             };
 
-
                         // Get the entity that was selected (if any;
                         // will be empty if creating a new one)
                         if (alakohde) {
@@ -157,7 +156,6 @@ angular.module('mip.kohde').controller(
                         vm.drawInteraction.on('drawstart', function (event) {
                             // unused atm
                         }, this);
-
                         vm.drawInteraction.on('drawend', function (event) {
                             // find the correct layer to append the newly drawn
                             // feature to
@@ -315,7 +313,6 @@ angular.module('mip.kohde').controller(
                             });
                         }
                     }
-
                     /**
                      * ModalHeader kutsuu scopesta closea
                      */
@@ -351,7 +348,6 @@ angular.module('mip.kohde').controller(
                         ModalService.closeModal(vm.modalNameId);
                         $scope.$destroy();
                     };
-
                     /*
                      * OPENLAYERS MAP
                      */
@@ -367,7 +363,6 @@ angular.module('mip.kohde').controller(
                         // Add default layer (kohteet)
                         this.selectedLayers.push('Alakohteet');
                         this.selectedLayers = MapService.selectLayer(vm.mapLayers, vm.selectedLayers, {}, true, null, null);
-
                         /*
                          * Add features, first select the layer and then set the layer source to the alue.
                          */
@@ -400,7 +395,6 @@ angular.module('mip.kohde').controller(
                             }
                         });
                     }
-
                     /**
                      * Controller-spesifinen funktio, jossa määritetään mitä dataa millekin controllerin käsittelemälle tasolle
                      * asetetaan kun taso valitaan.
@@ -420,7 +414,6 @@ angular.module('mip.kohde').controller(
                              }
                          }
                     };
-
 
                     // Move handler of the map. Make the pointer appropriate.
                     // Show popup on mouseover. (TODO: how to make it work in
@@ -497,14 +490,12 @@ angular.module('mip.kohde').controller(
                                         break;
                                     }
                                 }
-
                                 // disengage point setting!
                                 vm.togglePointTool();
 
                                 // used to force the map to redraw
                                 $scope.$apply();
                             } else if(vm.deleteTool) {
-
                                     var pixel = vm.map.getEventPixel(data.event.originalEvent);
                                     var layerHit = null;
                                     var featureHit = vm.map.forEachFeatureAtPixel(pixel, function(feature, layer) {
@@ -531,7 +522,6 @@ angular.module('mip.kohde').controller(
                                     // used to force the map to redraw
                                     $scope.$apply();
                             }
-
                             else if(vm.getDetailsTool) {
                                 vm.getDetails(data.coord);
                                 vm.toggleGetDetailsTool();
@@ -587,7 +577,6 @@ angular.module('mip.kohde').controller(
                             console.log(angular.copy(vm));
                         }
                     });
-
                     hotkeys.bindTo($scope).add({
                         combo : 'ä',
                         description : 'map',

@@ -83,7 +83,6 @@ angular.module('mip.general').factory('ModalControllerService', [
                 /*
                 selectLayer : function(layerName, data, clearLayer) {
                     this.selectedLayers = MapService.selectLayer(this.mapLayers, this.selectedLayers, {}, true, null, null);
-
                     var layer = null;
                     for(var i = 0; i<this.mapLayers.length; i++) {
                         if(this.mapLayers[i].name == layerName) {
@@ -98,7 +97,6 @@ angular.module('mip.general').factory('ModalControllerService', [
                                     layer.source.geojson.object.features.push(data);
                                 }
                             }
-
                         }
                     }
                 },*/
@@ -120,7 +118,6 @@ angular.module('mip.general').factory('ModalControllerService', [
                     }
                     //Kutsutaan tasojen valintaa
                     this.selectMapLayer(true);
-
                 },
                 /**
                  * Haetaan saatavilla olevat karttatasot kannasta (MapServiceltä)
@@ -142,7 +139,6 @@ angular.module('mip.general').factory('ModalControllerService', [
                         if (this.selectedMapLayers.length > 0) {
                             var arrayOfLayers = [];
                             for (var i = 0; i < this.selectedMapLayers.length; i++) {
-
                                 arrayOfLayers.push(this.selectedMapLayers[i].nimi);
                             }
 

@@ -177,7 +177,6 @@ angular.module('mip.filters').filter('trusted', [
             return dateFilter(pvm, options);
         };
     } //lisätään filtteriin jotenkin sopiva toiminnallisuus jotta kuvan päivämäärät toimivat? tai lisää uusi filtteri 'kuvauspvm'
-
     //tämä filteri toimii valintalistoihin joissa ei ole kunta tai kylä vaihtoehtoa
 ]).filter('namei18n', [
         'locale', function(locale) {
@@ -207,7 +206,6 @@ angular.module('mip.filters').filter('trusted', [
                 return obj.nimi_fi;
             };
         }
-
         //tämä filteri tomimii kunta kylä parametrissä ja muissa jossa on fi-FI on nimi ja sv-FI on nimi_se
 ]).filter('kuntaKylaNamei18n', [
     'locale', function(locale) {
@@ -345,7 +343,6 @@ angular.module('mip.filters').filter('trusted', [
                 }
             }
         }
-
         return out;
     };
 }]).filter('mipOutputFilename', [function() {
@@ -395,7 +392,6 @@ angular.module('mip.filters').filter('trusted', [
                 statusText = locale.getString('common.Failed');
                 break;
         }
-
         return statusText;
     };
 }]).filter('mipReportDisplayName', [function() {
@@ -453,7 +449,6 @@ angular.module('mip.filters').filter('trusted', [
         return layerName;
     }
 }]).filter('mipEpsg4326ToEpsg3067', ['MapService', function(MapService) {
-
     return function(coords) {
         var coord1, coord2, convertedCoords;
         coord1 = coords[0];
@@ -510,7 +505,6 @@ angular.module('mip.filters').filter('trusted', [
 
         var extractValueToCompare = function (item) {
           if (angular.isObject(item) && angular.isString(filterOn)) {
-
               if(filterOn.indexOf(',') > -1) {
                   //Multiple properties
                   var splittedFilter = filterOn.split(',');

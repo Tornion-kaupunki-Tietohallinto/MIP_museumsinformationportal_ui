@@ -10,7 +10,6 @@ angular.module('mip.directives').directive('mipModalMenuManager', ['$injector', 
            $timeout(function() {
                // Poistetaan korostus kaikilta menu-linkeiltä
                angular.element(document).find('.mip-menu-row').css('fontWeight','');
-
                // Uusi modal valituksi
                angular.element(document.getElementById(data.$id)).css('fontWeight','bold');
            });
@@ -84,7 +83,6 @@ angular.module('mip.directives').directive('mipModalMenuManager', ['$injector', 
                     // Asetetaan valittu menu korostetuksi
                     event.target.style.fontWeight = 'bold';
                 }
-
                 this.closable = false;
             }
          });
