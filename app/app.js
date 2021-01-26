@@ -536,7 +536,6 @@ mip.factory('httpResponseInterceptor', [
                         /*
                          * // Renew the token: if (rejection.data && rejection.data.data && rejection.data.data.content && rejection.data.data.content.token) { console.log("Renewing token..."); SessionService.set('token', rejection.data.data.content.token); SessionService.setAuthenticated(true); } //
                          * Resend the request: // TODO: Resend the request to load the data or to open a modal // // REFACTOR ME! TODO: The rest (only kiinteistö done at the moment) // var url = rejection.config.url; console.log("OpenModal url: " + url); //
-
                          *
                          * if (url.indexOf("?") == -1) { var ModalService = $injector.get('ModalService');
                          *

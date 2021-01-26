@@ -55,7 +55,6 @@ angular.module('mip.toimenpide').controller(
                     }else{
                     	vm.copy = false;
                     }
-
                     // Löytö ja näyte-taulujen editointiin
                     vm.editLoyto = false;
                     vm.editNayte = false;
@@ -73,7 +72,6 @@ angular.module('mip.toimenpide').controller(
             		vm.close();
                     $scope.$destroy();
                 };
-
 				/**
 				 * Peruuta muokkaus.
 				 */
@@ -84,13 +82,11 @@ angular.module('mip.toimenpide').controller(
                     vm.editNayte = false;
 					vm.editLoytoPaattyy = null;
 					vm.editNaytePaattyy = null;
-
 					// Toimenpiteen kopioinnin peruutuksessa suljetaan dialogi
 					if(vm.copy){
 						vm.copy = false;
 						$scope.close();
 					}
-
 					vm.toimenpide = angular.copy(vm.original);
 					vm.paivitaLoydot();
 					vm.paivitaNaytteet();
@@ -119,12 +115,10 @@ angular.module('mip.toimenpide').controller(
                     });
                 };
                 vm.paivitaLoydot();
-
                 /*
                  * Uusi rivi löytötauluun.
                  */
 	            vm.lisaaLoyto = function() {
-
 	            	vm.disableButtons = true;
 	            	var luettelointinumero = '';
 
@@ -150,7 +144,6 @@ angular.module('mip.toimenpide').controller(
 	            	vm.paivitaLoydot();
 
 	            };
-
 	            /*
 	             * Enterillä uuden löytörivin lisäys
 	             */
@@ -161,14 +154,12 @@ angular.module('mip.toimenpide').controller(
 		            	}
 	            	}
 	            };
-
 	            /* Löytö / Näyte
 	             * Luettelointinumerosta kopioidaan osa uuden rivin lisäyksessä alla olevan säännön mukaan:
 	             *  - kaikki merkit ennen ensimmäistä kaksoispistettä
 				 *  - ensimmäisen kaksoispisteen jälkeen kaksi seuraavaa merkkiä, mutta vain, jos ne ovat kirjaimia
 	             */
 	            vm.kopioiLuettelointinumero = function (ed_luettelointinro){
-
 	            	var l_numero = '';
             		var k_piste = ed_luettelointinro.indexOf(':');
             		if(k_piste > -1){
@@ -185,7 +176,6 @@ angular.module('mip.toimenpide').controller(
             		}
             		return l_numero;
 	            };
-
 	            /*
 	             * Tarkistetaan että annettu löytö on olemassa ja sitä ei ole vielä valittuna.
 	             */
@@ -210,7 +200,6 @@ angular.module('mip.toimenpide').controller(
                             }
                         }
 	            	}
-
 	            	if(vm.uniikkiLoyto){
 	            		vm.disableButtons = true;
 	            		LoytoService.haeLoytoLuettelointinumerolla(form.luettelointinumero.$modelValue).then(function (loyto) {
@@ -224,13 +213,11 @@ angular.module('mip.toimenpide').controller(
 	            		});
 	            	}
 	            };
-
 	            // Rivin muokkaus, vain päätöspäivä
 	            vm.muokkaaLoyto = function (rivi) {
 	            	vm.editLoytoPaattyy = rivi;
 	            	vm.original = angular.copy(vm.toimenpide);
 	            };
-
 	            /*
 	             * Peruutetaan rivin lisäys
 	             */
@@ -241,7 +228,6 @@ angular.module('mip.toimenpide').controller(
 		            vm.validiLoyto = true;
 	            	vm.paivitaLoydot();
 	            }
-
 	            /*
 	             * Yhden löytörivin poisto
 	             */
@@ -252,12 +238,10 @@ angular.module('mip.toimenpide').controller(
                     	// Poistetaan valittu rivi listalta
                     	var ind = vm.toimenpide.properties.loydot.indexOf(loyto);
                     	vm.toimenpide.properties.loydot.splice(ind, 1);
-
                 		// Tallennetaan aina koko toimenpide listoineen
                 		vm.save();
                     }
 	            };
-
 	            /**
 	             * Näytteet
 	             */
@@ -276,12 +260,10 @@ angular.module('mip.toimenpide').controller(
                     });
                 };
                 vm.paivitaNaytteet();
-
                 /*
                  * Uusi rivi näytetauluun.
                  */
 	            vm.lisaaNayte = function() {
-
 	            	vm.disableButtons = true;
 	            	var luettelointinumero = '';
 
@@ -300,14 +282,12 @@ angular.module('mip.toimenpide').controller(
 
 	            	vm.editNayte = true;
 	            	vm.create = true;
-
 	            	// Vain alin rivi aina kerrallaan muokattavissa
 	            	vm.aktiiviNayte = vm.toimenpide.properties.naytteet.length;
 	            	vm.toimenpide.properties.naytteet.push(rivi);
 	            	vm.paivitaNaytteet();
 
 	            };
-
 	            /*
 	             * Enterillä uuden näyterivin lisäys
 	             */
@@ -318,7 +298,6 @@ angular.module('mip.toimenpide').controller(
 		            	}
 	            	}
 	            };
-
 	            /*
 	             * Tarkistetaan että annettu näyte on olemassa ja sitä ei ole vielä valittuna.
 	             */
@@ -343,7 +322,6 @@ angular.module('mip.toimenpide').controller(
                             }
                         }
 	            	}
-
 	            	if(vm.uniikkiNayte){
 	            		vm.disableButtons = true;
 	            		NayteService.haeNayteLuettelointinumerolla(form.luettelointinumero.$modelValue).then(function (nayte) {
@@ -357,12 +335,10 @@ angular.module('mip.toimenpide').controller(
 	            		});
 	            	}
 	            };
-
 	            vm.muokkaaNayte = function (rivi) {
 	            	vm.editNaytePaattyy = rivi;
 	            	vm.original = angular.copy(vm.toimenpide);
 	            };
-
 	            /*
 	             * Peruutetaan rivin lisäys
 	             */
@@ -373,7 +349,6 @@ angular.module('mip.toimenpide').controller(
 		            vm.validiNayte = true;
 	            	vm.paivitaNaytteet();
 	            }
-
 	            /*
 	             * Yhden näyterivin poisto
 	             */
@@ -384,12 +359,10 @@ angular.module('mip.toimenpide').controller(
                     	// Poistetaan valittu rivi listalta
                     	var ind = vm.toimenpide.properties.naytteet.indexOf(nayte);
                     	vm.toimenpide.properties.naytteet.splice(ind, 1);
-
                 		// Tallennetaan aina koko toimenpide listoineen
                 		vm.save();
                     }
 	            };
-
 	            /**
 	             * Tultu löydön toiminnoista lisäämään toimenpide
 	             */
@@ -422,19 +395,16 @@ angular.module('mip.toimenpide').controller(
 	             * Avataan uuden toimenpiteen lisääminen jolle välitetään löydöt ja näytteet valmiiksi.
 	             */
 	            vm.kopioiToimenpide = function (){
-
 	            	// Resetoidaan löytöjen päivät
 	            	for (var l = 0; l < vm.toimenpide.properties.loydot.length; l++) {
 	            		vm.toimenpide.properties.loydot[l].alkaa = null;
 	            		vm.toimenpide.properties.loydot[l].paattyy = null;
 					}
-
 	            	// Resetoidaan näytteiden päivät
 	            	for (var k = 0; k < vm.toimenpide.properties.naytteet.length; k++) {
 	            		vm.toimenpide.properties.naytteet[k].alkaa = null;
 	            		vm.toimenpide.properties.naytteet[k].paattyy = null;
 					}
-
 	            	var kopio = {
 	            			'properties' : {
 	            				'loydot': vm.toimenpide.properties.loydot,
@@ -445,7 +415,6 @@ angular.module('mip.toimenpide').controller(
 	                            'tekija': vm.toimenpide.properties.tekija
 	            			}
 	                	};
-
 	            	ModalService.toimenpideModal(kopio, true, true);
 	            	AlertService.showInfo(locale.getString('ark.Operation_copy_notice'));
 	            };
@@ -463,7 +432,6 @@ angular.module('mip.toimenpide').controller(
                 	if(vm.toimenpide.properties.ark_loyto_id){
                 		vm.lisaaLoytoLuotaessa(vm.toimenpide.properties.ark_loyto_id);
                 	}
-
                 	// Tultu näytteen toiminnoista lisäämään toimenpide
                 	if(vm.toimenpide.properties.ark_nayte_id){
                 		vm.lisaaNayteLuotaessa(vm.toimenpide.properties.ark_nayte_id);
@@ -489,7 +457,6 @@ angular.module('mip.toimenpide').controller(
                         vm.editNayte = false;
                         vm.editLoytoPaattyy = null;
                         vm.editNaytePaattyy = null;
-
                     	// Taulukoiden päivitys
                     	vm.paivitaLoydot();
                     	vm.paivitaNaytteet();
@@ -499,7 +466,6 @@ angular.module('mip.toimenpide').controller(
                         vm.disableButtons = false;
                     });
                 };
-
                 /**
                  * Toimenpiteen soft delete
                  */
@@ -519,7 +485,6 @@ angular.module('mip.toimenpide').controller(
                         });
                 	}
                 };
-
                 /*
                  * Toimenpidettä vaihdettaessa haetaan sille kuuluvat menetelmät.
                  */
@@ -544,7 +509,6 @@ angular.module('mip.toimenpide').controller(
                             }
                         }
                         $defer.resolve(data.features);
-
                     }, function(data) {
                         locale.ready('common').then(function() {
                             AlertService.showWarning(locale.getString('common.Error'), AlertService.message(data));
@@ -552,7 +516,6 @@ angular.module('mip.toimenpide').controller(
                         $defer.resolve([]);
                     });
                 };
-
                 // Valitun toimenpiteen mukaisten materiaalien haku
                 if(vm.toimenpide.properties.toimenpide.id){
                 	var tp = {
@@ -560,7 +523,6 @@ angular.module('mip.toimenpide').controller(
                 	}
                 	vm.vaihdaToimenpide(tp);
                 }
-
                 /*
                  * Menetelmän valinta päivittää kuvauskenttään valitun menetelmän kuvauksen.
                  */
@@ -569,7 +531,6 @@ angular.module('mip.toimenpide').controller(
                 		vm.toimenpide.properties.menetelman_kuvaus = menetelma.kuvaus;
                 	}
                 };
-
                 /**
                  * Avaa linkistä valitun löydön omaan ikkunaan
                  */
@@ -579,7 +540,6 @@ angular.module('mip.toimenpide').controller(
                 		ModalService.loytoModal(loyto, false);
 					});
                 };
-
                 /**
                  * Avaa linkistä valitun näytteen omaan ikkunaan
                  */
@@ -589,7 +549,6 @@ angular.module('mip.toimenpide').controller(
                 		ModalService.nayteModal(nayte, false);
 					});
                 };
-
                 /**
                  * Taulukon kolumnien tekstien haku
                  */
@@ -604,7 +563,6 @@ angular.module('mip.toimenpide').controller(
 
                     return locale.getString(str);
                 }
-
                 /*
                  * Käyttäjien haku
                  */
@@ -614,14 +572,12 @@ angular.module('mip.toimenpide').controller(
                         'rivit' : 10000000,
                         'aktiivinen' : 'true'
                     }).then(function success(data) {
-
                     	vm.kayttajat = [];
                         // Otetaan vain tarvittavat tiedot niin toimii ui selectissä
                         for (var i = 0; i < data.features.length; i++){
                             var user = data.features[i].properties;
                             vm.kayttajat.push(user);
                         }
-
                     }, function error(data) {
                         locale.ready('error').then(function() {
                             AlertService.showError(locale.getString("error.Getting_users_failed"), AlertService.message(data));

@@ -166,7 +166,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                     var style = new ol.style.Style({image: img, zIndex: zIndexit.kiinteisto});
                     return [style];
                 }
-
                 if(props === undefined || props === null) {
                     var img = new ol.style.Circle({
                         radius : 8,
@@ -181,7 +180,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                     var style = new ol.style.Style({image: img, zIndex: zIndexit.kiinteisto});
                     return [style];
                 }
-
                 switch (parseInt(props.arvotustyyppi_id)) {
                     case 1: //Paikallinen
                         var img = new ol.style.Circle({
@@ -350,7 +348,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                     var style = new ol.style.Style({image: img, zIndex: zIndexit.rakennus});
                     return [style];
                 }
-
                 switch (parseInt(props.arvotustyyppi_id)) {
                     case 1: //Paikallinen
                         var img = new ol.style.Circle({
@@ -424,7 +421,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                             })
                         });
                 }
-
                 if(props.purettu === true){
                     var img = new ol.style.Circle({
                         radius : 6,
@@ -437,7 +433,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                         })
                     });
                 }
-
                 // If the feature has a property "ShowLabel", show the last char of the inventointinumero
                 if(props.showLabel) {
                     if(props.MMLFeatureIndex) {
@@ -493,7 +488,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                             color: 'rgba(255, 0, 0, 0.5)'
                         })
                     });
-
                     var pointStyle = new ol.style.Style({
                         image : new ol.style.Circle({
                             radius : 8,
@@ -527,7 +521,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                         color: karttaVarit.fillOpaque.eiArvoluokkaa
                     })
                 });
-
                 var pointStyle = new ol.style.Style({
                     image : new ol.style.Circle({
                         radius : 8,
@@ -577,7 +570,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                                color: 'rgba(0, 255, 0, 0.5)'
                            })
                     };
-
                     if(props.showLabel) {
                         var str = ''+parseInt(props.inventointinumero);
                         var textStyle = new ol.style.Text({
@@ -634,7 +626,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                     });
                     return [polygonStyle, pointStyle];
                 }
-
                 switch (parseInt(props.arvotustyyppi_id)) {
                     case 1: //Paikallinen
                         var point = new ol.style.Circle({
@@ -839,7 +830,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                         color: 'rgba(163, 73, 164, 0.5)'
                     })
                 });
-
                 var pointStyle = new ol.style.Style({
                     image : new ol.style.Circle({
                         radius : 8,
@@ -858,7 +848,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                           }
                     })
                 });
-
                 return [
                     polygonStyle, pointStyle
                 ];
@@ -873,7 +862,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                         color: 'rgba(0, 255, 217, 0.5)'
                     })
                 });
-
                 var pointStyle = new ol.style.Style({
                     image : new ol.style.Circle({
                         radius : 8,
@@ -892,7 +880,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                           }
                     })
                 });
-
                 return [
                     polygonStyle, pointStyle
                 ];
@@ -971,7 +958,6 @@ angular.module('mip.map').factory('FeatureStyleService', [ 'UserService', functi
                     var style = new ol.style.Style({image: img, zIndex: zIndexit.kohde});
                     return [style];
                 }
-
                 switch (parseInt(props.arvotustyyppi_id)) {
                     case 1: //Paikallinen
                         var img = new ol.style.Circle({

@@ -62,7 +62,6 @@ angular.module('mip.tutkimus').factory('TutkimusalueService', [
                     });
                     return deferred.promise;
                 },
-
                 /**
                  * Tallentaa tutkimusalueen - luodaan uusi ta tai päivitetään olemassaolevaa jos id on tiedossa.
                  * @param Tutkimusalue (objekti) jonka tiedot tallennetaan
