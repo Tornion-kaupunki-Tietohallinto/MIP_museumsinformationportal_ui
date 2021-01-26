@@ -84,6 +84,7 @@ angular.module('mip.tutkimus').controller(
                             /* Inventointi tutkimuksella halutaan tallentaa erikseen organisaatio tutkijalle.
                              * Lisätään kenttä formille.
                             */
+                            if(vm.tutkimus.properties.tutkimuslaji.id === 5){
                                 vm.selectedUser.user['properties']['inv_tutkija_organisaatio'] = '';
                             }
 
