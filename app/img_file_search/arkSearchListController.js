@@ -79,8 +79,8 @@ angular.module('mip.search').controller('arkSearchListController', [
          * Select the related object using advanced AI and heuristics
          */
         vm.openImage = function(image) {
-        	if(image.properties.kuvakohteet.length > 0) {
-        		var kohde = { 'properties': image.properties.kuvakohteet[0].kohde };
+        	if(image.properties.kohteet.length > 0) {
+        		var kohde = { 'properties': image.properties.kohteet[0].kohde };
         		ModalService.arkImageModal(image, 'kohde', kohde, image.properties.oikeudet, [image], null);
         	} else if(image.properties.tutkimukset) {
         		ModalService.arkImageModal(image, 'tutkimus', image.properties.tutkimukset, image.properties.oikeudet, [image], image.properties.tutkimukset.id);
