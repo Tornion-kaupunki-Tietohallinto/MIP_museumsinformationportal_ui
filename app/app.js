@@ -22,7 +22,7 @@ var mip = angular.module(
     'API_URL' : 'http://localhost:8000/api/', // The value will be replaced in the build process
     /** API version asetus */
     'API_VERSION' : 'v1', // API version
-    'APP_VERSION': 'v1.2 20200122',
+    'APP_VERSION': 'v1.2.1 20210316',
     /** Onko debug päällä, httpRequestInterceptor käyttää */
     'DEBUG' : true, // Is debug on?
     /** Accept languages */

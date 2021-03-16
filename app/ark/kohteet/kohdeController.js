@@ -831,6 +831,11 @@ angular.module('mip.kohde').controller(
                 ModalService.arkImageModal(image, 'kohde', vm.kohde, vm.permissions, vm.images, null);
             };
 
+            /* Avaa luetteloimaton kuva */
+            vm.openOtherImage = function (image) {
+                ModalService.arkImageModal(image, 'kohde', vm.kohde, vm.permissions, vm.otherImages, null);
+            };
+
             /*
              * Images were modified, fetch them again
              */
