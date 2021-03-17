@@ -149,7 +149,7 @@
                             i18n="common.Add_file"></a>
               </li>
               <li><a href="" ng-click="vm.addImage(false)" i18n="common.Add_image"
-                            data-ng-if="vm.editRelatedPermissions.luonti && !vm.create && !vm.edit && !vm.disableButtons"></a>
+                            data-ng-if="vm.editRelatedPermissions.luonti && !vm.create && !vm.edit && !vm.disableButtons && vm.tutkimus.properties.tutkimuslaji.id != 5"></a>
               </li>
               <li><a href="" ng-click="vm.addImage(true)" i18n="ark.Add_image_to_list"
                             data-ng-if="vm.editRelatedPermissions.luonti && !vm.create && !vm.edit && !vm.disableButtons && vm.tutkimus.properties.ark_valokuva_kokoelmalaji_id == '2' && vm.tutkimus.properties.digikuva_paanumero != null"></a>
