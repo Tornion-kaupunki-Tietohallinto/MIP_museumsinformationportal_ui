@@ -1525,7 +1525,6 @@ angular.module('mip.kohde').controller(
                     vm.center.lat = coords[1];
                     vm.showMarker(vm.center.lon, vm.center.lat);
                 });
-
             };
 
             /*

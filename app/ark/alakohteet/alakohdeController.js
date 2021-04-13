@@ -7,11 +7,11 @@ angular.module('mip.kohde').controller(
                 '$scope', 'CONFIG', 'ModalService', 'AlertService', 'MapService','$timeout', '$rootScope', 'olData',
                 'hotkeys', 'ListService', 'locale', 'MuutoshistoriaService', '$filter',
                 'SessionService', 'selectedModalNameId', 'existing', 'alakohde', 'ModalControllerService',
-                '$q', 'parentModalId', "kohde",
+                '$q', 'parentModalId', "kohde", "LocationService",
                 function($scope,  CONFIG, ModalService, AlertService, MapService, $timeout, $rootScope, olData,
                         hotkeys, ListService, locale, MuutoshistoriaService, $filter,
                         SessionService, selectedModalNameId, existing, alakohde, ModalControllerService,
-                        $q, parentModalId, kohde) {
+                        $q, parentModalId, kohde, LocationService) {
                     var vm = this;
 
                     /**
@@ -589,6 +589,62 @@ angular.module('mip.kohde').controller(
 
                         }
                     });
+
+                    //Remove existing marker(s)
+                    vm.clearMarker = function () {
+                        vm.markers.length = 0;
+                    };
+
+                    vm.custom_style = {
+                        image: {
+                            icon: {
+                                anchor: [0.5, 1],
+                                anchorXUnits: 'fraction',
+                                anchorYUnits: 'fraction',
+                                opacity: 0.90,
+                                src: 'resources/images/marker.png'
+                            }
+                        }
+                    };
+
+                    //Coordinates (lon, lat) and object containing the label information
+                    vm.showMarker = function (lon, lat) {
+                        //Clear old marker(s)
+                        vm.clearMarker();
+
+                        //Convert the coordinates to 4326 projection
+                        var epsg4326Coords = MapService.epsg3067ToEpsg4326(lon, lat);
+
+                        // Add marker to the position
+                        vm.markers.push({
+                            lon: epsg4326Coords[0],
+                            lat: epsg4326Coords[1]
+                        });
+
+                        // Markerin näyttäminen timeoutin sisällä, koska muutoin marker jää välillä muiden karttatasojen alle.
+                        $timeout(function () {
+                            var layers = vm.map.getLayers();
+                            for (var i = 0; i < layers.array_.length; i++) {
+                                var mapLayer = layers.array_[i];
+
+                                // Marker tasolla ei ole nimeä ja sen markers-arvo on true.
+                                if (mapLayer.values_.name == undefined && mapLayer.values_.markers === true) {
+                                    mapLayer.setZIndex(1000);
+                                    break;
+                                }
+                            }
+                            $scope.$apply();
+                        }, 1000);
+                    };
+
+                    vm.locationService = LocationService;
+                    vm.getCurrentPosition = function () {
+                        vm.locationService.getCurrentPosition().then(function (coords) {
+                            vm.center.lon = coords[0];
+                            vm.center.lat = coords[1];
+                            vm.showMarker(vm.center.lon, vm.center.lat);
+                        });
+                    };
 
                     /*
                      * Center the map to the location of the kohde

@@ -64,13 +64,21 @@
                                 role="group">
                                 <button
                                     class="btn btn-default"
-                                    ng-click="vm.centerToLocation()"
-                                    ng-disabled="vm.alakohde.sijainnit.length == 0"
-                                    type="button" data-i18n-attr="{title: 'estate.Show_location'}">
+                                    type="button" data-i18n-attr="{title: 'estate.Show_location'}"
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
                                     <span
                                         class="fa fa-map-marker"
                                         aria-hidden="true"></span>
+                                    <span class="caret"></span>
                                 </button>
+                                <ul class="dropdown-menu">
+                                    <li ng-show="vm.markers.length == 0"><a ng-click="vm.getCurrentPosition()" i18n="common.Locate_me"></a></li>
+                                    <li ng-show="vm.markers.length > 0"><a ng-click="vm.clearMarker()" i18n="common.Delete_marker"></a></li>
+                                    <li ng-show="vm.alakohde.sijainnit.length > 0"><a ng-click="vm.centerToLocation()" i18n="estate.Show_location"></a></li>
+                                </ul>
                             </div>
                             <div
                                 class="btn-group btn-group-map"
@@ -147,7 +155,8 @@
                     <ol-marker
                         ng-repeat="marker in vm.markers"
                         lat="marker.lat"
-                        lon="marker.lon">
+                        lon="marker.lon"
+                        ol-style="vm.custom_style">
                     </ol-marker>
                 </openlayers>
             </div>
