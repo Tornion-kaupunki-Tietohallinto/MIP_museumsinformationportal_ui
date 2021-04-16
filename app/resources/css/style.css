@@ -710,6 +710,11 @@ td.mip-table-header {
 	padding-right: 50px;
 }
 
+.koriPoisto{
+	color:red;
+	font-weight: bold;
+}
+
 /*
  *
  * --------------------------- BOOTSTRAP OVERRIDES ----------------------------
