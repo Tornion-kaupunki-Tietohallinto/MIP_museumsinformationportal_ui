@@ -4,15 +4,13 @@
 angular.module('mip.kori').controller(
 		'KoriController',
 		[
-			'$scope', '$rootScope', 'TabService', '$location', '$filter', 'Auth',
-			'CONFIG', 'AlertService', 'ModalService', 'ListService', 'locale',
-			'olData', 'hotkeys', '$timeout', 'UserService', 'NgTableParams', 'LoytoService', '$popover',
+			'$scope', 'AlertService', 'ModalService', 'ListService', 'locale',
+			'hotkeys', 'UserService', 'NgTableParams', 'LoytoService',
 			 'selectedModalNameId', 'ModalControllerService', 'KoriService', 'koriIdLista', 'korityyppi', 'kori', 'uusiKori',
 			 'RaporttiService', 'EntityBrowserService', 'NayteService', 'mip_alue', 'KiinteistoService', 'RakennusService',
 			 'ArvoalueService', 'AlueService',
-			function ($scope, $rootScope, TabService, $location, $filter, Auth,
-			        CONFIG, AlertService, ModalService, ListService, locale,
-			        olData, hotkeys, $timeout, UserService, NgTableParams, LoytoService, $popover,
+			function ($scope, AlertService, ModalService, ListService, locale,
+			        hotkeys, UserService, NgTableParams, LoytoService,
 			        selectedModalNameId, ModalControllerService, KoriService, koriIdLista, korityyppi, kori, uusiKori,
 			        RaporttiService, EntityBrowserService, NayteService, mip_alue, KiinteistoService, RakennusService,
 			        ArvoalueService, AlueService) {
@@ -52,7 +50,7 @@ angular.module('mip.kori').controller(
 
 			    	// RAK tai ARK puolen kori
 			    	vm.mip = mip_alue;
-			    	
+
 			        angular.extend(vm, ModalControllerService);
 
                     // Valitun modalin nimi ja järjestysnumero
@@ -61,7 +59,7 @@ angular.module('mip.kori').controller(
 			        vm.entity = 'kori';
 
 			        vm.korityyppi = korityyppi;
-			        
+
 			        // Kori valittu kori-välilehdeltä
 			        if(kori){
 			        	vm.kori = kori;
@@ -80,6 +78,9 @@ angular.module('mip.kori').controller(
 			        }else{
 			        	vm.edit = false;
 			        }
+
+					// korista poistettavat rivit
+					vm.poistettavat = [];
 
 			        vm.tilanmuutos = false;
 			        $scope.focusInput = false;
@@ -101,6 +102,14 @@ angular.module('mip.kori').controller(
 				 */
 				vm._cancelEdit = function () {
                    	vm.edit = false;
+					vm.poistettavat = [];
+
+					if(vm.uusia) {
+						vm.uusia = null;
+						vm.koriIdLista = []
+						vm.vanha_id_lista = [];
+					}
+
 					// Päivitetään korin sisältö hakemalla uudelleen
                    	if(vm.kori.properties.id){
                    		vm.haeKori(vm.kori.properties.id);
@@ -159,7 +168,7 @@ angular.module('mip.kori').controller(
                             var filterParameters = ListService.parseParameters(params);
                             // Suodatus korityypin id:n mukaan
                             filterParameters['korityyppi'] = korityyppi.properties.id;
-                            
+
                             // Suodatus MIP alueen mukaan RAK tai ARK
                             filterParameters['mip_alue'] = vm.mip;
 
@@ -199,10 +208,10 @@ angular.module('mip.kori').controller(
 					}else{
 						vm.vanha_id_lista = [];
 					}
-					
+
                     var uusi_id_lista = [];
                     var uusiaLkm = 0;
-					
+
                     // Lisäyksessä hakutuloksen id:t lisätään korin id listaan, jos ei vielä löydy
                     if(vm.koriIdLista && vm.koriIdLista.length > 0){
                     	for(var i = 0; i<vm.koriIdLista.length; i++) {
@@ -215,7 +224,7 @@ angular.module('mip.kori').controller(
                         // Uusien määrä
                         vm.uusia = uusiaLkm;
                     }
-					
+
                     if(vm.uusia > 0){
                         // Välitetään korille uusien lista
                     	vm.valitseKori(vm.kori, uusi_id_lista);
@@ -244,7 +253,7 @@ angular.module('mip.kori').controller(
 					if(kori){
 						vm.kori = kori;
 						var id_lista = [];
-						
+
 						// Lisättäessä koriin tässä tuodaan lisättävät id:t
 						if(uusi_id_lista){
 							id_lista = uusi_id_lista;
@@ -254,7 +263,7 @@ angular.module('mip.kori').controller(
 							// Korissa jo olevat id:t, ei uusia lisättävänä
 	                        id_lista = vm.kori.properties.kori_id_lista;
 	                    }
-						
+
                         // Haetaan tiedot. Korityypillä KoriService päättelee mitä haetaan.
                         var hakuKorityyppi = null;
                         if(kori.properties){
@@ -263,7 +272,7 @@ angular.module('mip.kori').controller(
                         	hakuKorityyppi = kori.korityyppi;
                         }
                         // jemmaan
-                        vm.korityyppi = hakuKorityyppi;						
+                        vm.korityyppi = hakuKorityyppi;
 
 						// Näytetään korin sisältörivit
 						vm.koriValittu = true;
@@ -304,7 +313,9 @@ angular.module('mip.kori').controller(
 				                            orderedData = [];
 				                            $defer.resolve(orderedData);
 				                        });
-					                }
+					                } else {
+										$defer.resolve([]);
+									}
 				                }
 				            });
 						}
@@ -341,7 +352,9 @@ angular.module('mip.kori').controller(
 				                            orderedData = [];
 				                            $defer.resolve(orderedData);
 				                        });
-					                }
+					                } else {
+										$defer.resolve([]);
+									}
 				                }
 				            });
 						}else if(vm.korityyppi.taulu == 'kiinteisto'){
@@ -377,9 +390,11 @@ angular.module('mip.kori').controller(
 				                            orderedData = [];
 				                            $defer.resolve(orderedData);
 				                        });
-					                }
+					                } else {
+										$defer.resolve([]);
+									}
 				                }
-				            });	
+				            });
 						}else if(vm.korityyppi.taulu == 'rakennus'){
 				            vm.rakennusKoriTable = new NgTableParams({
 				                page : 1,
@@ -413,9 +428,11 @@ angular.module('mip.kori').controller(
 				                            orderedData = [];
 				                            $defer.resolve(orderedData);
 				                        });
-					                }
+					                } else {
+										$defer.resolve([]);
+									}
 				                }
-				            });	
+				            });
 						}else if(vm.korityyppi.taulu == 'alue'){
 				            vm.alueKoriTable = new NgTableParams({
 				                page : 1,
@@ -449,9 +466,11 @@ angular.module('mip.kori').controller(
 				                            orderedData = [];
 				                            $defer.resolve(orderedData);
 				                        });
-					                }
+					                } else {
+										$defer.resolve([]);
+									}
 				                }
-				            });	
+				            });
 						}else if(vm.korityyppi.taulu == 'arvoalue'){
 				            vm.arvoalueKoriTable = new NgTableParams({
 				                page : 1,
@@ -485,14 +504,15 @@ angular.module('mip.kori').controller(
 				                            orderedData = [];
 				                            $defer.resolve(orderedData);
 				                        });
-					                }
+					                } else {
+										$defer.resolve([]);
+									}
 				                }
-				            });	
+				            });
 						}
 					}
 				};
 
-			    
 				/*
 				 * Kun tullaan kori-välilehdeltä on kori jo valittu ja haetaan sille rivit, jos löytyy
 				 */
@@ -502,42 +522,30 @@ angular.module('mip.kori').controller(
 				}
 
 				/*
-				 * Rivin poisto korista. Poistaa taulukosta ja id:n listalta, sekä päivittää laskurin.
+				 * Rivin poisto korista. Merkitään rivi poistettavaksi. Poistetaan rivit vasta korin tallennuksessa.
 				 */
 				vm.poistaRivi = function (data, rivi){
-					//Varmistetaan, että molemmat ovat samaa tyyppiä (str)
-					var idLista = angular.copy(vm.koriIdLista);
-					for(var i = 0; i<idLista.length; i++) {
-						idLista[i] = idLista[i].toString();
-					}
-					if(vm.korityyppi.taulu == 'ark_loyto'){
-						vm.loytoKoriTable.data.splice(rivi, 1);
-					}else if(vm.korityyppi.taulu == 'ark_nayte'){
-						vm.nayteKoriTable.data.splice(rivi, 1);
-					}else if(vm.korityyppi.taulu == 'kiinteisto'){
-						vm.kiinteistoKoriTable.data.splice(rivi, 1);
-					}else if(vm.korityyppi.taulu == 'rakennus'){
-						vm.rakennusKoriTable.data.splice(rivi, 1);
-					}else if(vm.korityyppi.taulu == 'alue'){
-						vm.alueKoriTable.data.splice(rivi, 1);
-					}else if(vm.korityyppi.taulu == 'arvoalue'){
-						vm.arvoalueKoriTable.data.splice(rivi, 1);
-					}
-					
+
 					var strId = data.properties.id.toString();
 
-					var ind = idLista.indexOf(strId);
+					vm.poistettavat.push(strId);
 
-					if(ind !== null){
-						vm.koriIdLista.splice(ind, 1);
-					}
-					// kantaan viedään null, jos ei ole rivejä
-					if(vm.koriIdLista.length < 1){
-						vm.koriIdLista = null;
-					}
-					
 					if(vm.uusia){
 						vm.uusia--;
+					}
+				};
+
+				/*
+				 * Poistetaan teksti näkyviin
+				 */
+				vm.poistettuRivi = function (data){
+					var strId = data.properties.id.toString();
+
+					var ind = vm.poistettavat.indexOf(strId);
+					if(ind > -1) {
+						return true;
+					} else {
+						return false;
 					}
 				};
 
@@ -547,6 +555,26 @@ angular.module('mip.kori').controller(
                 vm.save = function () {
                 	vm.disableButtons = true;
 
+					// Poistettavien listan läpikäynti.
+					if(vm.poistettavat.length > 0) {
+						//Varmistetaan, että molemmat ovat samaa tyyppiä (str)
+						var idLista = angular.copy(vm.koriIdLista);
+						for(var i = 0; i<idLista.length; i++) {
+							idLista[i] = idLista[i].toString();
+						}
+
+						for(var d = 0; d < vm.poistettavat.length; d++) {
+							var ind = idLista.indexOf(vm.poistettavat[d]);
+							if(ind !== -1) {
+								idLista.splice(ind, 1);
+							}
+						}
+
+						// jäljelle jääneet
+						vm.koriIdLista = idLista;
+						vm.poistettavat = [];
+					}
+
                     // Korin id listan päivitys ennen tallennusta. Jos lisätty uusia otetaan myös vanhat mukaan.
                     if(vm.vanha_id_lista){
                     	for(var i = 0; i<vm.vanha_id_lista.length; i++){
@@ -555,6 +583,12 @@ angular.module('mip.kori').controller(
                     		}
                     	}
                     }
+
+					// kantaan viedään null, jos ei ole rivejä
+					if(null != vm.koriIdLista && vm.koriIdLista.length < 1){
+						vm.koriIdLista = null;
+					}
+
                     vm.kori.properties.kori_id_lista = vm.koriIdLista;
 
                     KoriService.luoTallennaKori(vm.kori).then(function (kori) {
@@ -618,7 +652,7 @@ angular.module('mip.kori').controller(
                 		ModalService.nayteModal(nayte, false);
     				});
     			};
-    			
+
     			/*
     			 * Avaa kiinteistö katselutilaan
     			 */
@@ -628,7 +662,7 @@ angular.module('mip.kori').controller(
                         ModalService.kiinteistoModal(kiinteisto, null);
                     });
     			};
-    			
+
     			/*
     			 * Avaa rakennus katselutilaan
     			 */
@@ -638,7 +672,7 @@ angular.module('mip.kori').controller(
                         ModalService.rakennusModal(true, rakennus, null, null);
                     });
     			};
-    			
+
     			/*
     			 * Avaa alue katselutilaan
     			 */
@@ -648,7 +682,7 @@ angular.module('mip.kori').controller(
                         ModalService.alueModal(true, alue);
                     });
     			};
-    			
+
     			/*
     			 * Avaa alue katselutilaan
     			 */
@@ -816,7 +850,7 @@ angular.module('mip.kori').controller(
                 	}
 
                 };
-                
+
                 $scope.currentLocale = locale.getLocale();
 
                 /**
