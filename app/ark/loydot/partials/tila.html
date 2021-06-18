@@ -7,13 +7,13 @@
 	<div id="sijaintiPanel{{vm.modalId}}" class="panel-body panel-collapse collapse in">
 		<div class="panel-body" ng-if="vm.edit">
 			<mip-loyto-tila tila="vm.loyto.properties" vm="vm"></mip-loyto-tila>
-			<!-- Luetteloitu, Konservoinnissa, 
-			Röntgenkuvauksessa, Poistettu löytöluettelosta, 
-			Palautettu, Poistettu kokoelmasta, 
+			<!-- Luetteloitu, Konservoinnissa,
+			Röntgenkuvauksessa, Poistettu löytöluettelosta,
+			Palautettu, Poistettu kokoelmasta,
 			Puuttuu  -->
 			<div ng-if="vm.loyto.properties.loydon_tila.id == 1 || vm.loyto.properties.loydon_tila.id == 2 ||
                         vm.loyto.properties.loydon_tila.id == 4 || vm.loyto.properties.loydon_tila.id == 5 ||
-                        vm.loyto.properties.loydon_tila.id == 11 || vm.loyto.properties.loydon_tila.id == 9 || 
+                        vm.loyto.properties.loydon_tila.id == 11 || vm.loyto.properties.loydon_tila.id == 9 ||
                         vm.loyto.properties.loydon_tila.id == 10"
 			 ng-include="'ark/loydot/partials/tila_luetteloitu.html'"></div>
 			<!-- Lainassa, Näyttelyssä -->
@@ -56,7 +56,7 @@
 					<p class="form-control-static mip-multiline">{{vm.loyto.properties.loydon_tila | namei18n}}</p>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-if="vm.loyto.properties.sailytystila">
 				<label class="col-sm-4 control-label">
 					<span i18n="ark.Permanent_location"></span>
 				</label>
@@ -65,7 +65,7 @@
 						namei18n}}<span ng-if="vm.loyto.properties.sailytystila && vm.loyto.properties.vakituinen_hyllypaikka">.</span>{{vm.loyto.properties.vakituinen_hyllypaikka}}</p>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" ng-if="vm.loyto.properties.tilapainen_sijainti">
 				<label class="col-sm-4 control-label">
 					<span i18n="ark.Temporary_location"></span>
 				</label>

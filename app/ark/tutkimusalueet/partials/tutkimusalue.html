@@ -47,10 +47,10 @@
                                ng-show="!vm.create" data-ng-if="vm.permissions.muokkaus"></a>
                         </li>
 -->
-						<li role="separator" class="divider" data-ng-if="vm.permissions.luonti && !vm.create && !vm.edit && !vm.disableButtons && vm.tutkimus.properties.ark_loyto_kokoelmalaji_id == '2'"></li>
+						<li role="separator" class="divider" data-ng-if="vm.permissions.luonti && !vm.create && !vm.edit && !vm.disableButtons"></li>
 				        <li><a href="" ng-click="vm.addImage(true)"
 				                i18n="ark.Add_image_to_list"
-				                data-ng-if="vm.permissions.luonti && !vm.create && !vm.edit && !vm.disableButtons && vm.tutkimus.properties.ark_loyto_kokoelmalaji_id == '2'"></a>
+				                data-ng-if="vm.permissions.luonti && !vm.create && !vm.edit && !vm.disableButtons"></a>
 				        </li>
                         <li role="separator" class="divider" data-ng-if="vm.permissions.muokkaus && !vm.create"></li>
                          <li><a href="" ng-click="vm.updateLocationFromFile()"

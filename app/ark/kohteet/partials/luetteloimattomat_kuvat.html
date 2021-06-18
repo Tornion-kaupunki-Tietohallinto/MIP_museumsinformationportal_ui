@@ -14,11 +14,11 @@
                         <div class="col-md-12">
                             <img ng-if="image.properties.url_small" class="img-responsive mip-image-thumbnail"
                                 ng-src="{{image.properties.url_tiny}}" alt="{{image.properties.otsikko}}"
-                                ng-click="vm.openImage(image)" >
+                                ng-click="vm.openOtherImage(image)" >
                             <img
                                 ng-if="image.properties.url_small==''"  class="img-responsive mip-image-thumbnail"
                                 ng-src="/resources/images/kuva_placeholder.png" alt="..."
-                                ng-click="vm.openImage(image)">
+                                ng-click="vm.openOtherImage(image)">
                         </div>
                         <div class="col-md-12 text-center mip-image-caption">
                             <span title="{{image.properties.otsikko}}">{{image.properties.otsikko}} </span>

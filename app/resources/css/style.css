@@ -58,7 +58,7 @@ body {
 }
 
 .login-holder {
-	background-image: url("../images/nauvoberghamn_verkkoon.jpg");
+	background-image: url("../images/login_background.jpg");
 	position: fixed;
 	left: 0;
 	right: 0;
@@ -708,6 +708,11 @@ td.mip-table-header {
 .kyppi-changed{
 	color:red;
 	padding-right: 50px;
+}
+
+.koriPoisto{
+	color:red;
+	font-weight: bold;
 }
 
 /*
