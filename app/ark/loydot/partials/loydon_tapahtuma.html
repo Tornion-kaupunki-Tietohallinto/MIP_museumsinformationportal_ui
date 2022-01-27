@@ -62,11 +62,12 @@
 										<p class="form-control-static">{{vm.tapahtuma.luoja.etunimi}} {{vm.tapahtuma.luoja.sukunimi}}</p>
 									</div>
 								</div>
-								<div class="form-group" ng-if="vm.tapahtuma.sailytystila">
+								<div class="form-group" ng-if="vm.tapahtuma.sailytystila || vm.tapahtuma.vakituinen_hyllypaikka ">
                                     <label class="col-sm-4 control-label"> <span i18n="ark.Permanent_location"></span>
                                     </label>
                                     <div class="col-sm-8">
-                                        <p class="form-control-static mip-multiline">{{vm.tapahtuma.sailytystila | namei18n}}.{{vm.tapahtuma.vakituinen_hyllypaikka}}</p>
+                                        <p class="form-control-static mip-multiline">{{vm.tapahtuma.sailytystila |
+											 namei18n}}<span ng-if="vm.tapahtuma.sailytystila && vm.tapahtuma.vakituinen_hyllypaikka">.</span>{{vm.tapahtuma.vakituinen_hyllypaikka}}</p>
                                     </div>
                                 </div>
                                 <div class="form-group" ng-if="vm.tapahtuma.tilapainen_sijainti">

@@ -114,7 +114,9 @@
                                 {{loyto.properties.paino}} {{loyto.properties.painoyksikko}}
                             </td>
                             <td data-title="vm.getColumnName('Permanent_location', 'ark')" ng-if="vm.colVisibilities.showVakituinenSijaintiCol">
-                                {{loyto.properties.sailytystila | namei18n}} {{loyto.properties.vakituinen_hyllypaikka}}
+                                <div>
+                                    {{loyto.properties.sailytystila | namei18n}}<span ng-if="loyto.properties.sailytystila && loyto.properties.vakituinen_hyllypaikka">.</span>{{loyto.properties.vakituinen_hyllypaikka}}
+                                </div>
                             </td>
                             <td data-title="vm.getColumnName('Discovery_location_extension', 'ark')" ng-if="vm.colVisibilities.showLoytopaikanTarkenneCol">
                                 {{loyto.properties.loytopaikan_tarkenne}}
