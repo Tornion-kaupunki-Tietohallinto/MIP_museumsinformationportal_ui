@@ -56,7 +56,7 @@
 					<p class="form-control-static mip-multiline">{{vm.loyto.properties.loydon_tila | namei18n}}</p>
 				</div>
 			</div>
-			<div class="form-group" ng-if="vm.loyto.properties.sailytystila">
+			<div class="form-group" ng-if="vm.loyto.properties.sailytystila || vm.loyto.properties.vakituinen_hyllypaikka">
 				<label class="col-sm-4 control-label">
 					<span i18n="ark.Permanent_location"></span>
 				</label>
