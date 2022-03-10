@@ -26,11 +26,24 @@
                                    ng-click="vm.uusiKori()"
                                    data-i18n-attr="{title: 'common.New_cart'}">
                                    <i class="fa fa-cart-plus"></i>
-                               </button>                                 
+                               </button>                    
+                               <button type="button" class="btn btn-default" style="width: 37.16px"
+                                    data-template-url="pages/templates/popover-kori-qr-scanner.html"
+                                    data-auto-close="true" bs-popover data-container="body"
+                                    data-i18n-attr="{title: 'common.Scan_qrcode'}" ng-show="vm.showQRCodeButton">
+                                    <span class="fa fa-qrcode" aria-hidden="true"></span>
+                                </button>
                            </div>
                            <!-- Suodattimet -->
                            <div class="col-md-10 col-sm-10 col-xs-10">
-								<div class="col-md-12">&nbsp;</div>
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="nimi"
+                                        ng-model="vm.koriTable.filter().properties.nimi"
+                                        data-i18n-attr="{placeholder: 'common.Name'}"
+                                        spellcheck="false" autocomplete="off">
+                                    </div>
+                                </div>
                            </div>                                                  
                         </div>
                    </div>

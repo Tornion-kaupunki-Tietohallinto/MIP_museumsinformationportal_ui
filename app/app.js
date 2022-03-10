@@ -16,13 +16,13 @@ var mip = angular.module(
                 'mip.muutoshistoria', 'mip.raportti', 'mip.kunta', 'mip.kyla', 'mip.map',
                 'mip.kiinteisto', 'mip.rakennus', 'mip.alue', 'mip.arvoalue', 'mip.porrashuone',  'mip.suunnittelija', 'mip.inventointiprojekti',
                 'mip.matkaraportti', 'mip.inventointijulkaisu', 'mip.yksikko', 'mip.kohde', 'mip.tutkimus', 'mip.loyto', 'mip.kori', 'mip.nayte',
-                'mip.toimenpide', 'mip.kasittely', 'mip.konservointi.hallinta', 'mip.konservointi'
+                'mip.toimenpide', 'mip.kasittely', 'mip.konservointi.hallinta', 'mip.konservointi', 'qrScanner'
         ]).constant('CONFIG', {
     /** (backendin) osoitteen asetus */
     'API_URL' : 'http://localhost:8000/api/', // The value will be replaced in the build process
     /** API version asetus */
     'API_VERSION' : 'v1', // API version
-    'APP_VERSION': 'v1.2.2 20210617',
+    'APP_VERSION': 'v1.2.4 20220304',
     /** Onko debug päällä, httpRequestInterceptor käyttää */
     'DEBUG' : true, // Is debug on?
     /** Accept languages */
