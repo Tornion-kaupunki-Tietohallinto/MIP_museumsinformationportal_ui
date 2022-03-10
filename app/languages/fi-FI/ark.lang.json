@@ -365,5 +365,6 @@
     "Dates_must_be_set": "Alku- ja loppupäivämäärät pitää olla täytettynä, jotta raportin voi tehdä.",
     "Inventory_information_updated_reopen_view": "Inventointikohteen tiedot päivittyivät, avaa näkymä uudelleen nähdäksesi muutokset.",
     "Discovery_report_by_area": "Löytöluettelo alueittain",
-    "Removed_discoveries_report_by_area": "Poistetut löydöt luettelo alueittain"
+    "Removed_discoveries_report_by_area": "Poistetut löydöt luettelo alueittain",
+    "Type_value_missing": "Täytä kenttä 'Laji' ensin"
 }

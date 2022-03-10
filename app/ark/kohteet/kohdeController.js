@@ -182,7 +182,7 @@ angular.module('mip.kohde').controller(
                     // unused atm
                 }, this);
 
-                vm.drawInteraction.on('drawend', function (event) {
+                vm.drawInteraction.on('drawend', function (event) {                    
                     // find the correct layer to append the newly drawn
                     // feature to
                     for (var i = 0; i < vm.mapLayers.length; i++) {
@@ -242,8 +242,12 @@ angular.module('mip.kohde').controller(
                                     AlertService.showInfo(locale.getString('ark.Estate_search_successful'));
                                 }
 
-                            }, function error() {
-                                AlertService.showError(locale.getString('common.Error'), locale.getString('error.Estate_provider_could_not_be_contacted'));
+                            }, function error(error) {
+                                if(error && error.data && error.data.data && error.data.data.properties && error.data.data.properties.ktj_service === 'not_configured') {
+                                        AlertService.showWarning(AlertService.message(error));
+                                } else {
+                                    AlertService.showError(locale.getString('common.Error'), locale.getString('error.Estate_provider_could_not_be_contacted'));
+                                }
                             });
 
                             // add the newly drawn feature to the
@@ -1053,6 +1057,15 @@ angular.module('mip.kohde').controller(
                 });
             });
 
+            vm.checkFeatureRequiredFields = function(toolVal, callback) {
+                // Check that required fields have been filled in before dea
+                if(!vm.kohde.properties.laji || !vm.kohde.properties.laji.id) {
+                    AlertService.showWarning(locale.getString('ark.Type_value_missing'));
+                    return;
+                }
+                callback(toolVal);
+            }
+
             // Click handler of the map.
             $scope.$on('openlayers.map.singleclick', function (event, data) {
                 var pixel = vm.map.getEventPixel(data.event.originalEvent);
@@ -1063,6 +1076,7 @@ angular.module('mip.kohde').controller(
                 });
                 if (vm.edit) {
                     if (vm.pointTool) {
+                        
                         // perform a transform to get understandable
                         // coordinates
                         var prj = ol.proj.transform([
@@ -1118,10 +1132,14 @@ angular.module('mip.kohde').controller(
                             } else {
                                 AlertService.showInfo("", AlertService.message(data));
                             }
-                        }, function error(err) {
-                            locale.ready('error').then(function () {
-                                AlertService.showError(locale.getString('common.Error'), AlertService.message(err));
-                            });
+                        }, function error(error) {
+                            if(error && error.data && error.data.data && error.data.data.properties && error.data.data.properties.ktj_service === 'not_configured') {
+                                AlertService.showWarning(AlertService.message(error));
+                            } else {
+                                locale.ready('error').then(function () {
+                                    AlertService.showError(locale.getString('common.Error'), AlertService.message(error));
+                                });
+                            }
                         });
 
                         // disengage point setting!
@@ -1248,10 +1266,14 @@ angular.module('mip.kohde').controller(
                 if (vm.getDetailsDestination === 'ktj') {
                     MapService.fetchEstateDetails(coord[0], coord[1]).then(function success(data) {
                         ModalService.kiinteistoFetchedDetailsModal(data, null, vm.modalId);
-                    }, function error() {
-                        locale.ready('estate').then(function () {
-                            AlertService.showError(locale.getString('common.Error'), locale.getString('error.Estate_provider_could_not_be_contacted'));
-                        });
+                    }, function error(error) {
+                        if(error && error.data && error.data.data && error.data.data.properties && error.data.data.properties.ktj_service === 'not_configured') {
+                            AlertService.showWarning(AlertService.message(error));
+                        } else {
+                            locale.ready('estate').then(function () {
+                                AlertService.showError(locale.getString('common.Error'), locale.getString('error.Estate_provider_could_not_be_contacted'));
+                            });
+                        }
                     });
                 } else if (vm.getDetailsDestination === 'rhr') {
                     MapService.fetchBuildingDetails(null, coord[0] + " " + coord[1]).then(function success(data) {
@@ -1261,10 +1283,14 @@ angular.module('mip.kohde').controller(
                         } else {
                             AlertService.showInfo("", AlertService.message(data));
                         }
-                    }, function error(err) {
-                        locale.ready('error').then(function () {
-                            AlertService.showError(locale.getString('common.Error'), AlertService.message(err));
-                        });
+                    }, function error(error) {
+                        if(error && error.data && error.data.data && error.data.data.properties && error.data.data.properties.ktj_service === 'not_configured') {
+                            AlertService.showWarning(AlertService.message(error));
+                        } else {
+                            locale.ready('error').then(function () {
+                                AlertService.showError(locale.getString('common.Error'), AlertService.message(error));
+                            });
+                        }
                     });
                 } else if (vm.getDetailsDestination === 'taso') {
                     var layers = vm.map.getLayers();

@@ -49,7 +49,7 @@ angular.module('mip.alert').factory('AlertService', [
 					}
 
                     for (var i = 0; i < msg.length; i++) {
-                        ret += msg[i] + "<br>";
+                        ret += msg[i] + " ";
                     }
 
                     if(ret.length > 0) {
