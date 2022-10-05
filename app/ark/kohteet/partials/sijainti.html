@@ -34,10 +34,10 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a ng-click="vm.togglePointTool(false)"><span class="fa fa-thumb-tack" aria-hidden="true"></span> <span i18n="ark.Set_location_point"></span></a></li>
-                                    <li><a ng-click="vm.toggleDrawingTool(false)"><span class="fa fa-pencil-square-o"></span> <span i18n="ark.Set_location_area"></span></a></li>
-                                    <li><a ng-click="vm.togglePointTool(true)"><span class="fa fa-thumb-tack" aria-hidden="true"></span> <span i18n="ark.Set_location_destroyed_point"></span></a></li>
-                                    <li><a ng-click="vm.toggleDrawingTool(true)"><span class="fa fa-pencil-square-o"></span> <span i18n="ark.Set_location_destroyed_area"></span></a></li>
+                                    <li><a ng-click="vm.checkFeatureRequiredFields(false, vm.togglePointTool)"><span class="fa fa-thumb-tack" aria-hidden="true"></span> <span i18n="ark.Set_location_point"></span></a></li>
+                                    <li><a ng-click="vm.checkFeatureRequiredFields(false, vm.toggleDrawingTool)"><span class="fa fa-pencil-square-o"></span> <span i18n="ark.Set_location_area"></span></a></li>
+                                    <li><a ng-click="vm.checkFeatureRequiredFields(true, vm.togglePointTool)"><span class="fa fa-thumb-tack" aria-hidden="true"></span> <span i18n="ark.Set_location_destroyed_point"></span></a></li>
+                                    <li><a ng-click="vm.checkFeatureRequiredFields(true, vm.toggleDrawingTool)"><span class="fa fa-pencil-square-o"></span> <span i18n="ark.Set_location_destroyed_area"></span></a></li>
                                     <li><a ng-click="vm.toggleDeleteTool()"><span class="fa fa-times" aria-hidden="true"></span> <span i18n="common.Delete_point_or_area"></span></a></li>
                                 </ul>
                             </div>

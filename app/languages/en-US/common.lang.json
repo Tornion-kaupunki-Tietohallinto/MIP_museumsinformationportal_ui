@@ -566,5 +566,10 @@
 	"Internal_additional_info": "Internal additional information",
 	"Scan_qrcode": "Scan QR code",
 	"Basket_name": "Basket name",
-	"Storage_code": "Storage code"
+	"Storage_code": "Storage code",
+	"Shared": "Shared",
+	"Shared_to_users": "Shared to users",
+	"Print_qr_code": "Print QR code",
+	"Museums_cart": "Museums cart",
+	"Confirm_museum_cart_change": "Do you really want to delete museum cart share?"
 }

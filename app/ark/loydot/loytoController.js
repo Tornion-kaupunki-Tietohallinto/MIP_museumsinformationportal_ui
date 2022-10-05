@@ -297,6 +297,10 @@ angular.module('mip.loyto').controller(
                     // Valintalistojen tarkistus
                     vm.valintalista_reset();
 
+                    if (vm.loyto.properties.laatikko && vm.loyto.properties.laatikko.length > 0){
+                        vm.loyto.properties.vakituinen_hyllypaikka += "." + vm.loyto.properties.laatikko;
+                    }
+
                     LoytoService.luoTallennaLoyto(vm.loyto).then(function (loyto) {
 
                         // "update" the original after successful save
@@ -373,7 +377,7 @@ angular.module('mip.loyto').controller(
                 	vm.disableButtons = true;
                 	vm.loydonLisays = true;
                 	$scope.focusInput3 = true;
-
+                    $scope.focusInput4 = true;
                     // Uudelle löydölle laitetaan yksikön id viittaus
                 	vm.uusiLoyto = {
                 			'properties' : {
@@ -812,6 +816,11 @@ angular.module('mip.loyto').controller(
                     return locale.getString(str);
                 }
 
+                vm.printQRCode= function() {
+					sessionStorage.setItem("tunniste", vm.loyto.properties.luettelointinumero);
+					window.open("general/qrcode_printpage.html", "_blank");
+				};
+
 
                 /*
                  * Add image to the alue
@@ -1012,5 +1021,65 @@ angular.module('mip.loyto').controller(
                         vm.loyto = data.loyto;
                     }
                 });
+
+                // Event for successful QR code reading
+                $scope.onSuccess = function (data) {
+                  $scope.scannerText = data;
+                  this.$hide();
+                  $scope.asetaSijainti(data);
+                };
+
+                // Event for video error (no permission for camera etc.)
+                $scope.onVideoError = function (error) {
+                  console.log(error);
+                  vm.showStatus(error);
+                };
+
+                vm.showStatus = function (text) {
+                  $scope.scannerErrorText = text;
+                };
+
+                $scope.asetaSijainti = function(data) {
+                  // Parsitaan data
+                  try {
+                    var splittedText = data.split('&');
+
+                    var sailytyspaikka = splittedText[0].split('=')[1];
+                    var sailytystila = splittedText[1].split('=')[1];
+                    var hyllypaikka = splittedText[2].split('=')[1];
+                  } catch (err) {
+                    AlertService.showError(locale.getString('common.Error'), 'Sijaintikoodi on virheellinen: ' + data);
+                    return;
+                  }
+                  var tilaAsetettu = false;
+                  var sailytysTilaHakusana = (sailytyspaikka + ' ' + sailytystila).trim();
+
+                  // Hae sailytystilat
+                  ListService.getOptions('ark_sailytystila').then(function success(options) {
+                    for (var i = 0; i < options.length; i++) {
+                      if (options[i].nimi_fi == sailytysTilaHakusana) {
+                        // Asetetaan tilaksi se jonka nimi mätsää sailytyspaikka+sailytystila arvoon
+                        vm.loyto.properties.sailytystila = options[i];
+                        tilaAsetettu = true;
+                      }
+                      if(tilaAsetettu) {
+                        break;
+                      }
+                    }
+
+                    if(!tilaAsetettu) {
+                      AlertService.showError(locale.getString('common.Error'), 'Sijaintia ei löydy: ' + sailytyspaikka + ' ' + sailytystila);
+                    }
+
+                  }, function error(data) {
+                      locale.ready('error').then(function() {
+                          // TODO
+                          // AlertService.showError(locale.getString("error.Getting_culturohistorical_values_failed"), AlertService.message(data));
+                          console.log(data);
+                      });
+                  });
+                  // Asetetaan hyllypaikka
+                  vm.loyto.properties.vakituinen_hyllypaikka = hyllypaikka;
+                };
 		}
 ]);

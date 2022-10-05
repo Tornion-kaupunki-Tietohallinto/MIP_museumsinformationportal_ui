@@ -30,25 +30,25 @@
             </div>
             <div class="modal-footer">
                 <div class="mip-footer-btn-group">
-                    <button ng-click="vm.muutaLoydonTila()" class="btn btn-default"
-                        i18n="ark.Edit_discovery_status" data-ng-if="vm.tilamuutosPermission === true
-                        && !vm.edit && vm.kori.properties.kori_id_lista.length > 0
-                        && vm.korityyppi.taulu === 'ark_loyto'
-                        && vm.tilanmuutos === false">
-                    </button>
-                    <button ng-click="(form.$invalid || vm.disableButtons) || vm.save()" 
+                    <mip-loyto-valitsin-kori func="vm.addEntityToBasket(id)" ng-show="vm.koriValittu && vm.korityyppi.taulu === 'ark_loyto'"></mip-loyto-valitsin-kori>
+                    <mip-nayte-valitsin-kori func="vm.addEntityToBasket(id)" ng-show="vm.koriValittu && vm.korityyppi.taulu === 'ark_nayte'"></mip-nayte-valitsin-kori>
+                    <button ng-click="(form.$invalid || vm.disableButtons) || vm.save()"
                         class="btn btn-success"
                         i18n="common.Save"
                         ng-show="vm.edit">
                     </button>
-                    <button type="button" ng-click="vm.disableButtons || vm.cancelEdit()" data-ng-if="vm.edit"
+                    <button type="button" ng-click="vm.disableButtons || vm.cancelEdit()" data-ng-if="vm.edit && !vm.uusiKori"
+                        class="btn btn-default" style="margin-left : 5px">
+                        <span i18n="common.Cancel_edit"></span>
+                    </button>
+                    <button type="button" ng-click="vm.close()" ng-show="vm.uusiKori===true"
                         class="btn btn-default" style="margin-left : 5px">
                         <span i18n="common.Cancel_edit"></span>
                     </button>
                     <button ng-click="vm.editMode()" class="btn btn-default"
                         i18n="common.Edit"
                         ng-show="vm.koriValittu && !vm.edit && !vm.uusiKori && !vm.tilanmuutos">
-                    </button>                    
+                    </button>
                     <div class="dropup pull-right">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span i18n="common.Actions"></span> <span class="caret"></span>
@@ -83,9 +83,12 @@
                                         <a ng-click="vm.createQRCodeReport()"><span i18n="common.Report"></span> (QR Codes)</a>
                                     </li>
                                 </ul>
-                                <ul ng-if="vm.korityyppi.taulu !== 'ark_loyto'" class="dropdown-menu submenuHeightFix1Elements">
+                                <ul ng-if="vm.korityyppi.taulu !== 'ark_loyto'" class="dropdown-menu submenuHeightFix2Elements">
                                     <li style="cursor: pointer">
                                         <a ng-click="vm.createReport('EXCEL', vm.korityyppi.taulu)"><span i18n="common.Report"></span> (excel)</a>
+                                    </li>
+                                    <li style="cursor: pointer">
+                                        <a ng-click="vm.createQRCodeReport()"><span i18n="common.Report"></span> (QR Codes)</a>
                                     </li>
                                 </ul>
                             </li>
@@ -98,6 +101,8 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li><a href="" ng-click="vm.printQRCode()" ng-if="vm.mip === 'ARK'"
+								i18n="common.Print_qr_code"></a></li>
                             <li><a href="" ng-click="vm.close()"
                                 i18n="common.Close"
                                 ng-show="!vm.edit"></a>

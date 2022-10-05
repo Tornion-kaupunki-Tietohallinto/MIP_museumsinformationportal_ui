@@ -17,12 +17,12 @@ angular.module('mip.kori').controller(
 			'hotkeys', 'UserService', 'NgTableParams', 'LoytoService',
 			 'selectedModalNameId', 'ModalControllerService', 'KoriService', 'koriIdLista', 'korityyppi', 'kori', 'uusiKori',
 			 'RaporttiService', 'EntityBrowserService', 'NayteService', 'mip_alue', 'KiinteistoService', 'RakennusService',
-			 'ArvoalueService', 'AlueService',
+			 'ArvoalueService', 'AlueService', 'kayttajat', '$timeout',
 			function ($scope, AlertService, ModalService, ListService, locale,
 			        hotkeys, UserService, NgTableParams, LoytoService,
 			        selectedModalNameId, ModalControllerService, KoriService, koriIdLista, korityyppi, kori, uusiKori,
 			        RaporttiService, EntityBrowserService, NayteService, mip_alue, KiinteistoService, RakennusService,
-			        ArvoalueService, AlueService) {
+			        ArvoalueService, AlueService, kayttajat, $timeout) {
 
 			    var vm = this;
 
@@ -73,6 +73,7 @@ angular.module('mip.kori').controller(
 			        if(kori){
 			        	vm.kori = kori;
 						vm.koriValittu = true;
+						vm.jaetut_kayttajat = kayttajat;
 			        }
 
 			        // Hakutuloksella löydetyt id:t.
@@ -140,7 +141,6 @@ angular.module('mip.kori').controller(
 				 * Hakee korin id:n mukaan
 				 */
 				vm.haeKori = function (id){
-
 					vm.koriPromise = KoriService.haeKori(id);
 					vm.koriPromise.then(function (haettuKori){
 						if(haettuKori){
@@ -161,6 +161,8 @@ angular.module('mip.kori').controller(
 
 					// Näytetään valittavat korit
 					vm.koriValittu = false;
+					vm.showQRCodeButton = true;
+					vm.korihaku = true;
 
 		            vm.koriTable = new NgTableParams({
 		                page : 1,
@@ -174,17 +176,17 @@ angular.module('mip.kori').controller(
                                 vm.cancelRequest();
                             }
 
-                            var filterParameters = ListService.parseParameters(params);
+							var filterParameters = ListService.parseParameters(params);
                             // Suodatus korityypin id:n mukaan
                             filterParameters['korityyppi'] = korityyppi.properties.id;
 
                             // Suodatus MIP alueen mukaan RAK tai ARK
                             filterParameters['mip_alue'] = vm.mip;
-
+							filterParameters['korijako'] = 3; //3 = Koriin lisätessä näytetään kaikki korit
                             vm.koritPromise = KoriService.haeKorit(filterParameters);
                             vm.koritPromise.then(function(data) {
 
-                                params.total(data.total_count);
+								params.total(data.total_count);
                                 $defer.resolve(data.features);
 
                             }, function(data) {
@@ -286,6 +288,11 @@ angular.module('mip.kori').controller(
 						// Näytetään korin sisältörivit
 						vm.koriValittu = true;
 
+						if (vm.kori.properties.museon_kori == null){
+							vm.kori.properties.museon_kori = false;
+						}
+						vm.jaetut_kayttajat = vm.kori.properties.kayttajat;
+
 						/*
 						 *  Luodaan korin tyypin mukainen taulukko. Lisätään uusia tarpeen mukaan.
 						 */
@@ -299,7 +306,7 @@ angular.module('mip.kori').controller(
 				                getData : function($defer, params) {
 			                        var filterParameters = ListService.parseParameters(params);
 
-			                        if(id_lista.length > 0){
+				                        if(id_lista.length > 0){
 
 				                        // Parametreihin lisätään id lista
 				                        filterParameters['kori_id_lista'] = id_lista;
@@ -311,6 +318,7 @@ angular.module('mip.kori').controller(
 				                            vm.koriIdLista = data.idlist;
 				                            params.total(data.total_count);
 
+											vm.jaetut_kayttajat = vm.kori.properties.kayttajat;
 				                            // tarkista oikeudet
 				                            vm.updateTilamuutosPermission(data.features);
 				                            $defer.resolve(data.features);
@@ -349,8 +357,7 @@ angular.module('mip.kori').controller(
 				                            // id:t kerätään talteen
 				                            vm.koriIdLista = data.idlist;
 				                            params.total(data.total_count);
-
-				                            // tarkista oikeudet
+											// tarkista oikeudet
 				                            vm.updateTilamuutosPermission(data.features);
 				                            $defer.resolve(data.features);
 
@@ -502,7 +509,7 @@ angular.module('mip.kori').controller(
 				                            vm.koriIdLista = data.idlist;
 				                            params.total(data.total_count);
 
-				                            // tarkista oikeudet
+											// tarkista oikeudet
 				                            vm.updateTilamuutosPermission(data.features);
 				                            $defer.resolve(data.features);
 
@@ -562,7 +569,14 @@ angular.module('mip.kori').controller(
 				 * Tallenna
 				 */
                 vm.save = function () {
-                	vm.disableButtons = true;
+                	if (vm.museon_kori_change && vm.kori.properties.museon_kori == false){
+						var conf = confirm(locale.getString('common.Confirm_museum_cart_change'));
+						if (!conf) {
+							return;
+						}
+					}
+
+					vm.disableButtons = true;
 
 					// Poistettavien listan läpikäynti.
 					if(vm.poistettavat.length > 0) {
@@ -599,8 +613,16 @@ angular.module('mip.kori').controller(
 					}
 
                     vm.kori.properties.kori_id_lista = vm.koriIdLista;
+					if (vm.jaetut_kayttajat){
+						vm.jaettu = vm.jaetut_kayttajat.map(function(u) {
+							return u.id;
+						});
+					}
+					if (!vm.kori.properties.museon_kori){
+						vm.kori.properties.museon_kori = false;
+					}
 
-                    KoriService.luoTallennaKori(vm.kori).then(function (kori) {
+                    KoriService.luoTallennaKori(vm.kori, vm.jaettu).then(function success(kori) {
 
                         AlertService.showInfo(locale.getString('common.Save_ok'), "");
 
@@ -614,12 +636,26 @@ angular.module('mip.kori').controller(
                     	vm.uusiKori = false;
                     	vm.uusia = null;
                     	vm.vanha_id_lista = []; // vanhan listan resetointi
+						nykyinen = UserService.getProperties().user.id;
 
-                    }, function error () {
-                        AlertService.showError(locale.getString('common.Error'), locale.getString('common.Save_failed'));
+						if (kori.properties.luoja.id != nykyinen){
+							permission = kori.properties.kayttajat.filter(function(u) {
+								return u.id==nykyinen;
+							});
+							if (permission.length == 0 && kori.properties.museon_kori == false){
+								vm.close();
+							}
+
+						}
+                    }, function error (kori) {
+                        AlertService.showError(locale.getString('common.Error'), AlertService.message(kori));
                         vm.disableButtons = false;
                     });
                 };
+
+				vm.museon_kori_changed = function(){
+					vm.museon_kori_change = true;
+				};
 
                 /**
                  * Korin poisto.
@@ -721,8 +757,44 @@ angular.module('mip.kori').controller(
                  */
 				vm.createQRCodeReport = function() {
 					sessionStorage.setItem("korinimi", vm.kori.properties.nimi);
-					sessionStorage.setItem("koridata", JSON.stringify(vm.loytoKoriTable.data));
+					if(vm.kori.properties.korityyppi.taulu == 'ark_loyto'){
+						sessionStorage.setItem("koridata", JSON.stringify(vm.loytoKoriTable.data));
+					}
+					if(vm.kori.properties.korityyppi.taulu == 'ark_nayte'){
+						sessionStorage.setItem("koridata", JSON.stringify(vm.nayteKoriTable.data));
+					}
 					window.open("korit/partials/qrcode_report.html", "_blank");
+				};
+
+				// Tutkijat ja pääkäyttäjät valintalista
+				vm.kayttajat = [];
+				vm.valittu_kayttaja = {};
+				vm.getUsers = function () {
+					UserService.getUsers({
+						'rivit': 10000,
+						'aktiivinen': true
+					}).then(function success(data) {
+						vm.kayttajat = data.features;
+					}, function error(data) {
+						locale.ready('error').then(function () {
+							AlertService.showError(locale.getString("error.Getting_users_failed"), AlertService.message(data));
+						});
+					});
+				};
+				vm.getUsers();
+
+
+				vm.addUser = function(selected) {
+					if (vm.jaetut_kayttajat != null){
+						vm.jaetut_kayttajat.push(selected.properties);
+					}
+					else{
+						vm.jaetut_kayttajat = [selected.properties];
+					}
+				};
+				vm.printQRCode= function() {
+					sessionStorage.setItem("tunniste", vm.kori.properties.nimi);
+					window.open("general/qrcode_printpage.html", "_blank");
 				};
 
                 /*
@@ -754,7 +826,7 @@ angular.module('mip.kori').controller(
                 	vm.haeKori(vm.kori.properties.id);
 
                 	// Luodaan objekti tietojen välitystä varten
-									// Default arvo: Kokoelmassa 
+									// Default arvo: Kokoelmassa
                 	vm.loyto = {
                 			'properties' : {
                 				'loydon_tila': {id: 6, nimi_fi: 'Kokoelmassa'},
@@ -766,11 +838,15 @@ angular.module('mip.kori').controller(
                 		vm.loyto.properties.tapahtumapaiva = new Date();
                 	}
                 	vm.disableButtons = true;
-									vm.tilanmuutos = true;
+					vm.tilanmuutos = true;
+
+					$timeout(function() {
+						document.getElementById("popover_tila").click();
+					}, 250);
                 };
 
                 $scope.$watch('vm.loyto.properties.loydon_tila', function(newV, oldV) {
-                	if(newV != oldV) {
+					if(newV != oldV) {
                 		//Tehdään ensin kentistä tyhjät, ettei päivitetä arvoja joita ei uissa näy, mutta joissa kuitenkin on arvot
     					vm.loyto.properties.sailytystila = null;
     					vm.loyto.properties.vakituinen_hyllypaikka = null;
@@ -836,6 +912,10 @@ angular.module('mip.kori').controller(
                  */
                 vm.teeTilanMuutos = function (){
                 	if(vm.korityyppi.taulu === 'ark_loyto'){
+						if (vm.loyto.properties.laatikko && vm.loyto.properties.laatikko.length > 0){
+							vm.loyto.properties.vakituinen_hyllypaikka += "." + vm.loyto.properties.laatikko;
+						}
+
                     	LoytoService.teeKorinTilamuutosTapahtumat(vm.kori.properties.kori_id_lista, vm.loyto).then(function(data) {
 
                     		AlertService.showInfo(locale.getString('ark.Discoveries_status_changed'), vm.loyto.properties.loydon_tila.nimi_fi);
@@ -852,6 +932,10 @@ angular.module('mip.kori').controller(
         				});
                 	}
                 	else if(vm.korityyppi.taulu === 'ark_nayte'){
+						if (vm.nayte.properties.laatikko && vm.nayte.properties.laatikko.length > 0){
+							vm.nayte.properties.vakituinen_hyllypaikka += "." + vm.nayte.properties.laatikko;
+						}
+
                     	NayteService.teeKorinTilamuutosTapahtumat(vm.kori.properties.kori_id_lista, vm.nayte).then(function(data) {
 
                     		AlertService.showInfo(locale.getString('sample.Sample_status_changed'), vm.nayte.properties.tila.nimi_fi);
@@ -883,14 +967,51 @@ angular.module('mip.kori').controller(
 					}
 				});
 
+				$scope.haeKoriNimella = function(nimi) {
+					if (nimi.length > 0) {
+						if (nimi.indexOf('http') === -1 && nimi.indexOf('www.') === -1){
+							KoriService.haeKorit({'nimi':nimi,'mip_alue':'ARK'}).then(function(data){
+								if (data.count > 1) {
+									AlertService.showError(locale.getString('common.Error'), locale.getString('error.Too_many_baskets'));
+									$scope.scannerText = '';
+								}
+								else if(data.count === 0){
+									AlertService.showError(locale.getString('common.Error'), 'Virheellinen korin nimi: ' + nimi);
+									$scope.scannerText = '';
+								}
+								else if(data['features'][0].properties.korityyppi_id!=vm.korityyppi.properties.id){
+									AlertService.showError(locale.getString('common.Error'), locale.getString('error.Wrong_cart_type',{
+										korityyppi_fi : vm.korityyppi.properties.nimi_fi,
+										korityyppi_se : vm.korityyppi.properties.nimi_se,
+										korityyppi_eng : vm.korityyppi.properties.nimi_en
+									}));
+									$scope.scannerText = '';
+								}
+								else{
+									vm.lisaaKoriin(data['features'][0]);
+									$scope.scannerText = '';
+									}
+							},function error(error) {
+								console.log(error);
+								AlertService.showError(locale.getString('common.Error'), AlertService.message(error) + ' ' + nimi);
+							});
+						}
+					}
+				};
 
 				// Event for successful QR code reading
 				$scope.onSuccess = function (data) {
 					//console.log(data);
 					$scope.scannerText = data;
 					this.$hide();
-					
-					$scope.asetaTila(data);
+
+					if (vm.korihaku){
+						$scope.haeKoriNimella(data);
+					}
+					else
+					{
+						$scope.asetaTila(data);
+					}
 				}
 
 				$scope.asetaTila = function(data) {
@@ -906,14 +1027,13 @@ angular.module('mip.kori').controller(
 						return;
 					}
 
-					var tilaAsetettu = false;					
-					var sailytysTilaHakusana = sailytyspaikka + ', ' + sailytystila
-
+					var tilaAsetettu = false;
+					var sailytysTilaHakusana = (sailytyspaikka + ' ' + sailytystila).trim();
 					// Hae sailytystilat
 					ListService.getOptions('ark_sailytystila').then(function success(options) {
 						for (var i = 0; i < options.length; i++) {
-							if (options[i].nimi_fi == sailytysTilaHakusana) { 
-								// Asetetaan tilaksi se jonka nimi mätsää sailytyspaikka+sailytystila arvoon					
+							if (options[i].nimi_fi == sailytysTilaHakusana) {
+								// Asetetaan tilaksi se jonka nimi mätsää sailytyspaikka+sailytystila arvoon
 								vm.loyto.properties.sailytystila = options[i];
 								tilaAsetettu = true;
 							}
@@ -937,7 +1057,7 @@ angular.module('mip.kori').controller(
 					// Asetetaan hyllypaikaksi hyllypaikka
 					vm.loyto.properties.vakituinen_hyllypaikka = hyllypaikka;
 				}
-		
+
 				// Event for error QR code reading
 				$scope.onError = function (error) {
 					console.log(error);
@@ -948,19 +1068,22 @@ angular.module('mip.kori').controller(
 						vm.showStatus("Couldn't read code properly.");
 					} else {
 						vm.showStatus(error);
-					}      
+					}
 				};
-		
+
 				// Event for video error (no permission for camera etc.)
 				$scope.onVideoError = function (error) {
 					console.log(error);
 					vm.showStatus(error);
 				};
-		
+
 				vm.showStatus = function (text) {
 					$scope.scannerErrorText = text;
 				}
 
-
-				}
+				vm.addEntityToBasket = function(id){
+					vm.koriIdLista = [id];
+					vm.lisaaKoriin(vm.kori);
+				};
+			}
 		]);

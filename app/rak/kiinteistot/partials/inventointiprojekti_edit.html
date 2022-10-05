@@ -11,14 +11,14 @@
 			ng-class="{ 'has-error': kiinteistoForm.inventointiprojekti.$invalid && kiinteistoForm.inventointiprojekti.$touched }">
 			<label for="inventointiprojekti" class="col-sm-3 control-label">
 				<span i18n="common.Inventory_project"></span><span
-				ng-if="isInventor">*</span>
+				ng-if="isInventor || (kiinteisto.properties.inventointiprojekti.inventoija_id || kiinteisto.properties.inventointiprojekti.inventointipaiva || kiinteisto.properties.inventointiprojekti.kenttapaiva)">*</span>
 			</label>
 			<div class="col-sm-9">
 				<select
 					ng-model="kiinteisto.properties.inventointiprojekti.inventointiprojekti_id"
 					ng-options="inventointiprojekti.properties.id as inventointiprojekti.properties.nimi for inventointiprojekti in inventointiprojektit"
 					name="inventointiprojekti" class="form-control"
-					ng-change="inventointiprojektiChanged()" ng-required="isInventor">
+					ng-change="inventointiprojektiChanged()" ng-required="isInventor || (kiinteisto.properties.inventointiprojekti.inventoija_id || kiinteisto.properties.inventointiprojekti.inventointipaiva || kiinteisto.properties.inventointiprojekti.kenttapaiva)">
 					<option value="" i18n="common.Select"></option>
 				</select> <span class="help-block"
 					ng-show="kiinteistoForm.inventointiprojekti.$invalid && kiinteistoForm.inventointiprojekti.$touched">

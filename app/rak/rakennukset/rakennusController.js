@@ -620,10 +620,14 @@ angular.module('mip.rakennus').controller(
                                 } else {
                                     AlertService.showInfo("", AlertService.message(data));
                                 }
-                            }, function error(err) {
-                                locale.ready('error').then(function() {
-                                    AlertService.showError(locale.getString('common.Error'), AlertService.message(err));
-                                });
+                            }, function error(error) {
+                                if(error && error.data && error.data.data && error.data.data.properties && error.data.data.properties.ktj_service === 'not_configured') {
+                                    AlertService.showWarning(AlertService.message(error));
+                                } else {
+                                    locale.ready('error').then(function() {
+                                        AlertService.showError(locale.getString('common.Error'), AlertService.message(error));
+                                    });
+                                }
                             });
                         }
                     };

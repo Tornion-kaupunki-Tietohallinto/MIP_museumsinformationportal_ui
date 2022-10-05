@@ -118,10 +118,14 @@ angular.module('mip.kiinteisto').controller(
 
                             MapService.fetchEstateDetails(lon, lat).then(function success(data) {
                                 ModalService.kiinteistoFetchedDetailsModal(data, $scope.kiinteisto, $scope.modalId);
-                            }, function error() {
-                                locale.ready('estate').then(function() {
-                                    AlertService.showError(locale.getString('common.Error'), locale.getString('error.Estate_provider_could_not_be_contacted'));
-                                });
+                            }, function error(error) {
+                                if(error && error.data && error.data.data && error.data.data.properties && error.data.data.properties.ktj_service === 'not_configured') {
+                                    AlertService.showWarning(AlertService.message(error));
+                                } else {
+                                    locale.ready('estate').then(function() {
+                                        AlertService.showError(locale.getString('common.Error'), locale.getString('error.Estate_provider_could_not_be_contacted'));
+                                    });
+                                }
                             });
                         }
                     };

@@ -67,6 +67,8 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	z-index: 1;
+	overflow-y:auto;
+
 }
 
 @media screen and (max-width: 768px) {
@@ -1038,4 +1040,8 @@ td.mip-table-header {
 	 0% { opacity: 1.0; }
 	 50% { opacity: 0.0; }
 	 100% { opacity: 1.0; }
+	 }
+
+	 .korivalitsin {
+		float: left;
 	 }
