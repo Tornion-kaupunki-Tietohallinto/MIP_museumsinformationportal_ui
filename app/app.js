@@ -22,7 +22,7 @@ var mip = angular.module(
     'API_URL' : 'http://localhost:8000/api/', // The value will be replaced in the build process
     /** API version asetus */
     'API_VERSION' : 'v1', // API version
-    'APP_VERSION': 'v1.4.4 20230607',
+    'APP_VERSION': 'v1.4.5 20230928',
     /** Onko debug päällä, httpRequestInterceptor käyttää */
     'DEBUG' : true, // Is debug on?
     /** Accept languages */
@@ -420,6 +420,10 @@ mip.config([
             }).when('/ark_kartat', {
                 templateUrl : 'img_file_search/ark_map_search.html',
                 controller : 'arkMapSearchListController',
+                controllerAs : 'vm'
+            }).when('/tyokalut', {
+                templateUrl : 'tyokalut/tyokalut.html',
+                controller : 'TyokaluController',
                 controllerAs : 'vm'
             }).otherwise('/kirjaudu');
 

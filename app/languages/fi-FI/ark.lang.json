@@ -166,6 +166,7 @@
     "Search_discoveries": "Löytöjen haku",
 	"Research_users": "Tutkimuksen käyttäjät",
     "Discovery_main_number_missing": "Löydön päänumero puuttuu",
+    "Discovery_collection_type_missing": "Kokoelma- ja arkistotiedot puuttuvat",
     "Search_glossary": "Hae asiasanastosta (min 3 mrk)",
     "Mandatory_data_missing_confirmation": "Pakollinen tieto puuttuu! Haluatko varmasti poistua?",
     "Unknown_collection_type": "Tuntematon kokoelmalaji",
@@ -372,5 +373,6 @@
     "Location_data": "Sijaintitiedot",
     "Box": "Laatikko",
     "Read_location": "Lue sijainti",
-    "Conservation_Image": "Konservoinnin kuva"
+    "Conservation_Image": "Konservoinnin kuva",
+    "Update_relic_register": "Päivitä muinaisjäännökset muinaisjäännösrekisteristä"
 }
