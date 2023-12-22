@@ -572,5 +572,6 @@
 	"Print_qr_code": "Tulosta QR-koodi",
 	"Museums_cart": "Museon kori",
 	"Confirm_museum_cart_change": "Haluatko varmasti poistaa museon kori jaon?",
-	"Admin_tools": "Ylläpidon työkalut"
+	"Admin_tools": "Ylläpidon työkalut",
+	"Feedback_link": "Palautekanava"
 }
